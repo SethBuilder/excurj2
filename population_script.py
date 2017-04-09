@@ -4,11 +4,12 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'excurj_proj.settings')
 import django
 django.setup()
 
-#to retrieve city ID and photo reference from Google Places API
+#to retrieve city ID and photo reference from Google Places API and load local json files
 import urllib.request, json
 
 #to create a City object and save it in the database
 from excurj.models import City
+from django.contrib.auth.models import User
 
 #for city images
 from django.core.files import File
@@ -99,7 +100,7 @@ def populate_cities():
 		cities.append(created_city)
 
 		
-	#delete local files as
+	#delete local files as they're already uploaded to media root
 	for city in cities:
 		if os.path.isfile(city.name + '.jpg'):
 			os.remove(city.name + '.jpg')
@@ -107,6 +108,35 @@ def populate_cities():
 
 	return cities#return a list of City objects
 
+def populate_users():
+	users_list =[]
+	with open('generated.json') as json_data:
+		users = json.load(json_data)
+		# print(users[0]['fname'][0:3])
+
+	for i in range(len(users)):
+		username = users[i]['fname'][0:3].lower() + users[i]['lname'].lower()
+		created_user = User.objects.get_or_create(username=username)[0]
+		created_user.first_name = users[i]['fname']
+		created_user.last_name = users[i]['lname']
+		created_user.password = 'password'
+		created_user.email = users[i]['email']
+
+		created_user.save()
+
+		users_list.append(created_user)
+
+	#return a list of User objects
+	return users_list
+
+	#to print off users data to check
+	# for i in range(len(users_list)):
+	# 	print("username: " + users_list[i].username + "\n first name: " + 
+	# 		users_list[i].first_name + "\n last name: " + users_list[i].last_name + '\n password: ' + users_list[i].password + 
+	# 		'\n email: ' + users_list[i].email + "\nfinito" + '\n') 
+		
+
 if __name__ == '__main__':
 	print('starting populate.py')
-	populate_cities()
+	# populate_cities()
+	populate_users()
