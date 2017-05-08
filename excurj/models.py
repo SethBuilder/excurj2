@@ -23,16 +23,17 @@ class Reference(models.Model):
 	
 
 class UserProfile(models.Model):
-	user = models.OneToOneField(User, related_name='profile') #Each User is related to only one User Profile
-	city = models.ForeignKey(City) #Each User Profile must be related to one city.
+	user = models.OneToOneField(User, related_name='profile', primary_key=True) #Each User is related to only one User Profile
+	city = models.ForeignKey(City, blank=True, null=True) #Each User Profile must be related to one city.
 	prof_pic = models.ImageField(blank=True, upload_to='profile_pictures')
-	dob = models.DateField()
-	sex = models.CharField(max_length=50, blank=True)
+	dob = models.DateField(blank=True, null=True)
+	sex = models.CharField(max_length=10, blank=True)
+	education = models.CharField(blank=True, max_length=200)
+	career = models.CharField(blank=True, max_length=200)
 	about_you = models.CharField(max_length=500, blank=True)
 	music_movies_books = models.CharField(max_length=200, blank=True)
-	career = models.CharField(blank=True, max_length=200)
-	education = models.CharField(blank=True, max_length=200)
-	what_will_you_show_visitors = models.CharField(max_length=1000)
+	friendship = models.CharField(max_length=500, blank=True)
+	what_will_you_show_visitors = models.CharField(max_length=1000, blank=True)
 	#to add more later
 
 class Request(models.Model):

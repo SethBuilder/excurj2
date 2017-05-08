@@ -1,38 +1,38 @@
 import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'excurj_proj.settings')
-
 import django
 django.setup()
-
-#to retrieve city ID and photo reference from Google Places API and load local json files
 import urllib.request, json
-
-#to create a City object and save it in the database
 from excurj.models import City
 from django.contrib.auth.models import User
-
-#for city images
+from excurj.models import UserProfile
 from django.core.files import File
 import requests
-
-#to pull wiki summary for each city
 import wikipedia
-
-#to avoid connection errors from requests lib
 from time import sleep
+import datetime
+import glob
 
+
+def get_json(url):
+	""" takes API URL and returns raw JSON response as image"""
+	with urllib.request.urlopen(url) as response:
+		jsonraw = response.read().decode()
+		jsondata = json.loads(jsonraw)
+		return jsondata
 
 def populate_cities():
+	""" populates City objects """
 	#these cities will be highlighted on front page
-	city_names = ['London', 'Paris', 'Munich', 'Miami', 'Tokyo', 'Beijing', 'Toronto', 'Barcelona', 'Budapest', 'Dubai', 'Vancouver' ]
-	countries = ['England', 'France', 'Germany', 'USA', 'Japan', 'China', 'Canada', 'Spain', 'Hungary', 'UAE', 'Canada']
+	city_names = ['London', 'Paris', 'Munich', 'Miami', 'Beijing', 'Toronto', 'Barcelona', 'Budapest', 'Dubai', 'Vancouver' ]
+	countries = ['England', 'France', 'Germany', 'USA', 'China', 'Canada', 'Spain', 'Hungary', 'UAE', 'Canada']
 
 	#this will be returned at the end
 	cities = []
 
 	# GoogleKey = 'AIzaSyDaa7NZzS-SE4JW3J-7TaA1v1Y5aWUTiyc'
-	# GoogleKey = 'AIzaSyDViGwJgWL18QSKvPozvAiqloyy1pW2lxg'
-	GoogleKey = 'AIzaSyB1E9CZaaaw1c77A7eZSophK_LnaGX5XRQ'
+	GoogleKey = 'AIzaSyDViGwJgWL18QSKvPozvAiqloyy1pW2lxg'
+	# GoogleKey = 'AIzaSyB1E9CZaaaw1c77A7eZSophK_LnaGX5XRQ'
 
 	for i in range(len(city_names)):
 		query = city_names[i] + "+" + countries[i] # to be sent to the Google Places API
@@ -58,7 +58,7 @@ def populate_cities():
 		# send city and country name to wikipedia and exctract first 5 sentences
 		created_city.description = wikipedia.summary(city_names[i] + ' ' + countries[i]) 
 
-		#extract city photo reference that we'll send to google places photo API
+		#extract city's 'photo reference' that we'll send to google places photo API
 		city_image_ref = jsondata['results'][0]['photos'][0]['photo_reference']
 
 		#set max width / can be changed if front end requires it
@@ -89,7 +89,8 @@ def populate_cities():
 				with open(city_names[i] + '.jpg', 'rb') as reopen:
 					#convert it to a Django File
 					django_file = File(reopen)
-					#save it to the ImageField -> args are: 1. the name of the file that is to be saved in MEDIA_ROOT path 2. The Django file itself 3. save instance
+					#save it to the ImageField -> args are: 1. the name of the file that is to be saved in MEDIA_ROOT path 
+					#2. The Django file itself 3. save instance
 					if not created_city.city_image or not os.path.isfile("media/city_pictures/"+city_names[i] + '.jpg'):#if ImageField is empty then save image
 						created_city.city_image.save(city_names[i] + '.jpg', django_file, save=True)
 				
@@ -109,34 +110,103 @@ def populate_cities():
 	return cities#return a list of City objects
 
 def populate_users():
-	users_list =[]
-	with open('generated.json') as json_data:
-		users = json.load(json_data)
-		# print(users[0]['fname'][0:3])
+	""" populates User and UserProfile objects """
 
-	for i in range(len(users)):
-		username = users[i]['fname'][0:3].lower() + users[i]['lname'].lower()
-		created_user = User.objects.get_or_create(username=username)[0]
-		created_user.first_name = users[i]['fname']
-		created_user.last_name = users[i]['lname']
-		created_user.password = 'password'
-		created_user.email = users[i]['email']
+	#have a list of City objects at hand
+	if City.objects.all().count() == 0 or len(glob.glob('media/city_images/*.jpg')) == 0:
+		cities = populate_cities()
+	else:
+		cities = City.objects.all()
 
-		created_user.save()
+	# random data URLs
+	urls = ['https://randomuser.me/api/?nat=gb&results=10', 'https://randomuser.me/api/?nat=fr&results=10', 
+	'https://randomuser.me/api/?nat=de&results=10', 'https://randomuser.me/api/?nat=us&results=10', 
+	'https://randomuser.me/api/?results=10', 'https://randomuser.me/api/?results=10', 'https://randomuser.me/api/?results=10&nat=es', 
+	'https://randomuser.me/api/?results=10', 'https://randomuser.me/api/?results=10', 'https://randomuser.me/api/?results=10&nat=ca']
 
-		users_list.append(created_user)
+	#go through random data urls
+	for i in range(len(urls)):
+		users_in_json = get_json(urls[i])#bring json data for users of specific city and nationality
+		user_list = get_users(users_in_json)#returns list of User objects
+		#send User objects list, json data and a City object to create profiles
+		user_profiles = get_profiles(user_list, cities[i], users_in_json)
+	
+def get_users(users):
+	user_list = []
+	for i in range(len(users['results'])):
 
-	#return a list of User objects
-	return users_list
+		#1. fetch or create User object with this username
+		username = users['results'][i]['login']['username']
 
-	#to print off users data to check
-	# for i in range(len(users_list)):
-	# 	print("username: " + users_list[i].username + "\n first name: " + 
-	# 		users_list[i].first_name + "\n last name: " + users_list[i].last_name + '\n password: ' + users_list[i].password + 
-	# 		'\n email: ' + users_list[i].email + "\nfinito" + '\n') 
-		
+		#now fill in first name, last name, email, password
+		user = User.objects.get_or_create(username=username)[0]
+		user.first_name = users['results'][i]['name']['first']
+		user.last_name = users['results'][i]['name']['last']
+		user.email = users['results'][i]['email']
+		user.password = users['results'][i]['login']['password']
+
+		user.save()#save User object
+		user_list.append(user)
+
+	return user_list
+
+def get_profiles(user_list, city, users_in_json):
+	for i in range(len(user_list)):
+
+		#now create User Profile
+		profile = UserProfile.objects.get_or_create(user=user_list[i])[0]
+
+		#fill in the City object
+		profile.city = city
+		profile.dob = datetime.datetime.strptime(users_in_json['results'][i]['dob'], '%Y-%m-%d %H:%M:%S').date()
+		print(users_in_json['results'][i]['dob'])
+		print(users_in_json['results'][i]['picture']['large'])# TO DELETE
+
+		#retrieve the profile pic
+		try:
+			retrieved_image = requests.get(users_in_json['results'][i]['picture']['large'])
+			sleep(5)
+
+		except requests.exceptions.ConnectionError as e:
+			e.status_code = 'Connection refused from random user API'
+
+		#create local file to save remote image
+		with open(str(profile.user.id) + '.jpg', 'wb') as f:
+			#write the remote image to the local file we just created
+			f.write(retrieved_image.content)
+
+		#open the local file with the image inside it
+		with open(str(profile.user.id) + '.jpg', 'rb') as reopen:
+			#convert it to a Django File
+			django_file = File(reopen)
+			profile.prof_pic.save(str(profile.user.id) + '.jpg', django_file, save=True)
+
+		profile.save()
+
+def save_image(url, file_name):
+	"""retrieves an image from a URL and returns a Django file"""
+	#retrieve the profile pic
+	try:
+		retrieved_image = requests.get(url)
+		sleep(5)
+
+	except requests.exceptions.ConnectionError as e:
+		e.status_code = 'Connection refused from random user API'
+
+	#create local file to save remote image
+	with open(str(file_name) + '.jpg', 'wb') as f:
+		#write the remote image to the local file we just created
+		f.write(retrieved_image.content)
+
+	#open the local file with the image inside it
+	with open(str(file_name) + '.jpg', 'rb') as reopen:
+		#convert it to a Django File
+		django_file = File(reopen)
+	return django_file
+
 
 if __name__ == '__main__':
 	print('starting populate.py')
 	# populate_cities()
 	populate_users()
+
