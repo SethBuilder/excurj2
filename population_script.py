@@ -34,6 +34,7 @@ def populate_cities():
 	GoogleKey = 'AIzaSyDViGwJgWL18QSKvPozvAiqloyy1pW2lxg'
 	# GoogleKey = 'AIzaSyB1E9CZaaaw1c77A7eZSophK_LnaGX5XRQ'
 
+	#only call the Google API if there are no City objects or no city pictures (db is empty)
 	if City.objects.all().count() == 0 or len(glob.glob('media/city_images/*.jpg')) == 0:
 		for i in range(len(city_names)):
 			query = city_names[i] + "+" + countries[i] # to be sent to the Google Places API
@@ -56,6 +57,7 @@ def populate_cities():
 			#save name, country, description
 			created_city.name = city_names[i]
 			created_city.country = countries[i]
+
 			# send city and country name to wikipedia and exctract first 5 sentences
 			created_city.description = wikipedia.summary(city_names[i] + ' ' + countries[i]) 
 
@@ -73,23 +75,23 @@ def populate_cities():
 
 			#check if the image exists already
 			if not os.path.isfile("media/city_pictures/"+city_names[i] + '.jpg'):
-				#only get the remote image if the file is not there
 
+				#only get the remote image if the file is not there
 				django_file = save_image(city_image_url, city_names[i] + '.jpg')
-				print("image pulled")
-				
-				if not created_city.city_image or not os.path.isfile("media/city_pictures/"+city_names[i] + '.jpg'):#if ImageField is empty then save image
+
+				#if ImageField is empty then save image
+				if not created_city.city_image or not os.path.isfile("media/city_pictures/"+city_names[i] + '.jpg'):
 					created_city.city_image.save(city_names[i] + '.jpg', django_file, save=True)
 					django_file.close()
 				
 
 
-			created_city.save()# save City object
+			created_city.save()# save City object in db
 			
 			cities.append(created_city)
 
-		else:
-			cities = City.objects.all()
+	else:
+		cities = City.objects.all()
 
 		
 	#delete local files as they're already uploaded to media root
@@ -104,12 +106,13 @@ def populate_users():
 	""" populates User and UserProfile objects """
 
 	#have a list of City objects at hand
-	if City.objects.all().count() == 0 or len(glob.glob('media/city_images/*.jpg')) == 0:#if there's no City objects or no pics
+	#if there's no City objects or no pics
+	if City.objects.all().count() == 0 or len(glob.glob('media/city_images/*.jpg')) == 0:
 		cities = populate_cities()#call the function
 	else:
 		cities = City.objects.all()#else, call them from the db
 
-	# random data URLs
+	#URLs that bring back data for test users, one URL for each city
 	urls = ['https://randomuser.me/api/?nat=gb&results=1', 'https://randomuser.me/api/?nat=fr&results=2', 
 	'https://randomuser.me/api/?nat=de&results=1', 'https://randomuser.me/api/?nat=us&results=2', 
 	'https://randomuser.me/api/?results=0', 'https://randomuser.me/api/?results=1', 'https://randomuser.me/api/?results=2&nat=es', 
@@ -123,14 +126,17 @@ def populate_users():
 		user_profiles = get_profiles(user_list, cities[i], users_in_json)
 	
 def get_users(users):
+	"""takes JSON data for test users and bring back a list of User objects"""
 	user_list = []
 	for i in range(len(users['results'])):
 
-		#1. fetch or create User object with this username
+		#1. fetch username
 		username = users['results'][i]['login']['username']
 
-		#now fill in first name, last name, email, password
+		#create User object
 		user = User.objects.get_or_create(username=username)[0]
+
+		#now fill in first name, last name, email, password
 		user.first_name = users['results'][i]['name']['first']
 		user.last_name = users['results'][i]['name']['last']
 		user.email = users['results'][i]['email']
@@ -151,20 +157,23 @@ def get_profiles(user_list, city, users_in_json):
 		#fill in the City object
 		profile.city = city
 		profile.dob = datetime.datetime.strptime(users_in_json['results'][i]['dob'], '%Y-%m-%d %H:%M:%S').date()
-		print(users_in_json['results'][i]['dob'])
-		print(users_in_json['results'][i]['picture']['large'])# TO DELETE
+		# print(users_in_json['results'][i]['dob'])
+		# print(users_in_json['results'][i]['picture']['large'])# TO DELETE
 
+		#fetch Django file (prof_pic)
 		django_file = save_image(users_in_json['results'][i]['picture']['large'], str(profile.user.id) + '.jpg')
 
+		#save prof_pic
 		profile.prof_pic.save(str(profile.user.id) + '.jpg', django_file, save=True)
 		django_file.close()
 
+		#fill gender
 		profile.sex = users_in_json['results'][i]['gender']
 
 		profile.save()
 		profiles.append(profile)
 
-	#delete local files as they're already uploaded to media root
+	#delete local files (prof pics) as they're already uploaded to media root
 	for profile in profiles:
 		if os.path.isfile(str(profile.user.id) + '.jpg'):
 			os.remove(str(profile.user.id) + '.jpg')
@@ -173,6 +182,7 @@ def get_profiles(user_list, city, users_in_json):
 
 def save_image(url, file_name):
 	""" pulls an image from a URL and returns a Django File """
+
 	#retrieve the profile pic
 	try:
 		retrieved_image = requests.get(url)
@@ -186,15 +196,9 @@ def save_image(url, file_name):
 		#write the remote image to the local file we just created
 		f.write(retrieved_image.content)
 
-	#open the local file with the image inside it
-	# with open(file_name + '.jpg', 'rb') as reopen:
-	# 	#convert it to a Django File
-	# 	django_file = File(reopen)
-
 	reopen = open(file_name, 'rb')
 	django_file = File(reopen)
 
-	print("django is: " + str(django_file.closed))
 	return django_file
 
 if __name__ == '__main__':
