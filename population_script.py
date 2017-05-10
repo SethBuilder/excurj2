@@ -3,7 +3,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'excurj_proj.settings')
 import django
 django.setup()
 import urllib.request, json
-from excurj.models import City, UserProfile, Excursion, Offer, Request
+from excurj.models import City, UserProfile, Excursion, Offer, Request, Reference
 from django.contrib.auth.models import User
 from django.core.files import File
 import requests
@@ -311,11 +311,36 @@ def populate_requests():
 
 	return requests
 
+def populate_references():
+	""" populating references """
+
+	user_list = User.objects.all()
+
+	messages=[]
+	references=[]
+
+	for user in user_list:
+		msg1 = "I had so much fun with %s! we ended up pub crawling at midnight. Such a great time it was!" 
+		msg2 = "%s was so nice and interesting, we walked around art museums together and had interesting conversations about the the contemporary art scenes in our countries." 
+		msg3 = "%s showed me around town and seemed to know so many interesting things!" 
+
+		messages.extend((msg3,msg2, msg1))
+
+	for i in range(10):
+		referenced=random.choice(user_list)
+		description=random.choice(messages) % referenced.first_name.title()
+		reference = Reference(author=random.choice(user_list), referenced=referenced, description=description, fun=True)
+		reference.save()
+		references.append(reference)
+
+	return references
+
 if __name__ == '__main__':
 	print('starting populate.py')
 	# populate_cities()
 	# populate_users()
 	# populate_excursions()
 	# populate_offers()
-	populate_requests()
+	# populate_requests()
+	populate_references()
 
