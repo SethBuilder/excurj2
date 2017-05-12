@@ -37,8 +37,6 @@ nav.navbar.opaque{
 	transition: width 0.4s ease;
 	border: none;
 	opacity: .7;
-
-
 }
 
 #topsearchbox:focus{
@@ -76,21 +74,13 @@ navbar-nav ul li a{
     background-size: cover;
     padding: 0;
     width: 100%;
-    z-index: 99;
+    position: relative;
+  	overflow: hidden;
+  	margin: 0 auto;
 }
 
 .jumbotron #container video{
     width: 110%;
-    z-index: 99;
-}
-
-#container {
-  position: relative;
-  height:150px;
-  overflow: hidden;
-  width: 70%;
-  margin: 0 auto;
-  z-index: 99;
 }
 
 .arrow {
@@ -127,15 +117,69 @@ navbar-nav ul li a{
   transform: skewX(-45deg);
 }
 
-/*.h1_homepage{
-	font-size: 30px;
+.jumbotron h1{
+	font-size: 45px;
     font-family: 'Montserrat', sans-serif;
-    font-weight: 400;
+    font-weight: 20;
     font-style: normal;
     color: #FFFFFF;
+    text-align: center;
+}
+
+.jumbotron p{
+	font-size: 25px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 20;
+    font-style: normal;
+    color: #FFFFFF;
+    text-align: center;
 }
 
 .homepage_jumbo{
 	background-color: transparent;
-	z-index: 100;
-}*/
+	position: absolute;
+	width: 800px;
+	left: 0;
+  	right: 0;
+  	margin: 0 auto;
+  	top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+}
+
+#details-header{
+	width: 70%;
+	margin: auto;
+}
+
+@media only screen and (max-width: 600px){
+
+	.jumbotron h1{
+	font-size: 25px;
+}
+
+.jumbotron p{
+	font-size:15px;
+    font-weight: 20;
+}
+
+.homepage_jumbo{
+	background-color: transparent;
+	position: absolute;
+	width: 800px;
+	left: 0;
+  	right: 0;
+  	margin: 0 auto;
+  	top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#details-header{
+	width: 45%;
+	margin: auto;
+}
+
+
+}
