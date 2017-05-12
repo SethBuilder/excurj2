@@ -1,14 +1,23 @@
 body{
-	padding-top: 70px;
+	padding-top: 0px;
 /*	background-color: lightblue;
 */}
 
 nav.navbar{
 	border: none;
-	background-color: rgba(255,255,255,0);
+	background-color: rgba(255,255,255,0.6);
 	transition: background-color 1s ease 0s;
 	font-family: 'Questrial', sans-serif;
-	font-weight: bold;
+	font-weight: bolder;
+	font-size: 15px;
+}
+
+.navbar-header{
+	opacity: .6;
+}
+
+.container-fluid{
+	padding: 0;
 }
 
 /*to change nav bar color upon scrolling*/
@@ -17,21 +26,116 @@ nav.navbar.opaque{
 	transition: background-color 1s ease 0s;
 }
 
+.active{
+	background-color: white;
+	opacity: .5;
+}
+
 #topsearchbox{
 	width: 200px;
 	-webkit-transition: width 0.4s ease;
 	transition: width 0.4s ease;
 	border: none;
-	
+	opacity: .7;
+
 
 }
 
 #topsearchbox:focus{
 	width:250px;
+	opacity: 1;
 
 }
 
 ul.nav li:hover{
-	background-color: #7DCD85;
+	background-color: white;
+	color: white;
+	opacity: 0.5;
+}
+
+navbar-nav ul li a{
 	color: white;
 }
+
+.jumbotron{
+	background: no-repeat fixed;
+    background-size: cover;
+    margin: 0;
+    color: white;
+    padding: 0px;
+    width: 100%;
+
+}
+
+.jumbotron #container {
+    position: relative;
+    overflow: hidden;
+    height: 600px;
+    background: #edeae8;
+    margin: 0;
+    background-size: cover;
+    padding: 0;
+    width: 100%;
+    z-index: 99;
+}
+
+.jumbotron #container video{
+    width: 110%;
+    z-index: 99;
+}
+
+#container {
+  position: relative;
+  height:150px;
+  overflow: hidden;
+  width: 70%;
+  margin: 0 auto;
+  z-index: 99;
+}
+
+.arrow {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding-bottom:.7%;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.arrow:before, .arrow:after {
+  content:'';
+  position: absolute;
+  bottom: 100%;
+  width: 50%;
+  padding-bottom:inherit;
+  background-color: inherit;
+}
+.arrow:before {
+  right: 50%;
+  -ms-transform-origin: 100% 100%;
+  -webkit-transform-origin: 100% 100%;
+  transform-origin: 100% 100%;
+  -ms-transform: skewX(45deg);
+  -webkit-transform: skewX(45deg);
+  transform: skewX(45deg);
+}
+.arrow:after {
+  left: 50%;
+  -ms-transform-origin: 0 100%;
+  -webkit-transform-origin: 0 100%;
+  transform-origin: 0 100%;
+  -ms-transform: skewX(-45deg);
+  -webkit-transform: skewX(-45deg);
+  transform: skewX(-45deg);
+}
+
+/*.h1_homepage{
+	font-size: 30px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #FFFFFF;
+}
+
+.homepage_jumbo{
+	background-color: transparent;
+	z-index: 100;
+}*/
