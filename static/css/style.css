@@ -1,0 +1,37 @@
+body{
+	padding-top: 70px;
+/*	background-color: lightblue;
+*/}
+
+nav.navbar{
+	border: none;
+	background-color: rgba(255,255,255,0);
+	transition: background-color 1s ease 0s;
+	font-family: 'Questrial', sans-serif;
+	font-weight: bold;
+}
+
+/*to change nav bar color upon scrolling*/
+nav.navbar.opaque{
+	background-color: rgba(255,255,255,1);
+	transition: background-color 1s ease 0s;
+}
+
+#topsearchbox{
+	width: 200px;
+	-webkit-transition: width 0.4s ease;
+	transition: width 0.4s ease;
+	border: none;
+	
+
+}
+
+#topsearchbox:focus{
+	width:250px;
+
+}
+
+ul.nav li:hover{
+	background-color: #7DCD85;
+	color: white;
+}

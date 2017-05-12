@@ -1,0 +1,22 @@
+{% extends 'excurj/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+  Make New Friends As You Travel!
+{% endblock %}
+
+{% block body_block %}
+
+  {% if cities %}
+
+    <ul>
+      {% for city in cities %}
+        <li> <a href="{% url 'excurj:show_city' city.slug %}"> {{city.name}} </a></li>
+      {% endfor %}
+    </ul>
+
+  {% else %}
+    <strong>There's no cities</strong>
+  {% endif %}
+
+{% endblock %}

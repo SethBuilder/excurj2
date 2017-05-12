@@ -8,12 +8,17 @@ class City(models.Model):
 	country = models.CharField(max_length=128)
 	description = models.CharField(max_length=1000, blank=True)
 	city_image = models.ImageField(blank=True, upload_to='city_pictures')
+	slug = models.SlugField(unique=True)
 
 	class Meta:
 		verbose_name_plural = 'Cities'
 
 	def __str__(self):
 		return self.name
+
+	def save(self, *args, **kwargs):
+		self.slug = slugify(self.name + " " + self.country)
+		super(City, self).save(*args, **kwargs)
 
 class Reference(models.Model):
 	author = models.ForeignKey(User, related_name='referencer')#can be local or traveler
@@ -36,6 +41,9 @@ class UserProfile(models.Model):
 	what_will_you_show_visitors = models.CharField(max_length=1000, blank=True)
 	#to add more later
 
+	def __str__(self):
+		return self.user.first_name
+
 class Request(models.Model):
 	"""traveler requests local to take him out upon liking his profile"""
 	traveler = models.ForeignKey(User, related_name='traveler_requests')
@@ -47,12 +55,13 @@ class Request(models.Model):
 class Excursion(models.Model):
 	"""traveler lists his trips so local could see them and possibly offer to take him out"""
 	traveler = models.ForeignKey(User, related_name='traveler_lists_excursion')
-	message = models.CharField(max_length=500)
+	city = models.ForeignKey(City, related_name='visited_city', blank=True, null=True) #Each excursion is connected to one City.
+	message = models.CharField(max_length=500)#message to all locals of that city "Hey good people of Edinburgh!"
 	date = models.DateField()
 
 class Offer(models.Model):
-	""" local offers traveler to take out based on the trips listed by traveler """
-	traveler = models.ForeignKey(User, related_name='traveler_receives_offer')
+	""" local offers traveler to take her out based on the trips listed by traveler """
+	# traveler = models.ForeignKey(User, related_name='traveler_receives_offer')#not needed since trip already has traveler
 	local = models.ForeignKey(User, related_name='local_offers_excursion')
 	message = models.CharField(max_length=500)
 	trip = models.ForeignKey(Excursion)

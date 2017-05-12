@@ -1,0 +1,22 @@
+{% extends 'excurj/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+	Welcome to {{city.name}}! Yoppy!
+{% endblock %}
+
+{% block body_block %}
+
+	<h1>Welcome to {{city.name}}</h1>
+		{% if city_locals_profiles %}
+		<ul>
+			{% for local in city_locals_profiles %}
+			<li>{{local.user.first_name}}</li>
+			{% endfor %}
+		</ul>
+
+		{% else %}
+		<strong>There's no people in this city yet :( but there'll be soon! :)</strong>
+		{% endif %}
+
+{% endblock %}

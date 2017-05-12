@@ -338,9 +338,9 @@ def populate_references():
 if __name__ == '__main__':
 	print('starting populate.py')
 	# populate_cities()
-	# populate_users()
-	# populate_excursions()
-	# populate_offers()
-	# populate_requests()
+	populate_users()
+	populate_excursions()
+	populate_offers()
+	populate_requests()
 	populate_references()
 
