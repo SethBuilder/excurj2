@@ -1,7 +1,6 @@
 body{
 	padding-top: 0px;
-/*	background-color: lightblue;
-*/}
+}
 
 nav.navbar{
 	border: none;
@@ -48,12 +47,10 @@ nav.navbar.opaque{
 ul.nav li:hover{
 	background-color: white;
 	color: white;
-	opacity: 0.5;
+	opacity: 1;
 }
 
-navbar-nav ul li a{
-	color: white;
-}
+
 
 .jumbotron{
 	background: no-repeat fixed;
@@ -126,6 +123,13 @@ navbar-nav ul li a{
     text-align: center;
 }
 
+#homepage-search{
+	 font-family: 'Questrial', sans-serif;
+	 font-size: 20px;
+	 font-weight: bold;
+	 transition: width 2s ease;
+}
+
 .jumbotron p{
 	font-size: 25px;
     font-family: 'Montserrat', sans-serif;
@@ -138,7 +142,7 @@ navbar-nav ul li a{
 .homepage_jumbo{
 	background-color: transparent;
 	position: absolute;
-	width: 800px;
+	width: 700px;
 	left: 0;
   	right: 0;
   	margin: 0 auto;
@@ -148,15 +152,133 @@ navbar-nav ul li a{
     z-index: 100;
 }
 
-#details-header{
-	width: 70%;
+.header-sections{
+	width: 100%;
 	margin: auto;
 }
 
+
+#homepage-search{
+	width: 100%;
+	margin: auto;
+	padding: 20px;
+	transition: padding .0s ease;
+	opacity: 0.7;
+}
+
+#homepage-search:focus{
+	padding: 22px;
+	opacity: 1;
+}
+
+.header-button{
+	padding: 5px 10px;
+	font-size: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    color: black;
+    text-align: center;
+    width: 220px;
+    opacity: .7;
+    margin: 0px 20px;
+    border: none;
+    border-radius: 2px;
+}
+
+.header-button:hover{
+	opacity: 1;
+}
+
+.buttons{
+	margin: auto;
+	width: 100%;
+	text-align: center;
+}
+
+
+.how-it-works{
+	padding: 50px;
+	background-color: #C5B358;
+	font-family: 'Montserrat', sans-serif;
+	opacity: .8;
+	text-align: center;
+
+}
+.how-it-works h2{
+	text-align: center;
+	position: relative;
+	color: white;
+	margin-bottom: 30px;
+}
+
+.how-it-works h2:after{
+	content: "";
+	position: absolute;
+	top: 50px;
+	left: 47%;
+	right: 47%;
+	height: 2px;
+	background-color: white;
+	display: block;
+}
+
+.how-it-works-box{
+	padding: 30px;
+	background-color: #D6C362;
+	margin: 20px 5px;
+	display: inline-block;
+	width: calc(30%);
+	overflow-wrap: break-word;
+	color: white;
+	box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.how-it-works-box h3{
+position: relative;
+}
+
+
+.how-it-works-box h3:after{
+	content: "";
+	position: absolute;
+	top: 35px;
+	left: 30%;
+	right: 30%;
+	height: 2px;
+	background-color: white;
+	display: block;
+}
+
+.how-it-works-box p{
+	margin: 20px;
+	font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media only screen and (max-width: 600px){
 
+	ul.nav li{
+	background-color: white;
+	color: white;
+	opacity: 1;
+}
+
 	.jumbotron h1{
-	font-size: 25px;
+	font-size: 20px;
 }
 
 .jumbotron p{
@@ -167,7 +289,7 @@ navbar-nav ul li a{
 .homepage_jumbo{
 	background-color: transparent;
 	position: absolute;
-	width: 800px;
+	width: 350px;
 	left: 0;
   	right: 0;
   	margin: 0 auto;
@@ -176,10 +298,28 @@ navbar-nav ul li a{
     transform: translate(-50%, -50%);
 }
 
-#details-header{
-	width: 45%;
+#header-sections{
+	width: 40%;
 	margin: auto;
 }
 
+#homepage-search{
+	width: 100%;
+	margin: auto;
+	padding: 0px;
+}
 
+.header-button{
+	padding: 2px 5px;
+	font-size: 11px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    color: black;
+    width: 30%
+}
+
+#homepage-search:focus{
+	padding: 18px;
+
+}
 }

@@ -11,18 +11,26 @@
   <div id="container">
   
   <div class="homepage_jumbo">
-      <section>
+
+      <section class="header-sections">
         <h1>Seif, where do you want to go?</h1>
       </section>
 
-      <section id="details-header">
+      <section class="header-sections">
         <p>excurj. is a community where people show visitors around their cities to make new friendships.</p>
       </section>
 
-    
-<!--       <input type="text" name="search_homepage" class="form-control input-lg searchbox">
- -->    
+      <form>
+        <div class="form-group">
+          <input type="text" name="homepage-search" class="form-control" id="homepage-search" placeholder="Search cities...">
+        </div>
+      </form>
 
+      <div class="buttons">
+        <button class="header-button">Find a Guide</button>
+        <button class="header-button">Become a Guide</button>
+      </div>
+  
   </div>
   
     <!-- video background -->
@@ -36,6 +44,28 @@
   </div>
 </div>
 
+<!-- How It Works section -->
+<div class="how-it-works">
+    <h2>How It Works</h2>
+
+  <div class="how-it-works-box"> 
+    <img src=" {% static "images/meetlocals3.svg" %} "> 
+    <h3>Meet Local People</h3>
+    <p>Meet like-minded locals who could show you around their city.</p>
+  </div>
+
+  <div class="how-it-works-box">
+    <img src=" {% static "images/showpeople.svg" %} ">
+    <h3>Show Visitors Around</h3>
+    <p>Show visitors around and meet interesting international visitors.</p>
+  </div>
+
+  <div class="how-it-works-box">
+    <img src=" {% static "images/makefriends.svg" %} ">
+    <h3>Make New Friends!</h3>
+    <p>Walking around is a fun bonding activity to make new friends!</p>
+  </div>
+</div>
 
   {% if cities %}
 
