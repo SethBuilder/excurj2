@@ -1,3 +1,4 @@
+
 body{
 	padding-top: 0px;
 }
@@ -59,6 +60,7 @@ ul.nav li:hover{
     color: white;
     padding: 0px;
     width: 100%;
+    object-fit: cover;
 
 }
 
@@ -78,6 +80,8 @@ ul.nav li:hover{
 
 .jumbotron #container video{
     width: 110%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .arrow {
@@ -164,6 +168,7 @@ ul.nav li:hover{
 	padding: 20px;
 	transition: padding .0s ease;
 	opacity: 0.7;
+	border: none;
 }
 
 #homepage-search:focus{
@@ -196,22 +201,23 @@ ul.nav li:hover{
 }
 
 
-.how-it-works{
+.how-it-works-container{
 	padding: 50px;
 	background-color: #C5B358;
 	font-family: 'Montserrat', sans-serif;
 	opacity: .8;
 	text-align: center;
 
+	width: 100%;
 }
-.how-it-works h2{
+.how-it-works-container h2{
 	text-align: center;
 	position: relative;
 	color: white;
 	margin-bottom: 30px;
 }
 
-.how-it-works h2:after{
+.how-it-works-container h2:after{
 	content: "";
 	position: absolute;
 	top: 50px;
@@ -226,10 +232,10 @@ ul.nav li:hover{
 	padding: 30px;
 	background-color: #D6C362;
 	margin: 20px 5px;
-	display: inline-block;
-	width: calc(30%);
-	overflow-wrap: break-word;
+/*	min-width: calc(40%);
+*/	overflow-wrap: break-word;
 	color: white;
+	display: inline-block;
 	box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -269,7 +275,31 @@ position: relative;
 
 
 
-@media only screen and (max-width: 600px){
+@media only screen and (max-width: 750px){
+
+	#mainNavBar{
+		background-color: rgba(255,255,255,1);
+	}
+
+	#topsearchbox{
+	width: 200px;
+	-webkit-transition: width 0.4s ease;
+	transition: width 0.4s ease;
+	border: none;
+	opacity: .7;
+}
+
+#topsearchbox:focus{
+	width:250px;
+	opacity: 1;
+
+}
+
+	.jumbotron #container video{
+    width: 110%;
+    height: 100%;
+    object-fit: cover;
+}
 
 	ul.nav li{
 	background-color: white;
@@ -279,6 +309,10 @@ position: relative;
 
 	.jumbotron h1{
 	font-size: 20px;
+}
+
+.jumbotron{
+	background-image: url('/static/images/capture.jpg');
 }
 
 .jumbotron p{
@@ -293,9 +327,10 @@ position: relative;
 	left: 0;
   	right: 0;
   	margin: 0 auto;
-  	top: 20%;
+  	top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    background-image: url('./images/capture.jpg');
 }
 
 #header-sections{
@@ -310,16 +345,29 @@ position: relative;
 }
 
 .header-button{
-	padding: 2px 5px;
+	padding: 7px 16px;
 	font-size: 11px;
     font-family: 'Montserrat', sans-serif;
     font-weight: bold;
     color: black;
-    width: 30%
+    width: 35%
 }
 
 #homepage-search:focus{
 	padding: 18px;
 
+}
+
+.how-it-works-box h3:after{
+	
+	top: 55px;
+	
+}
+
+.how-it-works-container h2:after{
+	
+	left: 37%;
+	right: 37%;
+	
 }
 }

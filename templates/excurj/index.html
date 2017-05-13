@@ -34,7 +34,7 @@
   </div>
   
     <!-- video background -->
-    <video autoplay muted loop>
+    <video autoplay muted loop id="background_video">
             <source src="{% static 'videos/fun.mp4' %}" type="video/mp4">
     </video>
 
@@ -45,26 +45,35 @@
 </div>
 
 <!-- How It Works section -->
-<div class="how-it-works">
+<div class="how-it-works-container container-fluid">
+
     <h2>How It Works</h2>
 
-  <div class="how-it-works-box"> 
-    <img src=" {% static "images/meetlocals3.svg" %} "> 
-    <h3>Meet Local People</h3>
-    <p>Meet like-minded locals who could show you around their city.</p>
-  </div>
+  <div class="row">
+  <div class="col-lg-4 col-xs-12">
+      <div class="how-it-works-box"> 
+        <img src=" {% static "images/meetlocals3.svg" %} "> 
+        <h3>When You're a Traveler</h3>
+        <p>Meet like-minded locals who could show you around their city.</p>
+      </div>
+    </div>
+    <div class="col-lg-4 col-xs-12">
+      <div class="  how-it-works-box">
+        <img src=" {% static "images/showpeople.svg" %} ">
+        <h3>When You're a Local</h3>
+        <p>Show travelers around and meet interesting international visitors.</p>
+      </div>
+    </div>
 
-  <div class="how-it-works-box">
-    <img src=" {% static "images/showpeople.svg" %} ">
-    <h3>Show Visitors Around</h3>
-    <p>Show visitors around and meet interesting international visitors.</p>
-  </div>
+      <div class="col-lg-4 col-xs-12">
+      <div class=" how-it-works-box">
+        <img src=" {% static "images/makefriends.svg" %} ">
+        <h3>Make New Friends!</h3>
+        <p>Walking around is a fun bonding activity to make new friends!</p>
+      </div>
+      </div>
 
-  <div class="how-it-works-box">
-    <img src=" {% static "images/makefriends.svg" %} ">
-    <h3>Make New Friends!</h3>
-    <p>Walking around is a fun bonding activity to make new friends!</p>
-  </div>
+    </div>
 </div>
 
   {% if cities %}
@@ -79,7 +88,7 @@
     <strong>There's no cities</strong>
   {% endif %}
 
-<!--   <script src=" {% static 'js/bideo.js' %}"></script>
+  <!-- <script src=" {% static 'js/bideo.js' %}"></script>
   <script src=" {% static 'js/main.js' %}"></script> -->
 
 {% endblock %}
