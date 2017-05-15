@@ -302,7 +302,7 @@ def populate_requests():
 		messages.extend((msg3,msg2, msg1))
 
 	#generate 10 requests
-	for i in range(1000):
+	for i in range(2000):
 		request = Request(traveler=random.choice(user_list), local=random.choice(user_list), 
 			message=random.choice(messages), date=generate_date(), local_approval=random.choice([True, False]))
 
@@ -327,7 +327,7 @@ def populate_references():
 
 		msg_from_local1 = "I met up with %s and walked around town, then we had lunch and tried the local coffee, we'll stay in touch for sure."
 		msg_from_local2 = "%s was so curious about town and I enjoyed explaining all the small details that I thought would be interesting "
-		msg_from_local3 = "%s is COOL! we'll meet up again in the future."
+		msg_from_local3 = "%s is cool! we'll meet up again in the future."
 
 
 

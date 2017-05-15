@@ -7,8 +7,8 @@ from django.contrib.auth.models import User
 
 def index(request):
 	context_dict={}
-	#brings back top 5 cities with the highest number of users
-	city_list = City.objects.annotate(user_count=Count('userprofile')).order_by('-user_count')[:5]
+	#brings back top 6 cities with the highest number of users
+	city_list = City.objects.annotate(user_count=Count('userprofile')).order_by('-user_count')[:6]
 	
 	reqs = Request.objects.filter(local_approval=True).order_by('-date')[:2]
 

@@ -17,6 +17,11 @@ class City(models.Model):
 	def __str__(self):
 		return self.name + ", " + self.country
 
+	@property
+	def photo_url(self):
+	    if self.city_image and hasattr(self.city_image, 'url'):
+	        return self.city_image.url
+
 	def save(self, *args, **kwargs):
 		self.slug = slugify(self.name + " " + self.country)
 		super(City, self).save(*args, **kwargs)

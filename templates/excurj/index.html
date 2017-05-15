@@ -118,9 +118,52 @@
         </div>
     </div>
   </div>
+</div>
+
+  <div class="container-fluid popular-cities-container">
+    
+      <h2>Popular Cities</h2>
+      <div class="row">
+
+{% if cities %}
+{% for city in cities %}
+
+        <div class="col-lg-2 col-xs-12">
+          <div class="popular-cities-box">
+          <div class="thumbnails">
+            <a href="{% url 'excurj:show_city' city.slug %}">
+              <div class="captions">
+                <h2> {{ city.name }} </h2>
+              </div>
+{% if city.userprofile_set.count == 1 %}
+
+              <div class="num">
+                <p> Has one awesome person!</p>
+              </div>
+{% else %}
+              <div class="num">
+                <p> Has {{ city.userprofile_set.count}} people!</p>
+              </div>
+
+{% endif %}
+
+              <img src=" {{city.photo_url}} " class="img-responsive img-rounded">
+
+            </a>
+          </div>
+        </div>
+      </div>
+
+{% endfor %}
+{% else %}
+  <strong>There's no cities</strong>
+{% endif %}
+
+      </div>
+  </div>
 
 
-<!-- <div>
+<div>
   {% if cities %}
 
     <ul class="cities">
@@ -133,6 +176,6 @@
     <strong>There's no cities</strong>
   {% endif %}
 
-  </div> -->
+  </div>
 
 {% endblock %}

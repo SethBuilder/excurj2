@@ -201,7 +201,7 @@ ul.nav li:hover{
 }
 
 
-.how-it-works-container, .superstars-container{
+.how-it-works-container, .superstars-container, .popular-cities-container{
 	padding: 40px;
 	font-family: 'Montserrat', sans-serif;
 	opacity: .8;
@@ -217,11 +217,19 @@ ul.nav li:hover{
 	background-color: white;
 }
 
-.how-it-works-container h2{
+.popular-cities-container{
+	background-color: #efebe1;
+}
+
+.how-it-works-container h2, .popular-cities-container h2{
 	text-align: center;
 	position: relative;
 	color: white;
 	margin-bottom: 30px;
+}
+
+.popular-cities-container h2{
+	color: grey;
 }
 
 .superstars-container h2{
@@ -254,6 +262,17 @@ ul.nav li:hover{
 	display: block;
 }
 
+.popular-cities-container h2:after{
+	content: "";
+	position: absolute;
+	top: 50px;
+	left: 47%;
+	right: 47%;
+	height: 2px;
+	background-color: grey;
+	display: block;
+}
+
 .how-it-works-box{
 	padding: 30px;
 	background-color: #D6C362;
@@ -263,6 +282,30 @@ ul.nav li:hover{
 	color: white;
 	display: inline-block;
 	box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.popular-cities-box{
+	
+	background-color: grey;
+	margin: 10px 5px;
+	overflow-wrap: break-word;
+	color: white;
+	display: inline-block;
+	width: 200px;
+	min-height: 170px;
+	box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.popular-cities-box img{
+	
+	width: 200px;
+    height: 170px;
+	
+}
+
+.popular-cities-box a{
+	display: block;
+
 }
 
 .how-it-works-box h3{
@@ -321,8 +364,47 @@ position: relative;
 }
 
 
+.thumbnails{
+	position: relative;
+	overflow: hidden;
 
+}
 
+.popular-cities-box:hover{
+	filter: brightness(120%);
+}
+
+.captions{
+	position: absolute;
+	left: 100px;
+	top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+}
+
+.popular-cities-box:hover .num{
+	left: 0;
+}
+
+.num{
+	position: absolute;
+    
+    left:-200px;
+    bottom: 0;
+    transition: left 300ms ease-out;
+}
+
+.captions h2, .num p{
+	color: black;
+	background-color: rgba(255,255,255,.69);
+	padding: 5px;
+	
+}
+
+.num p{
+	padding: 1px 2px;
+}
 
 
 
