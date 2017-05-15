@@ -201,20 +201,35 @@ ul.nav li:hover{
 }
 
 
-.how-it-works-container{
-	padding: 50px;
-	background-color: #C5B358;
+.how-it-works-container, .superstars-container{
+	padding: 40px;
 	font-family: 'Montserrat', sans-serif;
 	opacity: .8;
 	text-align: center;
-
 	width: 100%;
 }
+
+.how-it-works-container{
+	background-color: #C5B358;
+}
+
+.superstars-container{
+	background-color: white;
+}
+
 .how-it-works-container h2{
 	text-align: center;
 	position: relative;
 	color: white;
 	margin-bottom: 30px;
+}
+
+.superstars-container h2{
+	text-align: center;
+	position: relative;
+	color: black;
+	margin-bottom: 30px;
+	font-family: 'Questrial', sans-serif;
 }
 
 .how-it-works-container h2:after{
@@ -225,6 +240,17 @@ ul.nav li:hover{
 	right: 47%;
 	height: 2px;
 	background-color: white;
+	display: block;
+}
+
+.superstars-container h2:after{
+	content: "";
+	position: absolute;
+	top: 50px;
+	left: 47%;
+	right: 47%;
+	height: 2px;
+	background-color: black;
 	display: block;
 }
 
@@ -256,7 +282,41 @@ position: relative;
 }
 
 .how-it-works-box p{
-	margin: 20px;
+	margin-top: 20px;
+	font-weight: ;
+	font-size: 20px;
+	font-family: 'Questrial', sans-serif;
+}
+
+
+.superstars-box{
+	background-color: white;
+}
+
+.superstars-box #first{
+	float: left;
+}
+
+.superstars-box #second{
+	float: right;
+}
+
+
+.clearfix{
+	overflow: auto;
+}
+
+
+
+.paired{
+	padding: 10px 0px;
+	font-family: 'Questrial', sans-serif;
+}
+
+.superstars-box-header{
+	
+	font-family: 'Questrial', sans-serif;
+	font-size: 16px;
 	font-weight: bold;
 }
 

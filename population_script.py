@@ -302,7 +302,7 @@ def populate_requests():
 		messages.extend((msg3,msg2, msg1))
 
 	#generate 10 requests
-	for i in range(10):
+	for i in range(1000):
 		request = Request(traveler=random.choice(user_list), local=random.choice(user_list), 
 			message=random.choice(messages), date=generate_date(), local_approval=random.choice([True, False]))
 
@@ -316,20 +316,34 @@ def populate_references():
 
 	user_list = User.objects.all()
 
-	messages=[]
+	messages_from_travelers=[]
+	messages_from_locals=[]
 	references=[]
 
 	for user in user_list:
-		msg1 = "I had so much fun with %s! we ended up pub crawling at midnight. Such a great time it was!" 
-		msg2 = "%s was so nice and interesting, we walked around art museums together and had interesting conversations about the the contemporary art scenes in our countries." 
-		msg3 = "%s showed me around town and seemed to know so many interesting things!" 
+		msg_from_traveler1 = "I had so much fun with %s! we ended up pub crawling at midnight. Such a great time it was!" 
+		msg_from_traveler2 = "%s was so nice and interesting, we walked around art museums together and had interesting conversations." 
+		msg_from_traveler3 = "%s showed me around town and seemed to know so many interesting things!" 
 
-		messages.extend((msg3,msg2, msg1))
+		msg_from_local1 = "I met up with %s and walked around town, then we had lunch and tried the local coffee, we'll stay in touch for sure."
+		msg_from_local2 = "%s was so curious about town and I enjoyed explaining all the small details that I thought would be interesting "
+		msg_from_local3 = "%s is COOL! we'll meet up again in the future."
 
-	for i in range(10):
+
+
+		messages_from_travelers.extend((msg_from_traveler1,msg_from_traveler2, msg_from_traveler3))
+		messages_from_locals.extend((msg_from_local1,msg_from_local2, msg_from_local3))
+
+	for i in range(2000):
 		referenced=random.choice(user_list)
-		description=random.choice(messages) % referenced.first_name.title()
-		reference = Reference(author=random.choice(user_list), referenced=referenced, description=description, fun=True)
+		# description=random.choice(messages) % referenced.first_name.title()
+		reference = Reference(author=random.choice(user_list), referenced=referenced, fun=True, local=random.choice([True,False]))
+
+		if reference.local == True:
+			reference.description = random.choice(messages_from_locals) % referenced.first_name.title()
+		else:
+			reference.description = random.choice(messages_from_travelers) % referenced.first_name.title()
+
 		reference.save()
 		references.append(reference)
 

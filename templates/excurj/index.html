@@ -9,29 +9,28 @@
 
 <div class="jumbotron" id="index-jumbotron">
   <div id="container">
-  
-  <div class="homepage_jumbo">
+    <div class="homepage_jumbo">
 
-      <section class="header-sections">
-        <h1>Seif, where do you want to go?</h1>
-      </section>
+        <section class="header-sections">
+          <h1>Seif, where do you want to go?</h1>
+        </section>
 
-      <section class="header-sections">
-        <p>excurj. is a community where people show visitors around their cities to make new friendships.</p>
-      </section>
+        <section class="header-sections">
+          <p>excurj. is a community where people show visitors around their cities to make new friendships.</p>
+        </section>
 
-      <form>
-        <div class="form-group">
-          <input type="text" name="homepage-search" class="form-control" id="homepage-search" placeholder="Search cities...">
+        <form>
+          <div class="form-group">
+            <input type="text" name="homepage-search" class="form-control" id="homepage-search" placeholder="Search cities...">
+          </div>
+        </form>
+
+        <div class="buttons">
+          <button class="header-button">Find a Guide</button>
+          <button class="header-button">Become a Guide</button>
         </div>
-      </form>
-
-      <div class="buttons">
-        <button class="header-button">Find a Guide</button>
-        <button class="header-button">Become a Guide</button>
-      </div>
-  
-  </div>
+    
+    </div>
   
     <!-- video background -->
     <video autoplay muted loop id="background_video">
@@ -40,23 +39,24 @@
 
     <!-- shows the arrow pointing down at the bottom -->
     <div class="arrow"></div>
-
   </div>
 </div>
 
 <!-- How It Works section -->
 <div class="how-it-works-container container-fluid">
 
-    <h2>How It Works</h2>
+  <h2>How It Works</h2>
 
   <div class="row">
-  <div class="col-lg-4 col-xs-12">
-      <div class="how-it-works-box"> 
-        <img src=" {% static "images/meetlocals3.svg" %} "> 
-        <h3>When You're a Traveler</h3>
-        <p>Meet like-minded locals who could show you around their city.</p>
-      </div>
+
+    <div class="col-lg-4 col-xs-12">
+        <div class="how-it-works-box"> 
+          <img src=" {% static "images/meetlocals3.svg" %} "> 
+          <h3>When You're a Traveler</h3>
+          <p>Meet like-minded locals who could show you around their city.</p>
+        </div>
     </div>
+
     <div class="col-lg-4 col-xs-12">
       <div class="  how-it-works-box">
         <img src=" {% static "images/showpeople.svg" %} ">
@@ -65,17 +65,62 @@
       </div>
     </div>
 
-      <div class="col-lg-4 col-xs-12">
+    <div class="col-lg-4 col-xs-12">
       <div class=" how-it-works-box">
         <img src=" {% static "images/makefriends.svg" %} ">
         <h3>Make New Friends!</h3>
         <p>Walking around is a fun bonding activity to make new friends!</p>
       </div>
-      </div>
 
     </div>
+  </div>
 </div>
 
+<div class="container-fluid superstars-container">
+
+  <h2>Super Stars</h2>
+
+  <div class="row">
+
+    <div class="col-lg-6 col-xs-12">
+        <div class="superstars-box">
+
+            <div class="superstars-box-header">
+               {{ req0.req0.local.first_name.title}} (local) met with {{req0.req0.traveler.first_name.title}} (traveler) on {{req0.req0.date}} in {{req0.req0.local.profile.city}} 
+            </div>
+
+              <div class="clearfix paired">
+
+                <img src=" {{req0.req0.local.profile.prof_pic.url }} " id="first" class="img-circle img-responsive">
+                <img src=" {{ req0.req0.traveler.profile.prof_pic.url }} " id="second" class="img-circle img-responsive">
+
+                <strong>{{ req0.req0.local.first_name.title}} said:</strong>
+                <span style="font-size: 20px">"</span> 
+                {{req0.local_references_traveler.description}} <span style="font-size: 20px">"</span><br> <strong>{{req0.req0.traveler.first_name.title}} said:</strong> <span style="font-size: 20px">"</span> {{ req0.traveler_references_local.description }} <span style="font-size: 20px">"</span>
+              </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-xs-12">
+        <div class="superstars-box"> 
+              
+              <div class="superstars-box-header">
+                {{ req1.req1.local.first_name.title}} (local) met with {{req1.req1.traveler.first_name.title}} (traveler) on {{req1.req1.date}} in {{req1.req1.local.profile.city}} 
+              </div>
+
+              <div class="clearfix paired">
+                <img src=" {{req1.req1.local.profile.prof_pic.url }} " id="first" class="img-circle img-responsive">
+                <img src=" {{ req1.req1.traveler.profile.prof_pic.url }} " id="second" class="img-circle img-responsive">
+
+                <strong>{{ req1.req1.local.first_name.title}} said:</strong> 
+                <span style="font-size: 20px">"</span> {{req1.local_references_traveler.description}} <span style="font-size: 20px">"</span><br> <strong>{{req1.req1.traveler.first_name.title}} said:</strong>  <span style="font-size: 20px">"</span>{{ req1.traveler_references_local.description }}<span style="font-size: 20px">"</span>
+              </div>
+        </div>
+    </div>
+  </div>
+
+
+<!-- <div>
   {% if cities %}
 
     <ul class="cities">
@@ -88,7 +133,6 @@
     <strong>There's no cities</strong>
   {% endif %}
 
-  <!-- <script src=" {% static 'js/bideo.js' %}"></script>
-  <script src=" {% static 'js/main.js' %}"></script> -->
+  </div> -->
 
 {% endblock %}

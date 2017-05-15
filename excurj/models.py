@@ -1,6 +1,7 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
+import datetime
 
 class City(models.Model):
 	city_id = models.CharField(primary_key=True, max_length=150)
@@ -14,7 +15,7 @@ class City(models.Model):
 		verbose_name_plural = 'Cities'
 
 	def __str__(self):
-		return self.name
+		return self.name + ", " + self.country
 
 	def save(self, *args, **kwargs):
 		self.slug = slugify(self.name + " " + self.country)
@@ -23,9 +24,18 @@ class City(models.Model):
 class Reference(models.Model):
 	author = models.ForeignKey(User, related_name='referencer')#can be local or traveler
 	referenced = models.ForeignKey(User, related_name='referencee')#can be local or traveler
-	description = models.CharField(max_length=500)
+	description = models.CharField(max_length=500, default="default reference")
 	fun = models.BooleanField() #did you have fun with the person or not?
-	
+	date = models.DateField(default=datetime.datetime.now())#in order to pull the last ref on index page
+	local = models.BooleanField(default=True) #Is the author a local ?
+
+	class Meta:
+		get_latest_by = "date"
+
+	def __str__(self):
+		return self.description	
+
+
 
 class UserProfile(models.Model):
 	user = models.OneToOneField(User, related_name='profile', primary_key=True) #Each User is related to only one User Profile
@@ -51,6 +61,9 @@ class Request(models.Model):
 	message = models.CharField(max_length=500)
 	date = models.DateField()
 	local_approval = models.BooleanField(blank=True)
+
+	def __str__(self):
+		return self.traveler.first_name + " " + self.local.first_name
 
 class Excursion(models.Model):
 	"""traveler lists his trips so local could see them and possibly offer to take him out"""
