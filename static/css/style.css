@@ -390,7 +390,7 @@ position: relative;
 .num{
 	position: absolute;
     
-    left:-200px;
+    left:-800px;
     bottom: 0;
     transition: left 300ms ease-out;
 }
