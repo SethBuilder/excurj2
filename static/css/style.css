@@ -1,6 +1,8 @@
 
 body{
 	padding-top: 0px;
+	line-height: 1.5;
+	font-family: 'Questrial', sans-serif;
 }
 
 nav.navbar{
@@ -25,6 +27,16 @@ nav.navbar.opaque{
 	background-color: rgba(255,255,255,1);
 	transition: background-color 1s ease 0s;
 }
+
+/*.feedback.opaque{
+	background-color: rgba(255,255,255,1);
+	transition: background-color 1s ease 0s;
+}
+
+.up.opaque{
+	background-color: rgba(255,255,255,1);
+	transition: background-color 1s ease 0s;
+}*/
 
 .active{
 	background-color: white;
@@ -120,7 +132,7 @@ ul.nav li:hover{
 
 .jumbotron h1{
 	font-size: 45px;
-    font-family: 'Montserrat', sans-serif;
+    /*font-family: 'Montserrat', sans-serif;*/
     font-weight: 20;
     font-style: normal;
     color: #FFFFFF;
@@ -128,7 +140,7 @@ ul.nav li:hover{
 }
 
 #homepage-search{
-	 font-family: 'Questrial', sans-serif;
+	 /*font-family: 'Questrial', sans-serif;*/
 	 font-size: 20px;
 	 font-weight: bold;
 	 transition: width 2s ease;
@@ -136,7 +148,7 @@ ul.nav li:hover{
 
 .jumbotron p{
 	font-size: 25px;
-    font-family: 'Montserrat', sans-serif;
+    /*font-family: 'Montserrat', sans-serif;*/
     font-weight: 20;
     font-style: normal;
     color: #FFFFFF;
@@ -179,7 +191,7 @@ ul.nav li:hover{
 .header-button{
 	padding: 5px 10px;
 	font-size: 20px;
-    font-family: 'Montserrat', sans-serif;
+    /*font-family: 'Montserrat', sans-serif;*/
     font-weight: bold;
     color: black;
     text-align: center;
@@ -203,7 +215,7 @@ ul.nav li:hover{
 
 .how-it-works-container, .superstars-container, .popular-cities-container{
 	padding: 40px;
-	font-family: 'Montserrat', sans-serif;
+	/*font-family: 'Montserrat', sans-serif;*/
 	opacity: .8;
 	text-align: center;
 	width: 100%;
@@ -353,7 +365,7 @@ position: relative;
 
 .paired{
 	padding: 10px 0px;
-	font-family: 'Questrial', sans-serif;
+	/*font-family: 'Questrial', sans-serif;*/
 }
 
 .superstars-box-header{
@@ -427,17 +439,17 @@ position: relative;
 .ready-header{
 	position: absolute;
 	text-align: center;
-	top: 50%;
+	top: 60%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -60%);
     
     background-color: rgba(255,255,255,.2);
-    padding: 25px;
+    padding: 35px;
 }
 
 .ready-header h2{
 	color: white;
-	font-size: 56px;
+	font-size: 46px;
 	font-weight: lighter;
 	line-height: 1.1;
 	
@@ -448,23 +460,139 @@ position: relative;
 .ready-header-button{
 	padding: 5px 10px;
 	font-size: 20px;
-    font-family: 'Montserrat', sans-serif;
+    /*font-family: 'Montserrat', sans-serif;*/
     font-weight: bold;
     color: black;
     
     width: 220px;
-    opacity: .7;
-    margin: 0px 20px;
+    opacity: .8;
+    margin: 10px 20px;
     border: none;
     border-radius: 2px;
 }
 
+
+/*.feedback, .up{
+	position: fixed;
+	top: 93%;
+	left: 93%;
+	font-weight: bold;
+	background-color: white;
+	padding: 7px;
+	
+	background-color: rgba(255,255,255,0);
+	transition: background-color 1s ease 0s;
+}
+
+.up{
+	left: 89%;
+}
+
+.feedback p{
+	margin: 0px;
+}
+*/
+
+footer{
+	background-color: white;
+	border-top: 3px solid grey;
+	font-size: .9em;
+	padding: 2.2rem 0 1.5rem; 
+	text-align: center;
+}
+.footer-container{
+	margin: 0 20px;
+	max-width: 1240px;
+}
+
+.footer-links-container{
+	margin: 5px;
+	
+}
+
+ul.footer-links{
+	margin: 0px;
+}
+
+ul.footer-links li{
+	list-style-type: none;
+	float: left;
+	text-transform: uppercase;
+    margin-right: 20px;
+    margin-bottom: 0.75em;
+    font-size: 1.1rem;
+    font-weight: bold;
+    
+}
+
+ul.footer-links li a{
+	display: block;
+	color: #34495e;
+
+}
+
+.copyrights{
+	text-align: center;
+	clear: left;
+	text-transform: none;
+    font-size: 12px;
+    font-weight: 700;
+    color: #bfcad2;
+}
+
+.call-to-action{
+	color: #929dad;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .2px;
+    text-transform: uppercase;
+    padding: 5px;
+}
+
+
+
+.fa-twitter {
+    color: #4099FF;
+}
+
+.fa-facebook {
+    color: #3B5998;
+}
+
+.fa-youtube-play {
+    color: #e52d27;
+}
+
+.fa-rss {
+    color: #FF6600;
+}
+
+
+.fa-flickr {
+    color: #ff0084;
+}
+
+
+.fa {
+    opacity: 0.6;
+    transition: 0s;
+    -webkit-transition: 0s;
+}
+
+.fa:hover{
+    opacity: 1;
+    transition: 0s;
+    -webkit-transition: .0s;
+}
 
 
 
 
 @media only screen and (max-width: 750px){
 
+.feedback, .up{
+	display: none;
+}
 	#mainNavBar{
 		background-color: rgba(255,255,255,1);
 	}

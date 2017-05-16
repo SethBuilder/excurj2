@@ -19,6 +19,7 @@
     <link href="{% static 'css/bootstrap.min.css'%} " rel="stylesheet">
     <link rel="stylesheet" type="text/css" href=" {% static 'css/style.css' %} ">
     <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -70,11 +71,38 @@
     		</div>
     	</nav>
 
-
     	{% block body_block %}
     		This page is undergoing maintenance, it'll be up in a giffy :)
     	{% endblock %}
+
 	</div>
+
+    <footer>
+      <div class="footer-container">
+          <div class="call-to-action">Connect with us</div>
+          <a href='#'><i class="fa fa-instagram fa-3x fa-fw"></i></a>
+          <a href='#'><i class="fa fa-facebook fa-3x fa-fw"></i></a>
+          <a href='#'><i class="fa fa-twitter fa-3x fa-fw"></i></a>
+          <a href='#'><i class="fa fa-flickr fa-3x fa-fw"></i></a>   
+      </div>
+
+      <div class="footer-links-container">
+          <ul class="footer-links">
+              <li> <a href="">ABOUT</a> </li>
+              <li> <a href="">SAFETY</a> </li>
+              <li> <a href="">SUPPORT</a> </li>
+              <li> <a href="">BLOG</a> </li>
+
+          </ul>
+      </div>
+
+      <div class="copyrights"><p>Copyrights 2017 by excurj.com. Made with 100% recycled pixels.</p></div>
+    </footer>
+
+    <!-- <img src=" {% static 'images/up.svg' %}" class="up"> 
+    <div class="feedback">
+        <p>Feedback</p>
+    </div> -->
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -85,8 +113,12 @@
 		    	$(window).scroll(function() {
 		    if($(this).scrollTop() > 10) {
 		        $('nav.navbar').addClass('opaque');
+                // $('.up').addClass('opaque');
+                // $('.feedback').addClass('opaque');
 		    } else {
 		        $('nav.navbar').removeClass('opaque');
+                // $('.up').removeClass('opaque');
+                // $('.feedback').removeClass('opaque');
 		    }
 		});
 
