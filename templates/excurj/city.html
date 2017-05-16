@@ -6,17 +6,35 @@
 {% endblock %}
 
 {% block body_block %}
+	<div style="margin-top: 70px;">	
 
-	<h1>Welcome to {{city.name}}</h1>
-		{% if city_locals_profiles %}
-		<ul>
-			{% for local in city_locals_profiles %}
-			<li>{{local.user.first_name}}</li>
-			{% endfor %}
-		</ul>
+		<h1>{{city.name}}'s Wiki summary</h1>
+		<p> {{city.description}} </p>
 
+		<h1>{{city.name}}'s Locals</h1>
+
+
+			{% if city_locals_profiles %}
+			<ul>
+				{% for local in city_locals_profiles %}
+				<li> <img src=" {{ local.prof_pic.url }} " class="img-circle"> <a href="{% url 'excurj:show_profile' local.user.username %}">{{local.user.first_name.title}}  {{local.user.last_name.title}}</a> {{local.sex.title}} born on  {{local.dob|date:'F-d'}} </li>
+				{% endfor %}
+			</ul>
+
+			{% else %}
+			<strong>There's no people in this city yet :( but there'll be soon! :)</strong>
+			{% endif %}
+
+		<h1>People coming to {{city.name}} soon! </h1>
+		{% if excursions %}
+			<ul>
+				{% for exj in excursions %}
+				<li>  <img src=" {{exj.traveler.profile.prof_pic.url }} "><strong> <a href=" {% url 'excurj:show_profile' exj.traveler.username %} ">{{ exj.traveler.first_name.title }}</a>  is arriving on {{ exj.date}} and says:</strong> {{exj.message}}  </li>
+				{% endfor %}
+			</ul>
 		{% else %}
-		<strong>There's no people in this city yet :( but there'll be soon! :)</strong>
+			No one is coming just now.
 		{% endif %}
 
+	</div>
 {% endblock %}

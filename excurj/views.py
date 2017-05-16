@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from excurj.models import City, UserProfile, Reference, Request, User
+from excurj.models import City, UserProfile, Reference, Request, User, Excursion
 from django.db.models import Count
 from django.contrib.auth.models import User
 
@@ -32,18 +32,37 @@ def show_city(request, city_name_slug):
 	try:
 		city = City.objects.get(slug=city_name_slug)
 		city_locals_profiles = UserProfile.objects.filter(city=city)
+		excursions = Excursion.objects.filter(city=city)
 
 		context_dict['city']=city
 		context_dict['city_locals_profiles']=city_locals_profiles
+		context_dict['excursions'] = excursions
 
 	except City.DoesNotExist:
-
 		context_dict['city']=None
+
+	except UserProfile.DoesNotExist:
 		context_dict['city_locals_profiles']=None
+
+	except Excursion.DoesNotExist:
+		context_dict['excursions'] = None
 
 	return render(request, 'excurj/city.html', context_dict)
 
 
-	
+def show_profile(request, username):
+	context_dict={}
 
+	try:
+		user = User.objects.get(username=username)
+		context_dict['user'] = user
+
+		refs = Reference.objects.filter(referenced=user)# references others left about the user
+		context_dict['refs'] = refs
+
+	except User.DoesNotExist:
+		context_dict['user'] = None
+		context_dict['refs'] = None
+
+	return render(request, 'excurj/user.html', context_dict)
 

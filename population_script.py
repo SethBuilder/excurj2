@@ -60,7 +60,7 @@ def populate_cities():
 			created_city.country = countries[i]
 
 			# send city and country name to wikipedia and exctract first 5 sentences
-			created_city.description = wikipedia.summary(city_names[i] + ' ' + countries[i]) 
+			created_city.description = wikipedia.summary(city_names[i] + ' ' + countries[i], sentences=5) 
 
 			#extract city's 'photo reference' that we'll send to google places photo API
 			city_image_ref = jsondata['results'][0]['photos'][0]['photo_reference']
@@ -114,9 +114,9 @@ def populate_users():
 		cities = City.objects.all()#else, call them from the db
 
 	#URLs that bring back data for test users, one URL for each city
-	urls = ['https://randomuser.me/api/?nat=gb&results=1', 'https://randomuser.me/api/?nat=fr&results=2', 
-	'https://randomuser.me/api/?nat=de&results=1', 'https://randomuser.me/api/?nat=us&results=2', 
-	'https://randomuser.me/api/?results=0', 'https://randomuser.me/api/?results=1', 'https://randomuser.me/api/?results=2&nat=es', 
+	urls = ['https://randomuser.me/api/?nat=gb&results=10', 'https://randomuser.me/api/?nat=fr&results=15', 
+	'https://randomuser.me/api/?nat=de&results=7', 'https://randomuser.me/api/?nat=us&results=4', 
+	'https://randomuser.me/api/?results=0', 'https://randomuser.me/api/?results=1', 'https://randomuser.me/api/?results=25&nat=es', 
 	'https://randomuser.me/api/?results=1', 'https://randomuser.me/api/?results=0', 'https://randomuser.me/api/?results=1&nat=ca']
 
 	#go through random data urls
@@ -220,9 +220,9 @@ def populate_excursions():
 
 	#populate messages travelers put on their excursions
 	for city in city_list:
-		msg1 = "Hey awesome people of " + city.name + "!" + " I'm arriving in your city quit soon and would love to meet some of you!"
-		msg2 = "I'm visiting " + city.name + " with a friend quit soon! we're nice and friendly and would love to meet up!"
-		msg3 = "Hello, Hello, I'm solo traveling around the world and soon to arrive in " + city.name + "!" + " would love to meet you some locals, maybe to walk around town and have lunch or dinner, Ciao, Ciao and talk to you soon!! :)"
+		msg1 = "Hey awesome people of %s. I'm arriving in your city quit soon and would love to meet some of you!"
+		msg2 = "I'm visiting %s with a friend quit soon! we're nice and friendly and would love to meet up!"
+		msg3 = "Hello, Hello, I'm solo traveling around the world and soon to arrive in %s! would love to meet you some locals, maybe to walk around town and have lunch or dinner, Ciao, Ciao and talk to you soon!! :)"
 
 		messages.extend((msg3,msg2, msg1))
 
@@ -234,10 +234,12 @@ def populate_excursions():
 	for i in range(10):
 		#generate random date
 	 	# date = datetime.date.fromordinal(random.randint(start_date, end_date))
+	 	city=random.choice(city_list)
+	 	message=random.choice(messages) % city.name
 
 	 	#create Excursion object
 	 	excursion = Excursion(traveler=random.choice(user_list), 
-	 		city=random.choice(city_list), message=random.choice(messages), date=generate_date() )
+	 		city=city, message=message, date=generate_date() )
 
 	 	excursion.save()
 	 	excursions.append(excursion)
@@ -302,7 +304,7 @@ def populate_requests():
 		messages.extend((msg3,msg2, msg1))
 
 	#generate 10 requests
-	for i in range(2000):
+	for i in range(200):
 		request = Request(traveler=random.choice(user_list), local=random.choice(user_list), 
 			message=random.choice(messages), date=generate_date(), local_approval=random.choice([True, False]))
 
@@ -334,7 +336,7 @@ def populate_references():
 		messages_from_travelers.extend((msg_from_traveler1,msg_from_traveler2, msg_from_traveler3))
 		messages_from_locals.extend((msg_from_local1,msg_from_local2, msg_from_local3))
 
-	for i in range(2000):
+	for i in range(200):
 		referenced=random.choice(user_list)
 		# description=random.choice(messages) % referenced.first_name.title()
 		reference = Reference(author=random.choice(user_list), referenced=referenced, fun=True, local=random.choice([True,False]))

@@ -1,0 +1,45 @@
+{% extends 'excurj/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+	Welcome to {{user.first_name.title}}! profile. Yoppy!
+{% endblock %}
+
+{% block body_block %}
+	<div style="margin: 70px;">	
+	{% if user %}
+		<h1>{{user.first_name.title}}'s Profile</h1>
+		<div> <img src=" {{ user.profile.prof_pic.url }} "> </div>
+		<div><span style="font-size: 20px;"><strong>{{user.first_name.title}}  {{user.last_name.title}},  {{user.profile.sex.title}} from  <a href=" {% url 'excurj:show_city' user.profile.city.slug %} "> {{user.profile.city.name.title}}, {{user.profile.city.country}} </a> born on  {{user.profile.dob|date:'F-d'}}</strong></span></div>
+
+		{% if refs %}
+			<p style="margin: 10px;font-size: 20px;"><strong>What people said about {{ user.first_name.title }} </strong></p>
+			{% for ref in refs %}
+
+			<div style="margin: 10px;">
+
+			 <img src=" {{ref.author.profile.prof_pic.url}} " class="img-circle"> 
+
+			 	{% if ref.fun %}
+
+			 		<strong>{{ref.author.first_name.title}} had fun with {{user.first_name.title}} and said:</strong> "{{ref.description}}"
+
+			 	{% else %}
+
+			 		<strong>{{ref.author.first_name.title}} didn't have fun with {{user.first_name.title}} and said:</strong> "{{ref.description}}"
+
+			 	{% endif %}
+			 	
+			</div>
+			{% endfor %}
+
+		{% else %}
+
+		<p>No said anythong about {{ user.first_name.title }} yet!</p>
+
+		{% endif %}
+	{% else %}
+	<strong>This user's profile is not there for some reason. Hmmm.</strong>
+	{% endif %}
+	</div>
+{% endblock %}
