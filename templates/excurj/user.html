@@ -12,21 +12,21 @@
 		<div> <img src=" {{ user.profile.prof_pic.url }} "> </div>
 		<div><span style="font-size: 20px;"><strong>{{user.first_name.title}}  {{user.last_name.title}},  {{user.profile.sex.title}} from  <a href=" {% url 'excurj:show_city' user.profile.city.slug %} "> {{user.profile.city.name.title}}, {{user.profile.city.country}} </a> born on  {{user.profile.dob|date:'F-d'}}</strong></span></div>
 
-		{% if refs %}
+		{% if reqs %}
 			<p style="margin: 10px;font-size: 20px;"><strong>What people said about {{ user.first_name.title }} </strong></p>
-			{% for ref in refs %}
+			{% for req in reqs %}
 
 			<div style="margin: 10px;">
 
-			 <img src=" {{ref.author.profile.prof_pic.url}} " class="img-circle"> 
+			 <img src=" {{req.traveler.profile.prof_pic.url}} " class="img-circle"> 
 
-			 	{% if ref.fun %}
+			 	{% if req.requestreference.traveler_fun == True %}
 
-			 		<strong> <a href=" {% url 'excurj:show_profile' ref.author.username  %} ">{{ref.author.first_name.title}}</a>  had fun with {{user.first_name.title}} and said:</strong> "{{ref.description}}"
+			 		<strong> <a href=" {% url 'excurj:show_profile' req.traveler.username  %} ">{{req.traveler.first_name.title}}</a>  had fun with {{ user.first_name.title}} and said:</strong> "{{  req.requestreference.traveler_desc }}"
 
 			 	{% else %}
 
-			 		<strong>{{ref.author.first_name.title}} didn't have fun with {{user.first_name.title}} and said:</strong> "{{ref.description}}"
+			 		<strong> <a href=" {% url 'excurj:show_profile' req.traveler.username  %} ">{{req.traveler.first_name.title}}</a>  didn't have fun with {{ user.first_name.title}} and said:</strong> "{{  req.requestreference.traveler_desc }} We missed our appointment! we'll do it again soon."
 
 			 	{% endif %}
 			 	

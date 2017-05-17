@@ -3,7 +3,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'excurj_proj.settings')
 import django
 django.setup()
 import urllib.request, json
-from excurj.models import City, UserProfile, Excursion, Offer, Request, Reference
+from excurj.models import City, UserProfile, Excursion, Request, RequestReference
 from django.contrib.auth.models import User
 from django.core.files import File
 import requests
@@ -114,9 +114,9 @@ def populate_users():
 		cities = City.objects.all()#else, call them from the db
 
 	#URLs that bring back data for test users, one URL for each city
-	urls = ['https://randomuser.me/api/?nat=gb&results=10', 'https://randomuser.me/api/?nat=fr&results=15', 
-	'https://randomuser.me/api/?nat=de&results=7', 'https://randomuser.me/api/?nat=us&results=4', 
-	'https://randomuser.me/api/?results=0', 'https://randomuser.me/api/?results=1', 'https://randomuser.me/api/?results=2&nat=es', 
+	urls = ['https://randomuser.me/api/?nat=gb&results=9', 'https://randomuser.me/api/?nat=fr&results=8', 
+	'https://randomuser.me/api/?nat=de&results=7', 'https://randomuser.me/api/?nat=us&results=5', 
+	'https://randomuser.me/api/?results=0', 'https://randomuser.me/api/?results=1', 'https://randomuser.me/api/?results=4&nat=es', 
 	'https://randomuser.me/api/?results=1', 'https://randomuser.me/api/?results=0', 'https://randomuser.me/api/?results=1&nat=ca']
 
 	#go through random data urls
@@ -307,19 +307,38 @@ def populate_requests():
 		messages.extend((msg3,msg2, msg1))
 
 	#generate 10 requests
-	for i in range(200):
-		request = Request(traveler=random.choice(user_list), local=random.choice(user_list), 
-			message=random.choice(messages), date=generate_date(), local_approval=random.choice([True, False]))
+	for i in range(100):
+		traveler=random.choice(user_list)
+		local=random.choice(user_list)
 
-		request.save()
-		requests.append(request)
+		if traveler != local:
+			request = Request(traveler=traveler, local=local, 
+				message=random.choice(messages), date=generate_date())
+
+			traveler_already_left_ref_for_local = False
+
+			for r in requests:
+				if request.traveler != r.traveler:
+					continue
+				else:
+					traveler_already_left_ref_for_local = True
+					break
+
+
+				
+
+		if traveler_already_left_ref_for_local == False:
+			request.save()
+			requests.append(request)
 
 	return requests
 
-def populate_references():
-	""" populating references """
+def populate_request_references():
+	""" Traveler request local to take her out. 
+	After they meet they leave each other a reference. """
 
 	user_list = User.objects.all()
+	req_list = populate_requests()
 
 	messages_from_travelers=[]
 	messages_from_locals=[]
@@ -329,28 +348,32 @@ def populate_references():
 		msg_from_traveler1 = "Thank you %s for a wonderful time! You're more than welcome to visit me anytime." 
 		msg_from_traveler2 = "%s was so nice and interesting, we walked around art museums together and had interesting conversations." 
 		msg_from_traveler3 = "%s showed me around town and seemed to know so many interesting things!" 
+		msg_from_traveler4 = "As an avid traveler I immensely enjoy meeting friendly locals. Thank you %s please do stop by."
+		msg_from_traveler5 = "Thank you %s! I enjoyed the tour!"
+		msg_from_traveler6 = "Couldn't have asked for a better guide than %s. Such a great persoanlity!"
 
 		msg_from_local1 = "I met up with %s and walked around town, then we had lunch and tried the local coffee, we'll stay in touch for sure."
 		msg_from_local2 = "%s was so curious about town and I enjoyed explaining all the small details that I thought would be interesting "
 		msg_from_local3 = "%s is cool! we'll meet up again in the future."
+		msg_from_local4 = "%s is an interesting person and quit well-travlled. I enjoyed showing him around my town."
+		msg_from_local5 = "Thank you %s for visiting me! come back anytime!"
+		msg_from_local6 = "%s is a wonderful traveller, full of curiousity and awesomeness!"
 
 
 
-		messages_from_travelers.extend((msg_from_traveler1,msg_from_traveler2, msg_from_traveler3))
-		messages_from_locals.extend((msg_from_local1,msg_from_local2, msg_from_local3))
+		messages_from_travelers.extend((msg_from_traveler1,msg_from_traveler2, msg_from_traveler3, msg_from_traveler4,msg_from_traveler5, msg_from_traveler6 ))
+		messages_from_locals.extend((msg_from_local1,msg_from_local2, msg_from_local3, msg_from_local4, msg_from_local5, msg_from_local6))
 
-	for i in range(200):
-		referenced=random.choice(user_list)
-		# description=random.choice(messages) % referenced.first_name.title()
-		reference = Reference(author=random.choice(user_list), referenced=referenced, fun=True, local=random.choice([True,False]))
+	for req in req_list:
+		
+		traveler_desc = random.choice(messages_from_travelers) % req.local.first_name.title()
+		local_desc = random.choice(messages_from_locals) % req.traveler.first_name.title()
 
-		if reference.local == True:
-			reference.description = random.choice(messages_from_locals) % referenced.first_name.title()
-		else:
-			reference.description = random.choice(messages_from_travelers) % referenced.first_name.title()
+		request_reference = RequestReference(request=req, traveler_desc=traveler_desc, 
+			local_desc = local_desc, traveler_fun=True, local_fun=True)
 
-		reference.save()
-		references.append(reference)
+		request_reference.save()
+		references.append(request_reference)
 
 	return references
 
@@ -359,7 +382,7 @@ if __name__ == '__main__':
 	# populate_cities()
 	populate_users()
 	populate_excursions()
-	populate_offers()
-	populate_requests()
-	populate_references()
+	# populate_offers()
+	# populate_requests()
+	populate_request_references()
 

@@ -81,42 +81,33 @@
   <h2>Super Stars</h2>
 
   <div class="row">
+{% if refs %}
+{% for ref in refs %}
 
     <div class="col-lg-6 col-xs-12">
         <div class="superstars-box">
 
             <div class="superstars-box-header">
-              <a href=" {% url 'excurj:show_profile' req0.req0.local.username %} ">{{ req0.req0.local.first_name.title}}</a>  (local) met with  <a href=" {% url 'excurj:show_profile' req0.req0.traveler.username %} ">{{req0.req0.traveler.first_name.title}}</a> (traveler) on {{req0.req0.date}} in {{req0.req0.local.profile.city}} 
+
+              <a href=" {% url 'excurj:show_profile' ref.request.local.username %} ">{{ ref.request.local.first_name.title }}</a>  (local) met with  <a href=" {% url 'excurj:show_profile' ref.request.traveler.username  %} ">{{ref.request.traveler.first_name.title}}</a> (traveler) on {{ref.request.date}} in  <a href=" {% url 'excurj:show_city'  ref.request.local.profile.city.slug %} "> {{ref.request.local.profile.city}} </a>  
             </div>
 
               <div class="clearfix paired">
 
-                <img src=" {{req0.req0.local.profile.prof_pic.url }} " id="first" class="img-circle img-responsive">
-                <img src=" {{ req0.req0.traveler.profile.prof_pic.url }} " id="second" class="img-circle img-responsive">
+                <img src=" {{ ref.request.local.profile.prof_pic.url }} " id="first" class="img-circle img-responsive">
+                <img src=" {{ ref.request.traveler.profile.prof_pic.url }} " id="second" class="img-circle img-responsive">
 
-                <strong>{{ req0.req0.local.first_name.title}} said:</strong>
+                <strong>{{ ref.request.local.first_name.title}} said:</strong>
                 <span style="font-size: 20px">"</span> 
-                {{req0.local_references_traveler.description}} <span style="font-size: 20px">"</span><br> <strong>{{req0.req0.traveler.first_name.title}} said:</strong> <span style="font-size: 20px">"</span> {{ req0.traveler_references_local.description }} <span style="font-size: 20px">"</span>
+                {{ ref.local_desc }} <span style="font-size: 20px">"</span><br> <strong>{{ref.request.traveler.first_name.title}} said:</strong> <span style="font-size: 20px">"</span> {{ ref.traveler_desc }} <span style="font-size: 20px">"</span>
               </div>
-        </div>
-    </div>
-
-    <div class="col-lg-6 col-xs-12">
-        <div class="superstars-box"> 
               
-              <div class="superstars-box-header">
-                  <a href=" {% url 'excurj:show_profile' req1.req1.local.username %} ">{{ req1.req1.local.first_name.title}}</a>  (local) met with  <a href=" {% url 'excurj:show_profile' req1.req1.traveler.username %} ">{{req1.req1.traveler.first_name.title}}</a> (traveler) on {{req1.req1.date}} in {{req1.req1.local.profile.city}} 
-              </div>
-
-              <div class="clearfix paired">
-                <img src=" {{req1.req1.local.profile.prof_pic.url }} " id="first" class="img-circle img-responsive">
-                <img src=" {{ req1.req1.traveler.profile.prof_pic.url }} " id="second" class="img-circle img-responsive">
-
-                <strong>{{ req1.req1.local.first_name.title}} said:</strong> 
-                <span style="font-size: 20px">"</span> {{req1.local_references_traveler.description}} <span style="font-size: 20px">"</span><br> <strong>{{req1.req1.traveler.first_name.title}} said:</strong>  <span style="font-size: 20px">"</span>{{ req1.traveler_references_local.description }}<span style="font-size: 20px">"</span>
-              </div>
         </div>
     </div>
+
+{% endfor %}
+{% endif %}
+ 
   </div>
 </div>
 

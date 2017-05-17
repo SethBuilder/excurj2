@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from excurj.models import City, UserProfile, Reference, Request, User, Excursion
+from excurj.models import City, UserProfile, RequestReference, Request, User, Excursion
 from django.db.models import Count
 from django.contrib.auth.models import User
 
@@ -10,15 +10,17 @@ def index(request):
 	#brings back top 6 cities with the highest number of users
 	city_list = City.objects.annotate(user_count=Count('userprofile')).order_by('-user_count')[:6]
 	
-	reqs = Request.objects.filter(local_approval=True).order_by('-date')[:2]
+	# reqs = Request.objects.filter(local_approval=True).order_by('-date')[:2]
+	refs= RequestReference.objects.select_related('request').filter(traveler_fun=True,local_fun=True).order_by('-request__date')[:2]
+	context_dict['refs'] = refs
 
-	for i in range(len(reqs)):
-		local_references_traveler = Reference.objects.filter(fun=True, author=reqs[i].local, referenced=reqs[i].traveler, local=True).latest()
-		traveler_references_local = Reference.objects.filter(fun=True, author=reqs[i].traveler, referenced=reqs[i].local, local=False).latest()
-		r = "req" + str(i)
-		context_dict[r] = {r : reqs[i], 
-		'local_references_traveler' : local_references_traveler, 'traveler_references_local' : traveler_references_local}
-		print(reqs)
+	# for i in range(len(reqs)):
+	# 	local_references_traveler = Reference.objects.filter(fun=True, author=reqs[i].local, referenced=reqs[i].traveler, local=True).latest()
+	# 	traveler_references_local = Reference.objects.filter(fun=True, author=reqs[i].traveler, referenced=reqs[i].local, local=False).latest()
+	# 	r = "req" + str(i)
+	# 	context_dict[r] = {r : reqs[i], 
+	# 	'local_references_traveler' : local_references_traveler, 'traveler_references_local' : traveler_references_local}
+	# 	print(reqs)
 
 	context_dict['cities'] = city_list
 
@@ -55,14 +57,14 @@ def show_profile(request, username):
 
 	try:
 		user = User.objects.get(username=username)
+		reqs = Request.objects.filter(local=user)
 		context_dict['user'] = user
 
-		refs = Reference.objects.filter(referenced=user)# references others left about the user
-		context_dict['refs'] = refs
+		context_dict['reqs'] = reqs
 
 	except User.DoesNotExist:
 		context_dict['user'] = None
-		context_dict['refs'] = None
+		context_dict['reqs'] = None
 
 	return render(request, 'excurj/user.html', context_dict)
 

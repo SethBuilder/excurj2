@@ -26,19 +26,63 @@ class City(models.Model):
 		self.slug = slugify(self.name + " " + self.country)
 		super(City, self).save(*args, **kwargs)
 
-class Reference(models.Model):
-	author = models.ForeignKey(User, related_name='referencer')#can be local or traveler
-	referenced = models.ForeignKey(User, related_name='referencee')#can be local or traveler
-	description = models.CharField(max_length=500, default="default reference")
-	fun = models.BooleanField() #did you have fun with the person or not?
-	date = models.DateField(default=datetime.datetime.now())#in order to pull the last ref on index page
-	local = models.BooleanField(default=True) #Is the author a local ?
 
-	class Meta:
-		get_latest_by = "date"
+class Request(models.Model):
+	"""traveler requests local to take her out upon liking her profile"""
+	traveler = models.ForeignKey(User, related_name='traveler_requests')
+	local = models.ForeignKey(User, related_name='local_requested')
+	message = models.CharField(max_length=500)
+	date = models.DateField()
+	local_approval = models.BooleanField(default=True)
 
 	def __str__(self):
-		return self.description	
+		return self.traveler.first_name + " " + self.local.first_name
+
+
+class RequestReference(models.Model):
+	""" traveler requests local to take her out on an excursion. 
+	After they have gone out they leave each other a reference"""
+
+	#Each request gets a reference instance
+	request = models.OneToOneField(Request, on_delete=models.CASCADE, primary_key=True)
+
+	traveler_desc = models.CharField(max_length=500, blank=True)#Traveler's reference description
+	local_desc = models.CharField(max_length=500, blank=True)
+
+	traveler_fun = models.BooleanField(default=True)#Did the traveler have fun ?
+	local_fun = models.BooleanField(default=True)#Did the local have fun ?
+
+	# traveler_date = models.DateField(default=datetime.datetime.now())#When the traveler leave the reference
+	# local_date = models.DateField(default=datetime.datetime.now())#When the local leave the reference
+
+	class Meta:
+		get_latest_by = "request.id"
+
+	def __str__(self):
+		return self.traveler_desc	
+
+# class OfferReference(models.Model):
+# 	""" Local offers traveler to take her out. 
+# 	For ex: I'm in London and a person is coming to London soon, then I offer to take her out
+# 	After they have met, they leave a reference for each other """
+
+# 	#Each offer gets a reference instance
+# 	offer = models.OneToOneField(Offer, on_delete=models.CASCADE, primary_key=True)
+
+# 	traveler_desc = models.CharField(max_length=500, blank=True)#Traveler's reference description
+# 	local_desc = models.CharField(max_length=500, blank=True)
+
+# 	traveler_fun = models.BooleanField()#Did the traveler have fun ?
+# 	local_fun = models.BooleanField()#Did the local have fun ?
+
+# 	# traveler_date = models.DateField(default=datetime.datetime.now())#When the traveler leave the reference
+# 	# local_date = models.DateField(default=datetime.datetime.now())#When the local leave the reference
+
+# 	class Meta:
+# 		get_latest_by = "request.id"
+
+# 	def __str__(self):
+# 		return self.description	
 
 
 
@@ -58,17 +102,6 @@ class UserProfile(models.Model):
 
 	def __str__(self):
 		return self.user.first_name
-
-class Request(models.Model):
-	"""traveler requests local to take her out upon liking her profile"""
-	traveler = models.ForeignKey(User, related_name='traveler_requests')
-	local = models.ForeignKey(User, related_name='local_requested')
-	message = models.CharField(max_length=500)
-	date = models.DateField()
-	local_approval = models.BooleanField(blank=True)
-
-	def __str__(self):
-		return self.traveler.first_name + " " + self.local.first_name
 
 class Excursion(models.Model):
 	"""traveler lists his trips so local could see them and possibly offer to take him out"""

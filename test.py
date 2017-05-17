@@ -31,7 +31,7 @@ from excurj.models import Reference, Request, User
 
 def test():
 
-	reqs = Request.objects.filter(traveler__reference.author = local, local_approval=True).order_by('-date')[:2]
+	reqs = Request.objects.filter(traveler = local, local_approval=True).order_by('-date')[:2]
 
 	for i in range(len(reqs)):
 		local_references_traveler = Reference.objects.filter(fun=True, author=reqs[i].local, referenced=reqs[i].traveler).latest()
