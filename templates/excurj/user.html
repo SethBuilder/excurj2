@@ -22,7 +22,7 @@
 
 			 	{% if ref.fun %}
 
-			 		<strong>{{ref.author.first_name.title}} had fun with {{user.first_name.title}} and said:</strong> "{{ref.description}}"
+			 		<strong> <a href=" {% url 'excurj:show_profile' ref.author.username  %} ">{{ref.author.first_name.title}}</a>  had fun with {{user.first_name.title}} and said:</strong> "{{ref.description}}"
 
 			 	{% else %}
 

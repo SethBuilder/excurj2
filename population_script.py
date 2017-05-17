@@ -116,7 +116,7 @@ def populate_users():
 	#URLs that bring back data for test users, one URL for each city
 	urls = ['https://randomuser.me/api/?nat=gb&results=10', 'https://randomuser.me/api/?nat=fr&results=15', 
 	'https://randomuser.me/api/?nat=de&results=7', 'https://randomuser.me/api/?nat=us&results=4', 
-	'https://randomuser.me/api/?results=0', 'https://randomuser.me/api/?results=1', 'https://randomuser.me/api/?results=25&nat=es', 
+	'https://randomuser.me/api/?results=0', 'https://randomuser.me/api/?results=1', 'https://randomuser.me/api/?results=2&nat=es', 
 	'https://randomuser.me/api/?results=1', 'https://randomuser.me/api/?results=0', 'https://randomuser.me/api/?results=1&nat=ca']
 
 	#go through random data urls
@@ -223,8 +223,11 @@ def populate_excursions():
 		msg1 = "Hey awesome people of %s. I'm arriving in your city quit soon and would love to meet some of you!"
 		msg2 = "I'm visiting %s with a friend quit soon! we're nice and friendly and would love to meet up!"
 		msg3 = "Hello, Hello, I'm solo traveling around the world and soon to arrive in %s! would love to meet you some locals, maybe to walk around town and have lunch or dinner, Ciao, Ciao and talk to you soon!! :)"
+		msg4 = "I'll arrive in %s in couple of weeks, would love to meet up."
+		msg5 = "Hello %s! I'm arriving over christmas with my Aunt. Would love to say hello."
+		msg6 = "Hey. I'm coming to %s for the first time soon, would love to make friends there!"
 
-		messages.extend((msg3,msg2, msg1))
+		messages.extend((msg3,msg2,msg1,msg4, msg5))
 
 	# #generate a random date from today till last day of the year
 	# start_date = datetime.date.today().toordinal()
@@ -323,7 +326,7 @@ def populate_references():
 	references=[]
 
 	for user in user_list:
-		msg_from_traveler1 = "I had so much fun with %s! we ended up pub crawling at midnight. Such a great time it was!" 
+		msg_from_traveler1 = "Thank you %s for a wonderful time! You're more than welcome to visit me anytime." 
 		msg_from_traveler2 = "%s was so nice and interesting, we walked around art museums together and had interesting conversations." 
 		msg_from_traveler3 = "%s showed me around town and seemed to know so many interesting things!" 
 

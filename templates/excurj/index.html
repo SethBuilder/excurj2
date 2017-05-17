@@ -43,7 +43,7 @@
 </div>
 
 <!-- How It Works section -->
-<div class="how-it-works-container container-fluid">
+<div class="how-it-works-container container-fluid" id="how-it-works">
 
   <h2>How It Works</h2>
 
@@ -76,7 +76,7 @@
   </div>
 </div>
 
-<div class="container-fluid superstars-container">
+<div class="container-fluid superstars-container" id="superstars">
 
   <h2>Super Stars</h2>
 
@@ -86,7 +86,7 @@
         <div class="superstars-box">
 
             <div class="superstars-box-header">
-               {{ req0.req0.local.first_name.title}} (local) met with {{req0.req0.traveler.first_name.title}} (traveler) on {{req0.req0.date}} in {{req0.req0.local.profile.city}} 
+              <a href=" {% url 'excurj:show_profile' req0.req0.local.username %} ">{{ req0.req0.local.first_name.title}}</a>  (local) met with  <a href=" {% url 'excurj:show_profile' req0.req0.traveler.username %} ">{{req0.req0.traveler.first_name.title}}</a> (traveler) on {{req0.req0.date}} in {{req0.req0.local.profile.city}} 
             </div>
 
               <div class="clearfix paired">
@@ -105,7 +105,7 @@
         <div class="superstars-box"> 
               
               <div class="superstars-box-header">
-                {{ req1.req1.local.first_name.title}} (local) met with {{req1.req1.traveler.first_name.title}} (traveler) on {{req1.req1.date}} in {{req1.req1.local.profile.city}} 
+                  <a href=" {% url 'excurj:show_profile' req1.req1.local.username %} ">{{ req1.req1.local.first_name.title}}</a>  (local) met with  <a href=" {% url 'excurj:show_profile' req1.req1.traveler.username %} ">{{req1.req1.traveler.first_name.title}}</a> (traveler) on {{req1.req1.date}} in {{req1.req1.local.profile.city}} 
               </div>
 
               <div class="clearfix paired">
@@ -120,7 +120,7 @@
   </div>
 </div>
 
-  <div class="container-fluid popular-cities-container">
+  <div class="container-fluid popular-cities-container" id="popularcities">
     
       <h2>Popular Cities</h2>
       <div class="row">

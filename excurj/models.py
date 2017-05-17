@@ -60,7 +60,7 @@ class UserProfile(models.Model):
 		return self.user.first_name
 
 class Request(models.Model):
-	"""traveler requests local to take him out upon liking his profile"""
+	"""traveler requests local to take her out upon liking her profile"""
 	traveler = models.ForeignKey(User, related_name='traveler_requests')
 	local = models.ForeignKey(User, related_name='local_requested')
 	message = models.CharField(max_length=500)
