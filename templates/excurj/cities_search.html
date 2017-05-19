@@ -1,0 +1,31 @@
+{% extends 'excurj/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+	Search Results
+{% endblock %}
+
+{% block body_block %}
+	<div style="margin-top: 70px;">	
+
+	<h1>People Search results</h1>
+
+	{% if cities %}
+	<h2>We found these cities based on your query</h2>
+		{% for city in cities %}
+		<ul>
+			<li>  <a href=" {% url 'excurj:show_city' city.slug %} ">{{ city.name }} </a>  </li>
+		</ul>
+		{% endfor %}
+
+	{% else %}
+	<p>This city doesn't have users yet :( you can search for other cities by:</p>
+	<ul>
+		<li>city name</li>
+		<li>country</li>
+		<li>description</li>
+	</ul>
+	{% endif %}
+
+	</div>
+{% endblock %}

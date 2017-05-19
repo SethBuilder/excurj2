@@ -23,8 +23,8 @@ def get_json(url):
 		return jsondata
 
 def get_google_key():
-	# GoogleKey = 'AIzaSyDaa7NZzS-SE4JW3J-7TaA1v1Y5aWUTiyc'
-	GoogleKey = 'AIzaSyDViGwJgWL18QSKvPozvAiqloyy1pW2lxg'
+	GoogleKey = 'AIzaSyDaa7NZzS-SE4JW3J-7TaA1v1Y5aWUTiyc'
+	# GoogleKey = 'AIzaSyDViGwJgWL18QSKvPozvAiqloyy1pW2lxg'
 	# GoogleKey = 'AIzaSyB1E9CZaaaw1c77A7eZSophK_LnaGX5XRQ'
 
 	return GoogleKey
@@ -37,14 +37,17 @@ def get_city_id(query):
 				'&key=%s') % (query, get_google_key())
 
 	print(url)
+	try:
+		#grabbing the JSON results
+		with urllib.request.urlopen(url) as response:
+			jsonraw = response.read()
+			print(jsonraw)
+			jsondata = json.loads(jsonraw)
 
-	#grabbing the JSON results
-	with urllib.request.urlopen(url) as response:
-		jsonraw = response.read()
-		print(jsonraw)
-		jsondata = json.loads(jsonraw)
+		return jsondata['results'][0]['id']
 
-	return jsondata['results'][0]['id']
+	except IndexError:
+		return -1
 
 
 def populate_cities():

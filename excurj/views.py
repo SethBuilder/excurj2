@@ -78,15 +78,26 @@ def search(request):
 			searched_city = request.GET.get('city-search')
 			print("SEARCHED CITY IS: " + searched_city.replace(" ", ""))
 
-			print(population_script.x)
-			searched_city_id = population_script.get_city_id(searched_city.replace(" ", ""))
-			print("SEARCHED CITY IS ID: " + searched_city_id)
-			city = City.objects.get(city_id = searched_city_id)
 			
-			return show_city(request, city.slug)
+			searched_city_id = population_script.get_city_id(searched_city.replace(" ", ""))
+			
+			if searched_city_id != -1:
+				city = City.objects.get(city_id = searched_city_id)
+				return show_city(request, city.slug)
+
+			else:
+				return HttpResponse("There's no such city, please try a different query.")
 
 		except City.DoesNotExist:
-			return HttpResponse("This city isn't populated yet :( ")
+			context_dict={}
+			cities = City.objects.filter(Q(name__icontains=searched_city) | Q(country__icontains=searched_city) | 
+				Q(description__icontains=searched_city) | Q(slug__icontains=searched_city))
+			context_dict['cities']=cities
+
+			return render(request, 'excurj/cities_search.html', context_dict)
+
+		# else:
+		# 	return HttpResponse("This city isn't populated yet :( ")
 
 	elif 'q' in request.GET:
 		context_dict={}
@@ -96,18 +107,15 @@ def search(request):
 
 			users = User.objects.filter(Q(username__icontains=q)  
 				| Q(first_name__icontains=q) | Q(last_name__icontains=q) 
-				| Q(email__icontains=q))
+				| Q(email__icontains=q) | Q(profile__city__name__icontains=q))
 
 			context_dict['users'] = users
 
-			return render(request, 'excurj/search.html', context_dict)
+			return render(request, 'excurj/people_search.html', context_dict)
 
 		except User.DoesNotExist:
 			return HttpResponse("No profiles were returned based on this query :(")
-		else:
-			pass
-		finally:
-			pass
+		
 
 	
 

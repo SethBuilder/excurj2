@@ -30,7 +30,7 @@ SECRET_KEY = '_vv+g6cnfxhf=@!(iiket2)actf2k6x)f_^)kh&q*#63dbht5^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['excurjdev.pythonanywhere.com']
+ALLOWED_HOSTS = ['excurjdev.pythonanywhere.com', '127.0.0.1']
 
 
 # Application definition

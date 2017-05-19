@@ -611,14 +611,33 @@ ul.footer-links li a{
 
 
 
+
+
+
+
+
+
+
+
 @media only screen and (max-width: 750px){
 
 .feedback, .up{
 	display: none;
 }
-	#mainNavBar{
+
+#mainNavBar{
 		background-color: rgba(255,255,255,1);
+
 	}
+
+.navbar-default .navbar-nav>li>a{
+	color: black;
+}
+
+.navbar-default .navbar-nav>li>a:hover{
+	color: white;
+	background-color: black;
+}
 
 	#topsearchbox{
 	width: 200px;
@@ -642,7 +661,7 @@ ul.footer-links li a{
 
 	ul.nav li{
 	background-color: white;
-	color: white;
+	color: black;
 	opacity: 1;
 }
 
