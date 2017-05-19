@@ -3,6 +3,9 @@ from django.http import HttpResponse
 from excurj.models import City, UserProfile, RequestReference, Request, User, Excursion
 from django.db.models import Count
 from django.contrib.auth.models import User
+import population_script
+from django.db.models import Q
+
 
 
 def index(request):
@@ -68,3 +71,44 @@ def show_profile(request, username):
 
 	return render(request, 'excurj/user.html', context_dict)
 
+def search(request):
+
+	if 'city-search' in request.GET:
+		try:
+			searched_city = request.GET.get('city-search')
+			print("SEARCHED CITY IS: " + searched_city.replace(" ", ""))
+
+			print(population_script.x)
+			searched_city_id = population_script.get_city_id(searched_city.replace(" ", ""))
+			print("SEARCHED CITY IS ID: " + searched_city_id)
+			city = City.objects.get(city_id = searched_city_id)
+			
+			return show_city(request, city.slug)
+
+		except City.DoesNotExist:
+			return HttpResponse("This city isn't populated yet :( ")
+
+	elif 'q' in request.GET:
+		context_dict={}
+		try:
+			q = request.GET.get('q')
+			print("THIS IS Q:" + q)
+
+			users = User.objects.filter(Q(username__icontains=q)  
+				| Q(first_name__icontains=q) | Q(last_name__icontains=q) 
+				| Q(email__icontains=q))
+
+			context_dict['users'] = users
+
+			return render(request, 'excurj/search.html', context_dict)
+
+		except User.DoesNotExist:
+			return HttpResponse("No profiles were returned based on this query :(")
+		else:
+			pass
+		finally:
+			pass
+
+	
+
+	

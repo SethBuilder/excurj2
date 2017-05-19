@@ -13,7 +13,7 @@ import datetime
 import glob
 import random
 
-
+x="SEIF IS COOL"
 
 def get_json(url):
 	""" takes API URL and returns raw JSON response as image"""
@@ -21,6 +21,31 @@ def get_json(url):
 		jsonraw = response.read().decode()
 		jsondata = json.loads(jsonraw)
 		return jsondata
+
+def get_google_key():
+	# GoogleKey = 'AIzaSyDaa7NZzS-SE4JW3J-7TaA1v1Y5aWUTiyc'
+	GoogleKey = 'AIzaSyDViGwJgWL18QSKvPozvAiqloyy1pW2lxg'
+	# GoogleKey = 'AIzaSyB1E9CZaaaw1c77A7eZSophK_LnaGX5XRQ'
+
+	return GoogleKey
+
+def get_city_id(query):
+	"""takes city name and return city ID as per Google Places API"""
+
+	url = ('https://maps.googleapis.com/maps/api/place/textsearch/json'
+				'?query=%s'
+				'&key=%s') % (query, get_google_key())
+
+	print(url)
+
+	#grabbing the JSON results
+	with urllib.request.urlopen(url) as response:
+		jsonraw = response.read()
+		print(jsonraw)
+		jsondata = json.loads(jsonraw)
+
+	return jsondata['results'][0]['id']
+
 
 def populate_cities():
 	""" populates City objects """
@@ -31,26 +56,15 @@ def populate_cities():
 	#this will be returned at the end
 	cities = []
 
-	# GoogleKey = 'AIzaSyDaa7NZzS-SE4JW3J-7TaA1v1Y5aWUTiyc'
-	GoogleKey = 'AIzaSyDViGwJgWL18QSKvPozvAiqloyy1pW2lxg'
-	# GoogleKey = 'AIzaSyB1E9CZaaaw1c77A7eZSophK_LnaGX5XRQ'
+	
 
 	#only call the Google API if there are no City objects or no city pictures (db is empty)
 	if City.objects.all().count() == 0 or len(glob.glob('media/city_images/*.jpg')) == 0:
 		for i in range(len(city_names)):
 			query = city_names[i] + "+" + countries[i] # to be sent to the Google Places API
 			
-			url = ('https://maps.googleapis.com/maps/api/place/textsearch/json'
-				'?query=%s'
-				'&key=%s') % (query, GoogleKey)
-
-			#grabbing the JSON results
-			with urllib.request.urlopen(url) as response:
-				jsonraw = response.read()
-				jsondata = json.loads(jsonraw)
-
 			#now we'll use json results to extract city ID and city image
-			city_id = jsondata['results'][0]['id']
+			city_id =  get_city_id(query) 
 
 			#create a City object
 			created_city = City.objects.get_or_create(city_id=city_id)[0]
@@ -72,7 +86,7 @@ def populate_cities():
 			city_image_url = ('https://maps.googleapis.com/maps/api/place/photo'
 			'?maxwidth=%s'
 			'&photoreference=%s'
-			'&key=%s') % (maxwidth, city_image_ref, GoogleKey)
+			'&key=%s') % (maxwidth, city_image_ref, get_google_key())
 
 			#check if the image exists already
 			if not os.path.isfile("media/city_pictures/"+city_names[i] + '.jpg'):

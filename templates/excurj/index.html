@@ -19,17 +19,37 @@
           <p>excurj. is a community where people show visitors around their cities to make new friendships.</p>
         </section>
 
-        <form>
+        <form action=" {% url 'excurj:search' %} ">
           <div class="form-group">
-            <input type="text" name="homepage-search" class="form-control" id="homepage-search" placeholder="Search cities...">
+            <input type="text" name="city-search" class="form-control" id="homepage-search" placeholder="Search cities...">
+                <!--script to auto complete location-->
+                    <script>
+                            function initMap() {
+        
+                            var defaultBounds = new google.maps.LatLngBounds(
+                            new google.maps.LatLng(-90, 91), new google.maps.LatLng(-180, 80));
+                          var options = {
+                            types: ['(cities)'],
+                            bounds: defaultBounds
+                          };
+                          var input = document.getElementById('homepage-search');
+                          
+                          var autocomplete = new google.maps.places.Autocomplete(input, options);
+                          }
+                    </script>
+
+                    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYfS_V4jHXS_jVYa1k2w9VY52r0pMrL8g&callback=initMap&libraries=places"
+                    async defer></script>
+          </div>
+
+                    
+        
+
+          <div class="buttons">
+            <button class="header-button">Find a Guide</button>
+            <button class="header-button">Become a Guide</button>
           </div>
         </form>
-
-        <div class="buttons">
-          <button class="header-button">Find a Guide</button>
-          <button class="header-button">Become a Guide</button>
-        </div>
-    
     </div>
   
     <!-- video background -->
@@ -81,6 +101,8 @@
   <h2>Super Stars</h2>
 
   <div class="row">
+
+<!--pulls last two references-->
 {% if refs %}
 {% for ref in refs %}
 
@@ -100,6 +122,7 @@
                 <strong>{{ ref.request.local.first_name.title}} said:</strong>
                 <span style="font-size: 20px">"</span> 
                 {{ ref.local_desc }} <span style="font-size: 20px">"</span><br> <strong>{{ref.request.traveler.first_name.title}} said:</strong> <span style="font-size: 20px">"</span> {{ ref.traveler_desc }} <span style="font-size: 20px">"</span>
+                
               </div>
               
         </div>
@@ -155,7 +178,7 @@
 
 <div class="container-fluid superstars-container">
 
-  <h2>Instagram Feed (#excurj)</h2>
+  <h2>Instagram Feed  (<a href="https://www.instagram.com/explore/tags/excurj/" target="_blank">#excurj</a>) </h2>
   
   <iframe width="100%" height="100%" src="https://pro.iconosquare.com/widget/gallery?choice=hashtag&amp;hashtag=excurj&amp;show_infos=false&amp;linking=instagram&amp;width=100%25&amp;height=100%25&amp;title=See%20what%20excurj%20users%20have%20been%20up%20to!&amp;title-align=left&amp;responsive=true&amp;mode=grid&amp;layout_x=3&amp;layout_y=2&amp;padding=10&amp;photo_border=true&amp;background=FFFFFF&amp;text=657886&amp;widget_border=true&amp;radius=5&amp;border-color=e6e6e6&amp;user_id=5465734036&amp;time=1494857886964" allowtransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden; width:100%; height:800px;" class="iconosquare-widget"></iframe>
 

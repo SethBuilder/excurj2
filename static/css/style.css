@@ -2,21 +2,33 @@
 body{
 	padding-top: 0px;
 	line-height: 1.5;
-	font-family: 'Questrial', sans-serif;
+	font-family: 'Open Sans', sans-serif;
+}
+
+::selection {
+    color: white; 
+    background: #63b8ff;
 }
 
 nav.navbar{
-	border: none;
-	background-color: rgba(255,255,255,0.6);
+	border-bottom: 1px solid white;
+	background-color: rgba(99,184,255,0.4);
 	transition: background-color 1s ease 0s;
-	font-family: 'Questrial', sans-serif;
+	/*font-family: 'Questrial', sans-serif;*/
 	font-weight: bolder;
 	font-size: 15px;
+	height: 10px;
+
 }
 
 .navbar-header{
 	opacity: .6;
 }
+
+.navbar-default .navbar-nav>li>a{
+	color: white;
+}
+
 
 .container-fluid{
 	padding: 0;
@@ -24,7 +36,7 @@ nav.navbar{
 
 /*to change nav bar color upon scrolling*/
 nav.navbar.opaque{
-	background-color: rgba(255,255,255,1);
+	background-color: rgba(99,184,255,.95);
 	transition: background-color 1s ease 0s;
 }
 
@@ -132,7 +144,7 @@ ul.nav li:hover{
 
 .jumbotron h1{
 	font-size: 45px;
-    /*font-family: 'Montserrat', sans-serif;*/
+    /*/*font-f*/amily: 'Montserrat', sans-serif;*/
     font-weight: 20;
     font-style: normal;
     color: #FFFFFF;
@@ -145,6 +157,17 @@ ul.nav li:hover{
 	 font-weight: bold;
 	 transition: width 2s ease;
 }
+
+/*.pac-container{
+	opacity: .95;
+	font-family: inherit;
+}
+
+.pac-item:hover{
+	background-color: #D6C362;
+	color: white;
+	opacity: 1;
+}*/
 
 .jumbotron p{
 	font-size: 25px;
@@ -222,7 +245,7 @@ ul.nav li:hover{
 }
 
 .how-it-works-container{
-	background-color: #C5B358;
+	background-color: #6599ff;
 }
 
 .superstars-container{
@@ -249,7 +272,7 @@ ul.nav li:hover{
 	position: relative;
 	color: black;
 	margin-bottom: 30px;
-	font-family: 'Questrial', sans-serif;
+	/*font-family: 'Questrial', sans-serif;*/
 }
 
 .how-it-works-container h2:after{
@@ -287,7 +310,7 @@ ul.nav li:hover{
 
 .how-it-works-box{
 	padding: 30px;
-	background-color: #D6C362;
+	background-color: #63b8ff;
 	margin: 20px 5px;
 /*	min-width: calc(40%);
 */	overflow-wrap: break-word;
@@ -340,7 +363,7 @@ position: relative;
 	margin-top: 20px;
 	font-weight: ;
 	font-size: 20px;
-	font-family: 'Questrial', sans-serif;
+	/*font-family: 'Questrial', sans-serif;*/
 }
 
 
@@ -370,7 +393,7 @@ position: relative;
 
 .superstars-box-header{
 	
-	font-family: 'Questrial', sans-serif;
+	/*font-family: 'Questrial', sans-serif;*/
 	font-size: 16px;
 	font-weight: bold;
 }
@@ -663,7 +686,7 @@ ul.footer-links li a{
 .header-button{
 	padding: 7px 16px;
 	font-size: 11px;
-    font-family: 'Montserrat', sans-serif;
+    /*font-family: 'Montserrat', sans-serif;*/
     font-weight: bold;
     color: black;
     width: 35%

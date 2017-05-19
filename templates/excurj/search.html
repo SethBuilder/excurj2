@@ -1,0 +1,33 @@
+{% extends 'excurj/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+	Search Results
+{% endblock %}
+
+{% block body_block %}
+	<div style="margin-top: 70px;">	
+
+	<h1>People Search results</h1>
+
+	{% if users %}
+	<h2>We found these people based on your query</h2>
+		{% for user in users %}
+		<ul>
+			<li>  <a href=" {% url 'excurj:show_profile' user.username %} ">{{ user.first_name }}  {{ user.last_name }}</a>  </li>
+		</ul>
+		{% endfor %}
+
+	{% else %}
+	<p>No users were found based on your query :( you can search by:</p>
+	<ul>
+		<li>First name</li>
+		<li>Last name</li>
+		<li>username</li>
+		<li>email</li>
+		<li>user's home city</li>
+	</ul>
+	{% endif %}
+
+	</div>
+{% endblock %}

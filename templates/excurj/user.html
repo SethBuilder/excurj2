@@ -6,40 +6,56 @@
 {% endblock %}
 
 {% block body_block %}
-	<div style="margin: 70px;">	
-	{% if user %}
-		<h1>{{user.first_name.title}}'s Profile</h1>
-		<div> <img src=" {{ user.profile.prof_pic.url }} "> </div>
-		<div><span style="font-size: 20px;"><strong>{{user.first_name.title}}  {{user.last_name.title}},  {{user.profile.sex.title}} from  <a href=" {% url 'excurj:show_city' user.profile.city.slug %} "> {{user.profile.city.name.title}}, {{user.profile.city.country}} </a> born on  {{user.profile.dob|date:'F-d'}}</strong></span></div>
 
-		{% if reqs %}
-			<p style="margin: 10px;font-size: 20px;"><strong>What people said about {{ user.first_name.title }} </strong></p>
-			{% for req in reqs %}
+<div style="margin: 70px;">	
 
-			<div style="margin: 10px;">
+{% if user %}
 
-			 <img src=" {{req.traveler.profile.prof_pic.url}} " class="img-circle"> 
+	<h1>{{user.first_name.title}}'s Profile</h1>
 
-			 	{% if req.requestreference.traveler_fun == True %}
-
-			 		<strong> <a href=" {% url 'excurj:show_profile' req.traveler.username  %} ">{{req.traveler.first_name.title}}</a>  had fun with {{ user.first_name.title}} and said:</strong> "{{  req.requestreference.traveler_desc }}"
-
-			 	{% else %}
-
-			 		<strong> <a href=" {% url 'excurj:show_profile' req.traveler.username  %} ">{{req.traveler.first_name.title}}</a>  didn't have fun with {{ user.first_name.title}} and said:</strong> "{{  req.requestreference.traveler_desc }} We missed our appointment! we'll do it again soon."
-
-			 	{% endif %}
-			 	
-			</div>
-			{% endfor %}
-
-		{% else %}
-
-		<p>No said anythong about {{ user.first_name.title }} yet!</p>
-
-		{% endif %}
-	{% else %}
-	<strong>This user's profile is not there for some reason. Hmmm.</strong>
-	{% endif %}
+	<div> 
+		<img src=" {{ user.profile.prof_pic.url }} "> 
 	</div>
+
+	<div>
+		<span style="font-size: 20px;">
+
+			<strong>{{user.first_name.title}}  {{user.last_name.title}},  {{user.profile.sex.title}} from  <a href=" {% url 'excurj:show_city' user.profile.city.slug %} "> 
+			{{user.profile.city.name.title}}, {{user.profile.city.country}} </a> born on  {{user.profile.dob|date:'F-d'}}</strong>
+
+		</span>
+	</div>
+
+{% if reqs %}
+
+		<p style="margin: 10px;font-size: 20px;"><strong>What people said about {{ user.first_name.title }} </strong></p>
+		{% for req in reqs %}
+
+		<div style="margin: 10px;">
+
+		 <img src=" {{req.traveler.profile.prof_pic.url}} " class="img-circle"> 
+
+		 	{% if req.requestreference.traveler_fun == True %}
+
+		 		<strong> <a href=" {% url 'excurj:show_profile' req.traveler.username  %} ">{{req.traveler.first_name.title}}</a>  had fun with {{ user.first_name.title}} and said:</strong> "{{  req.requestreference.traveler_desc }}"
+
+		 	{% else %}
+
+		 		<strong> <a href=" {% url 'excurj:show_profile' req.traveler.username  %} ">{{req.traveler.first_name.title}}</a>  didn't have fun with {{ user.first_name.title}} and said:</strong> "{{  req.requestreference.traveler_desc }} We missed our appointment! we'll do it again soon."
+
+		 	{% endif %}
+		 	
+		</div>
+		{% endfor %}
+
+	{% else %}
+
+	<p>No said anythong about {{ user.first_name.title }} yet!</p>
+
+	{% endif %}
+{% else %}
+
+<strong>This user's profile is not there for some reason. Hmmm.</strong>
+{% endif %}
+</div>
 {% endblock %}
