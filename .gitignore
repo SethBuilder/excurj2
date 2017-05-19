@@ -1,5 +1,5 @@
 
 *.pyc
 manage.py
-wsgi.py
+
 *.jpg
