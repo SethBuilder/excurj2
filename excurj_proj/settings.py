@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'registration',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +130,18 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
+
+
+#Django-Registeration-Redux variables
+ACCOUNT_ACTIVATION_DAYS =7
+REGISTRATION_AUTO_LOGIN =True
+REGISTRATION = True
+LOGIN_REDIRECT_LINK = '/'
+LOGIN_URL = '/accounts/login/'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = 'moghrabi@gmail.com'
+EMAIL_HOST_PASSWORD = 'Seeyou1later!'

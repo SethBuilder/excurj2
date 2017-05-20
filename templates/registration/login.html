@@ -1,0 +1,28 @@
+{% extends 'excurj/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+	Login to Your Excurj Account
+{% endblock %}
+
+{% block body_block %}
+	<div style="margin-top: 70px;">	
+
+	<h1>Login</h1>
+
+	<form method="post" action=".">
+		{% csrf_token %}
+		{{ form.as_p }}
+
+		<input type="submit" name="Log in">
+		<input type="hidden" name=" {{ next }} ">
+
+	</form>
+
+	<p>
+		Not a member?
+		<a href=" {% url 'registraion_register' %} ">Register</a>
+	</p>
+
+	</div>
+{% endblock %}

@@ -10,6 +10,18 @@ body{
     background: #63b8ff;
 }
 
+
+/*to make JOIN jump up and down*/
+#jump{
+	animation: top .7s linear infinite
+}
+
+@keyframes top{
+from{transform:translateY(0px);}
+to{transform:translateY(-4.5px);}
+}
+
+
 nav.navbar{
 	border-bottom: 1px solid white;
 	background-color: rgba(99,184,255,0.4);
@@ -612,15 +624,13 @@ ul.footer-links li a{
 }
 
 
-
-
-
-
+.navbar-default .navbar-collapse, .navbar-default .navbar-form{
+	padding: 0 8px;
+}
 
 .mobile{
 	display: none;
 }
-
 
 
 
