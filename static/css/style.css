@@ -628,7 +628,7 @@ ul.footer-links li a{
 
 .mobile{
 	display: inline;
-	background-image: url(' {% static 'images/cap.jpg' %} ');
+	/*background-image: url(' {% static 'images/cap.jpg' %} ');*/
 	background-position: center center;
 	background-size: cover;
 }
