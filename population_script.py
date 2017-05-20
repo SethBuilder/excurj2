@@ -35,8 +35,6 @@ def get_city_id(query):
 	url = ('https://maps.googleapis.com/maps/api/place/textsearch/json'
 				'?query=%s'
 				'&key=%s') % (query, get_google_key())
-
-	print(url)
 	try:
 		#grabbing the JSON results
 		with urllib.request.urlopen(url) as response:
@@ -44,7 +42,7 @@ def get_city_id(query):
 			print(jsonraw)
 			jsondata = json.loads(jsonraw)
 
-		return jsondata['results'][0]['id']
+		return jsondata
 
 	except IndexError:
 		return -1
@@ -67,7 +65,7 @@ def populate_cities():
 			query = city_names[i] + "+" + countries[i] # to be sent to the Google Places API
 			
 			#now we'll use json results to extract city ID and city image
-			city_id =  get_city_id(query) 
+			city_id =  get_city_id(query)['results'][0]['id']
 
 			#create a City object
 			created_city = City.objects.get_or_create(city_id=city_id)[0]
@@ -78,6 +76,8 @@ def populate_cities():
 
 			# send city and country name to wikipedia and exctract first 5 sentences
 			created_city.description = wikipedia.summary(city_names[i] + ' ' + countries[i], sentences=5) 
+
+			jsondata = get_city_id(query)
 
 			#extract city's 'photo reference' that we'll send to google places photo API
 			city_image_ref = jsondata['results'][0]['photos'][0]['photo_reference']
@@ -131,10 +131,10 @@ def populate_users():
 		cities = City.objects.all()#else, call them from the db
 
 	#URLs that bring back data for test users, one URL for each city
-	urls = ['https://randomuser.me/api/?nat=gb&results=9', 'https://randomuser.me/api/?nat=fr&results=8', 
-	'https://randomuser.me/api/?nat=de&results=7', 'https://randomuser.me/api/?nat=us&results=5', 
-	'https://randomuser.me/api/?results=0', 'https://randomuser.me/api/?results=1', 'https://randomuser.me/api/?results=4&nat=es', 
-	'https://randomuser.me/api/?results=1', 'https://randomuser.me/api/?results=0', 'https://randomuser.me/api/?results=1&nat=ca']
+	urls = ['https://randomuser.me/api/?nat=gb&results=10', 'https://randomuser.me/api/?nat=fr&results=2', 
+	'https://randomuser.me/api/?nat=de&results=5', 'https://randomuser.me/api/?nat=us&results=2', 
+	'https://randomuser.me/api/?results=0', 'https://randomuser.me/api/?results=1', 'https://randomuser.me/api/?results=3&nat=es', 
+	'https://randomuser.me/api/?results=0', 'https://randomuser.me/api/?results=0', 'https://randomuser.me/api/?results=3&nat=ca']
 
 	#go through random data urls
 	for i in range(len(urls)):

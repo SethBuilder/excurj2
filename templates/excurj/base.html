@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 {% load staticfiles %}
 <html lang="en">
   <head>
@@ -64,8 +65,8 @@
             </form> 
 
     				<ul class="nav navbar-nav navbar-right">
-    					<li><a href="#">LOG IN</a></li>
-    					<li><a href="#" id="jump">JOIN</a></li>
+    					<li><a href=" {% url 'excurj:auth_login' %} ">LOG IN</a></li>
+    					<li><a href=" {% url 'excurj:registration_register' %} " id="jump">JOIN</a></li>
     				</ul>
     				
     			</div>

@@ -641,6 +641,11 @@ ul.footer-links li a{
 	/*background-image: url(' {% static 'images/cap.jpg' %} ');*/
 	background-position: center center;
 	background-size: cover;
+	
+}
+
+.mobile img{
+	height: 100%;
 }
 
 .feedback, .up{
@@ -650,10 +655,12 @@ ul.footer-links li a{
 #mainNavBar{
 		background-color: rgba(255,255,255,1);
 
+
 	}
 
 .navbar-default .navbar-nav>li>a{
 	color: black;
+	padding-left: 40px;
 }
 
 .navbar-default .navbar-nav>li>a:hover{
@@ -667,6 +674,7 @@ ul.footer-links li a{
 	transition: width 0.4s ease;
 	border: none;
 	opacity: .7;
+	padding-left: 60px;
 }
 
 #topsearchbox:focus{
