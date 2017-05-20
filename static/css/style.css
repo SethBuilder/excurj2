@@ -617,12 +617,21 @@ ul.footer-links li a{
 
 
 
-
+.mobile{
+	display: none;
+}
 
 
 
 
 @media only screen and (max-width: 750px){
+
+.mobile{
+	display: inline;
+	background-image: url(' {% static 'images/cap.jpg' %} ');
+	background-position: center center;
+	background-size: cover;
+}
 
 .feedback, .up{
 	display: none;
@@ -657,9 +666,7 @@ ul.footer-links li a{
 }
 
 	.jumbotron #container video{
-    width: 110%;
-    height: 100%;
-    object-fit: cover;
+    display: none;
 }
 
 	ul.nav li{
