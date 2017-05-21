@@ -763,12 +763,14 @@ ul.footer-links li a{
 
 .jumbotron h1{
 	font-size: 22px;
+	line-height: 1.1;
 }
 
 
 .jumbotron p{
 	font-size:15px;
     font-weight: 20;
+    line-height: 1.1;
 }
 
 
@@ -779,5 +781,33 @@ ul.footer-links li a{
     font-weight: bold;
     color: black;
     width: 38%
+}
+
+
+}
+
+
+@media only screen and (max-width: 470px){
+.jumbotron #container{
+	height: 350px;
+}
+
+.header-button{
+	margin: 0;
+	background-color: white;
+
+}
+
+.jumbotron h1{
+	font-size: 23px;
+	line-height: 1.1;
+}
+
+
+.jumbotron p{
+	font-size:15px;
+    font-weight: 20;
+    line-height: 1.1;
+    margin-bottom: 30px;
 }
 }
