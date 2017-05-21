@@ -646,6 +646,7 @@ ul.footer-links li a{
 
 .mobile img{
 	height: 100%;
+	min-width: 100%;
 }
 
 .feedback, .up{
@@ -683,10 +684,6 @@ ul.footer-links li a{
 
 }
 
-	.jumbotron #container video{
-    display: none;
-}
-
 	ul.nav li{
 	background-color: white;
 	color: black;
@@ -694,24 +691,25 @@ ul.footer-links li a{
 }
 
 	.jumbotron h1{
-	font-size: 20px;
+	font-size: 45px;
 }
 
 
 .jumbotron p{
-	font-size:15px;
-    font-weight: 20;
+	font-size:25px;
+    font-weight: 30;
 }
 
 .homepage_jumbo{
-	background-color: transparent;
+	background-color: rgba(255,255,255,.3);
 	position: absolute;
-	width: 325px;
+	width: 600px;
 	left: 0;
   	right: 0;
   	margin: 0 auto;
   	top: 50%;
     left: 50%;
+    padding: 10px;
     transform: translate(-50%, -50%);
     
 }
@@ -724,12 +722,12 @@ ul.footer-links li a{
 #homepage-search{
 	width: 100%;
 	margin: auto;
-	padding: 0px;
+	padding: 20px;
 }
 
 .header-button{
-	padding: 7px 16px;
-	font-size: 11px;
+	padding: 10px 18px;
+	font-size: 20px;
     /*font-family: 'Montserrat', sans-serif;*/
     font-weight: bold;
     color: black;
@@ -752,5 +750,34 @@ ul.footer-links li a{
 	left: 37%;
 	right: 37%;
 	
+}
+}
+
+
+@media only screen and (max-width: 640px){
+
+.homepage_jumbo{
+	max-width: 100%;
+
+	}
+
+.jumbotron h1{
+	font-size: 22px;
+}
+
+
+.jumbotron p{
+	font-size:15px;
+    font-weight: 20;
+}
+
+
+.header-button{
+	padding: 7px 16px;
+	font-size: 12px;
+    /*font-family: 'Montserrat', sans-serif;*/
+    font-weight: bold;
+    color: black;
+    width: 38%
 }
 }

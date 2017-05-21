@@ -11,4 +11,5 @@ urlpatterns=[
 	url(r'^user/(?P<username>[\w\-]+)/$', views.show_profile, name='show_profile'),
 	url(r'^search/$', views.search, name='search'),
 	url(r'^accounts/', include('registration.backends.simple.urls')),
+	# url(r'^createprofile/', views.createprofile, name="createprofile"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

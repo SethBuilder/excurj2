@@ -136,7 +136,7 @@ MEDIA_URL = '/media/'
 ACCOUNT_ACTIVATION_DAYS =7
 REGISTRATION_AUTO_LOGIN =True
 REGISTRATION = True
-LOGIN_REDIRECT_LINK = '/'
+LOGIN_REDIRECT_LINK = '/createprofile/'
 LOGIN_URL = '/accounts/login/'
 
 EMAIL_HOST = 'smtp.gmail.com'
