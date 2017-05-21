@@ -633,6 +633,11 @@ ul.footer-links li a{
 }
 
 
+.container-fluid>.navbar-collapse, .container-fluid>.navbar-header, .container>.navbar-collapse, .container>.navbar-header{
+	margin-right: 1px;
+	margin-left: -5px;
+}
+
 
 @media only screen and (max-width: 750px){
 
@@ -701,7 +706,7 @@ ul.footer-links li a{
 }
 
 .homepage_jumbo{
-	background-color: rgba(255,255,255,.3);
+	/*background-color: rgba(255,255,255,.3);*/
 	position: absolute;
 	width: 600px;
 	left: 0;
