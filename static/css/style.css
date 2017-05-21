@@ -360,7 +360,7 @@ position: relative;
 }
 
 
-.how-it-works-box h3:after{
+/*.how-it-works-box h3:after{
 	content: "";
 	position: absolute;
 	top: 35px;
@@ -369,7 +369,7 @@ position: relative;
 	height: 2px;
 	background-color: white;
 	display: block;
-}
+}*/
 
 .how-it-works-box p{
 	margin-top: 20px;
@@ -652,6 +652,10 @@ ul.footer-links li a{
 	
 }
 
+.no-mobile{
+	display: none;
+}
+
 .mobile img{
 	height: 100%;
 	min-width: 100%;
@@ -661,42 +665,7 @@ ul.footer-links li a{
 	display: none;
 }
 
-#mainNavBar{
-		background-color: rgba(255,255,255,1);
 
-
-	}
-
-.navbar-default .navbar-nav>li>a{
-	color: black;
-	padding-left: 40px;
-}
-
-.navbar-default .navbar-nav>li>a:hover{
-	color: white;
-	background-color: black;
-}
-
-	#topsearchbox{
-	width: 200px;
-	-webkit-transition: width 0.4s ease;
-	transition: width 0.4s ease;
-	border: none;
-	opacity: .7;
-	padding-left: 60px;
-}
-
-#topsearchbox:focus{
-	width:250px;
-	opacity: 1;
-
-}
-
-	ul.nav li{
-	background-color: white;
-	color: black;
-	opacity: 1;
-}
 
 	.jumbotron h1{
 	font-size: 45px;
@@ -764,6 +733,47 @@ ul.footer-links li a{
 	background-color: white;
 }
 
+}
+
+
+@media only screen and (max-width: 750px){
+
+	#mainNavBar{
+		background-color: rgba(255,255,255,1);
+
+
+	}
+
+.navbar-default .navbar-nav>li>a{
+	color: black;
+	padding-left: 40px;
+}
+
+.navbar-default .navbar-nav>li>a:hover{
+	color: white;
+	background-color: black;
+}
+
+	#topsearchbox{
+	width: 200px;
+	-webkit-transition: width 0.4s ease;
+	transition: width 0.4s ease;
+	border: none;
+	opacity: .7;
+	padding-left: 60px;
+}
+
+#topsearchbox:focus{
+	width:250px;
+	opacity: 1;
+
+}
+
+	ul.nav li{
+	background-color: white;
+	color: black;
+	opacity: 1;
+}
 }
 
 
