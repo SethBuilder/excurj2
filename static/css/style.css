@@ -645,6 +645,9 @@ ul.footer-links li a{
 	display: inline;
 	/*background-image: url(' {% static 'images/cap.jpg' %} ');*/
 	background-position: center center;
+	-o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
 	background-size: cover;
 	
 }
@@ -756,6 +759,11 @@ ul.footer-links li a{
 	right: 37%;
 	
 }
+
+.ready-header-button{
+	background-color: white;
+}
+
 }
 
 
