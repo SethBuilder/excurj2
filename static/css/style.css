@@ -781,6 +781,16 @@ ul.footer-links li a{
     font-weight: bold;
     color: black;
     width: 38%
+    background-color: white;
+}
+
+.ready-header-button{
+	background-color: white;
+}
+
+.container-fluid>.navbar-collapse, .container-fluid>.navbar-header, .container>.navbar-collapse, .container>.navbar-header{
+	margin-right: -5px;
+	margin-left: -5px;
 }
 
 
@@ -795,6 +805,7 @@ ul.footer-links li a{
 .header-button{
 	margin: 0;
 	background-color: white;
+	width: 43%
 
 }
 
@@ -809,5 +820,18 @@ ul.footer-links li a{
     font-weight: 20;
     line-height: 1.1;
     margin-bottom: 30px;
+}
+
+.ready{
+	min-height: 300px;
+}
+
+.ready-header-button{
+	background-color: white;
+}
+
+.container-fluid>.navbar-collapse, .container-fluid>.navbar-header, .container>.navbar-collapse, .container>.navbar-header{
+	margin-right: -5px;
+	margin-left: -5px;
 }
 }
