@@ -141,7 +141,7 @@
   </div>
 </div>
 
-  <div class="container-fluid popular-cities-container" id="popularcities">
+  <div class="container popular-cities-container" id="popularcities">
     
       <h2>Popular Cities</h2>
       <div class="row">
@@ -149,7 +149,7 @@
 {% if cities %}
 {% for city in cities %}
 
-        <div class="col-lg-2 col-xs-12">
+        <div class="col-lg-2 col-md-4  col-md-6 col-lg-12">
           <div class="popular-cities-box">
           <div class="thumbnails">
             <a href="{% url 'excurj:show_city' city.slug %}">
