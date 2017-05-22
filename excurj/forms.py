@@ -13,7 +13,7 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('profilepic', 'city', 'hobbies', 'languages')
+        fields = ('profile_pic', 'city')
 
 
 # class UpdateUserForm(forms.ModelForm):

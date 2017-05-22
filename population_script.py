@@ -29,7 +29,7 @@ def get_google_key():
 
 	return GoogleKey
 
-def get_city_id(query):
+def get_city_json(query):
 	"""takes city name and return city ID as per Google Places API"""
 
 	url = ('https://maps.googleapis.com/maps/api/place/textsearch/json'
@@ -39,7 +39,7 @@ def get_city_id(query):
 		#grabbing the JSON results
 		with urllib.request.urlopen(url) as response:
 			jsonraw = response.read()
-			print(jsonraw)
+			
 			jsondata = json.loads(jsonraw)
 
 		return jsondata
@@ -65,7 +65,7 @@ def populate_cities():
 			query = city_names[i] + "+" + countries[i] # to be sent to the Google Places API
 			
 			#now we'll use json results to extract city ID and city image
-			city_id =  get_city_id(query)['results'][0]['id']
+			city_id =  get_city_json(query)['results'][0]['id']
 
 			#create a City object
 			created_city = City.objects.get_or_create(city_id=city_id)[0]
@@ -77,7 +77,7 @@ def populate_cities():
 			# send city and country name to wikipedia and exctract first 5 sentences
 			created_city.description = wikipedia.summary(city_names[i] + ' ' + countries[i], sentences=5) 
 
-			jsondata = get_city_id(query)
+			jsondata = get_city_json(query)
 
 			#extract city's 'photo reference' that we'll send to google places photo API
 			city_image_ref = jsondata['results'][0]['photos'][0]['photo_reference']

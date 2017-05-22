@@ -79,9 +79,10 @@ def search(request):
 			print("SEARCHED CITY IS: " + searched_city.replace(" ", ""))
 
 			
-			searched_city_id = population_script.get_city_id(searched_city.replace(" ", ""))
+			searched_city_id = population_script.get_city_json(searched_city.replace(" ", ""))['results'][0]['id']
 			
 			if searched_city_id != -1:
+				print("CITY ID: " + str(searched_city_id))
 				city = City.objects.get(city_id = searched_city_id)
 				return show_city(request, city.slug)
 
@@ -103,7 +104,7 @@ def search(request):
 		context_dict={}
 		try:
 			q = request.GET.get('q')
-			print("THIS IS Q:" + q)
+			
 
 			users = User.objects.filter(Q(username__icontains=q)  
 				| Q(first_name__icontains=q) | Q(last_name__icontains=q) 

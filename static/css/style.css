@@ -1,8 +1,15 @@
 
-body{
+html{
 	padding-top: 0px;
-	line-height: 1.5;
-	font-family: 'Open Sans', sans-serif;
+	line-height: 1.1;
+	font-family: 'Lato', sans-serif !important;
+	font-weight: lighter;
+
+}
+body{
+	line-height: 1.1;
+	font-family: 'Lato', sans-serif !important;
+	font-weight: lighter;
 }
 
 ::selection {
@@ -155,18 +162,17 @@ ul.nav li:hover{
 }
 
 .jumbotron h1{
-	font-size: 45px;
-    /*/*font-f*/amily: 'Montserrat', sans-serif;*/
-    font-weight: 20;
-    font-style: normal;
+	font-size: 56px;
+    font-weight: lighter;
+    
     color: #FFFFFF;
     text-align: center;
 }
 
 #homepage-search{
-	 /*font-family: 'Questrial', sans-serif;*/
+	 
 	 font-size: 20px;
-	 font-weight: bold;
+	 font-weight: lighter;
 	 transition: width 2s ease;
 }
 
@@ -183,17 +189,19 @@ ul.nav li:hover{
 
 .jumbotron p{
 	font-size: 25px;
-    /*font-family: 'Montserrat', sans-serif;*/
+    width: 700px;
     font-weight: 20;
     font-style: normal;
     color: #FFFFFF;
     text-align: center;
+    margin: auto;
+    margin-bottom: 20px;
 }
 
 .homepage_jumbo{
 	background-color: transparent;
 	position: absolute;
-	width: 700px;
+	width: 1000px;
 	left: 0;
   	right: 0;
   	margin: 0 auto;
@@ -210,7 +218,7 @@ ul.nav li:hover{
 
 
 #homepage-search{
-	width: 100%;
+	width: 700px;
 	margin: auto;
 	padding: 20px;
 	transition: padding .0s ease;
@@ -226,7 +234,7 @@ ul.nav li:hover{
 .header-button{
 	padding: 5px 10px;
 	font-size: 20px;
-    /*font-family: 'Montserrat', sans-serif;*/
+    
     font-weight: bold;
     color: black;
     text-align: center;
@@ -250,7 +258,7 @@ ul.nav li:hover{
 
 .how-it-works-container, .superstars-container, .popular-cities-container{
 	padding: 40px;
-	/*font-family: 'Montserrat', sans-serif;*/
+	
 	opacity: .8;
 	text-align: center;
 	width: 100%;
@@ -284,7 +292,7 @@ ul.nav li:hover{
 	position: relative;
 	color: black;
 	margin-bottom: 30px;
-	/*font-family: 'Questrial', sans-serif;*/
+	
 }
 
 .how-it-works-container h2:after{
@@ -360,22 +368,13 @@ position: relative;
 }
 
 
-/*.how-it-works-box h3:after{
-	content: "";
-	position: absolute;
-	top: 35px;
-	left: 30%;
-	right: 30%;
-	height: 2px;
-	background-color: white;
-	display: block;
-}*/
+
 
 .how-it-works-box p{
 	margin-top: 20px;
 	font-weight: ;
 	font-size: 20px;
-	/*font-family: 'Questrial', sans-serif;*/
+	
 }
 
 
@@ -400,12 +399,12 @@ position: relative;
 
 .paired{
 	padding: 10px 0px;
-	/*font-family: 'Questrial', sans-serif;*/
+	
 }
 
 .superstars-box-header{
 	
-	/*font-family: 'Questrial', sans-serif;*/
+	
 	font-size: 16px;
 	font-weight: bold;
 }
@@ -454,14 +453,6 @@ position: relative;
 }
 
 
-/*#readyimg{
-	width: 100%;
-    height: 600px;
-
-	
-}*/
-
-
 .ready{
 	margin: 0;
 	padding: 0;
@@ -498,7 +489,7 @@ position: relative;
 .ready-header-button{
 	padding: 5px 10px;
 	font-size: 20px;
-    /*font-family: 'Montserrat', sans-serif;*/
+    
     font-weight: bold;
     color: black;
     
@@ -509,27 +500,6 @@ position: relative;
     border-radius: 2px;
 }
 
-
-/*.feedback, .up{
-	position: fixed;
-	top: 93%;
-	left: 93%;
-	font-weight: bold;
-	background-color: white;
-	padding: 7px;
-	
-	background-color: rgba(255,255,255,0);
-	transition: background-color 1s ease 0s;
-}
-
-.up{
-	left: 89%;
-}
-
-.feedback p{
-	margin: 0px;
-}
-*/
 
 footer{
 	background-color: white;
@@ -639,7 +609,7 @@ ul.footer-links li a{
 }
 
 
-@media only screen and (max-width: 1036px){
+@media only screen and (max-width: 936px){
 
 .mobile{
 	display: inline;
@@ -675,6 +645,7 @@ ul.footer-links li a{
 .jumbotron p{
 	font-size:25px;
     font-weight: 30;
+    width: 550px;
 }
 
 .homepage_jumbo{
@@ -774,10 +745,19 @@ ul.footer-links li a{
 	color: black;
 	opacity: 1;
 }
+
+.jumbotron p{
+	
+    width: 400px;
+}
 }
 
 
 @media only screen and (max-width: 640px){
+
+/*.jumbotron p{
+	display: none;
+}*/
 
 .homepage_jumbo{
 	max-width: 100%;
@@ -785,15 +765,16 @@ ul.footer-links li a{
 	}
 
 .jumbotron h1{
-	font-size: 22px;
+	font-size: 48px;
 	line-height: 1.1;
 }
 
 
 .jumbotron p{
-	font-size:15px;
+	font-size:20px;
     font-weight: 20;
     line-height: 1.1;
+    width: 500px;
 }
 
 
@@ -833,7 +814,7 @@ ul.footer-links li a{
 }
 
 .jumbotron h1{
-	font-size: 23px;
+	font-size: 27px;
 	line-height: 1.1;
 }
 
@@ -843,6 +824,7 @@ ul.footer-links li a{
     font-weight: 20;
     line-height: 1.1;
     margin-bottom: 30px;
+    width: 350px;
 }
 
 .ready{
