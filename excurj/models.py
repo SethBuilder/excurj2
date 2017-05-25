@@ -2,14 +2,15 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 import datetime
+from crispy_forms.helper import FormHelper
 
 class City(models.Model):
 	city_id = models.CharField(primary_key=True, max_length=150)
-	name = models.CharField(max_length=128)
-	country = models.CharField(max_length=128)
+	name = models.CharField(max_length=128, blank=True)
+	country = models.CharField(max_length=128, blank=True)
 	description = models.CharField(max_length=1000, blank=True)
 	city_image = models.ImageField(blank=True, upload_to='city_pictures')
-	slug = models.SlugField(unique=True)
+	slug = models.SlugField()#MUST MAKE UNIQUE =TRUE AGAIN
 
 	class Meta:
 		verbose_name_plural = 'Cities'
@@ -88,7 +89,8 @@ class RequestReference(models.Model):
 
 class UserProfile(models.Model):
 	user = models.OneToOneField(User, related_name='profile', primary_key=True) #Each User is related to only one User Profile
-	city = models.ForeignKey(City, blank=True, null=True) #Each User Profile must be related to one city.
+	city_search_text = models.CharField(blank=True, max_length=300)
+	city = models.ForeignKey(City, blank=True, null=True, related_name='city') #Each User Profile must be related to one city.
 	prof_pic = models.ImageField(blank=True, upload_to='profile_pictures')
 	dob = models.DateField(blank=True, null=True)
 	sex = models.CharField(max_length=10, blank=True)
@@ -102,6 +104,7 @@ class UserProfile(models.Model):
 
 	def __str__(self):
 		return self.user.first_name
+
 
 class Excursion(models.Model):
 	"""traveler lists his trips so local could see them and possibly offer to take him out"""

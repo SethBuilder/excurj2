@@ -44,7 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'registration',
+    'crispy_forms',
+    'widget_tweaks',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -133,15 +137,8 @@ MEDIA_URL = '/media/'
 
 
 #Django-Registeration-Redux variables
-ACCOUNT_ACTIVATION_DAYS =7
+
 REGISTRATION_AUTO_LOGIN =True
 REGISTRATION = True
-LOGIN_REDIRECT_LINK = '/createprofile/'
-LOGIN_URL = '/accounts/login/'
-
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 465
-EMAIL_USE_TLS = True
-
-EMAIL_HOST_USER = 'moghrabi@gmail.com'
-EMAIL_HOST_PASSWORD = 'Seeyou1later!'
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/'

@@ -169,7 +169,7 @@ ul.nav li:hover{
     text-align: center;
 }
 
-#homepage-search{
+#google_city_search{
 	 
 	 font-size: 20px;
 	 font-weight: lighter;
@@ -217,7 +217,7 @@ ul.nav li:hover{
 }
 
 
-#homepage-search{
+#google_city_search{
 	width: 700px;
 	margin: auto;
 	padding: 20px;
@@ -226,9 +226,19 @@ ul.nav li:hover{
 	border: none;
 }
 
-#homepage-search:focus{
+#google_city_search:focus{
 	padding: 22px;
 	opacity: 1;
+}
+
+.prof_search#google_city_search{
+	width: 400px;
+	margin: auto;
+	padding: 5px;
+	transition: padding .0s ease;
+	opacity: 0.7;
+	border: 1px solid black;
+	font-size: 20px;
 }
 
 .header-button{
@@ -667,7 +677,7 @@ ul.footer-links li a{
 	margin: auto;
 }
 
-#homepage-search{
+#google_city_search{
 	width: 100%;
 	margin: auto;
 	padding: 20px;
@@ -682,7 +692,7 @@ ul.footer-links li a{
     width: 35%
 }
 
-#homepage-search:focus{
+#google_city_search:focus{
 	padding: 18px;
 
 }

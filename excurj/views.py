@@ -5,13 +5,14 @@ from django.db.models import Count
 from django.contrib.auth.models import User
 import population_script
 from django.db.models import Q
-
+from excurj.forms import UserForm, UserProfileForm
+from django.shortcuts import redirect
 
 
 def index(request):
 	context_dict={}
 	#brings back top 6 cities with the highest number of users
-	city_list = City.objects.annotate(user_count=Count('userprofile')).order_by('-user_count')[:6]
+	city_list = City.objects.annotate(user_count=Count('city__user')).order_by('-user_count')[:6]
 	
 	# reqs = Request.objects.filter(local_approval=True).order_by('-date')[:2]
 	refs= RequestReference.objects.select_related('request').filter(traveler_fun=True,local_fun=True).order_by('-request__date')[:2]
@@ -119,5 +120,69 @@ def search(request):
 		
 
 	
+def createprofile(request):
+	if request.method =='POST':
+		user = User.objects.get(username=request.user.username)
+		
+		user_form = UserForm(data=request.POST, instance=user)
+		
+		profile_form = UserProfileForm(data=request.POST)
+		
+		if user_form.is_valid() and profile_form.is_valid():
+			user = user_form.save()
+			user.save()
 
+			profile = profile_form.save(commit=False)
+
+			profile.user = user
+			
+
+			searched_city = request.POST['city_search_text']#brings back the city search result as text
+			try:
+
+				searched_city_id = population_script.get_city_json(
+				searched_city.replace(" ", ""))['results'][0]['id']#brings back city ID from the Google API
+
+				# city = City.objects.get(city_id = searched_city_id)
+				city = City.objects.get(city_id = searched_city_id)
+				profile.city = city
+			
+			except City.DoesNotExist:
+				city = population_script.populate_city(searched_city_id, searched_city)
+				# city = City.objects.create(city_id = searched_city_id)
+				profile.city = city
+
+			except IndexError:
+				return HttpResponse("There's no such city, please pick a city from the list.")
+
+		    # searched_city_id != -1:#If it's a valid city
+			
+
+			# return show_city(request, city.slug)
+			# profile.city = city
+
+			# else:
+			# 	return HttpResponse("There's no such city, please try a different query.")
+
+			if 'prof_pic' in request.FILES:#now save the profile pic
+				profile.prof_pic = request.FILES['prof_pic']
+				
+
+			else:
+				profile.prof_pic = 'profile_pictures/anon.png'
+
+			profile.save()
+
+			if 'next' in request.GET:
+				return redirect(request.GET['next'])
+
+		else:
+			print (user_form.errors, profile_form.errors)
+
+	else:
+		user_form = UserForm()
+		profile_form = UserProfileForm()
+
+
+	return render(request, 'excurj/createprofile.html', {'user_form':user_form, 'profile_form':profile_form})
 	

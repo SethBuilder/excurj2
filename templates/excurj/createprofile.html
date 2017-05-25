@@ -1,0 +1,72 @@
+{% extends 'excurj/base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+
+{% block title_block %}
+	Welcome to {{user.first_name.title}}! profile. Yoppy!
+{% endblock %}
+
+{% block body_block %}
+
+<div style="margin: 70px;">	
+
+	<form method="post" action="?next=/" enctype="multipart/form-data">
+                {% csrf_token %}
+                	{{ user_form.first_name.label }}
+	                 {{ user_form.first_name }}
+	                 {{ user_form.first_name.errors }}<br>
+
+
+					{{ user_form.last_name.label }}
+	                 {{ user_form.last_name }}
+	                 {{ user_form.last_name.errors }}<br>
+
+	                 {{ profile_form.city_search_text.label }}
+	                {{ profile_form.city_search_text|attr:"id:google_city_search"|attr:"placeholder:Search cities.."|add_class:"prof_search"}}
+	                {{ profile_form.city_search_text.errors }}<br>
+
+	                 <label class="">Profile Picture: </label><br>
+	                {{ profile_form.prof_pic }}
+	                {{ profile_form.prof_pic.errors }}<br>
+
+	                <label class="">Your Birthday: </label><br>
+	                {{ profile_form.dob }}
+	                {{ profile_form.dob.errors }}<br>
+
+	                <label class="">Sex: </label><br>
+	                {{ profile_form.sex }}
+	                {{ profile_form.sex.errors }}<br>
+
+	                <label class="">Education: </label><br>
+	                {{ profile_form.education }}
+	                {{ profile_form.education.errors }}<br>
+
+	                <label class="">career: </label><br>
+	                {{ profile_form.career }}
+	                {{ profile_form.career.errors }}<br>
+
+	                <label class="">about you: </label><br>
+	                {{ profile_form.about_you }}
+	                {{ profile_form.about_you.errors }}<br>
+
+	                <label class="">music_movies_books: </label><br>
+	                {{ profile_form.music_movies_books }}
+	                {{ profile_form.music_movies_books.errors }}<br>
+
+	                <label class="">what_will_you_show_visitors: </label><br>
+	                {{ profile_form.what_will_you_show_visitors }}
+	                {{ profile_form.what_will_you_show_visitors.errors }}<br>
+
+	                
+
+	                <input type="submit" value="Submit" class="btn btn-primary btn-lg "/>
+                <!--
+                 {{ user_form.as_p }}
+            	 {{ profile_form.as_p }}-->
+        </form>    	
+
+</div>
+
+
+{% endblock %}

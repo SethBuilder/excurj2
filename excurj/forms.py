@@ -1,19 +1,39 @@
 from django import forms
 from django.contrib.auth.models import User
-from excurj.models import UserProfile, City,
+from excurj.models import UserProfile, City
 from django.db import models
 
 
 class UserForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ('first_name', 'last_name')
+	first_name = forms.CharField(
+		label = "First Name:",
+		max_length = 80,
+		required = True
+		)
+
+	last_name = forms.CharField(
+		label = "Last Name:",
+		max_length = 80,
+		required = True,
+		)
+
+	class Meta:
+	    model = User
+	    fields = ('first_name', 'last_name')
 
 
 class UserProfileForm(forms.ModelForm):
-    class Meta:
-        model = UserProfile
-        fields = ('profile_pic', 'city')
+	city_search_text = forms.CharField(
+		label = "Your Current City:",
+		max_length = 200,
+		required = True,
+		)
+	class Meta:
+	    model = UserProfile
+	    exclude = ('city','user')
+	    # fields = ('city_search_text','city','prof_pic', 'dob', 'sex', 'education', 'career', 'about_you', 
+	    # 	'music_movies_books','friendship','what_will_you_show_visitors', )
+        
 
 
 # class UpdateUserForm(forms.ModelForm):

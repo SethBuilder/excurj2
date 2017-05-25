@@ -13,11 +13,16 @@
 
         <section class="header-sections">
         
-          <h1>{{request.user.first_name}}
+        {% if request.user.is_authenticated %}
 
-       
+          <h1>{{request.user.first_name.title}},
+          Where do you want to go?</h1>
+        
+        {% else %}
 
-          where do you want to go?</h1>
+        <h1>Where do you want to go?</h1>
+
+        {% endif %}
         
         </section>
 
@@ -27,25 +32,8 @@
 
         <form action=" {% url 'excurj:search' %} ">
           <div class="form-group">
-            <input type="text" name="city-search" class="form-control" id="homepage-search" placeholder="Search cities...">
-                <!--script to auto complete location-->
-                    <script>
-                            function initMap() {
-        
-                            var defaultBounds = new google.maps.LatLngBounds(
-                            new google.maps.LatLng(-90, 91), new google.maps.LatLng(-180, 80));
-                          var options = {
-                            types: ['(cities)'],
-                            bounds: defaultBounds
-                          };
-                          var input = document.getElementById('homepage-search');
-                          
-                          var autocomplete = new google.maps.places.Autocomplete(input, options);
-                          }
-                    </script>
-
-                    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYfS_V4jHXS_jVYa1k2w9VY52r0pMrL8g&callback=initMap&libraries=places"
-                    async defer></script>
+            <input type="text" name="city-search" class="form-control google_city_search" id="google_city_search" placeholder="Search cities...">
+                
           </div>
 
           <div class="buttons">
@@ -157,14 +145,14 @@
               <div class="captions">
                 <h2> {{ city.name }} </h2>
               </div>
-{% if city.userprofile_set.count == 1 %}
+{% if city.city.count == 1 %}
 
               <div class="num">
                 <p> Has one awesome person!</p>
               </div>
 {% else %}
               <div class="num">
-                <p> Has {{ city.userprofile_set.count}} people!</p>
+                <p> Has {{ city.city.count}} people!</p>
               </div>
 
 {% endif %}

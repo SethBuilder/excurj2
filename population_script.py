@@ -35,18 +35,69 @@ def get_city_json(query):
 	url = ('https://maps.googleapis.com/maps/api/place/textsearch/json'
 				'?query=%s'
 				'&key=%s') % (query, get_google_key())
+	print("URLLLLLLLLLL IS: " + url)
 	try:
 		#grabbing the JSON results
-		with urllib.request.urlopen(url) as response:
-			jsonraw = response.read()
-			
-			jsondata = json.loads(jsonraw)
-
+		# with urllib.request.urlopen(url) as response:
+		response = requests.get(url)
+		
+		# jsonraw = response.read()
+		
+		jsondata = json.loads(response.text)
+		print("JSONNNNNN IS: " + str(jsondata))
 		return jsondata
 
 	except IndexError:
 		return -1
 
+def populate_city(city_id, query):
+	""" takes city ID and returns City object """
+	#create a City object
+	created_city = City.objects.create(city_id=city_id)
+
+	#save name, country, description
+	created_city.name = query
+	created_city.slug = query.replace(", ", "-").lower()
+	print("SLUGGGGGGGGGGGG IS:" + str(created_city.slug))
+	# created_city.country = countries[i]
+
+	# send city and country name to wikipedia and exctract first 5 sentences
+	created_city.description = wikipedia.summary(query, sentences=5) 
+
+	print("DESCCCCCCCCCCCC is: " + str(created_city.description))
+
+	jsondata = get_city_json(query)
+
+	print("JSONNNNNNNNNNNNN ISSSS: " + str(jsondata))
+
+	#extract city's 'photo reference' that we'll send to google places photo API
+	city_image_ref = jsondata['results'][0]['photos'][0]['photo_reference']
+
+	#set max width / can be changed if front end requires it
+	maxwidth = '400'
+
+	#The URL the HTTP Response to which brings the image
+	city_image_url = ('https://maps.googleapis.com/maps/api/place/photo'
+	'?maxwidth=%s'
+	'&photoreference=%s'
+	'&key=%s') % (maxwidth, city_image_ref, get_google_key())
+
+	#check if the image exists already
+	if not os.path.isfile("media/city_pictures/"+ created_city.slug + '.jpg'):
+
+		#only get the remote image if the file is not there
+		django_file = save_image(city_image_url, created_city.slug + '.jpg')
+
+		#if ImageField is empty then save image
+		if not created_city.city_image or not os.path.isfile("media/city_pictures/"+city_names[i] + '.jpg'):
+			created_city.city_image.save(created_city.slug + '.jpg', django_file, save=True)
+			django_file.close()
+		
+
+
+	created_city.save()# save City object in db
+
+	return created_city
 
 def populate_cities():
 	""" populates City objects """
@@ -68,7 +119,7 @@ def populate_cities():
 			city_id =  get_city_json(query)['results'][0]['id']
 
 			#create a City object
-			created_city = City.objects.get_or_create(city_id=city_id)[0]
+			created_city = City.objects.create(city_id=city_id)
 
 			#save name, country, description
 			created_city.name = city_names[i]

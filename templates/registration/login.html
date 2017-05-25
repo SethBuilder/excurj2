@@ -1,5 +1,6 @@
 {% extends 'excurj/base.html' %}
 {% load staticfiles %}
+{% load crispy_forms_tags %}
 
 {% block title_block %}
 	Login to Your Excurj Account
@@ -12,7 +13,7 @@
 
 	<form method="post" action=".">
 		{% csrf_token %}
-		{{ form.as_p }}
+		{{ form|crispy }}
 
 		<input type="submit" name="Log in">
 		<input type="hidden" name=" {{ next }} ">

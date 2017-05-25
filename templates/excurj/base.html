@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 
 {% load staticfiles %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -23,6 +25,10 @@
     <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="{% static 'js/autocomplete.js' %}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYfS_V4jHXS_jVYa1k2w9VY52r0pMrL8g&callback=initMap&libraries=places"
+async defer></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -66,8 +72,16 @@
             </form> 
 
             <ul class="nav navbar-nav navbar-right">
+
+            {% if not request.user.is_authenticated %}
               <li><a href=" {% url 'excurj:auth_login' %} ">LOG IN</a></li>
               <li><a href=" {% url 'excurj:registration_register' %} " id="jump">JOIN</a></li>
+
+            {% else %}
+
+            <li><a href="#"> <a href=" {% url 'excurj:show_profile' request.user.username %} ">{{ request.user.first_name }}</a></li>
+            <li><a href="{% url 'excurj:auth_logout' %}?next=/"> logout</a></li>
+            {% endif %}
             </ul>
             
           </div>
@@ -107,10 +121,16 @@
         <p>Feedback</p>
     </div> -->
 
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    
+    <script>
+        $('#id_dob').datepicker({});
+      </script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="{% static 'js/bootstrap.min.js'%}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
     <!-- to add and remove active class -->
 
@@ -176,6 +196,8 @@
             }
           }
         });
-    </script>
+      </script>
+
+      
   </body>
 </html>
