@@ -13,16 +13,15 @@ import datetime
 import glob
 import random
 
-x="SEIF IS COOL"
-
 def get_json(url):
-	""" takes API URL and returns raw JSON response as image"""
+	""" takes Google Places api url and returns raw JSON response"""
 	with urllib.request.urlopen(url) as response:
 		jsonraw = response.read().decode()
 		jsondata = json.loads(jsonraw)
 		return jsondata
 
 def get_google_key():
+	""" returns Google api key"""
 	# GoogleKey = 'AIzaSyDaa7NZzS-SE4JW3J-7TaA1v1Y5aWUTiyc'
 	GoogleKey = 'AIzaSyDViGwJgWL18QSKvPozvAiqloyy1pW2lxg'
 	# GoogleKey = 'AIzaSyB1E9CZaaaw1c77A7eZSophK_LnaGX5XRQ'
@@ -58,17 +57,23 @@ def populate_city(city_id, query):
 	#save name, country, description
 	created_city.name = query
 	created_city.slug = query.replace(", ", "-").lower()
-	print("SLUGGGGGGGGGGGG IS:" + str(created_city.slug))
+	print("SLUGGGGGGGGG IS: " + created_city.slug)
+	
 	# created_city.country = countries[i]
 
 	# send city and country name to wikipedia and exctract first 5 sentences
-	created_city.description = wikipedia.summary(query, sentences=5) 
+	try:
+		created_city.description = wikipedia.summary(query, sentences=5) 
+	except wikipedia.exceptions.PageError:
+		pass
+		
+	
 
-	print("DESCCCCCCCCCCCC is: " + str(created_city.description))
+	
 
 	jsondata = get_city_json(query)
 
-	print("JSONNNNNNNNNNNNN ISSSS: " + str(jsondata))
+	
 
 	#extract city's 'photo reference' that we'll send to google places photo API
 	city_image_ref = jsondata['results'][0]['photos'][0]['photo_reference']

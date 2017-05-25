@@ -37,6 +37,7 @@ def show_city(request, city_name_slug):
 
 	try:
 		city = City.objects.get(slug=city_name_slug)
+		print()
 		city_locals_profiles = UserProfile.objects.filter(city=city)
 		excursions = Excursion.objects.filter(city=city)
 
@@ -98,6 +99,9 @@ def search(request):
 
 			return render(request, 'excurj/cities_search.html', context_dict)
 
+		except IndexError:
+			return HttpResponse("We couldn't find any city based on your query :( please pick from the list instead.")
+
 		# else:
 		# 	return HttpResponse("This city isn't populated yet :( ")
 
@@ -142,6 +146,7 @@ def createprofile(request):
 
 				searched_city_id = population_script.get_city_json(
 				searched_city.replace(" ", ""))['results'][0]['id']#brings back city ID from the Google API
+				print("IDDDDDDDDDDDDDDDDD is: " + searched_city_id)
 
 				# city = City.objects.get(city_id = searched_city_id)
 				city = City.objects.get(city_id = searched_city_id)
