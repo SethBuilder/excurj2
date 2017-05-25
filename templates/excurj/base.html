@@ -79,8 +79,18 @@ async defer></script>
 
             {% else %}
 
-            <li><a href="#"> <a href=" {% url 'excurj:show_profile' request.user.username %} ">{{ request.user.first_name }}</a></li>
-            <li><a href="{% url 'excurj:auth_logout' %}?next=/"> logout</a></li>
+            <li style="position: relative; background-color: transparent;" id="prof_li"><a href="  javascript:void(0)" style="display: inline;" > <img src=" {{request.user.profile.prof_pic.url}} " height="49px" width="49px" class="img-circle"> <span class="caret"></span> </a>
+
+            </li>
+
+            <div id="prof_dropdown">
+              <li class="dropli"><a href="">My Dashboard</a></li>
+              <li class="dropli"><a href="{% url 'excurj:show_profile' request.user.username %}">My Profile</a></li>
+              <li class="dropli"><a href="">Account</a></li>
+              <li class="dropli"><a href="{% url 'excurj:auth_logout' %}?next=/"> logout</a></li>
+            </div>
+
+            
             {% endif %}
             </ul>
             

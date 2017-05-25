@@ -65,11 +65,7 @@ def populate_city(city_id, query):
 	try:
 		created_city.description = wikipedia.summary(query, sentences=5) 
 	except wikipedia.exceptions.PageError:
-		pass
-		
-	
-
-	
+		created_city.description = "We couldn't find wiki summary for this town."
 
 	jsondata = get_city_json(query)
 
@@ -94,13 +90,19 @@ def populate_city(city_id, query):
 		django_file = save_image(city_image_url, created_city.slug + '.jpg')
 
 		#if ImageField is empty then save image
-		if not created_city.city_image or not os.path.isfile("media/city_pictures/"+city_names[i] + '.jpg'):
+		if not created_city.city_image or not os.path.isfile("media/city_pictures/"+created_city.slug + '.jpg'):
 			created_city.city_image.save(created_city.slug + '.jpg', django_file, save=True)
 			django_file.close()
 		
 
 
 	created_city.save()# save City object in db
+
+	#delete local files as they're already uploaded to media root
+	
+	if os.path.isfile(created_city.slug + '.jpg'):
+		os.remove(created_city.slug + '.jpg')
+		print("removed local file: "+created_city.name)
 
 	return created_city
 
