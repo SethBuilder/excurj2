@@ -265,7 +265,7 @@ def save_image(url, file_name):
 		sleep(2)
 
 	except requests.exceptions.ConnectionError as e:
-		e.status_code = 'Connection refused from random API'
+		e.status_code = 'Connection refused'
 
 	#create local file to save remote image
 	with open(file_name, 'wb') as f:

@@ -7,6 +7,7 @@ import population_script
 from django.db.models import Q
 from excurj.forms import UserForm, UserProfileForm
 from django.shortcuts import redirect
+from django.core.exceptions import MultipleObjectsReturned
 
 
 def index(request):
@@ -53,6 +54,9 @@ def show_city(request, city_name_slug):
 
 	except Excursion.DoesNotExist:
 		context_dict['excursions'] = None
+
+	except City.MultipleObjectsReturned:
+		city = City.objects.filter(slug=city_name_slug)[0]
 
 	return render(request, 'excurj/city.html', context_dict)
 
