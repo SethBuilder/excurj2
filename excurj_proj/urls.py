@@ -16,11 +16,17 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from excurj import views
+from registration.backends.simple.views import RegistrationView
 
+class MyRegistrationView(RegistrationView):
+    def get_success_url(self,user):
+        return('/createprofile/')
 
 urlpatterns = [
 	url(r'^', include('excurj.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'accounts/register/$', MyRegistrationView.as_view(), name='registraion_register'),
+    url(r'^accounts/', include('registration.backends.simple.urls')),
 ]
 
 

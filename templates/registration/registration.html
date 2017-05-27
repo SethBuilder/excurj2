@@ -10,16 +10,13 @@
 	<div style="margin-top: 70px;">	
 
 	<h1>Register here</h1>
+	<div class="col-sm-6 col-sm-offset-3">
+		<form method="post" action=".">
+			{% csrf_token %}
+			{{ form|crispy}}
 
-	<form method="post" action=".">
-		{% csrf_token %}
-		{{ form|crispy
-		 }}
-
-		<input type="submit" name="Log in">
-		
-
-	</form>
-
+			<input class="btn btn-primary" type="submit" name="Log in">
+		</form>
+	</div>
 	</div>
 {% endblock %}

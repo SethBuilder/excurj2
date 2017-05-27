@@ -1,0 +1,36 @@
+{% extends 'excurj/base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+
+{% block title_block %}
+	Edit Your Account
+{% endblock %}
+
+{% block body_block %}
+
+<div class="col-sm-6 col-sm-offset-3" style="margin-top: 100px;margin-bottom: 100px">	
+<h1>Edit Your Account</h1>
+	<form method="post" action="?next=/" enctype="multipart/form-data">
+                {% csrf_token %}
+                <!-- {{ form|crispy }}
+
+
+	                 {{ profile_form.city_search_text.label }}
+	                {{ profile_form.city_search_text|attr:"id:google_city_search"|attr:"placeholder:Search cities.."|add_class:"prof_search"}}
+	                {{ profile_form.city_search_text.errors }}<br>
+
+				-->
+
+	                                
+                 {{ edit_account_form|crispy }}
+            	 <!-- {{ profile_form|crispy }} -->
+
+	                <input type="submit" value="Submit" class="btn btn-primary btn-lg "/>
+
+        </form>    	
+
+</div>
+
+
+{% endblock %}

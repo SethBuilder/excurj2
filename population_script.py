@@ -22,8 +22,8 @@ def get_json(url):
 
 def get_google_key():
 	""" returns Google api key"""
-	# GoogleKey = 'AIzaSyDaa7NZzS-SE4JW3J-7TaA1v1Y5aWUTiyc'
-	GoogleKey = 'AIzaSyDViGwJgWL18QSKvPozvAiqloyy1pW2lxg'
+	GoogleKey = 'AIzaSyDaa7NZzS-SE4JW3J-7TaA1v1Y5aWUTiyc'
+	# GoogleKey = 'AIzaSyDViGwJgWL18QSKvPozvAiqloyy1pW2lxg'
 	# GoogleKey = 'AIzaSyB1E9CZaaaw1c77A7eZSophK_LnaGX5XRQ'
 
 	return GoogleKey
@@ -56,7 +56,7 @@ def populate_city(city_id, query):
 
 	#save name, country, description
 	created_city.name = query
-	created_city.slug = query.replace(", ", "-").lower()
+	created_city.slug = query.replace(", ", "-").replace(' ', '-').lower()
 	print("SLUGGGGGGGGG IS: " + created_city.slug)
 	
 	# created_city.country = countries[i]
@@ -98,11 +98,15 @@ def populate_city(city_id, query):
 
 	created_city.save()# save City object in db
 
+
+
 	#delete local files as they're already uploaded to media root
-	
 	if os.path.isfile(created_city.slug + '.jpg'):
+		print("maybeeeeeeeeeeeeeeeeeeee removed local file: "+created_city.slug + '.jpg')
 		os.remove(created_city.slug + '.jpg')
-		print("removed local file: "+created_city.name)
+		print("removed local file: "+created_city.slug + '.jpg')
+
+
 
 	return created_city
 
@@ -266,6 +270,7 @@ def save_image(url, file_name):
 
 	except requests.exceptions.ConnectionError as e:
 		e.status_code = 'Connection refused'
+		retrieved_image = None;
 
 	#create local file to save remote image
 	with open(file_name, 'wb') as f:

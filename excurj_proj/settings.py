@@ -32,18 +32,25 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['excurjdev.pythonanywhere.com', '127.0.0.1']
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'sethmoghrabi@gmail.com'
+EMAIL_HOST_PASSWORD =  'Seeyou1later!'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
 
 # Application definition
 
 INSTALLED_APPS = [
     'excurj',
     'django.contrib.admin',
+    'django.contrib.sites',
+    'registration',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'registration',
     'crispy_forms',
     'widget_tweaks',
 ]
@@ -137,8 +144,9 @@ MEDIA_URL = '/media/'
 
 
 #Django-Registeration-Redux variables
-
-REGISTRATION_AUTO_LOGIN =True
+REGISTRATION_AUTO_LOGIN = True
 REGISTRATION = True
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/'
+ACCOUNT_ACTIVATION_DAYS = 7
+SITE_ID=1

@@ -1,11 +1,12 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from excurj.models import City, UserProfile, RequestReference, Request, User, Excursion
 from django.db.models import Count
 from django.contrib.auth.models import User
 import population_script
 from django.db.models import Q
-from excurj.forms import UserForm, UserProfileForm
+from excurj.forms import UserForm, UserProfileForm, EditAccountForm, EditProfileForm
 from django.shortcuts import redirect
 from django.core.exceptions import MultipleObjectsReturned
 
@@ -126,7 +127,25 @@ def search(request):
 		except User.DoesNotExist:
 			return HttpResponse("No profiles were returned based on this query :(")
 		
+def creat_city_object(city_search_text, profile):
+	""" takes query string and UserProfile object and saves it in the user's profile"""
+	try:
 
+		searched_city_id = population_script.get_city_json(
+		city_search_text.replace(" ", ""))['results'][0]['id']#brings back city ID from the Google API
+		print("IDDDDDDDDDDDDDDDDD is: " + searched_city_id)
+
+		# city = City.objects.get(city_id = searched_city_id)
+		city = City.objects.get(city_id = searched_city_id)
+		profile.city = city
+
+	except City.DoesNotExist:
+		city = population_script.populate_city(searched_city_id, city_search_text)
+		# city = City.objects.create(city_id = searched_city_id)
+		profile.city = city
+
+	except IndexError:
+		return HttpResponse("There's no such city, please pick a city from the list.")
 	
 def createprofile(request):
 	if request.method =='POST':
@@ -146,32 +165,25 @@ def createprofile(request):
 			
 
 			searched_city = request.POST['city_search_text']#brings back the city search result as text
-			try:
+			creat_city_object(searched_city, profile)
+			# try:
 
-				searched_city_id = population_script.get_city_json(
-				searched_city.replace(" ", ""))['results'][0]['id']#brings back city ID from the Google API
-				print("IDDDDDDDDDDDDDDDDD is: " + searched_city_id)
+			# 	searched_city_id = population_script.get_city_json(
+			# 	searched_city.replace(" ", ""))['results'][0]['id']#brings back city ID from the Google API
+			# 	print("IDDDDDDDDDDDDDDDDD is: " + searched_city_id)
 
-				# city = City.objects.get(city_id = searched_city_id)
-				city = City.objects.get(city_id = searched_city_id)
-				profile.city = city
+			# 	# city = City.objects.get(city_id = searched_city_id)
+			# 	city = City.objects.get(city_id = searched_city_id)
+			# 	profile.city = city
 			
-			except City.DoesNotExist:
-				city = population_script.populate_city(searched_city_id, searched_city)
-				# city = City.objects.create(city_id = searched_city_id)
-				profile.city = city
+			# except City.DoesNotExist:
+			# 	city = population_script.populate_city(searched_city_id, searched_city)
+			# 	# city = City.objects.create(city_id = searched_city_id)
+			# 	profile.city = city
 
-			except IndexError:
-				return HttpResponse("There's no such city, please pick a city from the list.")
+			# except IndexError:
+			# 	return HttpResponse("There's no such city, please pick a city from the list.")
 
-		    # searched_city_id != -1:#If it's a valid city
-			
-
-			# return show_city(request, city.slug)
-			# profile.city = city
-
-			# else:
-			# 	return HttpResponse("There's no such city, please try a different query.")
 
 			if 'prof_pic' in request.FILES:#now save the profile pic
 				profile.prof_pic = request.FILES['prof_pic']
@@ -195,3 +207,48 @@ def createprofile(request):
 
 	return render(request, 'excurj/createprofile.html', {'user_form':user_form, 'profile_form':profile_form})
 	
+
+def editprofile(request):
+	if request.method == 'POST':
+		edit_profile_form = EditProfileForm(request.POST, instance=request.user.profile)
+
+		if edit_profile_form.is_valid():
+
+			profile = edit_profile_form.save(commit=False)
+			
+			if 'prof_pic' in request.FILES:#now save the profile pic
+
+				profile.prof_pic = request.FILES['prof_pic']
+
+			else:
+				profile.prof_pic = 'profile_pictures/anon.png'
+
+			if 'city_search_text' in request.POST:
+				creat_city_object(request.POST['city_search_text'], profile)
+
+			profile.save()
+
+			if 'next' in request.GET:
+				return redirect(request.GET['next'])
+		else:
+			print (profile_form.errors)
+	else:
+		edit_profile_form = EditProfileForm(instance=request.user.profile)
+
+	return render(request, 'excurj/editprofile.html', {'edit_profile_form':edit_profile_form,})
+
+
+
+def editaccount(request):
+	if request.method == 'POST':
+		edit_account_form = EditAccountForm(request.POST, instance=request.user)
+		if edit_account_form.is_valid():
+			edit_account_form.save()
+
+			if 'next' in request.GET:
+				return redirect(request.GET['next'])
+	else:
+		edit_account_form = EditAccountForm(instance=request.user)
+		# edit_profile_form = EditProfileForm(instance=request.user.profile)
+
+	return render(request, 'excurj/editaccount.html', {'edit_account_form':edit_account_form,})

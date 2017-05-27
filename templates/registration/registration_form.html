@@ -1,24 +1,23 @@
 {% extends 'excurj/base.html' %}
 {% load staticfiles %}
+{% load i18n %}
 {% load crispy_forms_tags %}
 
 {% block title_block %}
-	Login to Your Excurj Account
+	Register with excurj.
 {% endblock %}
 
 {% block body_block %}
-	<div style="margin-top: 70px;">	
+	<div style="margin-top: 70px;margin-bottom: 70px;" class="col-sm-6 col-sm-offset-3">	
 
 	<h1>Register here</h1>
+	
+		<form method="post" action=".">
+			{% csrf_token %}
+			{{ form|crispy}}
 
-	<form method="post" action=".">
-		{% csrf_token %}
-		{{ form|crispy }}
-
-		<input type="submit" name="Log in">
-		
-
-	</form>
-
+			<input class="btn btn-primary" type="submit" name="Log in">
+		</form>
+	
 	</div>
 {% endblock %}

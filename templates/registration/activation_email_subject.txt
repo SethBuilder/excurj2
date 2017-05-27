@@ -1,1 +1,1 @@
-Seif test excurj
+{% load i18n %}{% trans "Account activation on" %} Complete registraion for {{ site.name }} :)

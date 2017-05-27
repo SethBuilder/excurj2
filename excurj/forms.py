@@ -22,6 +22,20 @@ class UserForm(forms.ModelForm):
 	    fields = ('first_name', 'last_name')
 
 
+class EditAccountForm(forms.ModelForm):
+	class Meta:
+		model = User
+		exclude = ('password','is_staff', 'is_active', 'user_permissions', 'groups', 
+			'date_joined', 'last_login', 'date_joined', 'is_superuser')
+
+	def save(self, commit=True):
+		user = super(EditAccountForm, self).save(commit=False)
+
+		if commit:
+		    user.save()
+		return user
+
+
 class UserProfileForm(forms.ModelForm):
 	city_search_text = forms.CharField(
 		label = "Your Current City:",
@@ -35,36 +49,7 @@ class UserProfileForm(forms.ModelForm):
 	    # 	'music_movies_books','friendship','what_will_you_show_visitors', )
         
 
-
-# class UpdateUserForm(forms.ModelForm):
-#     username = forms.CharField(required=True)
-#     email = forms.EmailField(required=True)
-#     first_name = forms.CharField(required=False)
-#     last_name = forms.CharField(required=False)
-
-#     class Meta:
-#         model = User
-#         fields = ('username', 'email', 'first_name', 'last_name')
-
-#     def save(self, commit=True):
-#         user = super(UpdateUserForm, self).save(commit=False)
-
-#         if commit:
-#             user.save()
-
-#         return user
-
-
-# class UpdateProfileForm(forms.ModelForm):
-#     city = models.ForeignKey(City)
-
-#     class Meta:
-#         model = UserProfile
-#         fields = ('city', 'profilepic', 'hobbies', 'languages')
-
-#     def save(self, commit=True):
-#         profile = super(UpdateProfileForm, self).save(commit=False)
-
-#         if commit:
-#             profile.save()
-#         return profile
+class EditProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        exclude = ('city','user')#I'm testing to update these fields

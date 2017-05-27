@@ -74,8 +74,8 @@ async defer></script>
             <ul class="nav navbar-nav navbar-right">
 
             {% if not request.user.is_authenticated %}
-              <li><a href=" {% url 'excurj:auth_login' %} ">LOG IN</a></li>
-              <li><a href=" {% url 'excurj:registration_register' %} " id="jump">JOIN</a></li>
+              <li><a href=" {% url 'auth_login' %} ">LOG IN</a></li>
+              <li><a href=" {% url 'registration_register' %} " id="jump">JOIN</a></li>
 
             {% else %}
 
@@ -87,7 +87,7 @@ async defer></script>
               <li class="dropli"><a href="">My Dashboard</a></li>
               <li class="dropli"><a href="{% url 'excurj:show_profile' request.user.username %}">My Profile</a></li>
               <li class="dropli"><a href="">Account</a></li>
-              <li class="dropli"><a href="{% url 'excurj:auth_logout' %}?next=/"> logout</a></li>
+              <li class="dropli"><a href="{% url 'auth_logout' %}?next=/"> logout</a></li>
             </div>
 
             
@@ -137,7 +137,11 @@ async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     
     <script>
-        $('#id_dob').datepicker({});
+        $('#id_dob').datepicker({
+          changeMonth: true,
+          changeYear: true,
+          yearRange: '1925:'+(new Date).getFullYear()
+        });
       </script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>

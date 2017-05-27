@@ -1,16 +1,15 @@
 {% extends 'excurj/base.html' %}
 {% load staticfiles %}
+{% load i18n %}
+{% load crispy_forms_tags %}
 
 {% block title_block %}
-	Login to Your Excurj Account
+	Registration Complete!
 {% endblock %}
 
+
 {% block body_block %}
-	<div style="margin-top: 70px;">	
-
-	<h1>Registeratin complete</h1>
-	<p>You are now logged in</p>
-
-
-	</div>
+<div style="margin-top: 70px;margin-bottom: 70px;" class="col-sm-4 col-sm-offset-4">
+	<p class="lead">{% trans "You are now registered. Activation email sent." %}</p>
+</div>
 {% endblock %}

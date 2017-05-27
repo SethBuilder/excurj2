@@ -1,14 +1,14 @@
 {% extends 'excurj/base.html' %}
 {% load staticfiles %}
+{% load i18n %}
+{% load crispy_forms_tags %}
 
 {% block title_block %}
-	Login to Your Excurj Account
+	Logged out successfully
 {% endblock %}
 
 {% block body_block %}
-	<div style="margin-top: 70px;">	
-
-	<h1>You are noe logged out</h1>
-
-	</div>
+<div style="margin-top: 70px;" class="col-sm-6 col-sm-offset-3">
+	<p class="lead" style="text-align: center;">{% trans "Logged out" %}</p>
+</div>
 {% endblock %}
