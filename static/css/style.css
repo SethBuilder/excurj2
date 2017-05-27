@@ -653,7 +653,9 @@ ul.footer-links li a{
 	display: block;
 }
 
-
+ul.navbar-nav li.no_desktop{
+	display: none;
+}
 
 @media only screen and (max-width: 936px){
 
@@ -668,8 +670,16 @@ ul.footer-links li a{
 	
 }
 
+.no_mobile{
+	display: none;
+}
+
 .no-mobile{
 	display: none;
+}
+
+ul.navbar-nav li.no_desktop{
+	display: inline;
 }
 
 .mobile img{
@@ -754,6 +764,18 @@ ul.footer-links li a{
 
 
 @media only screen and (max-width: 750px){
+
+.no-mobile{
+	display: none;
+}
+
+.no_mobile{
+	display: none;
+}
+
+.on_mobile{
+	display: inline;
+}
 
 	#mainNavBar{
 		background-color: rgba(255,255,255,1);
