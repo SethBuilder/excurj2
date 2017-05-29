@@ -70,9 +70,10 @@ nav.navbar.opaque{
 }*/
 
 .active{
-	background-color: white;
-	opacity: .5;
+	background-color: #f5f8fa;
+	opacity: 1;
 }
+
 
 #topsearchbox{
 	width: 200px;
@@ -88,7 +89,7 @@ nav.navbar.opaque{
 
 }
 
-ul.nav li:hover{
+#mainNavBar ul.nav li:hover{
 	background-color: white;
 	color: white;
 	opacity: 1;
@@ -477,25 +478,39 @@ position: relative;
 
 }
 
-.ready-header{
+.ready-header, .city_header{
 	position: absolute;
 	text-align: center;
 	top: 60%;
     left: 50%;
     transform: translate(-50%, -60%);
-    
     background-color: rgba(255,255,255,.2);
     padding: 35px;
 }
 
-.ready-header h2{
+.city_header{
+	position: absolute;
+	text-align: center;
+	top: 60%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    background-color: rgba(0,0,0,.4);
+    padding: 35px;
+}
+
+.ready-header h2 {
 	color: white;
 	font-size: 46px;
 	font-weight: lighter;
 	line-height: 1.1;
-	
 }
 
+.city_header h1{
+	color: white;
+	font-size: 55px;
+	font-weight: lighter;
+	line-height: 1.1;
+}
 
 
 .ready-header-button{
@@ -519,11 +534,12 @@ footer{
 	font-size: .9em;
 	padding: 2.2rem 0 1.5rem; 
 	text-align: center;
-	clear: both;
+	clear: left;
 }
 .footer-container{
 	margin: 0 20px;
 	max-width: 1240px;
+	clear: both;
 
 }
 
@@ -626,26 +642,50 @@ ul.footer-links li a{
 
 #prof_dropdown{
 	position: absolute;
-    top: 50px;
+    top: 48px;
     background: white;
-    padding: 20px;
+    
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     display: none;
-    border-radius: 15px;
+    border-radius: 12px;
 }
 
 #prof_dropdown li.dropli{
 	float: none !important;
 	text-decoration: none;
+	
+	
+}
+
+#prof_dropdown li.dropli:not(:last-child){
 	border-bottom: 1px solid grey;
-	padding: 10px 0;
 }
 
 #prof_dropdown li.dropli a{
 	display: block;
 	text-decoration: none;
+	padding: 20px;
 	
+}
+
+#prof_dropdown li.dropli:hover{
+	background-color: #63b8ff !important;
+	
+}
+
+#prof_dropdown li.dropli:last-child:hover{
+	border-bottom-left-radius: 12px;
+	border-bottom-right-radius: 12px;
+}
+
+#prof_dropdown li.dropli:first-child:hover{
+	border-top-left-radius: 12px;
+	border-top-right-radius: 12px;
+}
+
+#prof_dropdown li.dropli:hover a{
+	color: white;
 }
 
 
@@ -657,7 +697,191 @@ ul.navbar-nav li.no_desktop{
 	display: none;
 }
 
+
+
+/*CITY PAGE CSS*/
+div.jumbotron #city_jumbotron{
+	background: no-repeat fixed;
+    background-size: cover;
+    margin: 0;
+    
+    padding: 0px;
+    width: 100%;
+    object-fit: cover;
+    min-height: 200px;
+    
+}
+
+div.jumbotron#city_jumbotron .container{
+	
+    margin: 0;
+    padding: 0;
+    min-height: 400px;
+    position: relative;
+    /*background-image: url('url('{{ MEDIA_URL }}{{city.city_image}}')');*/
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    width: 100%;
+    -webkit-filter: brightness(1.10);
+    filter: brightness(1.10);
+    
+}
+
+/*city TABS CSS*/
+
+
+ul.nav#tabs {
+    border-bottom: none !important;
+    text-align:center !important;
+    width: 100%;
+    background-color: #eceff2;
+
+}
+
+ul.nav#tabs li a{
+	color: black;
+	
+}
+
+ul.nav#tabs li.active a{
+	color: #3060A8;
+	background-color: transparent;
+}
+
+ul.nav#tabs li.active{
+	opacity: 1;
+}
+
+ul.nav#tabs li{
+	/*padding: 0 5px;*/
+	display: inline-block !important;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+/*TABS CSS*/
+
+
+ul.nav#tabs_user {
+    border-bottom: none !important;
+    text-align:center !important;
+    width: 100%;
+    background-color: #eceff2;
+}
+
+ul.nav#tabs_user li a{
+	color: black;
+	
+}
+
+ul.nav#tabs_user li.active a{
+	color: #3060A8;
+	background-color: transparent;
+}
+
+ul.nav#tabs_user li.active{
+	opacity: 1;
+}
+
+ul.nav#tabs_user li{
+	/*padding: 0 5px;*/
+	display: inline-block !important;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+/*LOCALS' TABLE CSS*/
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+	vertical-align: middle;
+	font-size: 20px;
+}
+
+table.table{
+	width: 100%;
+	
+}
+
+
+
+
+/*USER PROFILE CSS*/
+div.jumbotron#user_jumbotron .container{
+    margin: 0;
+    padding: 0;
+    min-height: 320px;
+    position: relative;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    width: 100%;
+    -webkit-filter: brightness(1.10);
+    filter: brightness(1.10);
+
+}
+
+
+.prof_pic_overlay{
+	position: absolute;
+	left: 70px;
+	top:190px;
+	box-shadow: 0 1px 1px rgba(136,153,166,0.15);
+	z-index: 3;
+	
+	border-radius: 15px;
+
+}
+
+.prof_pic_overlay h3, div.tab-content div#about h3{
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 28px;
+    margin-right: 2px;
+    word-wrap: break-word;
+    color: black;
+}
+
+.prof_pic_overlay img{
+	width: 200px;
+	height: 200px;
+	border-radius: 12px;
+}
+
+.personal_info{
+	
+	margin-left: 70px;
+	/*margin-top: 80px;*/
+	background-color:  #f5f8fa!important;
+}
+
+.personal_info p{
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+}
+
+
+.abouts{
+	background-color: white; 
+	padding: 18px;
+	border-radius: 12px;
+	margin-top: 50px;
+	margin-bottom: 50px;
+	/*box-shadow: 0 2px 4px 0 rgba(255, 255, 255, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);*/
+}
+
+
+
+
+
 @media only screen and (max-width: 936px){
+
+ul.nav#tabs_user {
+margin-top: 80px;
+}
 
 .mobile{
 	display: inline;
@@ -666,8 +890,7 @@ ul.navbar-nav li.no_desktop{
 	-o-background-size: cover;
     -moz-background-size: cover;
     -webkit-background-size: cover;
-	background-size: cover;
-	
+	background-size: cover;	
 }
 
 .no_mobile{

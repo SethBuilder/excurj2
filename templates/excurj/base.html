@@ -91,7 +91,7 @@ async defer></script>
             <div id="prof_dropdown">
               <li class="dropli no_mobile"><a class="no_mobile" href="">My Dashboard</a></li>
               <li class="dropli no_mobile"><a class="no_mobile" href="{% url 'excurj:show_profile' request.user.username %}">My Profile</a></li>
-              <li class="dropli no_mobile"><a class="no_mobile" href="">Account</a></li>
+              <li class="dropli no_mobile"><a class="no_mobile" href="{% url 'excurj:editaccount' %}">Account</a></li>
               <li class="dropli no_mobile"><a class="no_mobile" href="{% url 'auth_logout' %}?next=/"> logout</a></li>
             </div>
 
@@ -104,10 +104,8 @@ async defer></script>
     	</nav>
 
     	{% block body_block %}
-    		This page is undergoing maintenance, it'll be up in a giffy :)
+    		<p class="lead">This page is undergoing maintenance, it'll be up in a giffy :)</p>
     	{% endblock %}
-
-	   </div>
 
     <footer>
       <div class="footer-container">
@@ -130,6 +128,10 @@ async defer></script>
 
       <div class="copyrights"><p>Copyrights 2017 by excurj.com. Made with 100% recycled pixels.</p></div>
     </footer>
+
+	 </div>
+
+
 
     <!-- <img src=" {% static 'images/up.svg' %}" class="up"> 
     <div class="feedback">

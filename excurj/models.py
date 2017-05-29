@@ -16,7 +16,7 @@ class City(models.Model):
 		verbose_name_plural = 'Cities'
 
 	def __str__(self):
-		return self.name + ", " + self.country
+		return self.name
 
 	@property
 	def photo_url(self):
@@ -26,6 +26,11 @@ class City(models.Model):
 	def save(self, *args, **kwargs):
 		self.slug = slugify(self.name + " " + self.country)
 		super(City, self).save(*args, **kwargs)
+
+	def display_name(self):
+		return self.name.split(",")[0]
+
+	display_name = property(display_name)
 
 
 class Request(models.Model):
@@ -105,6 +110,11 @@ class UserProfile(models.Model):
 	def __str__(self):
 		return self.user.first_name
 
+	def age(self):
+		import datetime
+		return int((datetime.date.today() - self.dob).days / 365.25  )
+
+	age = property(age)
 
 class Excursion(models.Model):
 	"""traveler lists his trips so local could see them and possibly offer to take him out"""

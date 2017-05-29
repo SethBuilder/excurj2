@@ -68,13 +68,16 @@ def show_profile(request, username):
 	try:
 		user = User.objects.get(username=username)
 		reqs = Request.objects.filter(local=user)
-		context_dict['user'] = user
+		excurjs = Excursion.objects.filter(traveler=user)
 
+		context_dict['user'] = user
 		context_dict['reqs'] = reqs
+		context_dict['excurjs'] = excurjs
 
 	except User.DoesNotExist:
 		context_dict['user'] = None
 		context_dict['reqs'] = None
+		context_dict['excurjs'] = None
 
 	return render(request, 'excurj/user.html', context_dict)
 
@@ -228,12 +231,19 @@ def editprofile(request):
 
 			profile.save()
 
-			if 'next' in request.GET:
-				return redirect(request.GET['next'])
+			return show_profile(request, request.user.username)
+
+			# if 'next' in request.GET:
+			# 	return redirect(request.GET['next'])
 		else:
 			print (profile_form.errors)
 	else:
-		edit_profile_form = EditProfileForm(instance=request.user.profile)
+		if request.user.is_authenticated():
+			edit_profile_form = EditProfileForm(instance=request.user.profile)
+		else:
+			return HttpResponseRedirect("/accounts/login/")
+
+
 
 	return render(request, 'excurj/editprofile.html', {'edit_profile_form':edit_profile_form,})
 
@@ -244,11 +254,15 @@ def editaccount(request):
 		edit_account_form = EditAccountForm(request.POST, instance=request.user)
 		if edit_account_form.is_valid():
 			edit_account_form.save()
-
-			if 'next' in request.GET:
-				return redirect(request.GET['next'])
+			return show_profile(request, request.user.username)
+			# if 'next' in request.GET:
+			# 	return redirect(request.GET['next'])
 	else:
-		edit_account_form = EditAccountForm(instance=request.user)
+		if request.user.is_authenticated():
+			edit_account_form = EditAccountForm(instance=request.user)
+		else:
+			return HttpResponseRedirect("/accounts/login/")
+		
 		# edit_profile_form = EditProfileForm(instance=request.user.profile)
 
 	return render(request, 'excurj/editaccount.html', {'edit_account_form':edit_account_form,})

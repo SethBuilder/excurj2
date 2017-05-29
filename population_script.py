@@ -22,8 +22,8 @@ def get_json(url):
 
 def get_google_key():
 	""" returns Google api key"""
-	GoogleKey = 'AIzaSyDaa7NZzS-SE4JW3J-7TaA1v1Y5aWUTiyc'
-	# GoogleKey = 'AIzaSyDViGwJgWL18QSKvPozvAiqloyy1pW2lxg'
+	# GoogleKey = 'AIzaSyDaa7NZzS-SE4JW3J-7TaA1v1Y5aWUTiyc'
+	GoogleKey = 'AIzaSyDViGwJgWL18QSKvPozvAiqloyy1pW2lxg'
 	# GoogleKey = 'AIzaSyB1E9CZaaaw1c77A7eZSophK_LnaGX5XRQ'
 
 	return GoogleKey
@@ -63,8 +63,12 @@ def populate_city(city_id, query):
 
 	# send city and country name to wikipedia and exctract first 5 sentences
 	try:
-		created_city.description = wikipedia.summary(query, sentences=5) 
+		created_city.description = wikipedia.summary(query)
+		if created_city.description == "":
+			created_city.description = "We couldn't find wiki summary for this town."
 	except wikipedia.exceptions.PageError:
+		created_city.description = "We couldn't find wiki summary for this town."
+	except wikipedia.exceptions.DisambiguationError:
 		created_city.description = "We couldn't find wiki summary for this town."
 
 	jsondata = get_city_json(query)
@@ -193,21 +197,22 @@ def populate_users():
 		cities = City.objects.all()#else, call them from the db
 
 	#URLs that bring back data for test users, one URL for each city
-	urls = ['https://randomuser.me/api/?nat=gb&results=10', 'https://randomuser.me/api/?nat=fr&results=2', 
-	'https://randomuser.me/api/?nat=de&results=5', 'https://randomuser.me/api/?nat=us&results=2', 
+	urls = ['https://randomuser.me/api/?nat=gb&results=3', 'https://randomuser.me/api/?nat=fr&results=2', 
+	'https://randomuser.me/api/?nat=de&results=2', 'https://randomuser.me/api/?nat=us&results=1', 
 	'https://randomuser.me/api/?results=0', 'https://randomuser.me/api/?results=1', 'https://randomuser.me/api/?results=3&nat=es', 
 	'https://randomuser.me/api/?results=0', 'https://randomuser.me/api/?results=0', 'https://randomuser.me/api/?results=3&nat=ca']
 
 	#go through random data urls
 	for i in range(len(urls)):
-		users_in_json = get_json(urls[i])#bring json data for users of specific city and nationality
-		user_list = get_users(users_in_json)#returns list of User objects
+		users_in_json = get_json(urls[i])#bring random json data for users of specific city and nationality
+		user_list = get_users(users_in_json, cities[i], users_in_json)#returns list of User objects
 		#send User objects list, json data and a City object to create profiles
-		user_profiles = get_profiles(user_list, cities[i], users_in_json)
+		# user_profiles = get_profiles(user_list, cities[i], users_in_json)
 	
-def get_users(users):
+def get_users(users, city, users_in_json):
 	"""takes JSON data for test users and bring back a list of User objects"""
 	user_list = []
+	profiles = []
 	for i in range(len(users['results'])):
 
 		#1. fetch username
@@ -222,17 +227,12 @@ def get_users(users):
 		user.email = users['results'][i]['email']
 		user.password = users['results'][i]['login']['password']
 
-		user.save()#save User object
-		user_list.append(user)
 
-	return user_list
 
-def get_profiles(user_list, city, users_in_json):
-	profiles = []
-	for i in range(len(user_list)):
+
 
 		#now create User Profile
-		profile = UserProfile.objects.get_or_create(user=user_list[i])[0]
+		profile = UserProfile.objects.get_or_create(user=user)[0]
 
 		#fill in the City object
 		profile.city = city
@@ -250,14 +250,77 @@ def get_profiles(user_list, city, users_in_json):
 		#fill gender
 		profile.sex = users_in_json['results'][i]['gender']
 
+		#now fill education and career
+
+		education = ["MBA", 'MSc Physics', 'BSc ComSi', 'Bachelor of Sociology', 'Bachelor of Latin and Italian',
+		'Student of the Arts!', 'MA', 'High School Diploma', 'PhD of Astronomy', 'Community College']
+
+		career = ['CEO', 'student', 'web developer', 'teacher', 'interpreter', 'curator', 'teacher', 'shop keeper',
+		'professor', 'Police man']
+
+		profile.career = random.choice(career)
+		profile.education = random.choice(education)
+
 		profile.save()
 		profiles.append(profile)
+
+		user.save()#save User object
+		user_list.append(user)
+
+
 
 	#delete local files (prof pics) as they're already uploaded to media root
 	for profile in profiles:
 		if os.path.isfile(str(profile.user.id) + '.jpg'):
 			os.remove(str(profile.user.id) + '.jpg')
 			print("removed local file: "+ str(profile.user.id))
+
+	print("JSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSon is: " + str(users_in_json))
+
+	return user_list
+
+# def get_profiles(user_list, city, users_in_json):
+# 	profiles = []
+# 	for i in range(len(user_list)):
+
+# 		#now create User Profile
+# 		profile = UserProfile.objects.get_or_create(user=user_list[i])[0]
+
+# 		#fill in the City object
+# 		profile.city = city
+# 		profile.dob = datetime.datetime.strptime(users_in_json['results'][i]['dob'], '%Y-%m-%d %H:%M:%S').date()
+# 		# print(users_in_json['results'][i]['dob'])
+# 		# print(users_in_json['results'][i]['picture']['large'])# TO DELETE
+
+# 		#fetch Django file (prof_pic)
+# 		django_file = save_image(users_in_json['results'][i]['picture']['large'], str(profile.user.id) + '.jpg')
+
+# 		#save prof_pic
+# 		profile.prof_pic.save(str(profile.user.id) + '.jpg', django_file, save=True)
+# 		django_file.close()
+
+# 		#fill gender
+# 		profile.sex = users_in_json['results'][i]['gender']
+
+# 		#now fill education and career
+
+# 		education = ["MBA", 'MSc Physics', 'BSc ComSi', 'Bachelor of Sociology', 'Bachelor of Latin and Italian',
+# 		'Student of the Arts!', 'MA', 'High School Diploma', 'PhD of Astronomy', 'Community College']
+
+# 		career = ['CEO', 'student', 'web developer', 'teacher', 'interpreter', 'curator', 'teacher', 'shop keeper',
+# 		'professor', 'Police man']
+
+# 		profile.career = random.choice(career)
+# 		profile.education = random.choice(education)
+
+# 		profile.save()
+# 		profiles.append(profile)
+
+# 	#delete local files (prof pics) as they're already uploaded to media root
+# 	for profile in profiles:
+# 		if os.path.isfile(str(profile.user.id) + '.jpg'):
+# 			os.remove(str(profile.user.id) + '.jpg')
+# 			print("removed local file: "+ str(profile.user.id))
 
 
 def save_image(url, file_name):
@@ -314,7 +377,7 @@ def populate_excursions():
 	# end_date = datetime.date.today().replace(day=31, month=12).toordinal()
 
 	#generate 10 excursions
-	for i in range(10):
+	for i in range(30):
 		#generate random date
 	 	# date = datetime.date.fromordinal(random.randint(start_date, end_date))
 	 	city=random.choice(city_list)
@@ -431,6 +494,9 @@ def populate_request_references():
 		msg_from_traveler4 = "As an avid traveler I immensely enjoy meeting friendly locals. Thank you %s please do stop by."
 		msg_from_traveler5 = "Thank you %s! I enjoyed the tour!"
 		msg_from_traveler6 = "Couldn't have asked for a better guide than %s. Such a great persoanlity!"
+		msg_from_traveler7 = "%s is a wonderful guide and now a true friend."
+		msg_from_traveler8 = "I had an enjoyable time with %s!"
+		msg_from_traveler9 = "%s showed me around town and visited attractions. It was a wonderful time except wasn't for the rain :)"
 
 		msg_from_local1 = "I met up with %s and walked around town, then we had lunch and tried the local coffee, we'll stay in touch for sure."
 		msg_from_local2 = "%s was so curious about town and I enjoyed explaining all the small details that I thought would be interesting "
@@ -438,6 +504,9 @@ def populate_request_references():
 		msg_from_local4 = "%s is an interesting person and quit well-travlled. I enjoyed showing him around my town."
 		msg_from_local5 = "Thank you %s for visiting me! come back anytime!"
 		msg_from_local6 = "%s is a wonderful traveller, full of curiousity and awesomeness!"
+		msg_from_local7 = "%s was a curious traveler that I enjoyed showing him around"
+		msg_from_local8 = "I enjoyed the company of %s, you're welcome to visit me again anytime!"
+		msg_from_local9 = "%s is now my friend that I'd love to visit back!"
 
 
 
