@@ -8,12 +8,13 @@
 {% endblock %}
 
 {% block body_block %}
+<div id="loading"><img src= "{% static 'images/giphy.gif' %}"></div>
 
-<div class="col-sm-6 col-sm-offset-3" style="margin-top: 100px;margin-bottom: 100px" >
+<div id="content" class="col-sm-6 col-sm-offset-3" style="margin-top: 100px;margin-bottom: 100px" >
 
 <h1>Create Your Profile</h1>
 
-	<form method="post" action="?next=/" enctype="multipart/form-data" id="create_profile_form">
+	<form method="post" action="?next=/" enctype="multipart/form-data">
                 {% csrf_token %}
                 <!-- {{ form|crispy }}
 
@@ -28,10 +29,14 @@
                  {{ user_form|crispy }}
             	 {{ profile_form|crispy }}
 
-    <input type="submit" value="Submit" class="btn btn-primary btn-lg " />
+ 
+
+    <input type="submit" value="Submit" class="btn btn-primary btn-lg"/>
+
+
 
         </form>    	
-
+					
 </div>
 
 

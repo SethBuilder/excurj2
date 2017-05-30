@@ -245,7 +245,7 @@ nav.navbar.opaque{
 .header-button{
 	padding: 5px 10px;
 	font-size: 20px;
-    
+    background-color: white;
     font-weight: bold;
     color: black;
     text-align: center;
@@ -981,6 +981,7 @@ ul.navbar-nav li.no_desktop{
     font-weight: bold;
     color: black;
     width: 35%
+    background-color: white;
 }
 
 #google_city_search:focus{
@@ -1116,13 +1117,13 @@ ul.navbar-nav li.no_desktop{
 
 @media only screen and (max-width: 470px){
 .jumbotron #container{
-	height: 350px;
+	height: 450px;
 }
 
 .header-button{
 	margin: 0;
 	background-color: white;
-	width: 43%
+	width: 47%
 
 }
 
@@ -1137,7 +1138,7 @@ ul.navbar-nav li.no_desktop{
     font-weight: 20;
     line-height: 1.1;
     margin-bottom: 30px;
-    width: 350px;
+    width: 320px;
 }
 
 .ready{
