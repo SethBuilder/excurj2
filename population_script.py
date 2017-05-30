@@ -335,7 +335,7 @@ def save_image(url, file_name):
 	except requests.exceptions.ConnectionError as e:
 		e.status_code = 'Connection refused'
 		print(e.status_code)
-		retrieved_image = open('static/images/capor.jpg')
+		# retrieved_image = open('static/images/capor.jpg')
 
 	#create local file to save remote image
 	with open(file_name, 'wb') as f:
