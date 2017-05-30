@@ -12,6 +12,7 @@ from time import sleep
 import datetime
 import glob
 import random
+from django.http import HttpResponseServerError
 
 def get_json(url):
 	""" takes Google Places api url and returns raw JSON response"""
@@ -23,8 +24,8 @@ def get_json(url):
 def get_google_key():
 	""" returns Google api key"""
 	# GoogleKey = 'AIzaSyDaa7NZzS-SE4JW3J-7TaA1v1Y5aWUTiyc'
-	GoogleKey = 'AIzaSyDViGwJgWL18QSKvPozvAiqloyy1pW2lxg'
-	# GoogleKey = 'AIzaSyB1E9CZaaaw1c77A7eZSophK_LnaGX5XRQ'
+	# GoogleKey = 'AIzaSyDViGwJgWL18QSKvPozvAiqloyy1pW2lxg'
+	GoogleKey = 'AIzaSyB1E9CZaaaw1c77A7eZSophK_LnaGX5XRQ'
 
 	return GoogleKey
 
@@ -197,9 +198,9 @@ def populate_users():
 		cities = City.objects.all()#else, call them from the db
 
 	#URLs that bring back data for test users, one URL for each city
-	urls = ['https://randomuser.me/api/?nat=gb&results=3', 'https://randomuser.me/api/?nat=fr&results=2', 
-	'https://randomuser.me/api/?nat=de&results=2', 'https://randomuser.me/api/?nat=us&results=1', 
-	'https://randomuser.me/api/?results=0', 'https://randomuser.me/api/?results=1', 'https://randomuser.me/api/?results=3&nat=es', 
+	urls = ['https://randomuser.me/api/?nat=gb&results=5', 'https://randomuser.me/api/?nat=fr&results=4', 
+	'https://randomuser.me/api/?nat=de&results=3', 'https://randomuser.me/api/?nat=us&results=0', 
+	'https://randomuser.me/api/?results=0', 'https://randomuser.me/api/?results=1', 'https://randomuser.me/api/?results=7&nat=es', 
 	'https://randomuser.me/api/?results=0', 'https://randomuser.me/api/?results=0', 'https://randomuser.me/api/?results=3&nat=ca']
 
 	#go through random data urls
@@ -329,11 +330,12 @@ def save_image(url, file_name):
 	#retrieve the profile pic
 	try:
 		retrieved_image = requests.get(url)
-		sleep(2)
+		sleep(3)
 
 	except requests.exceptions.ConnectionError as e:
 		e.status_code = 'Connection refused'
-		retrieved_image = None;
+		print(e.status_code)
+		retrieved_image = open('static/images/capor.jpg')
 
 	#create local file to save remote image
 	with open(file_name, 'wb') as f:
@@ -369,15 +371,18 @@ def populate_excursions():
 		msg4 = "I'll arrive in %s in couple of weeks, would love to meet up."
 		msg5 = "Hello %s! I'm arriving over christmas with my Aunt. Would love to say hello."
 		msg6 = "Hey. I'm coming to %s for the first time soon, would love to make friends there!"
+		msg7 = "Hey. I'm arriving in %s with my partner soon, would love some nice people!"
+		msg8 = "Hello! I'm coming to %s soon, I'm a nice friendly person who loves to chat!"
+		msg9 = "I'm coming to %s with my family, anyone like to show us around? thanks! :)"
 
-		messages.extend((msg3,msg2,msg1,msg4, msg5))
+		messages.extend((msg3,msg2,msg1,msg4, msg5, msg6, msg7, msg8, msg9))
 
 	# #generate a random date from today till last day of the year
 	# start_date = datetime.date.today().toordinal()
 	# end_date = datetime.date.today().replace(day=31, month=12).toordinal()
 
 	#generate 10 excursions
-	for i in range(30):
+	for i in range(35):
 		#generate random date
 	 	# date = datetime.date.fromordinal(random.randint(start_date, end_date))
 	 	city=random.choice(city_list)

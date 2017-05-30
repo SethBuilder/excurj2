@@ -876,6 +876,28 @@ div.jumbotron#user_jumbotron .container{
 
 
 
+/*LOADING GIF*/
+div#loading {
+    display: none;
+    cursor: wait;
+    position: fixed;
+  	top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 4;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 @media only screen and (max-width: 936px){
 
