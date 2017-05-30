@@ -889,10 +889,14 @@ div#loading {
 
 
 
+#tabs_container{
+	width: 100%;position: relative;padding-bottom: 100px
+}
 
 
-
-
+#tabs_content_user{
+	width: 50%; margin: auto;margin-top: 60px;margin-left:400px;
+}
 
 
 
@@ -900,6 +904,20 @@ div#loading {
 
 
 @media only screen and (max-width: 936px){
+
+#tabs_container{
+	margin-top: 200px;
+}
+
+#tabs_content_user{
+	 margin-top: 300px;
+	 margin: auto;
+	 width: 100%;
+}
+
+.personal_info{
+	display: none;
+}
 
 ul.nav#tabs_user {
 margin-top: 80px;
@@ -1011,6 +1029,20 @@ ul.navbar-nav li.no_desktop{
 
 @media only screen and (max-width: 750px){
 
+#tabs_container{
+	margin-top: 200px;
+}
+
+#tabs_content_user{
+	 margin-top: 300px;
+	 margin: auto;
+	 width: 100%;
+}
+
+.personal_info{
+	display: none;
+}
+
 .no-mobile{
 	display: none;
 }
@@ -1069,6 +1101,20 @@ ul.navbar-nav li.no_desktop{
 
 @media only screen and (max-width: 640px){
 
+#tabs_container{
+	margin-top: 280px;
+}
+
+#tabs_content_user{
+	 margin-top: 300px;
+	 margin: auto;
+	 width: 100%;
+}
+
+.personal_info{
+	display: none;
+}
+
 /*.jumbotron p{
 	display: none;
 }*/
@@ -1116,6 +1162,25 @@ ul.navbar-nav li.no_desktop{
 
 
 @media only screen and (max-width: 470px){
+
+li.pull-right {
+    float: none !important;
+}
+
+#tabs_container{
+	margin-top: 280px;
+}
+
+#tabs_content_user{
+	 margin-top: 300px;
+	 margin: auto;
+	 width: 100%;
+}
+
+.personal_info{
+	display: none;
+}
+
 .jumbotron #container{
 	height: 450px;
 }
