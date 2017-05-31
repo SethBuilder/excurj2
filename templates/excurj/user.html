@@ -32,12 +32,17 @@
 		{% if request.user.is_authenticated and request.user.profile == user.profile%}
 
 			<li class="pull-right " style="margin-right: 20px;margin-top: 2px;">
+
 				<button class="btn btn-default btn-md" style=""> <a href=" {% url 'excurj:editprofile' %} "><strong>Edit Profile</strong></a></button>
 			</li>
 
 		{% else %}
-
-			<li class="pull-right " style="margin-right: 20px;margin-top: 2px;"><button class="btn btn-danger btn-md" style=""><strong>Ask {{user.first_name.title}} to Take You Out!</button></li>
+			
+				<li class="pull-right " style="margin-right: 20px;margin-top: 2px;">
+					<button class="btn btn-danger btn-md">
+						<a href="{% url 'excurj:excursionrequest' user.username %}"><strong>Ask {{user.first_name.title}} to Take You Out!</strong> </a>
+					</button>
+				</li>
 		{% endif %}
 	</ul>
 <div style="" id="tabs_container">

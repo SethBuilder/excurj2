@@ -35,11 +35,11 @@ class City(models.Model):
 
 class Request(models.Model):
 	"""traveler requests local to take her out upon liking her profile"""
-	traveler = models.ForeignKey(User, related_name='traveler_requests')
-	local = models.ForeignKey(User, related_name='local_requested')
+	traveler = models.ForeignKey(User, related_name='traveler_requests', blank=True)
+	local = models.ForeignKey(User, related_name='local_requested', blank=True)
 	message = models.CharField(max_length=500)
 	date = models.DateField()
-	local_approval = models.BooleanField(default=True)
+	local_approval = models.BooleanField(default=False)
 
 	def __str__(self):
 		return self.traveler.first_name + " " + self.local.first_name
@@ -120,13 +120,17 @@ class Excursion(models.Model):
 	"""traveler lists his trips so local could see them and possibly offer to take him out"""
 	traveler = models.ForeignKey(User, related_name='traveler_lists_excursion')
 	city = models.ForeignKey(City, related_name='visited_city', blank=True, null=True) #Each excursion is connected to one City.
+	city_search_text = models.CharField(blank=True, max_length=300)
 	message = models.CharField(max_length=500)#message to all locals of that city "Hey good people of Edinburgh!"
 	date = models.DateField()
+
+	def __str__(self):
+		return self.traveler.first_name.title() + " " + self.traveler.last_name.title() + "'s trip to " + self.city.name + " on " + str(self.date)
 
 class Offer(models.Model):
 	""" local offers traveler to take her out based on the trips listed by traveler """
 	# traveler = models.ForeignKey(User, related_name='traveler_receives_offer')#not needed since trip already has traveler
 	local = models.ForeignKey(User, related_name='local_offers_excursion')
 	message = models.CharField(max_length=500)
-	trip = models.ForeignKey(Excursion)
+	trip = models.ForeignKey(Excursion, related_name='traveler_trip')
 	traveler_approval = models.BooleanField(blank=True)

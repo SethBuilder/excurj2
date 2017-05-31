@@ -535,6 +535,9 @@ footer{
 	padding: 2.2rem 0 1.5rem; 
 	text-align: center;
 	clear: left;
+	position: absolute;
+	width: 100%;
+	bottom: -15px;
 }
 .footer-container{
 	margin: 0 20px;
@@ -897,6 +900,80 @@ div#loading {
 #tabs_content_user{
 	width: 50%; margin: auto;margin-top: 60px;margin-left:400px;
 }
+
+
+
+/*DHASHBOARD CSS*/
+#dashboard_bio{
+	
+	
+	margin-top: 70px;
+	background-color: white;
+	margin-left: 10px;
+	margin-right: 3px;
+	border-bottom: 2px solid #bfcad2;
+	padding: 0;
+}
+
+#dashboard_bio h3{
+	font-weight: bold;
+	text-align: center;
+	padding:  5px 20px;
+}
+
+#req_i_made, #offers{
+	
+	margin-left: 5px;
+	margin-right: 3px;
+	margin-top: 70px;
+	background-color: white;
+	border-bottom: 2px solid #bfcad2;
+	padding: 0;
+}
+
+#offers{
+	margin-left: 355px;
+}
+
+table.upcoming_guests tbody tr td{
+	font-size: 14px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

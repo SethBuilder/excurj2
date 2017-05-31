@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from excurj.models import City, UserProfile, RequestReference, Request, User, Excursion
+from excurj.models import City, UserProfile, RequestReference, Request, User, Excursion, Offer
 from django.db.models import Count
 from django.contrib.auth.models import User
 import population_script
 from django.db.models import Q
-from excurj.forms import UserForm, UserProfileForm, EditAccountForm, EditProfileForm
+from excurj.forms import UserForm, UserProfileForm, EditAccountForm, EditProfileForm, ExcursionRequestForm, CreateTripForm, OfferExcursionForm
 from django.shortcuts import redirect
 from django.core.exceptions import MultipleObjectsReturned
 
@@ -131,7 +131,7 @@ def search(request):
 			return HttpResponse("No profiles were returned based on this query :(")
 		
 def creat_city_object(city_search_text, profile):
-	""" takes query string and UserProfile object and saves it in the user's profile"""
+	""" takes query string and UserProfile object and saves it in the user's profile - also work for createtrip view"""
 	try:
 
 		searched_city_id = population_script.get_city_json(
@@ -266,3 +266,116 @@ def editaccount(request):
 		# edit_profile_form = EditProfileForm(instance=request.user.profile)
 
 	return render(request, 'excurj/editaccount.html', {'edit_account_form':edit_account_form,})
+
+def excursion_request(request, username):
+	if request.method == 'POST':
+		print("POOOOOOOOST" + str(request.POST))
+		excursion_request_form = ExcursionRequestForm(request.POST)
+		if excursion_request_form.is_valid():
+
+			exj = excursion_request_form.save(commit=False)
+
+			local_username = username
+			print(local_username)
+
+			local = User.objects.get(username=local_username)
+
+			traveler = User.objects.get(username=request.user.username)
+			message = request.POST['message']
+			date = request.POST['date']
+
+			exj.local = local
+			exj.traveler=traveler
+			exj.date=date
+			exj.save()
+
+			if 'next' in request.GET:
+				return redirect(request.GET['next'])
+
+		else:
+			print(excursion_request_form.errors)
+
+		excursion_request = Request.objects.create(local=local, traveler=traveler, message=message, date=date)
+
+	else:
+		excursion_request_form = ExcursionRequestForm()
+
+	return render(request, 'excurj/excursionrequest.html', {'excursion_request_form':excursion_request_form})
+
+
+
+def dashboard(request):
+	context_dict={}
+	if request.user.is_authenticated:
+		#return the logged in user
+		user = User.objects.get(username=request.user.username)
+		context_dict['user'] = user
+
+		#requests made by logged in user for others to take her out
+		requests_i_made = Request.objects.filter(traveler=request.user)
+		context_dict['requests_i_made'] = requests_i_made
+
+		#others asked logged in user to take them out
+		requests_others_made = Request.objects.filter(local=request.user)
+		context_dict['requests_others_made'] = requests_others_made
+
+		#upcoming trips for logged in user
+		trips = Excursion.objects.filter(traveler=request.user)
+		context_dict['trips'] = trips
+
+		#excursions offers others have made
+		offers = Offer.objects.filter(trip__traveler=request.user)
+		context_dict['offers'] = offers
+
+		#travelers coming to the logged in user's town soon
+		upcoming_guests = Excursion.objects.filter(city=request.user.profile.city)
+		context_dict['upcoming_guests'] = upcoming_guests
+
+
+		return render(request, 'excurj/dashboard.html', context_dict)
+
+	else:
+		return HttpResponseRedirect("/accounts/login/")
+
+def createtrip(request):
+	if request.method == 'POST':
+		create_trip_form = CreateTripForm(request.POST)
+
+		if create_trip_form.is_valid():
+			trip = create_trip_form.save(commit=False)
+			trip.traveler = request.user
+			if 'city_search_text' in request.POST:
+				creat_city_object(request.POST['city_search_text'], trip)
+			trip.save()
+
+			if 'next' in request.GET:
+				return redirect(request.GET['next'])
+
+		else:
+			print(create_trip_form.errors)
+
+	else:
+		if request.user.is_authenticated():
+			create_trip_form = CreateTripForm()
+		else:
+			return HttpResponseRedirect("/accounts/login/")
+	return render(request, 'excurj/createtrip.html', {'create_trip_form':create_trip_form})
+
+def offerexcursion(request, username):
+	traveler = User.objects.get(username=username)
+	if request.method == 'POST':
+		offer_excursion_form = OfferExcursionForm(traveler=traveler, city=request.user.profile.city, data=request.POST)
+		if offer_excursion_form.is_valid():
+			offer = offer_excursion_form.save(commit=False)
+			offer.local = request.user
+			offer.traveler_approval = True
+			offer.save()
+			if 'next' in request.GET:
+				return redirect(request.GET['next'])
+		else:
+			print(offer_excursion_form.errors)
+	else:
+
+		offer_excursion_form = OfferExcursionForm(traveler=traveler, city=request.user.profile.city)
+	return render(request, 'excurj/offerexcursion.html', {'offer_excursion_form':offer_excursion_form})
+
