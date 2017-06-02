@@ -53,7 +53,9 @@ async defer></script>
   <body>
 
     <form action=" {% url 'excurj:feedback' %} ">
-      <button id="feedback" class="btn btn-lg btn-primary" name="feedback">FEEDBACK</button>
+        <button id="feedback" class="btn btn-lg btn-primary" name="feedback">
+        <span class="glyphicon glyphicon-send" style="padding-right: 10px;"></span>  FEEDBACK
+      </button>
     </form>
 
     <div>
@@ -127,13 +129,13 @@ async defer></script>
       
       <div class="container">
         <div class="row">
-          <div class="col-lg-4">
+          <div class="col-md-4 col-xs-12">
             <a href=" {% url 'excurj:index' %} " class="">
-              <img src=" {% static 'images/logo.png' %} " class="pull-left">
+              <img src=" {% static 'images/logo.png' %} " class="">
             </a>
           </div>
 
-          <div class="col-lg-4">
+          <div class="col-md-4 col-xs-12">
             <div class="call-to-action">Connect with us</div>
             <a href='#'><i class="fa fa-instagram fa-3x fa-fw"></i></a>
             <a href='#'><i class="fa fa-facebook fa-3x fa-fw"></i></a>
@@ -141,9 +143,7 @@ async defer></script>
             <a href='#'><i class="fa fa-flickr fa-3x fa-fw"></i></a>
           </div>
 
-          <div class="col-lg-4">
-            
-          </div>
+          
         </div>
 
         <div class="row">
@@ -166,9 +166,7 @@ async defer></script>
             </div>
           </div>
 
-          <div class="col-lg-4">
-            
-          </div>
+          
         </div>
         
       </div>
