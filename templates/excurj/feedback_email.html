@@ -1,0 +1,25 @@
+{% extends 'excurj/base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+
+{% block title_block %}
+	Create Trip Form | excurj.
+{% endblock %}
+
+{% block body_block %}
+
+<div class="col-sm-6 col-sm-offset-3" style="margin-top: 100px;margin-bottom: 100px">	
+<h1>We'd love to hear from you {{user.first_name}} !</h1>
+	<form method="post">
+    {% csrf_token %}
+    {{ feedback_form|crispy }}
+    <div class="form-actions">
+      <button type="submit" class="btn btn-lg btn-success">Send</button>
+    </div>
+</form>    	
+
+</div>
+
+
+{% endblock %}

@@ -5,6 +5,7 @@
 {% load widget_tweaks %}
 <html lang="en">
   <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,6 +15,9 @@
     <meta name="description" content="excurj. is a community where people show visitors around their cities to make new friendships.">
     <meta name="keywords" content="Travel, travel mates, excursions, europe, asia, australia, friends, fun, genuine travel experience, culture, cultural exchange, inter-cultural relationships, tolerance, travel, travel blogging">
     <meta name="author" content="Seif Elmughrabi">
+
+    <!--FOR THE THANK YOU PAGE AFTER SUBMITTING FEEDBACK-->
+
 
     <title>
 
@@ -41,9 +45,17 @@ async defer></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     
+    {% block extra_style %}
+      
+    {% endblock %}
+
   </head>
   <body>
-    
+
+    <form action=" {% url 'excurj:feedback' %} ">
+      <button id="feedback" class="btn btn-lg btn-primary" name="feedback">FEEDBACK</button>
+    </form>
+
     <div>
 
     	<nav class="navbar navbar-default navbar-fixed-top">
@@ -110,32 +122,63 @@ async defer></script>
     	{% block body_block %}
     		<p class="lead">This page is undergoing maintenance, it'll be up in a giffy :)</p>
     	{% endblock %}
+</div>
+    <footer style="text-align: center;"> 
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4">
+            <a href=" {% url 'excurj:index' %} " class="">
+              <img src=" {% static 'images/logo.png' %} " class="pull-left">
+            </a>
+          </div>
 
-    <!-- <footer>
-      <div class="footer-container">
-          <div class="call-to-action">Connect with us</div>
-          <a href='#'><i class="fa fa-instagram fa-3x fa-fw"></i></a>
-          <a href='#'><i class="fa fa-facebook fa-3x fa-fw"></i></a>
-          <a href='#'><i class="fa fa-twitter fa-3x fa-fw"></i></a>
-          <a href='#'><i class="fa fa-flickr fa-3x fa-fw"></i></a>   
+          <div class="col-lg-4">
+            <div class="call-to-action">Connect with us</div>
+            <a href='#'><i class="fa fa-instagram fa-3x fa-fw"></i></a>
+            <a href='#'><i class="fa fa-facebook fa-3x fa-fw"></i></a>
+            <a href='#'><i class="fa fa-twitter fa-3x fa-fw"></i></a>
+            <a href='#'><i class="fa fa-flickr fa-3x fa-fw"></i></a>
+          </div>
+
+          <div class="col-lg-4">
+            
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-4">
+            <ul class="footer-links">
+                <li> <a href="">ABOUT</a> </li>
+                <li> <a href="">SAFETY</a> </li>
+                <li> <a href="">SUPPORT</a> </li>
+                <li> <a href="">BLOG</a> </li>
+            </ul>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="copyrights">
+
+              <p class="" >
+                Copyrights 2017 by excurj.com. Made with 100% recycled pixels.
+              </p>
+
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            
+          </div>
+        </div>
+        
       </div>
-
-      <div class="footer-links-container">
-          <ul class="footer-links">
-              <li> <a href="">ABOUT</a> </li>
-              <li> <a href="">SAFETY</a> </li>
-              <li> <a href="">SUPPORT</a> </li>
-              <li> <a href="">BLOG</a> </li>
-
-          </ul>
-      </div>
-
-      <div class="copyrights"><p>Copyrights 2017 by excurj.com. Made with 100% recycled pixels.</p></div>
-    </footer> -->
-
-	 </div>
-
-
+      
+     
+        
+        
+       
+      
+    </footer>
 
     <!-- <img src=" {% static 'images/up.svg' %}" class="up"> 
     <div class="feedback">

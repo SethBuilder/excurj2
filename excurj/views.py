@@ -6,9 +6,10 @@ from django.db.models import Count
 from django.contrib.auth.models import User
 import population_script
 from django.db.models import Q
-from excurj.forms import UserForm, UserProfileForm, EditAccountForm, EditProfileForm, ExcursionRequestForm, CreateTripForm, OfferExcursionForm
+from excurj.forms import UserForm, UserProfileForm, EditAccountForm, EditProfileForm, ExcursionRequestForm, CreateTripForm, OfferExcursionForm, FeedbackForm
 from django.shortcuts import redirect
 from django.core.exceptions import MultipleObjectsReturned
+from django.core.mail import send_mail, BadHeaderError
 
 
 def index(request):
@@ -368,7 +369,6 @@ def offerexcursion(request, username):
 		if offer_excursion_form.is_valid():
 			offer = offer_excursion_form.save(commit=False)
 			offer.local = request.user
-			offer.traveler_approval = True
 			offer.save()
 			if 'next' in request.GET:
 				return redirect(request.GET['next'])
@@ -379,3 +379,34 @@ def offerexcursion(request, username):
 		offer_excursion_form = OfferExcursionForm(traveler=traveler, city=request.user.profile.city)
 	return render(request, 'excurj/offerexcursion.html', {'offer_excursion_form':offer_excursion_form})
 
+def confirmoffer(request, offerid):
+	offer = Offer.objects.get(id = offerid)
+	if 'confirm' in request.GET:
+		
+		offer.traveler_approval = True;
+	else:
+		offer.traveler_approval = False;
+	offer.save()
+
+	return HttpResponseRedirect("/dashboard/#excursionoffers")
+
+def feedback(request):
+	if request.method == 'GET':
+		feedback_form = FeedbackForm()
+	else:
+		feedback_form = FeedbackForm(data = request.POST)
+
+		if feedback_form.is_valid():
+			subject = feedback_form.cleaned_data['subject']
+			recipient = feedback_form.cleaned_data['recipient']
+			message = feedback_form.cleaned_data['message']
+			try:
+				send_mail(subject, message, 'sethmoghrabi@gmail.com', [recipient,])
+			except BadHeaderError:
+				return HttpResponse('Invalid header found.')
+			return thankyou(request)
+
+	return render(request, "excurj/feedback_email.html", {'feedback_form': feedback_form})
+
+def thankyou(request):
+    return render(request, "excurj/thankyousvg/index.html", {})

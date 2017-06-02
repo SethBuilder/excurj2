@@ -129,8 +129,14 @@ class Excursion(models.Model):
 
 class Offer(models.Model):
 	""" local offers traveler to take her out based on the trips listed by traveler """
-	# traveler = models.ForeignKey(User, related_name='traveler_receives_offer')#not needed since trip already has traveler
 	local = models.ForeignKey(User, related_name='local_offers_excursion')
 	message = models.CharField(max_length=500)
 	trip = models.ForeignKey(Excursion, related_name='traveler_trip')
-	traveler_approval = models.BooleanField(blank=True)
+	traveler_approval = models.NullBooleanField(default=None)
+
+
+# class feedback(models.Model):
+# 	"""feedback"""
+# 	name = models.CharField(max_length=100)
+# 	email = models.EmailField()
+# 	message = models.CharField(max_length=1500)

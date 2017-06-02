@@ -19,4 +19,7 @@ urlpatterns=[
 	url(r'^createtrip/$', views.createtrip, name="createtrip"),
 	url(r'^excursionrequest/(?P<username>[\w\-]+)/$', views.excursion_request, name="excursionrequest"),
 	url(r'^offerexcursion/(?P<username>[\w\-]+)/$', views.offerexcursion, name="offerexcursion"),
+	url(r'^feedback/$', views.feedback, name="feedback"),
+	url(r'^thankyou/$', views.thankyou, name="thankyou"),
+	# url(r'^confirmoffer/(?P<offerid>[\w\-]+)/$', views.confirmoffer, name="confirmoffer"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

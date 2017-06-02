@@ -77,7 +77,7 @@
 					<span class="glyphicon glyphicon-sunglasses" style="padding: 10px;font-size: 25px;"></span>EXCURSION OFFERS!
 				</h4>
 
-				<div style="background-color: #fbfcfc;padding: 30px; border-top: 1px solid grey; border-bottom: 1px solid grey">
+				<div style=" background-color: #fbfcfc;padding: 30px; border-top: 1px solid grey; border-bottom: 1px solid grey ; " id="excursionoffers">
 					<p class="lead">
 						These wonderful locals offered to take you out during your upcoming trips!
 					</p>
@@ -94,7 +94,7 @@
 						</thead>
 						<tbody>
 						{% for offer in offers %}
-							<tr>
+							<tr >
 								<td> <img src=" {{offer.local.profile.prof_pic.url}} " class="img-circle" height="100" width="100"> </td>
 								<td>
 									<a href=" {% url 'excurj:show_profile' offer.local.username %} ">{{offer.local.get_full_name.title}}</a>	
@@ -105,12 +105,25 @@
 								<td>
 									{{offer.trip.city.name}}
 								</td>
-								<td>
-									<button class="btn btn-lg btn-success">CONFIRM!</button>
-								</td>
-								<td>
-									<button class="btn btn-lg btn-danger">DECLINE :(</button>
-								</td>
+
+								{% if offer.traveler_approval is null %}
+									<td>
+									<form action=" {% url 'excurj:confirmoffer' %} ">
+										<button class="btn btn-sm btn-success" name="confirm" value="True">CONFIRM!</button>
+										<button class="btn btn-sm btn-danger" name="decline" value="False">DECLINE :(</button>
+									</form>
+									</td>
+									
+
+								{% elif   offer.traveler_approval %}
+									<td>
+										<p>CONFIRMED!</p>
+									</td>
+								{% else%}
+									<td>
+										<p>DECLINED :(</p>
+									</td>
+								{%endif%}
 							</tr>
 						
 						{% endfor %}
@@ -166,7 +179,13 @@
 								</td>
 
 								<td>
+								{% if guest.offer.local  is null %}
+								
 									<button class="btn btn-lg btn-success"> <a href=" {% url 'excurj:offerexcursion' guest.traveler.username %} ">Offer Excursion</a></button>
+									
+								{% else %}
+								<p title="Awaiting confirmation" style="background-color: #6599ff; color: white; vertical-align: center;">Offer Sent</p>
+								{% endif %}
 								</td>
 							</tr>
 						{% endfor %}
@@ -180,7 +199,7 @@
 				</div>
 				<div style=" padding: 10px; padding: 30px;">
 					<p class="lead">
-						These people has sent you requests to take them out! exciting!
+						These people has sent you requests to show them around {{user.profile.city.display_name}} exciting!
 					</p>
 
 					{% if requests_others_made %}
@@ -215,12 +234,10 @@
 								</td>
 
 								<td>
-									<button class="btn btn-lg btn-success">Accept!</button>
+									<button class="btn btn-sm btn-success">Accept!</button>
+									<button class="btn btn-sm btn-danger">Decline :(</button>
 								</td>
 
-								<td>
-									<button class="btn btn-lg btn-danger">Decline :(</button>
-								</td>
 							</tr>
 							{{req.local_approval}}
 						{% endfor %}

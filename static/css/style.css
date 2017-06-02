@@ -297,7 +297,7 @@ nav.navbar.opaque{
 }
 
 .popular-cities-container h2{
-	color: grey;
+	color: black;
 }
 
 .superstars-container h2{
@@ -532,27 +532,15 @@ footer{
 	background-color: white;
 	border-top: 3px solid grey;
 	font-size: .9em;
-	padding: 2.2rem 0 1.5rem; 
-	text-align: center;
-	clear: left;
-	position: absolute;
-	width: 100%;
-	bottom: -15px;
-}
-.footer-container{
-	margin: 0 20px;
-	max-width: 1240px;
-	clear: both;
-
-}
-
-.footer-links-container{
-	margin: 5px;
+	padding: 7px;
 	
 }
 
+
 ul.footer-links{
-	margin: 0px;
+	
+	margin-left: -25px;
+	
 }
 
 ul.footer-links li{
@@ -561,8 +549,9 @@ ul.footer-links li{
 	text-transform: uppercase;
     margin-right: 20px;
     margin-bottom: 0.75em;
-    font-size: 1.1rem;
+    font-size: 12px;
     font-weight: bold;
+
     
 }
 
@@ -573,8 +562,9 @@ ul.footer-links li a{
 }
 
 .copyrights{
-	text-align: center;
+	
 	clear: left;
+	
 	text-transform: none;
     font-size: 12px;
     font-weight: 700;
@@ -938,6 +928,42 @@ div#loading {
 table.upcoming_guests tbody tr td{
 	font-size: 14px;
 }
+
+
+
+body button#feedback{
+	position: fixed;
+	bottom: 5px;
+	right: 5px;
+	z-index: 5;
+	
+}
+
+
+/*START SECTION FEATUED ON*/
+
+/*.featured-on{
+	background-color: #EEE;
+	padding-top: 20px
+	padding-bottom: 20px;
+}
+
+.featured-on p:not(.first){
+	opacity: .4;
+	filter: alpha(opacity=40);
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.first{
+		margin-top: 20px;
+	margin-bottom: 20px;
+}*/
+
+/*END SECTION FEATUED ON*/
+
+
+
 
 
 
