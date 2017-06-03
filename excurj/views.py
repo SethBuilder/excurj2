@@ -436,6 +436,7 @@ def confirmoffer(request, offerid):
 def feedback(request):
 	if request.method == 'GET':
 		feedback_form = FeedbackForm()
+		send_me_email("NEW FEEDBACK SEARCH!!!!!! | excurj." , str("TEST"), ['moghrabi@gmail.com'])
 	else:
 		feedback_form = FeedbackForm(data = request.POST)
 
@@ -449,7 +450,7 @@ def feedback(request):
 			# except BadHeaderError:
 			# 	return HttpResponse('Invalid header found.')
 
-			send_me_email("NEW FEEDBACK SEARCH!!!!!! | excurj." , str(message), ['moghrabi@gmail.com'])
+			
 			return thankyou(request)
 
 	return render(request, "excurj/feedback_email.html", {'feedback_form': feedback_form})
