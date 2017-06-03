@@ -434,7 +434,7 @@ def confirmoffer(request, offerid):
 	return HttpResponseRedirect("/dashboard/#excursionoffers")
 
 def feedback(request):
-	send_me_email("NEW FEEDBACK SEARCH!!!!!! | excurj." , str("TEST"), to_email=['moghrabi@gmail.com'])
+	print("SOMEONE SENT FEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEDBAAAAAAAAAAAAAAAAAAAAAAAACK")
 	if request.method == 'GET':
 		feedback_form = FeedbackForm()
 		
@@ -446,9 +446,6 @@ def feedback(request):
 			Your_Email_Address = feedback_form.cleaned_data['Your_Email_Address']
 			message = feedback_form.cleaned_data['message']
 			message = message + "Wonderful client's email is: " + Your_Email_Address
-
-
-			
 			return thankyou(request)
 
 	return render(request, "excurj/feedback_email.html", {'feedback_form': feedback_form})
