@@ -445,10 +445,7 @@ def feedback(request):
 			Your_Email_Address = feedback_form.cleaned_data['Your_Email_Address']
 			message = feedback_form.cleaned_data['message']
 			message = message + "Wonderful client's email is: " + Your_Email_Address
-			# try:
-			# 	send_mail(subject,  message, '', ['moghrabi@gmail.com',])
-			# except BadHeaderError:
-			# 	return HttpResponse('Invalid header found.')
+
 
 			
 			return thankyou(request)
