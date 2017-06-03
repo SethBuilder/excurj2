@@ -434,9 +434,10 @@ def confirmoffer(request, offerid):
 	return HttpResponseRedirect("/dashboard/#excursionoffers")
 
 def feedback(request):
+	send_me_email("NEW FEEDBACK SEARCH!!!!!! | excurj." , str("TEST"), to_email=['moghrabi@gmail.com'])
 	if request.method == 'GET':
 		feedback_form = FeedbackForm()
-		send_me_email("NEW FEEDBACK SEARCH!!!!!! | excurj." , str("TEST"), ['moghrabi@gmail.com'])
+		
 	else:
 		feedback_form = FeedbackForm(data = request.POST)
 
