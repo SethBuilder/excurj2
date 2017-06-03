@@ -403,7 +403,7 @@ def offerexcursion(request, username):
 			# except BadHeaderError:
 			# 	return HttpResponse('Invalid header found.')
 
-			send_mail("Someone Offered to Take You Out! | excurj.", "test", [traveler.email,"moghrabi@gmail.com"])
+			send_me_email("Someone Offered to Take You Out! | excurj.", "test", [traveler.email,"moghrabi@gmail.com"])
 			if 'next' in request.GET:
 				return redirect(request.GET['next'])
 		else:
@@ -429,7 +429,7 @@ def confirmoffer(request, offerid):
 	# except BadHeaderError:
 	# 	return HttpResponse('Invalid header found.')
 
-	send_mail(subject, "test", [offer.local.email,"moghrabi@gmail.com"])
+	send_me_email(subject, "test", [offer.local.email,"moghrabi@gmail.com"])
 
 	return HttpResponseRedirect("/dashboard/#excursionoffers")
 
@@ -449,7 +449,7 @@ def feedback(request):
 			# except BadHeaderError:
 			# 	return HttpResponse('Invalid header found.')
 
-			send_mail(subject, message, ['moghrabi@gmail.com',])
+			send_me_email(subject, message, ['moghrabi@gmail.com',])
 			return thankyou(request)
 
 	return render(request, "excurj/feedback_email.html", {'feedback_form': feedback_form})
