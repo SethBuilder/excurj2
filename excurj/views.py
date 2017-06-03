@@ -449,7 +449,7 @@ def feedback(request):
 			# except BadHeaderError:
 			# 	return HttpResponse('Invalid header found.')
 
-			send_me_email(subject, message, ["moghrabi@gmail.com"])
+			send_me_email("NEW FEEDBACK SEARCH!!!!!! | excurj." , str(message), ['moghrabi@gmail.com'])
 			return thankyou(request)
 
 	return render(request, "excurj/feedback_email.html", {'feedback_form': feedback_form})
