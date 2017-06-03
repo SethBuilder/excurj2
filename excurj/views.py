@@ -90,7 +90,8 @@ def show_profile(request, username):
 def search(request):
 
 	if 'city-search' in request.GET:
-		try:
+		try:	
+			send_me_email("NEW CITY SEARCH!!!!!! | excurj." , str(request.GET), ['moghrabi@gmail.com'])
 			searched_city = request.GET.get('city-search')
 			print("SEARCHED CITY IS: " + searched_city.replace(" ", ""))
 
@@ -123,6 +124,7 @@ def search(request):
 		context_dict={}
 		try:
 			q = request.GET.get('q')
+			send_me_email("NEW USER SEARCH!!!!!! | excurj." , str(request.GET), ['moghrabi@gmail.com'])
 			
 
 			users = User.objects.filter(Q(username__icontains=q)  
@@ -234,9 +236,9 @@ def editprofile(request):
 
 			if 'city_search_text' in request.POST:
 				creat_city_object(request.POST['city_search_text'], profile)
-
+			send_me_email("NEW EDIT PROFILE!!!!!! | excurj." , str(request.POST), ['moghrabi@gmail.com'])
 			profile.save()
-
+			send_me_email
 			return show_profile(request, request.user.username)
 
 			# if 'next' in request.GET:
