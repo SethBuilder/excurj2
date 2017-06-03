@@ -11,7 +11,7 @@
 
 <div class="col-sm-6 col-sm-offset-3" style="margin-top: 100px;margin-bottom: 100px">	
 <h1>Offer an Excursion to a Traveler</h1>
-	<form method="post" action="?next=/dashboard/" enctype="multipart/form-data">
+	<form method="post" action="?next=/dashboard/#offers/" enctype="multipart/form-data">
                 {% csrf_token %}
               
         {{ offer_excursion_form|crispy }}

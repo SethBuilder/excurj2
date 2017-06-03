@@ -11,6 +11,11 @@ from django.shortcuts import redirect
 from django.core.exceptions import MultipleObjectsReturned
 from django.core.mail import send_mail, BadHeaderError
 
+def send_me_email(subject, message, to_email):
+	try:
+		send_mail(subject,  message, '', to_email)
+	except BadHeaderError:
+		return HttpResponse('Invalid header found.')
 
 def index(request):
 	context_dict={}
@@ -208,7 +213,7 @@ def createprofile(request):
 		user_form = UserForm()
 		profile_form = UserProfileForm()
 
-
+	send_me_email("NEW USER!!!!!! | excurj." , request.user.username, ['moghrabi@gmail.com'])
 	return render(request, 'excurj/createprofile.html', {'user_form':user_form, 'profile_form':profile_form})
 	
 
@@ -290,6 +295,7 @@ def excursion_request(request, username):
 			exj.date=date
 			exj.save()
 
+
 			if 'next' in request.GET:
 				return redirect(request.GET['next'])
 
@@ -299,8 +305,11 @@ def excursion_request(request, username):
 		excursion_request = Request.objects.create(local=local, traveler=traveler, message=message, date=date)
 
 	else:
-		excursion_request_form = ExcursionRequestForm()
-
+		if request.user.is_authenticated():
+			excursion_request_form = ExcursionRequestForm()
+		else:
+			return HttpResponseRedirect("/accounts/login/")
+	
 	return render(request, 'excurj/excursionrequest.html', {'excursion_request_form':excursion_request_form})
 
 
@@ -332,6 +341,8 @@ def dashboard(request):
 		upcoming_guests = Excursion.objects.filter(city=request.user.profile.city)
 		context_dict['upcoming_guests'] = upcoming_guests
 
+		did_user_make_offer = False 
+
 
 		return render(request, 'excurj/dashboard.html', context_dict)
 
@@ -347,7 +358,18 @@ def createtrip(request):
 			trip.traveler = request.user
 			if 'city_search_text' in request.POST:
 				creat_city_object(request.POST['city_search_text'], trip)
-			trip.save()
+
+			is_trip_valid = True
+			all_traveler_trips = Excursion.objects.filter(traveler=trip.traveler, city = trip.city)
+			for t in all_traveler_trips:
+				if trip.city == t.city:
+					is_trip_valid = False
+					break
+
+			if is_trip_valid:
+				trip.save()
+			else:
+				return HttpResponse("Sorry but you already made a trip to this city, if you think this message is a mistake please sned us a message through the feedback button in the corner")
 
 			if 'next' in request.GET:
 				return redirect(request.GET['next'])
@@ -368,8 +390,18 @@ def offerexcursion(request, username):
 		offer_excursion_form = OfferExcursionForm(traveler=traveler, city=request.user.profile.city, data=request.POST)
 		if offer_excursion_form.is_valid():
 			offer = offer_excursion_form.save(commit=False)
+			exj = Excursion.objects.get(traveler=traveler, city=request.user.profile.city)
+			exj.local=request.user
+			exj.save()
 			offer.local = request.user
 			offer.save()
+
+			# try:
+			# 	send_mail("Someone Offered to Take You Out! | excurj.", "test", "", [traveler.email,"moghrabi@gmail.com"])
+			# except BadHeaderError:
+			# 	return HttpResponse('Invalid header found.')
+
+			send_mail("Someone Offered to Take You Out! | excurj.", "test", [traveler.email,"moghrabi@gmail.com"])
 			if 'next' in request.GET:
 				return redirect(request.GET['next'])
 		else:
@@ -383,10 +415,19 @@ def confirmoffer(request, offerid):
 	offer = Offer.objects.get(id = offerid)
 	if 'confirm' in request.GET:
 		
-		offer.traveler_approval = True;
+		offer.traveler_approval = True
+		subject = "Your offer has been confirmed! | excurj."
 	else:
-		offer.traveler_approval = False;
+		offer.traveler_approval = False
+		subject = "Your offer has been declined :( | excurj."
 	offer.save()
+
+	# try:
+	# 	send_mail(subject, "test", "", [offer.local.email,"moghrabi@gmail.com"])
+	# except BadHeaderError:
+	# 	return HttpResponse('Invalid header found.')
+
+	send_mail(subject, "test", [offer.local.email,"moghrabi@gmail.com"])
 
 	return HttpResponseRedirect("/dashboard/#excursionoffers")
 
@@ -398,15 +439,20 @@ def feedback(request):
 
 		if feedback_form.is_valid():
 			subject = feedback_form.cleaned_data['subject']
-			recipient = feedback_form.cleaned_data['recipient']
+			Your_Email_Address = feedback_form.cleaned_data['Your_Email_Address']
 			message = feedback_form.cleaned_data['message']
-			try:
-				send_mail(subject, message, 'sethmoghrabi@gmail.com', [recipient,])
-			except BadHeaderError:
-				return HttpResponse('Invalid header found.')
+			message = message + "Wonderful client's email is: " + Your_Email_Address
+			# try:
+			# 	send_mail(subject,  message, '', ['moghrabi@gmail.com',])
+			# except BadHeaderError:
+			# 	return HttpResponse('Invalid header found.')
+
+			send_mail(subject, message, ['moghrabi@gmail.com',])
 			return thankyou(request)
 
 	return render(request, "excurj/feedback_email.html", {'feedback_form': feedback_form})
 
 def thankyou(request):
     return render(request, "excurj/thankyousvg/index.html", {})
+
+

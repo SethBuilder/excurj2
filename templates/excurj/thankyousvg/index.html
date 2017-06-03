@@ -108,14 +108,14 @@
 </svg>
 
 {%if user.is_authenticated%}
-  <button id="play" class="btn btn-md btn-info">THANK {{user.first_name.upper}} AGAIN</button>
+  <button id="play" class="btn btn-lg btn-info">THANK {{user.first_name.upper}} AGAIN</button>
 {%else%}
-  <button id="play" class="btn btn-md btn-info">THANK ME AGAIN</button>
+  <button id="play" class="btn btn-lg btn-info">THANK ME AGAIN</button>
 {%endif%}
 
 <form action="{% url 'excurj:index' %}" >
 
-  <button id="takeback" class="btn btn-md btn-info" type="submit">Now Take Me Back</button>
+  <button id="takeback" class="btn btn-lg btn-info" type="submit">Now Take Me Home</button>
   
 </form>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js'></script>

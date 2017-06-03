@@ -102,7 +102,7 @@ class UserProfile(models.Model):
 	education = models.CharField(blank=True, max_length=200)
 	career = models.CharField(blank=True, max_length=200)
 	about_you = models.CharField(max_length=500, blank=True)
-	music_movies_books = models.CharField(max_length=200, blank=True)
+	music_movies_books = models.CharField(max_length=1000, blank=True)
 	friendship = models.CharField(max_length=500, blank=True)
 	what_will_you_show_visitors = models.CharField(max_length=1000, blank=True)
 	#to add more later
@@ -119,6 +119,7 @@ class UserProfile(models.Model):
 class Excursion(models.Model):
 	"""traveler lists his trips so local could see them and possibly offer to take him out"""
 	traveler = models.ForeignKey(User, related_name='traveler_lists_excursion')
+	local = models.ForeignKey(User, related_name='local_who_offered', blank=True, null=True)
 	city = models.ForeignKey(City, related_name='visited_city', blank=True, null=True) #Each excursion is connected to one City.
 	city_search_text = models.CharField(blank=True, max_length=300)
 	message = models.CharField(max_length=500)#message to all locals of that city "Hey good people of Edinburgh!"
@@ -133,6 +134,8 @@ class Offer(models.Model):
 	message = models.CharField(max_length=500)
 	trip = models.ForeignKey(Excursion, related_name='traveler_trip')
 	traveler_approval = models.NullBooleanField(default=None)
+	def __str__(self):
+		return trip.id
 
 
 # class feedback(models.Model):

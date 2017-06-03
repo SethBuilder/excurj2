@@ -108,7 +108,7 @@
 
 								{% if offer.traveler_approval is null %}
 									<td>
-									<form action=" {% url 'excurj:confirmoffer' %} ">
+									<form action=" {% url 'excurj:confirmoffer' offer.id%} ">
 										<button class="btn btn-sm btn-success" name="confirm" value="True">CONFIRM!</button>
 										<button class="btn btn-sm btn-danger" name="decline" value="False">DECLINE :(</button>
 									</form>
@@ -140,7 +140,7 @@
 				</div>
 	</div>
 
-	<div id="offers" class=" col-lg-7 ">
+	<div id="offers" class=" col-lg-7 comingsoon">
 			
 				<h4>
 					<img src=' {% static "images/pizza-black.svg" %}' style="margin-right: 10px;">UPCOMING GUESTS!
@@ -179,12 +179,13 @@
 								</td>
 
 								<td>
-								{% if guest.offer.local  is null %}
+								
+								{% if request.user != guest.local %}
 								
 									<button class="btn btn-lg btn-success"> <a href=" {% url 'excurj:offerexcursion' guest.traveler.username %} ">Offer Excursion</a></button>
 									
 								{% else %}
-								<p title="Awaiting confirmation" style="background-color: #6599ff; color: white; vertical-align: center;">Offer Sent</p>
+								<p title="Awaiting confirmation" style="vertical-align: center;" class="text-info">Offer Sent</p>
 								{% endif %}
 								</td>
 							</tr>
