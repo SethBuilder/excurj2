@@ -433,6 +433,26 @@ def confirmoffer(request, offerid):
 
 	return HttpResponseRedirect("/dashboard/#excursionoffers")
 
+def acceptrequest(request, requestid):
+	requested = Request.objects.get(id = requestid)
+	if 'accept' in request.GET:
+		
+		requested.local_approval = True
+		subject = "Your request has been accepted! | excurj.".capitalize()
+	else:
+		requested.local_approval = False
+		subject = "Your request has been declined :( | excurj.".capitalize()
+	requested.save()
+
+	# try:
+	# 	send_mail(subject, "test", "", [offer.local.email,"moghrabi@gmail.com"])
+	# except BadHeaderError:
+	# 	return HttpResponse('Invalid header found.')
+
+	send_me_email(subject, "test", [requested.traveler.email,"moghrabi@gmail.com"])
+
+	return HttpResponseRedirect("/dashboard/#excursionoffers")
+
 def feedback(request):
 	
 	if request.method == 'GET':

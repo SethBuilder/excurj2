@@ -24,7 +24,7 @@
 			<hr>
 		</div>
 
-		<div id="req_i_made" class=" col-lg-7 ">
+		<div id="req_i_made" class=" col-md-8 col-xs-12 ">
 			
 				<h4>
 					<span class="glyphicon glyphicon-plane" style="padding: 10px;font-size: 25px;"></span>MY TRAVEL PLANS
@@ -71,7 +71,7 @@
 				</div>
 	</div>
 
-	<div id="offers" class=" col-lg-7 ">
+	<div id="offers" class=" col-md-8 col-xs-12 ">
 			
 				<h4>
 					<span class="glyphicon glyphicon-sunglasses" style="padding: 10px;font-size: 25px;"></span>EXCURSION OFFERS!
@@ -140,7 +140,7 @@
 				</div>
 	</div>
 
-	<div id="offers" class=" col-lg-7 comingsoon">
+	<div id="offers" class=" col-md-8 col-xs-12 ">
 			
 				<h4>
 					<img src=' {% static "images/pizza-black.svg" %}' style="margin-right: 10px;">UPCOMING GUESTS!
@@ -235,9 +235,23 @@
 								</td>
 
 								<td>
-									<button class="btn btn-sm btn-success">Accept!</button>
-									<button class="btn btn-sm btn-danger">Decline :(</button>
+								{% if req.local_approval is null%}
+
+								<form action=" {% url 'excurj:acceptrequest' req.id %} ">
+									<button class="btn btn-sm btn-success" value="True" name="accept">Accept!</button>
+									<button class="btn btn-sm btn-danger" value="False" name="decline">Decline :(</button>
+								</form>
 								</td>
+								{% elif req.local_approval %}
+								<td>
+									Accepted!
+								</td>
+
+								{%else%}
+								<td>
+									Declined!
+								</td>
+								{%endif%}
 
 							</tr>
 							{{req.local_approval}}
@@ -250,7 +264,7 @@
 				</div>
 	</div>
 	
-	<div id="offers" class="col-lg-7">
+	<div id="offers" class="col-md-8 col-xs-12">
 			
 				<h4>
 					<span class="glyphicon glyphicon-time" style="padding: 10px;font-size: 25px;"></span>My Requests
@@ -297,9 +311,11 @@
 								
 								<td>
 								{% if  req.local_approval == False %}
-								<p class="bg-info lead">Pending Approval</p>
-								{%else%}
-								<p class="bg-success lead">APPROVED!</p>
+								<p class="bg-info ">DECLINED :(</p>
+								{%elif req.local_approval%}
+								<p class="bg-success ">APPROVED!</p>
+								{% else %}
+								<p class="bg-info ">PENDING APPROVAL</p>
 								{%endif%}
 								</td>
 							</tr>

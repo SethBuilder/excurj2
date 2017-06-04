@@ -22,4 +22,5 @@ urlpatterns=[
 	url(r'^feedback/$', views.feedback, name="feedback"),
 	url(r'^thankyou/$', views.thankyou, name="thankyou"),
 	url(r'^confirmoffer/(?P<offerid>[\w\-]+)/$', views.confirmoffer, name="confirmoffer"),
+	url(r'^acceptrequest/(?P<requestid>[\w\-]+)/$', views.acceptrequest, name="acceptrequest"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
