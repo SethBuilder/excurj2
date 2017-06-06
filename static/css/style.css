@@ -939,6 +939,20 @@ body button#feedback{
 	
 }
 
+/*.disappear_upon_load{
+	display: none;
+}
+
+.preload{
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-right: -50%;
+	transform: translate(-50%, -50%);
+	z-index: 6;
+}*/
+
 
 /*START SECTION FEATUED ON*/
 
@@ -999,14 +1013,16 @@ body button#feedback{
 
 
 
+@media only screen and (max-width: 910px){
+
+no-mobile{
+	display: none;
+}
+
+}
 
 
-
-
-
-
-
-@media only screen and (max-width: 936px){
+@media only screen and (max-width: 996px){
 
 #offers{
 	margin-left: 0;
