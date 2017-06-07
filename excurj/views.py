@@ -42,6 +42,10 @@ def index(request):
 		'slug' : city.slug,
 		'count' : city.count
 		}
+
+		if city.count == 1:
+			print("KIIIIIIIIIIIIING: " + str(city.city.all()[0].prof_pic.url) + "CITY IS: " + str(city))
+			lat_lng_entry['king_pic'] = str(city.city.all()[0].prof_pic.url)
 		lat_lng_dict.append(lat_lng_entry)
 
 	context_dict['all_cities'] =  mark_safe(lat_lng_dict)

@@ -186,7 +186,7 @@
       </div>
   </div>
 
-<div class="container-fluid superstars-container">
+<div class="container-fluid superstars-container" id="insta">
 
   <h2>Instagram Feed  (<a href="https://www.instagram.com/explore/tags/excurj/" target="_blank">#excurj</a>) </h2>
   
@@ -290,17 +290,26 @@ function CenterControl(controlDiv, map) {
         google.maps.event.addListener(marker, 'click', (function (marker, i) {
           return function () {
             if (cities[i].count == 1) {
-              infowindow.setContent("<a href ='" + "/city/" + cities[i].slug + "'><h4>" + cities[i].city_name + "</h4></a>" + "<br>" + "Has one awesome person!");
+              infowindow.setContent("<a href ='" + "/city/" + cities[i].slug + "'><h3>" + cities[i].city_name + "</h3>" + "</a>" + "<br>" + 
+ 
+                "<img class='img-circle' width=100 height=100 src='" + cities[i].king_pic + "'>" + 
+                "<p class='lead'>Has one awesome person!</p>");
+              }
+
+              else{
+              infowindow.setContent("<a href ='" + "/city/" + cities[i].slug + "'><h3>" + cities[i].city_name + "</h3></a>" + "<br>" + "<p class='lead'>Has " + cities[i].count + " people!</p>");
             }
-            else{
-              infowindow.setContent("<a href ='" + "/city/" + cities[i].slug + "'><h4>" + cities[i].city_name + "</h4></a>" + "<br>" + "Has " + cities[i].count + " people!");
-            }
-            
+
             infowindow.open(map, marker);
           }
           })(marker, i));
+           
+            
+            }
 
-      }
+            
+
+     
 
             // Create the DIV to hold the control and call the CenterControl()
         // constructor passing in this DIV.

@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" sizes="32x32" href=" {% static 'images/favicon-32x32.png' %} ">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
     <meta name="description" content="excurj. is a community where people show visitors around their cities to make new friendships.">
     <meta name="keywords" content="Travel, travel mates, excursions, europe, asia, australia, friends, fun, genuine travel experience, culture, cultural exchange, inter-cultural relationships, tolerance, travel, travel blogging">
     <meta name="author" content="Seif Elmughrabi">
@@ -82,6 +82,7 @@
               <li class="no_mobile"><a href="{% url 'excurj:index' %}#how-it-works">How it Works</a></li>
               <li><a href=" {% url 'excurj:index' %}#superstars">Super Stars</a></li>
               <li><a href=" {% url 'excurj:index' %}#popularcities ">Popular Cities</a></li>
+              <li><a href=" {% url 'excurj:index' %}#insta ">Insta Feed</a></li>
               <li><a href=" {% url 'excurj:index' %}#map_canvas ">Map</a></li>
               {% if request.user.is_authenticated %}
                 <li class=" no_desktop"><a href=" {% url 'excurj:dashboard' %} ">My Dashboard</a></li>
