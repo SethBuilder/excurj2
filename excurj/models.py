@@ -11,6 +11,8 @@ class City(models.Model):
 	description = models.CharField(max_length=1000, blank=True)
 	city_image = models.ImageField(blank=True, upload_to='city_pictures')
 	slug = models.SlugField()#MUST MAKE UNIQUE =TRUE AGAIN
+	lat = models.FloatField(blank=True, null=True)
+	lng = models.FloatField(blank=True, null=True)
 
 	class Meta:
 		verbose_name_plural = 'Cities'

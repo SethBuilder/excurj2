@@ -195,6 +195,129 @@
   <iframe src="https://snapwidget.com/embed/384797" class="snapwidget-widget" allowTransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden; width:100%; "></iframe>
 
 </div>
+<h2 id="world_map"> All Populated Cities</h2>
+<p style="color: #929dad;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .2px;
+    text-transform: uppercase;
+    text-align: center;
+    ">MARK YOUR CITY BY SIGNING UP!</p>
+<div id="map_canvas" class="superstars-container" style="height: 500px;border: 5px solid #bfcad2;">
+  
+</div>
+
+<script type="text/javascript">
+
+  //CENTER CONTROL 
+
+
+function CenterControl(controlDiv, map) {
+  var center_here = {lat: 41.38506389999999, lng: 2.1734035,};
+
+        // Set CSS for the control border.
+        var controlUI = document.createElement('div');
+        controlUI.style.backgroundColor = '#fff';
+        controlUI.style.border = '2px solid #fff';
+        controlUI.style.borderRadius = '3px';
+        controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+        controlUI.style.cursor = 'pointer';
+        controlUI.style.marginBottom = '22px';
+        controlUI.style.textAlign = 'center';
+        controlUI.title = 'Click to recenter the map';
+        controlDiv.appendChild(controlUI);
+
+        // Set CSS for the control interior.
+        var controlText = document.createElement('div');
+        controlText.style.color = 'rgb(25,25,25)';
+        controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+        controlText.style.fontSize = '16px';
+        controlText.style.lineHeight = '38px';
+        controlText.style.paddingLeft = '5px';
+        controlText.style.paddingRight = '5px';
+        controlText.innerHTML = 'Center Map';
+        controlUI.appendChild(controlText);
+
+        // Setup the click event listeners: simply set the map to Chicago.
+        controlUI.addEventListener('click', function() {
+          map.setCenter(center_here);
+        });
+
+      }
+
+
+
+
+
+
+
+
+
+
+
+  (function(window, google){
+
+    //map option
+    var options = {
+      center: {
+        lat:41.38506389999999,
+        lng:2.1734035
+      },
+      zoom: 2,
+      scrollwheel:  false
+    },
+    //map
+    element = document.getElementById('map_canvas'),
+    map = new google.maps.Map(element, options);
+
+    var cities = {{all_cities}}
+
+    // Create a popup for when users click on a map marker
+    var infowindow = new google.maps.InfoWindow();
+    var marker, i;
+    // Loop through each location in the list and place a marker there
+    for (i = 0; i < cities.length; i++) {
+      console.log("LAAAAt is:  " + cities[i].lat)
+      console.log("LNG is:  " + cities[i].lng)
+
+      
+        marker = new google.maps.Marker({
+            position: new google.maps.LatLng(cities[i].lat, cities[i].lng),
+            map: map,
+            
+        });
+
+        google.maps.event.addListener(marker, 'click', (function (marker, i) {
+          return function () {
+            if (cities[i].count == 1) {
+              infowindow.setContent("<a href ='" + "/city/" + cities[i].slug + "'><h4>" + cities[i].city_name + "</h4></a>" + "<br>" + "Has one awesome person!");
+            }
+            else{
+              infowindow.setContent("<a href ='" + "/city/" + cities[i].slug + "'><h4>" + cities[i].city_name + "</h4></a>" + "<br>" + "Has " + cities[i].count + " people!");
+            }
+            
+            infowindow.open(map, marker);
+          }
+          })(marker, i));
+
+      }
+
+            // Create the DIV to hold the control and call the CenterControl()
+        // constructor passing in this DIV.
+        var centerControlDiv = document.createElement('div');
+        var centerControl = new CenterControl(centerControlDiv, map);
+
+        centerControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv);
+
+  }(window, google));
+
+  
+
+  
+</script>
+
+
 
 <div class="superstars-container ready">
   

@@ -10,7 +10,9 @@ from excurj.forms import UserForm, UserProfileForm, EditAccountForm, EditProfile
 from django.shortcuts import redirect
 from django.core.exceptions import MultipleObjectsReturned
 from django.core.mail import send_mail, BadHeaderError
+from django.utils.safestring import mark_safe
 
+#used for me to receive emails when a new user signs up or does other things
 def send_me_email(subject, message, to_email):
 	try:
 		send_mail(subject,  message, '', to_email)
@@ -19,25 +21,32 @@ def send_me_email(subject, message, to_email):
 
 def index(request):
 	context_dict={}
+
 	#brings back top 6 cities with the highest number of users
 	city_list = City.objects.annotate(user_count=Count('city__user')).order_by('-user_count')[:6]
 	
-	# reqs = Request.objects.filter(local_approval=True).order_by('-date')[:2]
 	refs= RequestReference.objects.select_related('request').filter(traveler_fun=True,local_fun=True).order_by('-request__date')[:2]
+	
 	context_dict['refs'] = refs
-
-	# for i in range(len(reqs)):
-	# 	local_references_traveler = Reference.objects.filter(fun=True, author=reqs[i].local, referenced=reqs[i].traveler, local=True).latest()
-	# 	traveler_references_local = Reference.objects.filter(fun=True, author=reqs[i].traveler, referenced=reqs[i].local, local=False).latest()
-	# 	r = "req" + str(i)
-	# 	context_dict[r] = {r : reqs[i], 
-	# 	'local_references_traveler' : local_references_traveler, 'traveler_references_local' : traveler_references_local}
-	# 	print(reqs)
 
 	context_dict['cities'] = city_list
 
-	
+	#bring back lat and lng for all cities to show them on Google Maps
+	lat_lng_dict=[]
+	all_cities = City.objects.select_related().annotate(count=Count('city__user'))
+	for city in all_cities:
+		lat_lng_entry = {
+		'city_name' : city.name,
+		'lat' : city.lat,
+		'lng' : city.lng,
+		'slug' : city.slug,
+		'count' : city.count
+		}
+		lat_lng_dict.append(lat_lng_entry)
 
+	context_dict['all_cities'] =  mark_safe(lat_lng_dict)
+	print(str(lat_lng_dict))
+	
 	return render(request, 'excurj/index.html', context_dict)
 
 def show_city(request, city_name_slug):
@@ -95,7 +104,6 @@ def search(request):
 			searched_city = request.GET.get('city-search')
 			print("SEARCHED CITY IS: " + searched_city.replace(" ", ""))
 
-			
 			searched_city_id = population_script.get_city_json(searched_city.replace(" ", ""))['results'][0]['id']
 			
 			if searched_city_id != -1:
@@ -116,9 +124,6 @@ def search(request):
 
 		except IndexError:
 			return HttpResponse("We couldn't find any city based on your query :( please pick from the list instead.")
-
-		# else:
-		# 	return HttpResponse("This city isn't populated yet :( ")
 
 	elif 'q' in request.GET:
 		context_dict={}

@@ -24,8 +24,8 @@ def get_json(url):
 def get_google_key():
 	""" returns Google api key"""
 	# GoogleKey = 'AIzaSyDaa7NZzS-SE4JW3J-7TaA1v1Y5aWUTiyc'
-	# GoogleKey = 'AIzaSyDViGwJgWL18QSKvPozvAiqloyy1pW2lxg'
-	GoogleKey = 'AIzaSyB1E9CZaaaw1c77A7eZSophK_LnaGX5XRQ'
+	GoogleKey = 'AIzaSyDViGwJgWL18QSKvPozvAiqloyy1pW2lxg'
+	# GoogleKey = 'AIzaSyB1E9CZaaaw1c77A7eZSophK_LnaGX5XRQ'
 
 	return GoogleKey
 
@@ -44,7 +44,7 @@ def get_city_json(query):
 		# jsonraw = response.read()
 		
 		jsondata = json.loads(response.text)
-		print("JSONNNNNN IS: " + str(jsondata))
+		# print("JSONNNNNN IS: " + str(jsondata))
 		return jsondata
 
 	except IndexError:
@@ -74,8 +74,10 @@ def populate_city(city_id, query):
 
 	jsondata = get_city_json(query)
 
-	
+	created_city.lat = jsondata['results'][0]['geometry']['location']['lat']
+	created_city.lng = jsondata['results'][0]['geometry']['location']['lng']
 
+	print("LAAAAAAAAAAAAAAAAAT: " + str(jsondata['results'][0]['geometry']['location']['lat']))
 	#extract city's 'photo reference' that we'll send to google places photo API
 	city_image_ref = jsondata['results'][0]['photos'][0]['photo_reference']
 
@@ -129,51 +131,59 @@ def populate_cities():
 	#only call the Google API if there are no City objects or no city pictures (db is empty)
 	if City.objects.all().count() == 0 or len(glob.glob('media/city_images/*.jpg')) == 0:
 		for i in range(len(city_names)):
-			query = city_names[i] + "+" + countries[i] # to be sent to the Google Places API
+			query = city_names[i] + ", " + countries[i] # to be sent to the Google Places API
 			
 			#now we'll use json results to extract city ID and city image
 			city_id =  get_city_json(query)['results'][0]['id']
+			created_city = populate_city(city_id, query)
+			created_city.save()
+			cities.append(created_city)
 
-			#create a City object
-			created_city = City.objects.create(city_id=city_id)
 
-			#save name, country, description
-			created_city.name = city_names[i]
-			created_city.country = countries[i]
 
-			# send city and country name to wikipedia and exctract first 5 sentences
-			created_city.description = wikipedia.summary(city_names[i] + ' ' + countries[i], sentences=5) 
 
-			jsondata = get_city_json(query)
 
-			#extract city's 'photo reference' that we'll send to google places photo API
-			city_image_ref = jsondata['results'][0]['photos'][0]['photo_reference']
 
-			#set max width / can be changed if front end requires it
-			maxwidth = '400'
+			# #create a City object
+			# created_city = City.objects.create(city_id=city_id)
 
-			#The URL the HTTP Response to which brings the image
-			city_image_url = ('https://maps.googleapis.com/maps/api/place/photo'
-			'?maxwidth=%s'
-			'&photoreference=%s'
-			'&key=%s') % (maxwidth, city_image_ref, get_google_key())
+			# #save name, country, description
+			# created_city.name = city_names[i]
+			# created_city.country = countries[i]
 
-			#check if the image exists already
-			if not os.path.isfile("media/city_pictures/"+city_names[i] + '.jpg'):
+			# # send city and country name to wikipedia and exctract first 5 sentences
+			# created_city.description = wikipedia.summary(city_names[i] + ' ' + countries[i], sentences=5) 
 
-				#only get the remote image if the file is not there
-				django_file = save_image(city_image_url, city_names[i] + '.jpg')
+			# jsondata = get_city_json(query)
 
-				#if ImageField is empty then save image
-				if not created_city.city_image or not os.path.isfile("media/city_pictures/"+city_names[i] + '.jpg'):
-					created_city.city_image.save(city_names[i] + '.jpg', django_file, save=True)
-					django_file.close()
+			# #extract city's 'photo reference' that we'll send to google places photo API
+			# city_image_ref = jsondata['results'][0]['photos'][0]['photo_reference']
+
+			# #set max width / can be changed if front end requires it
+			# maxwidth = '400'
+
+			# #The URL the HTTP Response to which brings the image
+			# city_image_url = ('https://maps.googleapis.com/maps/api/place/photo'
+			# '?maxwidth=%s'
+			# '&photoreference=%s'
+			# '&key=%s') % (maxwidth, city_image_ref, get_google_key())
+
+			# #check if the image exists already
+			# if not os.path.isfile("media/city_pictures/"+city_names[i] + '.jpg'):
+
+			# 	#only get the remote image if the file is not there
+			# 	django_file = save_image(city_image_url, city_names[i] + '.jpg')
+
+			# 	#if ImageField is empty then save image
+			# 	if not created_city.city_image or not os.path.isfile("media/city_pictures/"+city_names[i] + '.jpg'):
+			# 		created_city.city_image.save(city_names[i] + '.jpg', django_file, save=True)
+			# 		django_file.close()
 				
 
 
-			created_city.save()# save City object in db
+			# created_city.save()# save City object in db
 			
-			cities.append(created_city)
+			# cities.append(created_city)
 
 	else:
 		cities = City.objects.all()
@@ -276,7 +286,7 @@ def get_users(users, city, users_in_json):
 			os.remove(str(profile.user.id) + '.jpg')
 			print("removed local file: "+ str(profile.user.id))
 
-	print("JSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSon is: " + str(users_in_json))
+	# print("JSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSon is: " + str(users_in_json))
 
 	return user_list
 

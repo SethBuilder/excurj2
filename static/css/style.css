@@ -308,6 +308,13 @@ nav.navbar.opaque{
 	
 }
 
+#world_map{
+	text-align: center;
+	position: relative;
+	color: black;
+	margin-bottom: 30px;	
+}
+
 .how-it-works-container h2:after{
 	content: "";
 	position: absolute;
@@ -319,7 +326,7 @@ nav.navbar.opaque{
 	display: block;
 }
 
-.superstars-container h2:after{
+.superstars-container h2:after,#world_map:after{
 	content: "";
 	position: absolute;
 	top: 50px;
@@ -327,6 +334,17 @@ nav.navbar.opaque{
 	right: 47%;
 	height: 2px;
 	background-color: black;
+	display: block;
+}
+
+.ready h2:after{
+		content: "";
+	position: absolute;
+	top: 50px;
+	left: 37%;
+	right: 37%;
+	height: 2px;
+	background-color: white;
 	display: block;
 }
 
@@ -473,7 +491,7 @@ position: relative;
 	position: relative;
 	background-image: url('/static/images/bk2.jpg');
 	background-position: center center;
-	background-size: cover;
+	
 	opacity: 1;
 
 }
