@@ -247,12 +247,7 @@ def creat_city_object(city_search_text, profile):
 	try:
 
 		#Pull City ID from the Google API
-		searched_city_id = population_script.get_city_json( 
-
-		city_search_text.replace(" ", "") 
-
-		)['results'][0]['id']
-		
+		searched_city_id = population_script.get_city_json( city_search_text.replace(" ", ""))['results'][0]['id']
 
 		#If city is in the database pull it and save it to the profile
 		city = City.objects.get(city_id = searched_city_id)
