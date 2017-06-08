@@ -30,8 +30,9 @@ SECRET_KEY = '_vv+g6cnfxhf=@!(iiket2)actf2k6x)f_^)kh&q*#63dbht5^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['excurjdev.pythonanywhere.com', '127.0.0.1','seifjo.pythonanywhere.com']
+ALLOWED_HOSTS = ['excurjdev.pythonanywhere.com', '127.0.0.1','seifjo.pythonanywhere.com', 'excurj.pythonanywhere.com']
 
+SECURE_SSL_REDIRECT = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'sethmoghrabi@gmail.com'
 EMAIL_HOST_PASSWORD =  'Seeyou1later!'
