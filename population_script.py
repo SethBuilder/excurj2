@@ -13,6 +13,7 @@ import datetime
 import glob
 import random
 from django.http import HttpResponseServerError
+from django.contrib.staticfiles.storage import staticfiles_storage
 
 def get_json(url):
 	""" 
@@ -245,11 +246,11 @@ def save_image(url, file_name):
 	try:
 		retrieved_image = requests.get(url)
 		sleep(3)#To avoid jamming the requests library
-
+		
 	except requests.exceptions.ConnectionError as e:
 		e.status_code = 'Connection refused'
 		print(e.status_code)
-		retrieved_image = open('/static/images/capor.jpg')
+		retrieved_image = None
 
 	#create local file to save remote image
 	with open(file_name, 'wb') as f:
