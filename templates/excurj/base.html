@@ -11,23 +11,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" sizes="32x32" href=" {% static 'images/favicon-32x32.png' %} ">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
     <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
     <meta name="description" content="excurj. is a community where people show visitors around their cities to make new friendships.">
     <meta name="keywords" content="Travel, travel mates, excursions, europe, asia, australia, friends, fun, genuine travel experience, culture, cultural exchange, inter-cultural relationships, tolerance, travel, travel blogging">
     <meta name="author" content="Seif Elmughrabi">
 
-    <!--FOR THE THANK YOU PAGE AFTER SUBMITTING FEEDBACK-->
-
 
     <title>
 
     {% block title_block %}
-    	Make New Friends As You Travel!
+    	Make New Friends Via Travel | excurj.
     {% endblock %}
 
     </title>
 
-    <!-- Bootstrap CSS!-->
+    <!-- Bootstrap CSS and CSS-->
     <link href="{% static 'css/bootstrap.min.css'%} " rel="stylesheet">
     <link rel="stylesheet" type="text/css" href=" {% static 'css/style.css' %} ">
     <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet">
@@ -36,9 +35,7 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <script src="{% static 'js/autocomplete.js' %}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYfS_V4jHXS_jVYa1k2w9VY52r0pMrL8g&callback=initMap&libraries=places" async defer></script>
-
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAali5z1ZHUooZzMz7GP_sqMYDVpN-PQl8">
-  </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAali5z1ZHUooZzMz7GP_sqMYDVpN-PQl8"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -47,15 +44,14 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <script>
+<!-- Google Analytics script -->
+<script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
   ga('create', 'UA-58047753-2', 'auto');
   ga('send', 'pageview');
-
 </script>
     
     {% block extra_style %}
@@ -72,7 +68,6 @@
     </form>
 
     <div>
-
     	<nav class="navbar navbar-default navbar-fixed-top">
     		<div class="container-fluid">
           <!-- logo -->
@@ -82,15 +77,13 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a href=" {% url 'excurj:index' %} "><img src=" {% static 'images/logo.png' %} "></a>
-
-                    
+            <a href=" {% url 'excurj:index' %} "><img src=" {% static 'images/logo.png' %} "></a>       
           </div>
 
           <!--menu items-->
           <div class="collapse navbar-collapse " id="mainNavBar">
-            <ul class="nav navbar-nav">
-              <li class="no_mobile"><a href="{% url 'excurj:index' %}#how-it-works">How it Works</a></li>
+            <ul class="nav navbar-nav ">
+              <li><a href="{% url 'excurj:index' %}#how-it-works">How it Works</a></li>
               <li><a href=" {% url 'excurj:index' %}#superstars">Super Stars</a></li>
               <li><a href=" {% url 'excurj:index' %}#popularcities ">Popular Cities</a></li>
               <li><a href=" {% url 'excurj:index' %}#insta ">Insta Feed</a></li>
@@ -119,7 +112,12 @@
 
             {% else %}
 
-            <li style="position: relative; background-color: transparent;" id="prof_li"><a href="  javascript:void(0)" style="display: inline;" class="no_mobile"> <img src=" {{request.user.profile.prof_pic.url}} " height="49px" width="49px" class="img-circle no_mobile"> <span class="caret no_mobile"></span> </a></li>
+            <li style="position: relative; background-color: transparent;" id="prof_li">
+              <a href="  javascript:void(0)" style="display: inline;" class="no_mobile"> 
+                <img src=" {{request.user.profile.prof_pic.url}} " height="49px" width="49px" class="img-circle no_mobile"> 
+                <span class="caret no_mobile"></span> 
+              </a>
+            </li>
 
             <div id="prof_dropdown">
               <li class="dropli no_mobile"><a class="no_mobile" href="{% url 'excurj:dashboard' %}">My Dashboard</a></li>
@@ -135,16 +133,14 @@
           </div>
         </div>
     	</nav>
-      <!-- <div class="preload">
-        <img src=" {% static 'images/giphy.gif' %} ">
-      </div> -->
-      <div class="disappear_upon_load">
-      	{% block body_block %}
-      		<p class="lead">This page is undergoing maintenance, it'll be up in a giffy :)</p>
-      	{% endblock %}
-      
-</div>
-    <footer style="text-align: center;max-height: 100px;" class="disappear_upon_load"> 
+
+      <div>
+        {% block body_block %}
+        <p class="lead">This page is undergoing maintenance, it'll be up in a giffy :)</p>
+        {% endblock %}
+      </div>
+
+    <footer style="text-align: center;max-height: 100px;> 
       
       <div class="container">
         <div class="row">
@@ -303,16 +299,5 @@
           }
         });
       </script>
-
-      <!-- <script type="text/javascript">
-        $(function() {
-          $('.preload').fadeOut(0, function(){
-            $('.disappear_upon_load').fadeIn(0);
-          });
-        });
-        
-      </script> -->
-
-
   </body>
 </html>

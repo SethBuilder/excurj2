@@ -4,7 +4,19 @@ from django.contrib.auth.models import User
 import datetime
 from crispy_forms.helper import FormHelper
 
+
+
 class City(models.Model):
+	"""
+	Each user must associated with a City.
+
+	City ID is pulled from the Google Places API
+
+	City Image, lat and lng are also pulled from the same API
+
+	Description is pulled from the Wikipedia API
+
+	"""
 	city_id = models.CharField(primary_key=True, max_length=150)
 	name = models.CharField(max_length=128, blank=True)
 	country = models.CharField(max_length=128, blank=True)
@@ -25,10 +37,13 @@ class City(models.Model):
 	    if self.city_image and hasattr(self.city_image, 'url'):
 	        return self.city_image.url
 
+	#Override save to save city name as a slug
 	def save(self, *args, **kwargs):
 		self.slug = slugify(self.name + " " + self.country)
 		super(City, self).save(*args, **kwargs)
 
+	#Display name pulls the city name without province/state/country 
+	#for ex: New York, New York, USA becomes New York
 	def display_name(self):
 		return self.name.split(",")[0]
 
@@ -49,14 +64,18 @@ class Request(models.Model):
 
 class RequestReference(models.Model):
 	""" traveler requests local to take her out on an excursion. 
-	After they have gone out they leave each other a reference"""
+	After they have gone out they leave each other a reference
+	"""
 
 	#Each request gets a reference instance
 	request = models.OneToOneField(Request, on_delete=models.CASCADE, primary_key=True)
 
+	#traveler and local description
 	traveler_desc = models.CharField(max_length=500, blank=True)#Traveler's reference description
 	local_desc = models.CharField(max_length=500, blank=True)
 
+	#Did the traveler have fun with the local? and the other way around?
+	#if they both enjoyed the outing/excursion their reference is featured on the front page
 	traveler_fun = models.BooleanField(default=True)#Did the traveler have fun ?
 	local_fun = models.BooleanField(default=True)#Did the local have fun ?
 
@@ -95,7 +114,12 @@ class RequestReference(models.Model):
 
 
 class UserProfile(models.Model):
-	user = models.OneToOneField(User, related_name='profile', primary_key=True) #Each User is related to only one User Profile
+	"""Each User instance is associated with a profile instance - One to One"""
+
+	#Each User is related to only one User Profile
+	user = models.OneToOneField(User, related_name='profile', primary_key=True)
+
+	#User picks city from the autocomplete, then the text is used to pull or create a city 
 	city_search_text = models.CharField(blank=True, max_length=300)
 	city = models.ForeignKey(City, blank=True, null=True, related_name='city') #Each User Profile must be related to one city.
 	prof_pic = models.ImageField(blank=True, upload_to='profile_pictures')
@@ -105,7 +129,10 @@ class UserProfile(models.Model):
 	career = models.CharField(blank=True, max_length=200)
 	about_you = models.CharField(max_length=500, blank=True)
 	music_movies_books = models.CharField(max_length=1000, blank=True)
+
+	#What is the user's view on forming friendships via travel instead of the typical tourist experience
 	friendship = models.CharField(max_length=500, blank=True)
+
 	what_will_you_show_visitors = models.CharField(max_length=1000, blank=True)
 	#to add more later
 
@@ -119,7 +146,11 @@ class UserProfile(models.Model):
 	age = property(age)
 
 class Excursion(models.Model):
-	"""traveler lists his trips so local could see them and possibly offer to take him out"""
+	"""
+		Traveler lists his trips so locals could see her and possibly offer to take her out
+		The term Excursion, outing and trip are used interchangeabily across the app
+
+	"""
 	traveler = models.ForeignKey(User, related_name='traveler_lists_excursion')
 	local = models.ForeignKey(User, related_name='local_who_offered', blank=True, null=True)
 	city = models.ForeignKey(City, related_name='visited_city', blank=True, null=True) #Each excursion is connected to one City.

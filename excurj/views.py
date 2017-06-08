@@ -6,18 +6,22 @@ from django.db.models import Count
 from django.contrib.auth.models import User
 import population_script
 from django.db.models import Q
-from excurj.forms import UserForm, UserProfileForm, EditAccountForm, EditProfileForm, ExcursionRequestForm, CreateTripForm, OfferExcursionForm, FeedbackForm
+from excurj.forms import UserForm, UserProfileForm, EditAccountForm, EditProfileForm, \
+ ExcursionRequestForm, CreateTripForm, OfferExcursionForm, FeedbackForm
+
 from django.shortcuts import redirect
 from django.core.exceptions import MultipleObjectsReturned
 from django.core.mail import send_mail, BadHeaderError
 from django.utils.safestring import mark_safe
 
-#used for me to receive emails when a new user signs up or does other things
+
 def send_me_email(subject, message, to_email):
+	"""Used so I receive emails when a new user signs up or does other things like send feedback"""
 	try:
 		send_mail(subject,  message, '', to_email)
 	except BadHeaderError:
 		return HttpResponse('Invalid header found.')
+
 
 def index(request):
 	context_dict={}
@@ -25,15 +29,24 @@ def index(request):
 	#brings back top 6 cities with the highest number of users
 	city_list = City.objects.annotate(user_count=Count('city__user')).order_by('-user_count')[:6]
 	
-	refs= RequestReference.objects.select_related('request').filter(traveler_fun=True,local_fun=True).order_by('-request__date')[:2]
+	#The two references that are based on the front page
+	#Currently featured references are from Requests (traveler asks local to take her out) 
+		#and not offers (when local offers traveler to take him out)
+	refs= RequestReference.objects.select_related('request') \
+	.filter(traveler_fun=True,local_fun=True) \
+	.order_by('-request__date')[:2]
 	
 	context_dict['refs'] = refs
 
 	context_dict['cities'] = city_list
 
-	#bring back lat and lng for all cities to show them on Google Maps
+	#bring back lat and lng for all cities to show them on the Google Maps
 	lat_lng_dict=[]
+
+	#Pull all cities to feature them on the Google Map with the number of users for each one
 	all_cities = City.objects.select_related().annotate(count=Count('city__user'))
+
+	#Loop thru cities and pull their name, lat, lng, slug and number of users
 	for city in all_cities:
 		lat_lng_entry = {
 		'city_name' : city.name,
@@ -43,29 +56,40 @@ def index(request):
 		'count' : city.count
 		}
 
+		#If the user only has one user then include her/his profile picture to feature it on the map marker pop up
 		if city.count == 1:
-			print("KIIIIIIIIIIIIING: " + str(city.city.all()[0].prof_pic.url) + "CITY IS: " + str(city))
+
+			#A lonely user is called King as I might give royal titles to the first users of each city
 			lat_lng_entry['king_pic'] = str(city.city.all()[0].prof_pic.url)
+
+		#append city's lat and lng to the lat lng dictionary
 		lat_lng_dict.append(lat_lng_entry)
 
 	context_dict['all_cities'] =  mark_safe(lat_lng_dict)
-	print(str(lat_lng_dict))
 	
 	return render(request, 'excurj/index.html', context_dict)
 
 def show_city(request, city_name_slug):
+	"""View to show city profile"""
+
 	context_dict={}
 
 	try:
+
+		#Try pull the City object from the passed slug
 		city = City.objects.get(slug=city_name_slug)
-		print()
+		
+		#Pull associated profiles to feature them under the "Locals" tab
 		city_locals_profiles = UserProfile.objects.filter(city=city)
+
+		#Pull trips to this city to feature them under "People coming to this city soon"
 		excursions = Excursion.objects.filter(city=city)
 
 		context_dict['city']=city
 		context_dict['city_locals_profiles']=city_locals_profiles
 		context_dict['excursions'] = excursions
 
+	#Error message will be shown if the city being searched does not exist
 	except City.DoesNotExist:
 		context_dict['city']=None
 
@@ -75,6 +99,7 @@ def show_city(request, city_name_slug):
 	except Excursion.DoesNotExist:
 		context_dict['excursions'] = None
 
+	#If more than one city returned (for whatever reason) then return the first one
 	except City.MultipleObjectsReturned:
 		city = City.objects.filter(slug=city_name_slug)[0]
 
@@ -82,11 +107,17 @@ def show_city(request, city_name_slug):
 
 
 def show_profile(request, username):
+	"""View for User Profile"""
+
 	context_dict={}
 
 	try:
+		#Pull the user based on the passed username
 		user = User.objects.get(username=username)
+
 		reqs = Request.objects.filter(local=user)
+
+		#Pull users upcoming trips
 		excurjs = Excursion.objects.filter(traveler=user)
 
 		context_dict['user'] = user
@@ -100,126 +131,187 @@ def show_profile(request, username):
 
 	return render(request, 'excurj/user.html', context_dict)
 
-def search(request):
 
+
+def search(request):
+	"""
+		View for the search features - 
+		the one on the homepage to search cities and the one in the nav bar to search people (users)
+	"""
+
+	#if user searches for a city
 	if 'city-search' in request.GET:
 		try:	
+			#Send me Email
 			send_me_email("NEW CITY SEARCH!!!!!! | excurj." , str(request.GET), ['moghrabi@gmail.com'])
-			searched_city = request.GET.get('city-search')
-			print("SEARCHED CITY IS: " + searched_city.replace(" ", ""))
 
+			#Pull the search text
+			searched_city = request.GET.get('city-search')
+
+			#Pass on the searched text for a city and pull the ID (from Google Places API)
 			searched_city_id = population_script.get_city_json(searched_city.replace(" ", ""))['results'][0]['id']
 			
+			#If city ID is returned
 			if searched_city_id != -1:
-				print("CITY ID: " + str(searched_city_id))
+				
+				#Pull city from the database and return the appropriate city profile
 				city = City.objects.get(city_id = searched_city_id)
 				return show_city(request, city.slug)
 
+			#If no city ID was returned from the Google API (very rarely the case)
 			else:
 				return HttpResponse("There's no such city, please try a different query.")
 
+		#If the user searched for a city that does not exist in the database 
 		except City.DoesNotExist:
+
 			context_dict={}
-			cities = City.objects.filter(Q(name__icontains=searched_city) | Q(country__icontains=searched_city) | 
-				Q(description__icontains=searched_city) | Q(slug__icontains=searched_city))
+
+			#Then, pull other populated cities that match the query
+			cities = City.objects.filter(
+
+				  #Based on city name
+				  Q(name__icontains=searched_city) \
+
+				  #Or country name
+				| Q(country__icontains=searched_city) \
+
+				  #Or city description
+				| Q(description__icontains=searched_city) \
+
+				  #Or city's slug
+				| Q(slug__icontains=searched_city) \
+
+				) 
+
+			#Show the searching user these cities
 			context_dict['cities']=cities
 
 			return render(request, 'excurj/cities_search.html', context_dict)
 
+		#If no query matches found
 		except IndexError:
 			return HttpResponse("We couldn't find any city based on your query :( please pick from the list instead.")
 
+
+	#Is user is searching for a person (in the nav bar)
 	elif 'q' in request.GET:
+
 		context_dict={}
+
 		try:
+			#Pull search query
 			q = request.GET.get('q')
+
+			#Send me email
 			send_me_email("NEW USER SEARCH!!!!!! | excurj." , str(request.GET), ['moghrabi@gmail.com'])
 			
 
-			users = User.objects.filter(Q(username__icontains=q)  
-				| Q(first_name__icontains=q) | Q(last_name__icontains=q) 
-				| Q(email__icontains=q) | Q(profile__city__name__icontains=q))
+			#Match query with existing users, based on:
+			users = User.objects.filter(
+
+				  #Based on username
+				  Q(username__icontains=q)  \
+
+				  #Or first name
+				| Q(first_name__icontains=q) \
+
+				  #Or last name
+				| Q(last_name__icontains=q) \
+
+				  #OR email address
+				| Q(email__icontains=q) \
+
+				  #Or city name
+				| Q(profile__city__name__icontains=q) \
+
+				)
 
 			context_dict['users'] = users
 
 			return render(request, 'excurj/people_search.html', context_dict)
 
+		#If no users were found based on the search query
 		except User.DoesNotExist:
 			return HttpResponse("No profiles were returned based on this query :(")
-		
+
+	
 def creat_city_object(city_search_text, profile):
-	""" takes query string and UserProfile object and saves it in the user's profile - also work for createtrip view"""
+	""" 
+		Takes query string for a city from the Google autocomplete API, 
+		then it whether pulls the city or creates it.
+
+		Used for User signups, updating profiles
+	"""
+
 	try:
 
-		searched_city_id = population_script.get_city_json(
-		city_search_text.replace(" ", ""))['results'][0]['id']#brings back city ID from the Google API
-		print("IDDDDDDDDDDDDDDDDD is: " + searched_city_id)
+		#Pull City ID from the Google API
+		searched_city_id = population_script.get_city_json( 
 
-		# city = City.objects.get(city_id = searched_city_id)
+		city_search_text.replace(" ", "") 
+
+		)['results'][0]['id']
+		
+
+		#If city is in the database pull it and save it to the profile
 		city = City.objects.get(city_id = searched_city_id)
 		profile.city = city
 
+	#If city doesn't not exist in the database but has valid Google API ID
 	except City.DoesNotExist:
+
+		#Create it and save it to the profile
 		city = population_script.populate_city(searched_city_id, city_search_text)
-		# city = City.objects.create(city_id = searched_city_id)
 		profile.city = city
 
+	#If no City ID was returned (like when the user searches for: fdhjhdjfhdjskfhjh)
 	except IndexError:
 		return HttpResponse("There's no such city, please pick a city from the list.")
 	
 def createprofile(request):
+	"""View to create profile"""
+
+	#If request is POST, pull data and save it
 	if request.method =='POST':
+
 		user = User.objects.get(username=request.user.username)
-		
 		user_form = UserForm(data=request.POST, instance=user)
-		
 		profile_form = UserProfileForm(data=request.POST)
 		
 		if user_form.is_valid() and profile_form.is_valid():
 			user = user_form.save()
 			user.save()
 
+			#commit = false so that we can save profile pic and process city search query
 			profile = profile_form.save(commit=False)
 
 			profile.user = user
 			
+			#brings back the city search query
+			searched_city = request.POST['city_search_text']
 
-			searched_city = request.POST['city_search_text']#brings back the city search result as text
+			#Get or create the city
 			creat_city_object(searched_city, profile)
 			# try:
 
-			# 	searched_city_id = population_script.get_city_json(
-			# 	searched_city.replace(" ", ""))['results'][0]['id']#brings back city ID from the Google API
-			# 	print("IDDDDDDDDDDDDDDDDD is: " + searched_city_id)
-
-			# 	# city = City.objects.get(city_id = searched_city_id)
-			# 	city = City.objects.get(city_id = searched_city_id)
-			# 	profile.city = city
-			
-			# except City.DoesNotExist:
-			# 	city = population_script.populate_city(searched_city_id, searched_city)
-			# 	# city = City.objects.create(city_id = searched_city_id)
-			# 	profile.city = city
-
-			# except IndexError:
-			# 	return HttpResponse("There's no such city, please pick a city from the list.")
-
-
-			if 'prof_pic' in request.FILES:#now save the profile pic
+			#now save the profile pic
+			if 'prof_pic' in request.FILES:
 				profile.prof_pic = request.FILES['prof_pic']
 				
-
 			else:
 				profile.prof_pic = 'profile_pictures/anon.png'
 
 			profile.save()
 
+			#direct user to index page
 			if 'next' in request.GET:
 				return redirect(request.GET['next'])
 
 		else:
 			print (user_form.errors, profile_form.errors)
 
+	#If request is GET then show forms
 	else:
 		user_form = UserForm()
 		profile_form = UserProfileForm()
@@ -229,72 +321,70 @@ def createprofile(request):
 	
 
 def editprofile(request):
+	""" View to edit profile """
+
 	if request.method == 'POST':
+		#pull user's profile data by passing an instance of the profile
 		edit_profile_form = EditProfileForm(request.POST, instance=request.user.profile)
 
 		if edit_profile_form.is_valid():
 
 			profile = edit_profile_form.save(commit=False)
-			
-			if 'prof_pic' in request.FILES:#now save the profile pic
 
-				profile.prof_pic = request.FILES['prof_pic']
-
-			else:
-				profile.prof_pic = 'profile_pictures/anon.png'
-
+			#If user changed his city, then process search query and save resulting city it in his profile
 			if 'city_search_text' in request.POST:
 				creat_city_object(request.POST['city_search_text'], profile)
+
+			#send me email
 			send_me_email("NEW EDIT PROFILE!!!!!! | excurj." , str(request.POST), ['moghrabi@gmail.com'])
+
+			#Save updated profile
 			profile.save()
 			
+			#Return user to his profile page
 			return show_profile(request, request.user.username)
 
-			# if 'next' in request.GET:
-			# 	return redirect(request.GET['next'])
 		else:
 			print (profile_form.errors)
+	
+	#If user attempts to go to /editprofile/ but he's not authenticated then forward rqeuest to /accounts/login/
 	else:
 		if request.user.is_authenticated():
 			edit_profile_form = EditProfileForm(instance=request.user.profile)
 		else:
 			return HttpResponseRedirect("/accounts/login/")
 
-
-
 	return render(request, 'excurj/editprofile.html', {'edit_profile_form':edit_profile_form,})
 
 
 
 def editaccount(request):
+	"""Edit account view"""
+
+	#Pass User instance to pull already filled data
 	if request.method == 'POST':
 		edit_account_form = EditAccountForm(request.POST, instance=request.user)
 		if edit_account_form.is_valid():
 			edit_account_form.save()
 			return show_profile(request, request.user.username)
-			# if 'next' in request.GET:
-			# 	return redirect(request.GET['next'])
+
+	#If user is not authenticated and goes to /editaccount/ then forward her to /accounts/login/
 	else:
 		if request.user.is_authenticated():
 			edit_account_form = EditAccountForm(instance=request.user)
 		else:
 			return HttpResponseRedirect("/accounts/login/")
-		
-		# edit_profile_form = EditProfileForm(instance=request.user.profile)
 
 	return render(request, 'excurj/editaccount.html', {'edit_account_form':edit_account_form,})
 
 def excursion_request(request, username):
+	"""View for when traveler requests local to take him/her out"""
 	if request.method == 'POST':
-		print("POOOOOOOOST" + str(request.POST))
+		
 		excursion_request_form = ExcursionRequestForm(request.POST)
 		if excursion_request_form.is_valid():
-
 			exj = excursion_request_form.save(commit=False)
-
 			local_username = username
-			print(local_username)
-
 			local = User.objects.get(username=local_username)
 
 			traveler = User.objects.get(username=request.user.username)
@@ -326,7 +416,9 @@ def excursion_request(request, username):
 
 
 def dashboard(request):
+
 	context_dict={}
+
 	if request.user.is_authenticated:
 		#return the logged in user
 		user = User.objects.get(username=request.user.username)
@@ -352,15 +444,15 @@ def dashboard(request):
 		upcoming_guests = Excursion.objects.filter(city=request.user.profile.city)
 		context_dict['upcoming_guests'] = upcoming_guests
 
-		did_user_make_offer = False 
-
-
 		return render(request, 'excurj/dashboard.html', context_dict)
 
 	else:
 		return HttpResponseRedirect("/accounts/login/")
 
+
 def createtrip(request):
+	"""View for when users create public trips on their dashboard"""
+
 	if request.method == 'POST':
 		create_trip_form = CreateTripForm(request.POST)
 
@@ -370,6 +462,8 @@ def createtrip(request):
 			if 'city_search_text' in request.POST:
 				creat_city_object(request.POST['city_search_text'], trip)
 
+			#Currently, users are able to only make one trip to the same city
+			#TO_DO: after the date has passed for the trip, send review request and archive trip into offline table
 			is_trip_valid = True
 			all_traveler_trips = Excursion.objects.filter(traveler=trip.traveler, city = trip.city)
 			for t in all_traveler_trips:
@@ -393,9 +487,12 @@ def createtrip(request):
 			create_trip_form = CreateTripForm()
 		else:
 			return HttpResponseRedirect("/accounts/login/")
+
 	return render(request, 'excurj/createtrip.html', {'create_trip_form':create_trip_form})
 
 def offerexcursion(request, username):
+	""" View for when local offers excursions to visitors """
+
 	traveler = User.objects.get(username=username)
 	if request.method == 'POST':
 		offer_excursion_form = OfferExcursionForm(traveler=traveler, city=request.user.profile.city, data=request.POST)
@@ -407,12 +504,9 @@ def offerexcursion(request, username):
 			offer.local = request.user
 			offer.save()
 
-			# try:
-			# 	send_mail("Someone Offered to Take You Out! | excurj.", "test", "", [traveler.email,"moghrabi@gmail.com"])
-			# except BadHeaderError:
-			# 	return HttpResponse('Invalid header found.')
-
+			#Send email to traveler (and moi)
 			send_me_email("Someone Offered to Take You Out! | excurj.", "test", [traveler.email,"moghrabi@gmail.com"])
+
 			if 'next' in request.GET:
 				return redirect(request.GET['next'])
 		else:
@@ -423,6 +517,8 @@ def offerexcursion(request, username):
 	return render(request, 'excurj/offerexcursion.html', {'offer_excursion_form':offer_excursion_form})
 
 def confirmoffer(request, offerid):
+	""" Confirm offer view """
+
 	offer = Offer.objects.get(id = offerid)
 	if 'confirm' in request.GET:
 		
@@ -433,37 +529,34 @@ def confirmoffer(request, offerid):
 		subject = "Your offer has been declined :( | excurj."
 	offer.save()
 
-	# try:
-	# 	send_mail(subject, "test", "", [offer.local.email,"moghrabi@gmail.com"])
-	# except BadHeaderError:
-	# 	return HttpResponse('Invalid header found.')
-
+	#Send email
 	send_me_email(subject, "test", [offer.local.email,"moghrabi@gmail.com"])
 
 	return HttpResponseRedirect("/dashboard/#excursionoffers")
 
 def acceptrequest(request, requestid):
-	requested = Request.objects.get(id = requestid)
+	""" view to accept traveler's request for an excursion """
+
+	#Requested is the request
+	traveler_request = Request.objects.get(id = requestid)
 	if 'accept' in request.GET:
 		
-		requested.local_approval = True
+		traveler_request.local_approval = True
 		subject = "Your request has been accepted! | excurj.".capitalize()
 	else:
-		requested.local_approval = False
+		traveler_request.local_approval = False
 		subject = "Your request has been declined :( | excurj.".capitalize()
-	requested.save()
 
-	# try:
-	# 	send_mail(subject, "test", "", [offer.local.email,"moghrabi@gmail.com"])
-	# except BadHeaderError:
-	# 	return HttpResponse('Invalid header found.')
+	traveler_request.save()
 
-	send_me_email(subject, "test", [requested.traveler.email,"moghrabi@gmail.com"])
+	#Send email
+	send_me_email(subject, "test", [traveler_request.traveler.email,"moghrabi@gmail.com"])
 
 	return HttpResponseRedirect("/dashboard/#excursionoffers")
 
 def feedback(request):
-	
+	"""Feedback view"""
+
 	if request.method == 'GET':
 		feedback_form = FeedbackForm()
 		
@@ -474,13 +567,14 @@ def feedback(request):
 			subject = feedback_form.cleaned_data['subject']
 			Your_Email_Address = feedback_form.cleaned_data['Your_Email_Address']
 			message = feedback_form.cleaned_data['message']
-			message = message + "Wonderful client's email is: " + Your_Email_Address
+			message = message + ". Wonderful client's email is: " + Your_Email_Address
 			send_me_email("NEW FEEDBACK!!!!!! | excurj." , message, ['moghrabi@gmail.com'])
 			return thankyou(request)
 
 	return render(request, "excurj/feedback_email.html", {'feedback_form': feedback_form})
 
 def thankyou(request):
-    return render(request, "excurj/thankyousvg/index.html", {})
+	"""to show animation after submitting feedback and signing up for a new account"""
+	return render(request, "excurj/thankyousvg/index.html", {})
 
 

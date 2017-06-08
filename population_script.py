@@ -15,7 +15,10 @@ import random
 from django.http import HttpResponseServerError
 
 def get_json(url):
-	""" takes Google Places api url and returns raw JSON response"""
+	""" 
+		takes Google Places api url and returns raw JSON response
+	 	of random users of different nationalities
+	 """
 	with urllib.request.urlopen(url) as response:
 		jsonraw = response.read().decode()
 		jsondata = json.loads(jsonraw)
@@ -30,39 +33,35 @@ def get_google_key():
 	return GoogleKey
 
 def get_city_json(query):
-	"""takes city name and return city ID as per Google Places API"""
+	"""takes city search query and return JSON city data as per Google Places API"""
 
 	url = ('https://maps.googleapis.com/maps/api/place/textsearch/json'
 				'?query=%s'
 				'&key=%s') % (query, get_google_key())
-	print("URLLLLLLLLLL IS: " + url)
+	
 	try:
 		#grabbing the JSON results
-		# with urllib.request.urlopen(url) as response:
 		response = requests.get(url)
-		
-		# jsonraw = response.read()
-		
 		jsondata = json.loads(response.text)
-		# print("JSONNNNNN IS: " + str(jsondata))
 		return jsondata
 
 	except IndexError:
 		return -1
 
 def populate_city(city_id, query):
-	""" takes city ID and returns City object """
+	""" takes city ID and search query returns City object """
+
 	#create a City object
 	created_city = City.objects.create(city_id=city_id)
 
 	#save name, country, description
-	created_city.name = query
-	created_city.slug = query.replace(", ", "-").replace(' ', '-').lower()
-	print("SLUGGGGGGGGG IS: " + created_city.slug)
+	created_city.name = query#Save search query as city name
+	created_city.slug = query.replace(", ", "-").replace(' ', '-').lower()#replaces spaces and commas with -
 	
+	#Country is no longer used
 	# created_city.country = countries[i]
 
-	# send city and country name to wikipedia and exctract first 5 sentences
+	# send search query to wikipedia and exctract first 5 sentences
 	try:
 		created_city.description = wikipedia.summary(query)
 		if created_city.description == "":
@@ -72,17 +71,18 @@ def populate_city(city_id, query):
 	except wikipedia.exceptions.DisambiguationError:
 		created_city.description = "We couldn't find wiki summary for this town."
 
+	#extract city data as per Google Places API
 	jsondata = get_city_json(query)
 
+	#Extract lat and lng
 	created_city.lat = jsondata['results'][0]['geometry']['location']['lat']
 	created_city.lng = jsondata['results'][0]['geometry']['location']['lng']
 
-	print("LAAAAAAAAAAAAAAAAAT: " + str(jsondata['results'][0]['geometry']['location']['lat']))
 	#extract city's 'photo reference' that we'll send to google places photo API
 	city_image_ref = jsondata['results'][0]['photos'][0]['photo_reference']
 
 	#set max width / can be changed if front end requires it
-	maxwidth = '50000'
+	maxwidth = '1600'
 
 	#The URL the HTTP Response to which brings the image
 	city_image_url = ('https://maps.googleapis.com/maps/api/place/photo'
@@ -101,20 +101,12 @@ def populate_city(city_id, query):
 			created_city.city_image.save(created_city.slug + '.jpg', django_file, save=True)
 			django_file.close()
 		
-
-
 	created_city.save()# save City object in db
-
-
 
 	#delete local files as they're already uploaded to media root
 	if os.path.isfile(created_city.slug + '.jpg'):
-		print("maybeeeeeeeeeeeeeeeeeeee removed local file: "+created_city.slug + '.jpg')
 		os.remove(created_city.slug + '.jpg')
-		print("removed local file: "+created_city.slug + '.jpg')
-
-
-
+		
 	return created_city
 
 def populate_cities():
@@ -126,10 +118,9 @@ def populate_cities():
 	#this will be returned at the end
 	cities = []
 
-	
-
 	#only call the Google API if there are no City objects or no city pictures (db is empty)
-	if City.objects.all().count() == 0 or len(glob.glob('media/city_images/*.jpg')) == 0:
+	if not City.objects.all() or len(glob.glob('media/city_images/*.jpg')) == 0:
+
 		for i in range(len(city_names)):
 			query = city_names[i] + ", " + countries[i] # to be sent to the Google Places API
 			
@@ -139,52 +130,7 @@ def populate_cities():
 			created_city.save()
 			cities.append(created_city)
 
-
-
-
-
-
-			# #create a City object
-			# created_city = City.objects.create(city_id=city_id)
-
-			# #save name, country, description
-			# created_city.name = city_names[i]
-			# created_city.country = countries[i]
-
-			# # send city and country name to wikipedia and exctract first 5 sentences
-			# created_city.description = wikipedia.summary(city_names[i] + ' ' + countries[i], sentences=5) 
-
-			# jsondata = get_city_json(query)
-
-			# #extract city's 'photo reference' that we'll send to google places photo API
-			# city_image_ref = jsondata['results'][0]['photos'][0]['photo_reference']
-
-			# #set max width / can be changed if front end requires it
-			# maxwidth = '400'
-
-			# #The URL the HTTP Response to which brings the image
-			# city_image_url = ('https://maps.googleapis.com/maps/api/place/photo'
-			# '?maxwidth=%s'
-			# '&photoreference=%s'
-			# '&key=%s') % (maxwidth, city_image_ref, get_google_key())
-
-			# #check if the image exists already
-			# if not os.path.isfile("media/city_pictures/"+city_names[i] + '.jpg'):
-
-			# 	#only get the remote image if the file is not there
-			# 	django_file = save_image(city_image_url, city_names[i] + '.jpg')
-
-			# 	#if ImageField is empty then save image
-			# 	if not created_city.city_image or not os.path.isfile("media/city_pictures/"+city_names[i] + '.jpg'):
-			# 		created_city.city_image.save(city_names[i] + '.jpg', django_file, save=True)
-			# 		django_file.close()
-				
-
-
-			# created_city.save()# save City object in db
-			
-			# cities.append(created_city)
-
+	#If there are cities, just pull them
 	else:
 		cities = City.objects.all()
 
@@ -215,15 +161,22 @@ def populate_users():
 
 	#go through random data urls
 	for i in range(len(urls)):
-		users_in_json = get_json(urls[i])#bring random json data for users of specific city and nationality
-		user_list = get_users(users_in_json, cities[i], users_in_json)#returns list of User objects
+
+		#bring random json data for users of specific city and nationality
+		users_in_json = get_json(urls[i])
+
 		#send User objects list, json data and a City object to create profiles
+		user_list = get_users(users_in_json, cities[i], users_in_json)#returns list of User objects
+		
 		# user_profiles = get_profiles(user_list, cities[i], users_in_json)
 	
 def get_users(users, city, users_in_json):
-	"""takes JSON data for test users and bring back a list of User objects"""
+	"""takes JSON data for test users and bring back a list of User and UserProfile objects"""
+
 	user_list = []
 	profiles = []
+
+	#go thru all users returned from the random user API
 	for i in range(len(users['results'])):
 
 		#1. fetch username
@@ -239,17 +192,12 @@ def get_users(users, city, users_in_json):
 		user.password = users['results'][i]['login']['password']
 
 
-
-
-
 		#now create User Profile
 		profile = UserProfile.objects.get_or_create(user=user)[0]
 
 		#fill in the City object
 		profile.city = city
 		profile.dob = datetime.datetime.strptime(users_in_json['results'][i]['dob'], '%Y-%m-%d %H:%M:%S').date()
-		# print(users_in_json['results'][i]['dob'])
-		# print(users_in_json['results'][i]['picture']['large'])# TO DELETE
 
 		#fetch Django file (prof_pic)
 		django_file = save_image(users_in_json['results'][i]['picture']['large'], str(profile.user.id) + '.jpg')
@@ -264,10 +212,11 @@ def get_users(users, city, users_in_json):
 		#now fill education and career
 
 		education = ["MBA", 'MSc Physics', 'BSc ComSi', 'Bachelor of Sociology', 'Bachelor of Latin and Italian',
-		'Student of the Arts!', 'MA', 'High School Diploma', 'PhD of Astronomy', 'Community College']
+		'Student of the Arts!', 'MA', 'High School Diploma', 'PhD of Astronomy', 'Community College', 
+		'Chemical Engineering', 'English Literature']
 
 		career = ['CEO', 'student', 'web developer', 'teacher', 'interpreter', 'curator', 'teacher', 'shop keeper',
-		'professor', 'Police man']
+		'professor', 'Policeman', 'Librarian']
 
 		profile.career = random.choice(career)
 		profile.education = random.choice(education)
@@ -286,52 +235,7 @@ def get_users(users, city, users_in_json):
 			os.remove(str(profile.user.id) + '.jpg')
 			print("removed local file: "+ str(profile.user.id))
 
-	# print("JSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSon is: " + str(users_in_json))
-
 	return user_list
-
-# def get_profiles(user_list, city, users_in_json):
-# 	profiles = []
-# 	for i in range(len(user_list)):
-
-# 		#now create User Profile
-# 		profile = UserProfile.objects.get_or_create(user=user_list[i])[0]
-
-# 		#fill in the City object
-# 		profile.city = city
-# 		profile.dob = datetime.datetime.strptime(users_in_json['results'][i]['dob'], '%Y-%m-%d %H:%M:%S').date()
-# 		# print(users_in_json['results'][i]['dob'])
-# 		# print(users_in_json['results'][i]['picture']['large'])# TO DELETE
-
-# 		#fetch Django file (prof_pic)
-# 		django_file = save_image(users_in_json['results'][i]['picture']['large'], str(profile.user.id) + '.jpg')
-
-# 		#save prof_pic
-# 		profile.prof_pic.save(str(profile.user.id) + '.jpg', django_file, save=True)
-# 		django_file.close()
-
-# 		#fill gender
-# 		profile.sex = users_in_json['results'][i]['gender']
-
-# 		#now fill education and career
-
-# 		education = ["MBA", 'MSc Physics', 'BSc ComSi', 'Bachelor of Sociology', 'Bachelor of Latin and Italian',
-# 		'Student of the Arts!', 'MA', 'High School Diploma', 'PhD of Astronomy', 'Community College']
-
-# 		career = ['CEO', 'student', 'web developer', 'teacher', 'interpreter', 'curator', 'teacher', 'shop keeper',
-# 		'professor', 'Police man']
-
-# 		profile.career = random.choice(career)
-# 		profile.education = random.choice(education)
-
-# 		profile.save()
-# 		profiles.append(profile)
-
-# 	#delete local files (prof pics) as they're already uploaded to media root
-# 	for profile in profiles:
-# 		if os.path.isfile(str(profile.user.id) + '.jpg'):
-# 			os.remove(str(profile.user.id) + '.jpg')
-# 			print("removed local file: "+ str(profile.user.id))
 
 
 def save_image(url, file_name):
@@ -340,7 +244,7 @@ def save_image(url, file_name):
 	#retrieve the profile pic
 	try:
 		retrieved_image = requests.get(url)
-		sleep(3)
+		sleep(3)#To avoid jamming the requests library
 
 	except requests.exceptions.ConnectionError as e:
 		e.status_code = 'Connection refused'
@@ -349,6 +253,7 @@ def save_image(url, file_name):
 
 	#create local file to save remote image
 	with open(file_name, 'wb') as f:
+
 		#write the remote image to the local file we just created
 		f.write(retrieved_image.content)
 
@@ -379,7 +284,7 @@ def populate_excursions():
 		msg2 = "I'm visiting %s with a friend quit soon! we're nice and friendly and would love to meet up!"
 		msg3 = "Hello, Hello, I'm solo traveling around the world and soon to arrive in %s! would love to meet you some locals, maybe to walk around town and have lunch or dinner, Ciao, Ciao and talk to you soon!! :)"
 		msg4 = "I'll arrive in %s in couple of weeks, would love to meet up."
-		msg5 = "Hello %s! I'm arriving over christmas with my Aunt. Would love to say hello."
+		msg5 = "Hello %s! I'm arriving over the holidays with my Aunt. Would love to say hello."
 		msg6 = "Hey. I'm coming to %s for the first time soon, would love to make friends there!"
 		msg7 = "Hey. I'm arriving in %s with my partner soon, would love some nice people!"
 		msg8 = "Hello! I'm coming to %s soon, I'm a nice friendly person who loves to chat!"
@@ -387,9 +292,6 @@ def populate_excursions():
 
 		messages.extend((msg3,msg2,msg1,msg4, msg5, msg6, msg7, msg8, msg9))
 
-	# #generate a random date from today till last day of the year
-	# start_date = datetime.date.today().toordinal()
-	# end_date = datetime.date.today().replace(day=31, month=12).toordinal()
 
 	#generate 10 excursions
 	for i in range(35):
@@ -409,6 +311,7 @@ def populate_excursions():
 
 def generate_date():
 	""" generate a date between today and the end of the year """
+
 	#generate a random date from today till last day of the year
 	start_date = datetime.date.today().toordinal()
 	end_date = datetime.date.today().replace(day=31, month=12).toordinal()
@@ -480,10 +383,7 @@ def populate_requests():
 					continue
 				else:
 					traveler_already_left_ref_for_local = True
-					break
-
-
-				
+					break	
 
 		if traveler_already_left_ref_for_local == False:
 			request.save()
@@ -547,6 +447,5 @@ if __name__ == '__main__':
 	populate_users()
 	populate_excursions()
 	# populate_offers()
-	# populate_requests()
 	populate_request_references()
-
+	#FINITO

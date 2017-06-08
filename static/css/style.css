@@ -491,7 +491,8 @@ position: relative;
 	position: relative;
 	background-image: url('/static/images/bk2.jpg');
 	background-position: center center;
-	
+	background-size: cover;
+	background-repeat: no-repeat;
 	opacity: 1;
 
 }
@@ -729,7 +730,7 @@ div.jumbotron#city_jumbotron .container{
     padding: 0;
     min-height: 400px;
     position: relative;
-    /*background-image: url('url('{{ MEDIA_URL }}{{city.city_image}}')');*/
+    background-image: url('../media/city_pictures.jpg');
     background-position: center center;
     background-size: cover;
     opacity: 1;
@@ -1075,7 +1076,7 @@ margin-top: 80px;
 }
 
 .no_mobile{
-	display: none;
+	display: none !important;
 }
 
 .no-mobile{
@@ -1193,7 +1194,7 @@ ul.navbar-nav li.no_desktop{
 }
 
 .no_mobile{
-	display: none;
+	display: none !important;
 }
 
 .on_mobile{
