@@ -23,9 +23,9 @@ def get_json(url):
 
 def get_google_key():
 	""" returns Google api key"""
-	GoogleKey = 'AIzaSyDaa7NZzS-SE4JW3J-7TaA1v1Y5aWUTiyc'
+	# GoogleKey = 'AIzaSyDaa7NZzS-SE4JW3J-7TaA1v1Y5aWUTiyc'
 	# GoogleKey = 'AIzaSyDViGwJgWL18QSKvPozvAiqloyy1pW2lxg'
-	# GoogleKey = 'AIzaSyB1E9CZaaaw1c77A7eZSophK_LnaGX5XRQ'
+	GoogleKey = 'AIzaSyB1E9CZaaaw1c77A7eZSophK_LnaGX5XRQ'
 
 	return GoogleKey
 
@@ -82,7 +82,7 @@ def populate_city(city_id, query):
 	city_image_ref = jsondata['results'][0]['photos'][0]['photo_reference']
 
 	#set max width / can be changed if front end requires it
-	maxwidth = '400'
+	maxwidth = '50000'
 
 	#The URL the HTTP Response to which brings the image
 	city_image_url = ('https://maps.googleapis.com/maps/api/place/photo'
@@ -396,7 +396,7 @@ def populate_excursions():
 		#generate random date
 	 	# date = datetime.date.fromordinal(random.randint(start_date, end_date))
 	 	city=random.choice(city_list)
-	 	message=random.choice(messages) % city.name
+	 	message=random.choice(messages) % city.display_name
 
 	 	#create Excursion object
 	 	excursion = Excursion(traveler=random.choice(user_list), 
