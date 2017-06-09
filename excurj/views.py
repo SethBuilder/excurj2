@@ -79,7 +79,7 @@ def get_json_raw(url):
 	"""takes facebook graph url and returns raw json"""
 	with urllib.request.urlopen(url) as response:
 		jsonraw = response.read()
-		jsondata = json.loads(jsonraw)
+		jsondata = json.loads(jsonraw.decode())
 		return jsondata
 
 
