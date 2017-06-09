@@ -28,8 +28,8 @@ def get_json(url):
 def get_google_key():
 	""" returns Google api key"""
 	# GoogleKey = 'AIzaSyDaa7NZzS-SE4JW3J-7TaA1v1Y5aWUTiyc'
-	# GoogleKey = 'AIzaSyDViGwJgWL18QSKvPozvAiqloyy1pW2lxg'
-	GoogleKey = 'AIzaSyB1E9CZaaaw1c77A7eZSophK_LnaGX5XRQ'
+	GoogleKey = 'AIzaSyDViGwJgWL18QSKvPozvAiqloyy1pW2lxg'
+	# GoogleKey = 'AIzaSyB1E9CZaaaw1c77A7eZSophK_LnaGX5XRQ'
 
 	return GoogleKey
 
@@ -83,7 +83,7 @@ def populate_city(city_id, query):
 	city_image_ref = jsondata['results'][0]['photos'][0]['photo_reference']
 
 	#set max width / can be changed if front end requires it
-	maxwidth = '1600'
+	maxwidth = '800'
 
 	#The URL the HTTP Response to which brings the image
 	city_image_url = ('https://maps.googleapis.com/maps/api/place/photo'
@@ -246,17 +246,20 @@ def save_image(url, file_name):
 	try:
 		retrieved_image = requests.get(url)
 		sleep(3)#To avoid jamming the requests library
+		image = retrieved_image.content
 		
 	except requests.exceptions.ConnectionError as e:
 		e.status_code = 'Connection refused'
 		print(e.status_code)
-		retrieved_image = None
+		
+		#If requests throws exception use this alternative city image
+		retrieved_image = open('static/images/one.jpg', 'rb').read()
+		image = retrieved_image
 
 	#create local file to save remote image
 	with open(file_name, 'wb') as f:
-
 		#write the remote image to the local file we just created
-		f.write(retrieved_image.content)
+		f.write(image)
 
 	reopen = open(file_name, 'rb')
 	django_file = File(reopen)

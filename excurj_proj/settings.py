@@ -32,7 +32,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['excurjdev.pythonanywhere.com', '127.0.0.1','seifjo.pythonanywhere.com', 'excurj.pythonanywhere.com']
 
-SECURE_SSL_REDIRECT = True
+# SECURE_SSL_REDIRECT = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'sethmoghrabi@gmail.com'
 EMAIL_HOST_PASSWORD =  'Seeyou1later!'
