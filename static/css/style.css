@@ -289,10 +289,17 @@ nav.navbar.opaque{
 	background-color: #efebe1;
 }
 
-.how-it-works-container h2, .popular-cities-container h2{
+.how-it-works-container h2, .popular-cities-container h2, div#events h2{
 	text-align: center;
 	position: relative;
 	color: white;
+	margin-bottom: 30px;
+}
+
+div#events h2, div#wiki h2, #coming h2, #locals h2{
+	text-align: center;
+	position: relative;
+	color: black;
 	margin-bottom: 30px;
 }
 
@@ -337,8 +344,20 @@ nav.navbar.opaque{
 	display: block;
 }
 
+
+div#events h2:after, div#wiki h2:after, div#coming h2:after, div#locals h2:after{
+	content: "";
+	position: absolute;
+	top: 50px;
+	left: 27%;
+	right: 27%;
+	height: 2px;
+	background-color: black;
+	display: block;
+}
+
 .ready h2:after{
-		content: "";
+	content: "";
 	position: absolute;
 	top: 50px;
 	left: 37%;

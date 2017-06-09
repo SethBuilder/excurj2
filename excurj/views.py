@@ -13,6 +13,7 @@ from django.shortcuts import redirect
 from django.core.exceptions import MultipleObjectsReturned
 from django.core.mail import send_mail, BadHeaderError
 from django.utils.safestring import mark_safe
+import urllib.request, json
 
 
 def send_me_email(subject, message, to_email):
@@ -65,14 +66,29 @@ def index(request):
 		#append city's lat and lng to the lat lng dictionary
 		lat_lng_dict.append(lat_lng_entry)
 
+		print("LAAAAAAAAAAAAAT" + str(lat_lng_dict))
+
 	context_dict['all_cities'] =  mark_safe(lat_lng_dict)
 	
 	return render(request, 'excurj/index.html', context_dict)
+
+
+
+
+def get_json_raw(url):
+	"""takes facebook graph url and returns raw json"""
+	with urllib.request.urlopen(url) as response:
+		jsonraw = response.read()
+		jsondata = json.loads(jsonraw)
+		return jsondata
+
+
 
 def show_city(request, city_name_slug):
 	"""View to show city profile"""
 
 	context_dict={}
+	events=[]
 
 	try:
 
@@ -103,12 +119,36 @@ def show_city(request, city_name_slug):
 	except City.MultipleObjectsReturned:
 		city = City.objects.filter(slug=city_name_slug)[0]
 
-	return render(request, 'excurj/city.html', context_dict)
+	
 
+	#PULL LOCAL EVENTS
+
+
+	url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBAPoL66ZACy2OfWyX1Vw76IesJMNZAb5M6lc4OcXojTGyLzmUwg7aTRZBlXLSO08QGS4CRemk2luC0cWlzCMd5FpzPY9ExZCjWSpMbClEqeKQdtP8Sax2GW5Rw82rg9aLVZBFDCBRgnep0uvMcf4ulPyYgVrQfVq5G7mYz7JEtSvilKKo4cG4ZD' % city.name.replace(' ', '')
+	events_json = get_json_raw(url)
+
+	#If no events were returned, try using the first level of the city name as query (Amman instead of Amman, Jordam)
+	if len(events_json['data']) == 0:
+		#PULL LOCAL EVENTS
+		url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBAPoL66ZACy2OfWyX1Vw76IesJMNZAb5M6lc4OcXojTGyLzmUwg7aTRZBlXLSO08QGS4CRemk2luC0cWlzCMd5FpzPY9ExZCjWSpMbClEqeKQdtP8Sax2GW5Rw82rg9aLVZBFDCBRgnep0uvMcf4ulPyYgVrQfVq5G7mYz7JEtSvilKKo4cG4ZD' % city.display_name.replace(' ', '')
+		events_json = get_json_raw(url)
+
+	#Loop thru events and send list of events
+	for event in events_json['data']:
+		cover_photo_url = 'https://graph.facebook.com/{0}?fields=cover&access_token=EAADuTyDZATeoBAPoL66ZACy2OfWyX1Vw76IesJMNZAb5M6lc4OcXojTGyLzmUwg7aTRZBlXLSO08QGS4CRemk2luC0cWlzCMd5FpzPY9ExZCjWSpMbClEqeKQdtP8Sax2GW5Rw82rg9aLVZBFDCBRgnep0uvMcf4ulPyYgVrQfVq5G7mYz7JEtSvilKKo4cG4ZD'.format(event['id'])
+		 
+		event_photo_json = get_json_raw(cover_photo_url)
+		if 'cover' in event_photo_json:
+			event['cover'] = event_photo_json['cover']['source']
+			
+		events.append(event)
+
+	context_dict['events'] = events
+
+	return render(request, 'excurj/city.html', context_dict)
 
 def show_profile(request, username):
 	"""View for User Profile"""
-
 	context_dict={}
 
 	try:
@@ -128,6 +168,7 @@ def show_profile(request, username):
 		context_dict['user'] = None
 		context_dict['reqs'] = None
 		context_dict['excurjs'] = None
+
 
 	return render(request, 'excurj/user.html', context_dict)
 

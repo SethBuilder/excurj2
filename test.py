@@ -11,22 +11,25 @@ def populate():
 	cities = []
 	GoogleKey = 'AIzaSyDaa7NZzS-SE4JW3J-7TaA1v1Y5aWUTiyc'
 
-	for i in range(len(city_names)):
-		query = city_names[i] + "+" + countries[i] 
+	# for i in range(len(city_names)):
+	# 	query = city_names[i] + "+" + countries[i] 
 		
-		url = ('https://maps.googleapis.com/maps/api/place/textsearch/json'
-			'?query=%s'
-			'&key=%s') % (query, GoogleKey)
+	# 	url = ('https://maps.googleapis.com/maps/api/place/textsearch/json'
+	# 		'?query=%s'
+	# 		'&key=%s') % (query, GoogleKey)
 
-		#grabbing the JSON results
-		with urllib.request.urlopen(url) as response:
-			jsonraw = response.read()
-			jsondata = json.loads(jsonraw)
-			print (jsondata['results'][0]['geometry']['location']['lat'])
+	# 	#grabbing the JSON results
+	# 	with urllib.request.urlopen(url) as response:
+	# 		jsonraw = response.read()
+	# 		jsondata = json.loads(jsonraw)
+			# print (jsondata['results'][0]['geometry']['location']['lat'])
 			
+	url = 'https://graph.facebook.com/search?q=amman,jordan&type=event&access_token=EAADuTyDZATeoBAIQokWxUwPWETSzcv8tRcN6eMAbRm5J4YPHUtD7BC7wZAqXzaAar750DZBNalKXG1TyJfMABkZBaL8MRaHbKZA3ifvpKiXrNACp9PZAlZAIeKu8MEejTB7a3DLciHZCpdWg0FfxTGhCHMGuk7iLBr4vzZB8wBzX5TUfcdFSBI31d1MbzmcZAUFA4ZD'
 
-
-
+	with urllib.request.urlopen(url) as response:
+		jsonraw = response.read()
+		jsondata = json.loads(jsonraw)
+		print(jsondata['data'][0]['description'])
 
 # from excurj.models import Reference, Request, User
 
