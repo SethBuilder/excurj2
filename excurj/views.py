@@ -8,7 +8,7 @@ import population_script
 from django.db.models import Q
 from excurj.forms import UserForm, UserProfileForm, EditAccountForm, EditProfileForm, \
  ExcursionRequestForm, CreateTripForm, OfferExcursionForm, FeedbackForm
-
+from datetime import datetime
 from django.shortcuts import redirect
 from django.core.exceptions import MultipleObjectsReturned
 from django.core.mail import send_mail, BadHeaderError
@@ -135,12 +135,17 @@ def show_city(request, city_name_slug):
 
 	#Loop thru events and send list of events
 	for event in events_json['data']:
+
+
+
+		#pull event cover photo
 		cover_photo_url = 'https://graph.facebook.com/{0}?fields=cover&access_token=EAADuTyDZATeoBAPoL66ZACy2OfWyX1Vw76IesJMNZAb5M6lc4OcXojTGyLzmUwg7aTRZBlXLSO08QGS4CRemk2luC0cWlzCMd5FpzPY9ExZCjWSpMbClEqeKQdtP8Sax2GW5Rw82rg9aLVZBFDCBRgnep0uvMcf4ulPyYgVrQfVq5G7mYz7JEtSvilKKo4cG4ZD'.format(event['id'])
 		 
 		event_photo_json = get_json_raw(cover_photo_url)
 		if 'cover' in event_photo_json:
 			event['cover'] = event_photo_json['cover']['source']
-			
+		
+		#append event to events list
 		events.append(event)
 
 	context_dict['events'] = events
