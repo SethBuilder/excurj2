@@ -253,7 +253,7 @@ def save_image(url, file_name):
 		print(e.status_code)
 		
 		#If requests throws exception use this alternative city image
-		retrieved_image = open('static/images/one.jpg', 'rb').read()
+		retrieved_image = open('home/excurj/static/images/one.jpg', 'rb').read()
 		image = retrieved_image
 
 	#create local file to save remote image
