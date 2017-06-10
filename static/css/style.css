@@ -1088,7 +1088,7 @@ ul.nav#tabs_user {
 margin-top: 80px;
 }
 
-:after{
+.mobile{
 	display: inline;
 	/*background-image: url(' {% static 'images/cap.jpg' %} ');*/
 	background-position: center center;
