@@ -869,8 +869,12 @@ div.jumbotron#user_jumbotron .container{
     font-weight: bold;
     line-height: 28px;
     margin-right: 2px;
-    word-wrap: break-word;
+    word-break: keep-all;
     color: black;
+}
+
+pre{
+	word-break: keep-all !important;
 }
 
 .prof_pic_overlay img{
