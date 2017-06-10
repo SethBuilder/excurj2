@@ -124,13 +124,13 @@ def show_city(request, city_name_slug):
 	#PULL LOCAL EVENTS
 
 
-	url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBAPoL66ZACy2OfWyX1Vw76IesJMNZAb5M6lc4OcXojTGyLzmUwg7aTRZBlXLSO08QGS4CRemk2luC0cWlzCMd5FpzPY9ExZCjWSpMbClEqeKQdtP8Sax2GW5Rw82rg9aLVZBFDCBRgnep0uvMcf4ulPyYgVrQfVq5G7mYz7JEtSvilKKo4cG4ZD' % city.name.replace(' ', '')
+	url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=262023620939242|WLPyg2PPrru8didwYORThZaqk_I' % city.name.replace(' ', '')
 	events_json = get_json_raw(url)
 
 	#If no events were returned, try using the first level of the city name as query (Amman instead of Amman, Jordam)
 	if len(events_json['data']) == 0:
 		#PULL LOCAL EVENTS
-		url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBAPoL66ZACy2OfWyX1Vw76IesJMNZAb5M6lc4OcXojTGyLzmUwg7aTRZBlXLSO08QGS4CRemk2luC0cWlzCMd5FpzPY9ExZCjWSpMbClEqeKQdtP8Sax2GW5Rw82rg9aLVZBFDCBRgnep0uvMcf4ulPyYgVrQfVq5G7mYz7JEtSvilKKo4cG4ZD' % city.display_name.replace(' ', '')
+		url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=262023620939242|WLPyg2PPrru8didwYORThZaqk_I' % city.display_name.replace(' ', '')
 		events_json = get_json_raw(url)
 
 	#Loop thru events and send list of events
@@ -139,7 +139,7 @@ def show_city(request, city_name_slug):
 
 
 		#pull event cover photo
-		cover_photo_url = 'https://graph.facebook.com/{0}?fields=cover&access_token=EAADuTyDZATeoBAPoL66ZACy2OfWyX1Vw76IesJMNZAb5M6lc4OcXojTGyLzmUwg7aTRZBlXLSO08QGS4CRemk2luC0cWlzCMd5FpzPY9ExZCjWSpMbClEqeKQdtP8Sax2GW5Rw82rg9aLVZBFDCBRgnep0uvMcf4ulPyYgVrQfVq5G7mYz7JEtSvilKKo4cG4ZD'.format(event['id'])
+		cover_photo_url = 'https://graph.facebook.com/{0}?fields=cover&access_token=262023620939242|WLPyg2PPrru8didwYORThZaqk_I'.format(event['id'])
 		 
 		event_photo_json = get_json_raw(cover_photo_url)
 		if 'cover' in event_photo_json:

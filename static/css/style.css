@@ -1088,10 +1088,10 @@ margin-top: 80px;
 	display: inline;
 	/*background-image: url(' {% static 'images/cap.jpg' %} ');*/
 	background-position: center center;
-	-o-background-size: cover;
-    -moz-background-size: cover;
-    -webkit-background-size: cover;
-	background-size: cover;	
+	-o-background-size: contain;
+    -moz-background-size: contain;
+    -webkit-background-size: contain;
+	background-size: contain;	
 }
 
 .no_mobile{
