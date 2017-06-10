@@ -345,7 +345,7 @@ div#events h2, div#wiki h2, #coming h2, #locals h2{
 }
 
 
-div#events h2:after, div#wiki h2:after, div#coming h2:after, div#locals h2:after{
+/*div#events h2:after, div#wiki h2:after, div#coming h2:after, div#locals h2:after{
 	content: "";
 	position: absolute;
 	top: 50px;
@@ -354,7 +354,7 @@ div#events h2:after, div#wiki h2:after, div#coming h2:after, div#locals h2:after
 	height: 2px;
 	background-color: black;
 	display: block;
-}
+}*/
 
 .ready h2:after{
 	content: "";
@@ -1084,7 +1084,7 @@ ul.nav#tabs_user {
 margin-top: 80px;
 }
 
-.mobile{
+:after{
 	display: inline;
 	/*background-image: url(' {% static 'images/cap.jpg' %} ');*/
 	background-position: center center;

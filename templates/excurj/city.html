@@ -147,6 +147,13 @@
       			{% endif %}
 
 
+      			{% if event.ticket_uri %}
+      				<pre style="white-space:pre-wrap; background-color: white; border: none;font-weight: bold;">Tickets: <a href="{{event.ticket_uri}}" target="_blank">{{event.ticket_uri}}</a></pre>
+      			{% else %}
+      				<pre style="white-space:pre-wrap; background-color: white; border: none;">Ticket info not avilable</pre>
+      			{% endif %}
+
+
 	    		{% if event.description %}
       				<pre style="white-space:pre-wrap; background-color: white; border: none;">{{event.description}}</pre>
       			{% else %}
@@ -175,7 +182,7 @@
 
 
 	<div id="wiki" class="tab-pane fade" style="padding: 20px;">
-	  	<h2>{{city.display_name}}'s Wiki Summary to Jump Start Your Conversations!</h2>
+	  	<h2><strong>{{city.display_name}}</strong>'s Wiki Summary to Jump Start Your Conversations!</h2>
 		<pre style="white-space:pre-wrap; background-color: white; border: none;"> {{city.description}} </pre>
 	</div>
   </div>

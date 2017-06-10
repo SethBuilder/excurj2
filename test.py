@@ -53,6 +53,20 @@ def populate():
 	# 	refs_trav = Reference.objects.filter(fun=True, author=req.traveler, referenced=req.local).latest()
 
 	# 	print(refs_loc, refs_trav)
+
+def get_json_raw(url):
+	"""takes facebook graph url and returns raw json"""
+	with urllib.request.urlopen(url) as response:
+		jsonraw = response.read()
+		jsondata = json.loads(jsonraw.decode())
+		return jsondata
+
+
+
+def get_perma_fb_token():
+
+	token = get_json_raw("https://graph.facebook.com/oauth/access_token?client_id=262023620939242&client_secret=13a20efc5cb8245237e8a8d08118abe1&grant_type=client_credentials")
+	print(token)
 if __name__ == '__main__':
 	# test()
-	populate()
+	get_perma_fb_token()

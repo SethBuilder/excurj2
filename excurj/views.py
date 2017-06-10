@@ -73,7 +73,8 @@ def index(request):
 	return render(request, 'excurj/index.html', context_dict)
 
 
-
+def get_perma_fb_token():
+	token = get_json_raw("https://graph.facebook.com/oauth/access_token?client_id=262023620939242&client_secret=13a20efc5cb8245237e8a8d08118abe1&grant_type=client_credentials")
 
 def get_json_raw(url):
 	"""takes facebook graph url and returns raw json"""
@@ -124,14 +125,20 @@ def show_city(request, city_name_slug):
 	#PULL LOCAL EVENTS
 
 
-	url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=262023620939242|WLPyg2PPrru8didwYORThZaqk_I' % city.name.replace(' ', '')
+	
+	url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBALgvIecgxo7OXsfJ8wldki5xkJt43Jxa7nMHJSlYX1ajnO90pIopsLDsGTyLYJXy7y8KFCrmh7hBiKRAOEFZBYOGyzxEjJP1p1RzCuR0NsGCaT3PTSxJexceqYZCSo5tukee7aCasdCMAZBpFkZD&token_type=bearer' % city.name.replace(' ', '')
+	print(url)
 	events_json = get_json_raw(url)
+
+	
 
 	#If no events were returned, try using the first level of the city name as query (Amman instead of Amman, Jordam)
 	if len(events_json['data']) == 0:
 		#PULL LOCAL EVENTS
-		url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=262023620939242|WLPyg2PPrru8didwYORThZaqk_I' % city.display_name.replace(' ', '')
+		url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBALgvIecgxo7OXsfJ8wldki5xkJt43Jxa7nMHJSlYX1ajnO90pIopsLDsGTyLYJXy7y8KFCrmh7hBiKRAOEFZBYOGyzxEjJP1p1RzCuR0NsGCaT3PTSxJexceqYZCSo5tukee7aCasdCMAZBpFkZD&token_type=bearer' % city.display_name.replace(' ', '')
+		print(url)
 		events_json = get_json_raw(url)
+		
 
 	#Loop thru events and send list of events
 	for event in events_json['data']:
@@ -139,11 +146,13 @@ def show_city(request, city_name_slug):
 
 
 		#pull event cover photo
-		cover_photo_url = 'https://graph.facebook.com/{0}?fields=cover&access_token=262023620939242|WLPyg2PPrru8didwYORThZaqk_I'.format(event['id'])
-		 
+		cover_photo_url = 'https://graph.facebook.com/{0}?fields=cover,ticket_uri&access_token=EAADuTyDZATeoBALgvIecgxo7OXsfJ8wldki5xkJt43Jxa7nMHJSlYX1ajnO90pIopsLDsGTyLYJXy7y8KFCrmh7hBiKRAOEFZBYOGyzxEjJP1p1RzCuR0NsGCaT3PTSxJexceqYZCSo5tukee7aCasdCMAZBpFkZD&token_type=bearer'.format(event['id'])
+		print("PHOTTOOOO URL" + cover_photo_url)
 		event_photo_json = get_json_raw(cover_photo_url)
 		if 'cover' in event_photo_json:
 			event['cover'] = event_photo_json['cover']['source']
+		if 'ticket_uri' in event_photo_json:
+			event['ticket_uri'] = event_photo_json['ticket_uri']
 		
 		#append event to events list
 		events.append(event)
