@@ -23,5 +23,6 @@ urlpatterns=[
 	url(r'^thankyou/$', views.thankyou, name="thankyou"),
 	url(r'^confirmoffer/(?P<offerid>[\w\-]+)/$', views.confirmoffer, name="confirmoffer"),
 	url(r'^acceptrequest/(?P<requestid>[\w\-]+)/$', views.acceptrequest, name="acceptrequest"),
-	# url(r'^leavereview/(?P<requestid>[\w\-]+)/$', views.leavereview, name="leavereview"),
+	url(r'^leavereview_for_traveler/(?P<username>[\w\-]+)/$', views.leavereview_for_traveler, name="leavereview_for_traveler"),
+	url(r'^leavereview_for_local/(?P<username>[\w\-]+)/$', views.leavereview_for_local, name="leavereview_for_local"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

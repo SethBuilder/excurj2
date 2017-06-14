@@ -235,7 +235,7 @@
 								</td>
 
 								<td>
-								{% if req.local_approval is null%}
+								{% if req.local_approval == None %}
 
 								<form action=" {% url 'excurj:acceptrequest' req.id %} ">
 									<button class="btn btn-sm btn-success" value="True" name="accept">Accept!</button>
@@ -247,7 +247,7 @@
 									Accepted!
 								</td>
 
-								{%else%}
+								{%elif req.local_approval != None%}
 								<td>
 									Declined!
 								</td>

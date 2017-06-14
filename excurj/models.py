@@ -56,7 +56,10 @@ class Request(models.Model):
 	local = models.ForeignKey(User, related_name='local_requested', blank=True)
 	message = models.CharField(max_length=500)
 	date = models.DateField()
-	local_approval = models.BooleanField(default=False)
+	local_approval = models.NullBooleanField(default=None, null=True)
+
+	class Meta:
+		get_latest_by = "id"
 
 	def __str__(self):
 		return self.traveler.first_name + " " + self.local.first_name
@@ -68,7 +71,8 @@ class RequestReference(models.Model):
 	"""
 
 	#Each request gets a reference instance
-	request = models.OneToOneField(Request, on_delete=models.CASCADE, primary_key=True)
+	request = models.OneToOneField(Request, on_delete=models.CASCADE, primary_key=True,\
+	 related_name='reference_request')
 
 	#traveler and local description
 	traveler_desc = models.CharField(max_length=500, blank=True)#Traveler's reference description
@@ -83,7 +87,7 @@ class RequestReference(models.Model):
 	# local_date = models.DateField(default=datetime.datetime.now())#When the local leave the reference
 
 	class Meta:
-		get_latest_by = "request.id"
+		get_latest_by = "request_id"
 
 	def __str__(self):
 		return self.traveler_desc	

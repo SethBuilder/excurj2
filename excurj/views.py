@@ -7,14 +7,14 @@ from django.contrib.auth.models import User
 import population_script
 from django.db.models import Q
 from excurj.forms import UserForm, UserProfileForm, EditAccountForm, EditProfileForm, \
- ExcursionRequestForm, CreateTripForm, OfferExcursionForm, FeedbackForm
+ ExcursionRequestForm, CreateTripForm, OfferExcursionForm, FeedbackForm, LeaveReference_for_traveler, \
+ LeaveReference_for_local
 from datetime import datetime
 from django.shortcuts import redirect
 from django.core.exceptions import MultipleObjectsReturned
 from django.core.mail import send_mail, BadHeaderError
 from django.utils.safestring import mark_safe
 import urllib.request, json
-
 
 def send_me_email(subject, message, to_email):
 	"""Used so I receive emails when a new user signs up or does other things like send feedback"""
@@ -27,6 +27,8 @@ def send_me_email(subject, message, to_email):
 def index(request):
 	context_dict={}
 
+	# print("taaaaaaaaaaaaaaask is: " + str(fact.delay(20000).get(propagate=False)))
+
 	#brings back top 6 cities with the highest number of users
 	city_list = City.objects.annotate(user_count=Count('city__user')).order_by('-user_count')[:6]
 	
@@ -36,6 +38,8 @@ def index(request):
 	refs= RequestReference.objects.select_related('request') \
 	.filter(traveler_fun=True,local_fun=True) \
 	.order_by('-request__date')[:2]
+
+	# refs = reversed(refs)
 	
 	context_dict['refs'] = refs
 
@@ -66,7 +70,7 @@ def index(request):
 		#append city's lat and lng to the lat lng dictionary
 		lat_lng_dict.append(lat_lng_entry)
 
-		print("LAAAAAAAAAAAAAT" + str(lat_lng_dict))
+		
 
 	context_dict['all_cities'] =  mark_safe(lat_lng_dict)
 	
@@ -127,7 +131,7 @@ def show_city(request, city_name_slug):
 
 	
 	url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBALgvIecgxo7OXsfJ8wldki5xkJt43Jxa7nMHJSlYX1ajnO90pIopsLDsGTyLYJXy7y8KFCrmh7hBiKRAOEFZBYOGyzxEjJP1p1RzCuR0NsGCaT3PTSxJexceqYZCSo5tukee7aCasdCMAZBpFkZD&token_type=bearer' % city.name.replace(' ', '')
-	print(url)
+	
 	events_json = get_json_raw(url)
 
 	
@@ -136,7 +140,7 @@ def show_city(request, city_name_slug):
 	if len(events_json['data']) == 0:
 		#PULL LOCAL EVENTS
 		url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBALgvIecgxo7OXsfJ8wldki5xkJt43Jxa7nMHJSlYX1ajnO90pIopsLDsGTyLYJXy7y8KFCrmh7hBiKRAOEFZBYOGyzxEjJP1p1RzCuR0NsGCaT3PTSxJexceqYZCSo5tukee7aCasdCMAZBpFkZD&token_type=bearer' % city.display_name.replace(' ', '')
-		print(url)
+		
 		events_json = get_json_raw(url)
 		
 
@@ -147,7 +151,7 @@ def show_city(request, city_name_slug):
 
 		#pull event cover photo
 		cover_photo_url = 'https://graph.facebook.com/{0}?fields=cover,ticket_uri&access_token=EAADuTyDZATeoBALgvIecgxo7OXsfJ8wldki5xkJt43Jxa7nMHJSlYX1ajnO90pIopsLDsGTyLYJXy7y8KFCrmh7hBiKRAOEFZBYOGyzxEjJP1p1RzCuR0NsGCaT3PTSxJexceqYZCSo5tukee7aCasdCMAZBpFkZD&token_type=bearer'.format(event['id'])
-		print("PHOTTOOOO URL" + cover_photo_url)
+		
 		event_photo_json = get_json_raw(cover_photo_url)
 		if 'cover' in event_photo_json:
 			event['cover'] = event_photo_json['cover']['source']
@@ -165,22 +169,91 @@ def show_profile(request, username):
 	"""View for User Profile"""
 	context_dict={}
 
+
 	try:
 		#Pull the user based on the passed username
 		user = User.objects.get(username=username)
 
-		reqs = Request.objects.filter(local=user)
+		#all the excursion requests made to the user as a local
+		reqs_as_local = Request.objects.filter(local=user)
+		#all requests made to the user whose profile is being browsed (as a traveler)
+		reqs_as_traveler = Request.objects.filter(traveler=user)
+
+ 		#The logged in user is the traveler in this case
+		show_review_button_for_traveler = False
+
+		#show review button on the local profile
+		for req in reqs_as_traveler:
+			print("REQ IS: " + str(req))
+			
+			if req.traveler == user and req.local == request.user:
+				try:
+					ref = RequestReference.objects.get(pk = req.id)
+					print("REFFFFF 1: " + str(ref))
+				except RequestReference.DoesNotExist:
+					ref = RequestReference.objects.create(pk = req.id)
+					print("REFFFFF 2: " + str(ref))
+				if ref.local_desc in [None, '']:
+					show_review_button_for_traveler = True
+					print("show_review_button_for_traveler 1: " + str(show_review_button_for_traveler))
+					
+				else:
+					show_review_button_for_traveler = False
+					print("show_review_button_for_traveler 2: " + str(show_review_button_for_traveler))
+					
+			else:
+				show_review_button_for_traveler = False
+				print("show_review_button_for_traveler 3: " + str(show_review_button_for_traveler))
+
+
+
+
+
+		#The logged in user is the local in this case
+		show_review_button_for_local = False
+
+		#show review buton on the traveler profile
+		for req in reqs_as_local:
+			
+			if req.local == user and req.traveler == request.user:
+				try:
+					ref = RequestReference.objects.get(pk = req.id)
+					print("REFFFFF : " + str(ref))
+				except RequestReference.DoesNotExist:
+					ref = RequestReference.objects.create(pk = req.id)
+					print("REFFFFF : " + str(ref))
+				if ref.traveler_desc in [None, '']:
+					show_review_button_for_local = True
+					print("show_review_button_for_local 1: " + str(show_review_button_for_local))
+					
+				else:
+					show_review_button_for_local = False
+					print("show_review_button_for_local 2: " + str(show_review_button_for_local))
+					
+			else:
+				show_review_button_for_local = False
+				print("show_review_button_for_local 3: " + str(show_review_button_for_local))
+
+
+
+
+
+
+
+
 
 		#Pull users upcoming trips
 		excurjs = Excursion.objects.filter(traveler=user)
 
 		context_dict['user'] = user
-		context_dict['reqs'] = reqs
+		context_dict['reqs_as_local'] = reqs_as_local
 		context_dict['excurjs'] = excurjs
+		context_dict['show_review_button_for_traveler'] = show_review_button_for_traveler
+		context_dict['show_review_button_for_local'] = show_review_button_for_local
 
 	except User.DoesNotExist:
 		context_dict['user'] = None
-		context_dict['reqs'] = None
+		context_dict['reqs_as_local'] = None
 		context_dict['excurjs'] = None
 
 
@@ -380,6 +453,13 @@ def editprofile(request):
 		if edit_profile_form.is_valid():
 
 			profile = edit_profile_form.save(commit=False)
+			if 'prof_pic' in request.FILES:#now save the profile pic
+
+				profile.prof_pic = request.FILES['prof_pic']
+			elif profile.prof_pic != " /media/profile_pictures/anon.png ":
+				pass
+			else:
+				profile.prof_pic = 'profile_pictures/anon.png'
 
 			#If user changed his city, then process search query and save resulting city it in his profile
 			if 'city_search_text' in request.POST:
@@ -545,7 +625,8 @@ def offerexcursion(request, username):
 
 	traveler = User.objects.get(username=username)
 	if request.method == 'POST':
-		offer_excursion_form = OfferExcursionForm(traveler=traveler, city=request.user.profile.city, data=request.POST)
+		offer_excursion_form = OfferExcursionForm(traveler=traveler, city=request.user.profile.city,\
+		 data=request.POST)
 		if offer_excursion_form.is_valid():
 			offer = offer_excursion_form.save(commit=False)
 			exj = Excursion.objects.get(traveler=traveler, city=request.user.profile.city)
@@ -565,6 +646,83 @@ def offerexcursion(request, username):
 
 		offer_excursion_form = OfferExcursionForm(traveler=traveler, city=request.user.profile.city)
 	return render(request, 'excurj/offerexcursion.html', {'offer_excursion_form':offer_excursion_form})
+
+
+
+def leavereview_for_traveler(request, username):
+	""" logged in user is the local - profile being reviewed is the traveler """
+
+	excursion_request = Request.objects.filter(traveler__username = username, local = request.user).latest()
+	reference = RequestReference.objects.filter(request = excursion_request).latest()
+	referenced_person_name = User.objects.get(username=username).first_name.title()
+	
+
+	if request.method == 'POST':
+		leavereview_for_traveler_form = LeaveReference_for_traveler(data=request.POST)
+		if leavereview_for_traveler_form.is_valid():
+			ref = leavereview_for_traveler_form.save(commit=False)
+			ref.request = excursion_request
+			ref.traveler_desc = reference.traveler_desc
+			ref.save()
+
+			if 'next' in request.GET:
+				return redirect(request.GET['next'])
+
+		else:
+			print(leavereview_for_traveler_form.errors)
+	else:
+		leavereview_for_traveler_form = LeaveReference_for_traveler()
+	return render(request, 'excurj/leavereview_for_traveler.html',\
+	 {'leavereview_for_traveler_form':leavereview_for_traveler_form,\
+	 'referenced_person_name': referenced_person_name})
+
+	#Send email
+	# 
+
+	return HttpResponseRedirect("/")
+
+
+def leavereview_for_local(request, username):
+	""" logged in user is the traveler - profile being reviewed is the local """
+
+	excursion_request = Request.objects.filter(local__username = username, traveler=request.user).latest()
+	reference = RequestReference.objects.filter(request = excursion_request).latest()
+	referenced_person_name = User.objects.get(username=username).first_name.title()
+
+	if request.method == 'POST':
+		leavereview_for_local_form = LeaveReference_for_local(data=request.POST)
+		if leavereview_for_local_form.is_valid():
+			ref = leavereview_for_local_form.save(commit=False)
+			ref.request = excursion_request
+			ref.local_desc = reference.local_desc
+			ref.save()
+
+			if 'next' in request.GET:
+				return redirect(request.GET['next'])
+
+		else:
+			print(leavereview_for_local_form.errors)
+	else:
+		leavereview_for_local_form = LeaveReference_for_local()
+
+	return render(request, 'excurj/leavereview_for_local.html',\
+	 {'leavereview_for_local_form':leavereview_for_local_form, \
+	 'referenced_person_name': referenced_person_name})
+
+	#Send email
+	
+
+	return HttpResponseRedirect("/")
+
+
+
+
+
+
+
+
+
+
 
 def confirmoffer(request, offerid):
 	""" Confirm offer view """
@@ -589,6 +747,7 @@ def acceptrequest(request, requestid):
 
 	#Requested is the request
 	traveler_request = Request.objects.get(id = requestid)
+	
 	if 'accept' in request.GET:
 		
 		traveler_request.local_approval = True
@@ -603,6 +762,8 @@ def acceptrequest(request, requestid):
 	send_me_email(subject, "test", [traveler_request.traveler.email,"moghrabi@gmail.com"])
 
 	return HttpResponseRedirect("/dashboard/#excursionoffers")
+
+
 
 def feedback(request):
 	"""Feedback view"""

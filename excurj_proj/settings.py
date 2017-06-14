@@ -39,7 +39,6 @@ EMAIL_HOST_PASSWORD =  'Seeyou1later!'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-
 # Application definition
 
 INSTALLED_APPS = [

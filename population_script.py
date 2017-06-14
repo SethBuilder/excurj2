@@ -83,7 +83,7 @@ def populate_city(city_id, query):
 	city_image_ref = jsondata['results'][0]['photos'][0]['photo_reference']
 
 	#set max width / can be changed if front end requires it
-	maxwidth = '800'
+	maxwidth = '1600'
 
 	#The URL the HTTP Response to which brings the image
 	city_image_url = ('https://maps.googleapis.com/maps/api/place/photo'

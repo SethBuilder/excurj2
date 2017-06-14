@@ -44,6 +44,74 @@
 					</button>
 				</li>
 		{% endif %}
+
+
+
+
+
+
+
+		{% if request.user.is_authenticated and show_review_button_for_local == True %}
+
+			<li class="pull-right " style="margin-right: 20px;margin-top: 2px;">
+
+				<button class="btn btn-default btn-md" style=""> 
+					<a href=" {% url 'excurj:leavereview_for_local' user.username %} ">
+						<strong>
+							Leave a Reference for {{user.first_name.title}} (Local)
+						</strong>
+					</a>
+				</button>
+			</li>
+
+		{% elif request.user.is_authenticated and show_review_button_for_traveler == True %}
+			
+				<li class="pull-right " style="margin-right: 20px;margin-top: 2px;">
+					<button class="btn btn-default btn-md">
+						<a href="{% url 'excurj:leavereview_for_traveler' user.username %}" style="color: black">
+							<strong>
+								Leave a Reference for {{user.first_name.title}} (Traveler)
+							</strong> </a>
+					</button>
+				</li>
+
+		{% else %}
+
+		{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	</ul>
 <div style="" id="tabs_container">
 	<div id="tabs_content_user" class="tab-content" style="">
@@ -89,11 +157,11 @@
 
 		<div id="reviews" class="tab-pane fade">
 			
-			{% if reqs %}
+			{% if reqs_as_local %}
 
 				<h3><strong>What people said about {{ user.first_name.title }} </strong></h3>
 
-			{% for req in reqs %}
+			{% for req in reqs_as_local %}
 
 				<div style="margin-bottom: 50px;padding: 0px">
 

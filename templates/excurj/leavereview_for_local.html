@@ -1,0 +1,26 @@
+{% extends 'excurj/base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+
+{% block title_block %}
+	Request an Excusrion from a local
+{% endblock %}
+
+{% block body_block %}
+
+<div class="col-sm-6 col-sm-offset-3" style="margin-top: 100px;margin-bottom: 100px">	
+<h1>Leave <strong>{{referenced_person_name}}</strong> a reference here!</h1>
+	<form method="post" action="?next=/" enctype="multipart/form-data">
+                {% csrf_token %}
+              
+        {{ leavereview_for_local_form|crispy }}
+
+	    <input type="submit" value="Submit" class="btn btn-primary btn-lg "/>
+
+    </form>    	
+
+</div>
+
+
+{% endblock %}

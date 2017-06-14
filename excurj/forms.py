@@ -1,10 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
-from excurj.models import UserProfile, City, Request, Excursion, Offer
+from excurj.models import UserProfile, City, Request, Excursion, Offer, RequestReference
 from django.db import models
 import datetime
-
-
 
 #Displayed on the UserProfileForm
 class UserForm(forms.ModelForm):
@@ -170,6 +168,31 @@ class ExcursionRequestForm(forms.ModelForm):
 	class Meta:
 		model = Request
 		fields = ('message', 'date')
+
+
+class LeaveReference_for_local(forms.ModelForm):
+	"""User leaves reference for another user"""
+	traveler_fun = forms.BooleanField(required=True, initial=True, label="Did you have fun with the local?")
+	traveler_desc = forms.CharField(
+		label='Reference Description',
+
+		widget=forms.Textarea(attrs={'placeholder': 'Leave a reference here for the local that you met.'})
+		)
+	class Meta:
+		model=RequestReference
+		fields = ('traveler_fun', 'traveler_desc')
+
+class LeaveReference_for_traveler(forms.ModelForm):
+	"""User leaves reference for another user"""
+	local_fun = forms.BooleanField(required=True, initial=True, label="Did you have fun with the traveler?")
+	local_desc = forms.CharField(
+		label='Reference Description',
+
+		widget=forms.Textarea(attrs={'placeholder': 'Leave a reference here for the traveler that you met.'})
+		)
+	class Meta:
+		model=RequestReference
+		fields = ('local_fun', 'local_desc')
 
 
 class CreateTripForm(forms.ModelForm):
