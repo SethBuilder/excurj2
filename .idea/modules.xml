@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/excurj_proj.iml" filepath="$PROJECT_DIR$/.idea/excurj_proj.iml" />
-      <module fileurl="file://$USER_HOME$/pomodoroabs_proj/.idea/pomodoroabs_proj.iml" filepath="$USER_HOME$/pomodoroabs_proj/.idea/pomodoroabs_proj.iml" />
+      <module fileurl="file://C:\Users\bnbih\pomodoroabs_proj\.idea\pomodoroabs_proj.iml" filepath="C:\Users\bnbih\pomodoroabs_proj\.idea\pomodoroabs_proj.iml" />
     </modules>
   </component>
 </project>

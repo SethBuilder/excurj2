@@ -16,7 +16,7 @@
 	</div>
 </div>
 
-	<ul class="nav  navbar-centered" id="tabs">
+	<ul class="nav  navbar-centered tabs" id="">
 		<li class="active" role="presentation"><a data-toggle="tab" href="#locals">LOCALS</a></li>
 		<li role="presentation"><a data-toggle="tab" href="#coming">PEOPLE COMING HERE SOON</a></li>
 		<li role="presentation"><a data-toggle="tab" href="#insta">INSTAFRAM FEED</a></li>
@@ -25,8 +25,8 @@
 		<li title="Coming Soon!"><a data-toggle="tab" href="javascript:void(0)" title="coming soon!">POINTS OF INTEREST</a></li>
 	</ul>
 
-<div class="tab-content">
-    <div id="locals" class="tab-pane fade in active">
+<div class="tab-content no_outline">
+    <div id="locals" class="tab-pane fade in active no_outline">
 
 	<div class="container table-responsive">
 	  <h2 style="text-align: center;"> Locals of <span style="font-weight: bold;">{{city.name}}</span></h2>
@@ -75,7 +75,7 @@
 		{% endif %} -->
     </div>
 
-	<div id="coming" class="tab-pane fade" style="border: none;">
+	<div id="coming" class="tab-pane fade no_outline" style="border: none;">
 
 
 	<div class="container table-responsive">
@@ -111,13 +111,13 @@
 
 
 
-    <div id="insta" class="tab-pane fade">
+    <div id="insta" class="tab-pane fade no_outline">
     	<script async src="https://d36hc0p18k1aoc.cloudfront.net/pages/a5b5e5.js"></script><div class="tintup" data-id="moghrabi" data-columns="" data-expand="true"    data-infinitescroll="true" data-personalization-id="863390" style="height:500px;width:100%;"></div>
     </div>
 
 
 
-    <div id="events" class="tab-pane fade" style="margin-right: 20px;padding: 20px;">
+    <div id="events" class="tab-pane fade no_outline" style="margin-right: 20px;padding: 20px;">
       <h2>Here's what's happening in <strong>{{city.display_name}}</strong> to jump start your plans! </h2>
       {% if events %}
 
@@ -125,7 +125,7 @@
 
 	    <div class="abouts">
 
-	    	<h3>{{forloop.counter}}. {{event.name}}</h3>
+	    	<a href=" {% url 'excurj:eventdetails' city.slug event.id %} "><h3>{{forloop.counter}}. {{event.name}}</h3></a>
 
 
 	    	<div style="overflow: auto;">
@@ -135,7 +135,7 @@
 
 
       			{% if event.place.name %}
-      				<pre style="white-space:pre-wrap; background-color: white; border: none;font-weight: bold;">Place or venue: {{event.place.name}}</pre>
+      				<pre style="white-space:pre-wrap; background-color: white; border: none;font-weight: bold;">Place or venue:<a href=" {% url 'excurj:eventdetails' city.slug event.id %}#venue_map "> {{event.place.name}} </a></pre>
       			{% else %}
       				<pre style="white-space:pre-wrap; background-color: white; border: none;">Venue or place not available</pre>
       			{% endif %}
@@ -155,7 +155,7 @@
 
 
 	    		{% if event.description %}
-      				<pre style="white-space:pre-wrap; background-color: white; border: none;">{{event.description}}</pre>
+      				<pre style="white-space:pre-wrap; background-color: white; border: none;">{{event.description|truncatewords:50}} <a href=" {% url 'excurj:eventdetails' city.slug event.id %} ">more.</a> </pre>
       			{% else %}
       				<pre style="white-space:pre-wrap; background-color: white; border: none;">Description not available</pre>
       			{% endif %}
@@ -174,17 +174,27 @@
 
 
 
-    <div id="poi" class="tab-pane fade">
+    <div id="poi" class="tab-pane fade no_outline">
       <h3>Menu 3</h3>
       <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
     </div>
 
 
 
-	<div id="wiki" class="tab-pane fade" style="padding: 20px;">
+	<div id="wiki" class="tab-pane fade no_outline" style="padding: 20px;">
 	  	<h2><strong>{{city.display_name}}</strong>'s Wiki Summary to Jump Start Your Conversations!</h2>
 		<pre style="white-space:pre-wrap; background-color: white; border: none;"> {{city.description}} </pre>
 	</div>
   </div>
 
+
+	<script type="text/javascript">
+		$('.nav-tabs li a').click(function (e) {
+		e.preventDefault();
+		$(this).tab('show');
+		$('.tab-content > .tab-pane.active').jScrollPane();
+	});
+	</script>
+
+	
 {% endblock %}

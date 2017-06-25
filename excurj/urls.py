@@ -25,4 +25,5 @@ urlpatterns=[
 	url(r'^acceptrequest/(?P<requestid>[\w\-]+)/$', views.acceptrequest, name="acceptrequest"),
 	url(r'^leavereview_for_traveler/(?P<username>[\w\-]+)/$', views.leavereview_for_traveler, name="leavereview_for_traveler"),
 	url(r'^leavereview_for_local/(?P<username>[\w\-]+)/$', views.leavereview_for_local, name="leavereview_for_local"),
+	url(r'^eventdetails/(?P<cityslug>[\w\-]+)/(?P<eventid>[0-9]+)/$', views.eventdetails, name="eventdetails"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

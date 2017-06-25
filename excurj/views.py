@@ -15,6 +15,10 @@ from django.core.exceptions import MultipleObjectsReturned
 from django.core.mail import send_mail, BadHeaderError
 from django.utils.safestring import mark_safe
 import urllib.request, json
+import requests
+import dateutil.parser
+
+
 
 def send_me_email(subject, message, to_email):
 	"""Used so I receive emails when a new user signs up or does other things like send feedback"""
@@ -82,23 +86,82 @@ def get_perma_fb_token():
 
 def get_json_raw(url):
 	"""takes facebook graph url and returns raw json"""
-	with urllib.request.urlopen(url) as response:
-		jsonraw = response.read()
-		jsondata = json.loads(jsonraw.decode())
-		return jsondata
+	response = requests.get(url)
+	jsondata = json.loads(response.text)
+	
+	return jsondata
+
+def pull_events(city):
+	events=[]
+	url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBALgvIecgxo7OXsfJ8wldki5xkJt43Jxa7nMHJSlYX1ajnO90pIopsLDsGTyLYJXy7y8KFCrmh7hBiKRAOEFZBYOGyzxEjJP1p1RzCuR0NsGCaT3PTSxJexceqYZCSo5tukee7aCasdCMAZBpFkZD&token_type=bearer' % city.name.replace(' ', '')
+	
+	events_json = get_json_raw(url)
 
 
+	# If no events were returned, try using the first level of the city name as query (Amman instead of Amman, Jordam)
+	if len(events_json['data']) == 0:
+		try_differeny_city_name = city.name.split(',');
+		try_differeny_city_name = try_differeny_city_name[0] + ',' + try_differeny_city_name[len(try_differeny_city_name) -1]
+
+		
+		#PULL LOCAL EVENTS
+		url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBALgvIecgxo7OXsfJ8wldki5xkJt43Jxa7nMHJSlYX1ajnO90pIopsLDsGTyLYJXy7y8KFCrmh7hBiKRAOEFZBYOGyzxEjJP1p1RzCuR0NsGCaT3PTSxJexceqYZCSo5tukee7aCasdCMAZBpFkZD&token_type=bearer' % try_differeny_city_name.replace(' ', '')
+		
+		events_json = get_json_raw(url)
+		
+		
+
+	#Loop thru events and send list of events
+	for event in events_json['data']:
+
+
+
+		#pull event cover photo
+		cover_photo_url = 'https://graph.facebook.com/{0}?fields=cover,ticket_uri,type&access_token=EAADuTyDZATeoBALgvIecgxo7OXsfJ8wldki5xkJt43Jxa7nMHJSlYX1ajnO90pIopsLDsGTyLYJXy7y8KFCrmh7hBiKRAOEFZBYOGyzxEjJP1p1RzCuR0NsGCaT3PTSxJexceqYZCSo5tukee7aCasdCMAZBpFkZD&token_type=bearer'.format(event['id'])
+		
+		event_photo_json = get_json_raw(cover_photo_url)
+		if 'cover' in event_photo_json:
+			event['cover'] = event_photo_json['cover']['source']
+		if 'ticket_uri' in event_photo_json:
+			event['ticket_uri'] = event_photo_json['ticket_uri']
+		
+
+		if 'type' in event_photo_json:
+			event['type'] = event_photo_json['type']
+		
+		#append event to events list
+		events.append(event)
+	
+	return events
+
+
+def pull_city(city_name_slug):
+	try:
+
+		#Try pull the City object from the passed slug
+		city = City.objects.get(slug=city_name_slug)
+
+	#Error message will be shown if the city being searched does not exist
+	except City.DoesNotExist:
+		context_dict['city']=None
+
+
+	#If more than one city returned (for whatever reason) then return the first one
+	except City.MultipleObjectsReturned:
+		city = City.objects.filter(slug=city_name_slug)[0]
+
+	return city
 
 def show_city(request, city_name_slug):
 	"""View to show city profile"""
 
 	context_dict={}
-	events=[]
+	# events=[]
 
 	try:
 
 		#Try pull the City object from the passed slug
-		city = City.objects.get(slug=city_name_slug)
+		city = pull_city(city_name_slug)
 		
 		#Pull associated profiles to feature them under the "Locals" tab
 		city_locals_profiles = UserProfile.objects.filter(city=city)
@@ -110,60 +173,109 @@ def show_city(request, city_name_slug):
 		context_dict['city_locals_profiles']=city_locals_profiles
 		context_dict['excursions'] = excursions
 
-	#Error message will be shown if the city being searched does not exist
-	except City.DoesNotExist:
-		context_dict['city']=None
-
 	except UserProfile.DoesNotExist:
 		context_dict['city_locals_profiles']=None
 
 	except Excursion.DoesNotExist:
 		context_dict['excursions'] = None
 
-	#If more than one city returned (for whatever reason) then return the first one
-	except City.MultipleObjectsReturned:
-		city = City.objects.filter(slug=city_name_slug)[0]
-
-	
-
-	#PULL LOCAL EVENTS
-
-
-	
-	url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBALgvIecgxo7OXsfJ8wldki5xkJt43Jxa7nMHJSlYX1ajnO90pIopsLDsGTyLYJXy7y8KFCrmh7hBiKRAOEFZBYOGyzxEjJP1p1RzCuR0NsGCaT3PTSxJexceqYZCSo5tukee7aCasdCMAZBpFkZD&token_type=bearer' % city.name.replace(' ', '')
-	
-	events_json = get_json_raw(url)
-
-	
-
-	#If no events were returned, try using the first level of the city name as query (Amman instead of Amman, Jordam)
-	if len(events_json['data']) == 0:
-		#PULL LOCAL EVENTS
-		url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBALgvIecgxo7OXsfJ8wldki5xkJt43Jxa7nMHJSlYX1ajnO90pIopsLDsGTyLYJXy7y8KFCrmh7hBiKRAOEFZBYOGyzxEjJP1p1RzCuR0NsGCaT3PTSxJexceqYZCSo5tukee7aCasdCMAZBpFkZD&token_type=bearer' % city.display_name.replace(' ', '')
-		
-		events_json = get_json_raw(url)
-		
-
-	#Loop thru events and send list of events
-	for event in events_json['data']:
-
-
-
-		#pull event cover photo
-		cover_photo_url = 'https://graph.facebook.com/{0}?fields=cover,ticket_uri&access_token=EAADuTyDZATeoBALgvIecgxo7OXsfJ8wldki5xkJt43Jxa7nMHJSlYX1ajnO90pIopsLDsGTyLYJXy7y8KFCrmh7hBiKRAOEFZBYOGyzxEjJP1p1RzCuR0NsGCaT3PTSxJexceqYZCSo5tukee7aCasdCMAZBpFkZD&token_type=bearer'.format(event['id'])
-		
-		event_photo_json = get_json_raw(cover_photo_url)
-		if 'cover' in event_photo_json:
-			event['cover'] = event_photo_json['cover']['source']
-		if 'ticket_uri' in event_photo_json:
-			event['ticket_uri'] = event_photo_json['ticket_uri']
-		
-		#append event to events list
-		events.append(event)
+	events = pull_events(city)
 
 	context_dict['events'] = events
 
 	return render(request, 'excurj/city.html', context_dict)
+
+def eventdetails(request, cityslug, eventid):
+
+	city = pull_city(cityslug)
+	events = pull_events(city)
+	
+	context_dict={}
+
+	event_in_question = [event for event in events if event['id'] == eventid]
+
+
+
+	context_dict['event'] = event_in_question
+	print("EVENTTT IS: " + str(event_in_question))
+	
+	context_dict['venue_image'] = pull_venue_image(event_in_question,cityslug)
+
+	event_date = event_in_question[0]['start_time']
+	
+
+	date = dateutil.parser.parse(event_date)
+	offset = dateutil.parser.parse(event_date).tzinfo._offset
+
+	readable_event_date = (date + offset).strftime('%a, %b %d %Y %I:%M:%S %p')
+
+	print("START TIME IS: " + str(readable_event_date))
+
+	context_dict['event_time'] = readable_event_date
+
+	context_dict['city'] = city
+
+
+	return render(request, 'excurj/event.html', context_dict)
+
+def pull_venue_image(event_in_question, cityslug):
+	
+	try:
+		venue_name = event_in_question[0]['place']['name']
+		venue_lat = event_in_question[0]['place']['location']['latitude']
+		venue_long = event_in_question[0]['place']['location']['longitude']
+		
+
+		url = ('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%s,%s&radius=500&type=venue&keyword=%s&key=%s') % (venue_lat, venue_long, venue_name, population_script.get_google_key())
+
+		#retrieve the profile pic
+	
+		response = requests.get(url)
+		jsondata = json.loads(response.text)
+		
+		venue_photo_reference = jsondata['results'][0]['photos'][0]['photo_reference']
+
+		venue_image = ('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photoreference=%s&key=%s') % (venue_photo_reference, population_script.get_google_key())
+		
+		return venue_image
+
+	except requests.exceptions.ConnectionError as e:
+		e.status_code = 'Connection refused'
+		print(e.status_code)
+		venue_image = -1
+		return venue_image
+
+	except IndexError:
+		venue_image = -1
+		return venue_image
+
+	#use geocode to pull lat and long
+	except KeyError:
+		geo_code_url = 'https://maps.googleapis.com/maps/api/geocode/json?address=%s&key=AIzaSyAC9SSvIEbSOt7ocozi4AxBoFqOz7ZX2Wc' % venue_name
+		geo_code_response = get_json_raw(geo_code_url)
+
+		#now pull lat and long
+		print("GEOOOO" + str(geo_code_response['results'][0]['geometry']['location']))
+		venue_lat = geo_code_response['results'][0]['geometry']['location']['lat']
+		venue_long = geo_code_response['results'][0]['geometry']['location']['lng']
+		
+		url = ('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%s,%s&radius=500&type=venue&keyword=%s&key=%s') % (venue_lat, venue_long, venue_name, population_script.get_google_key())
+
+		#retrieve the profile pic
+	
+		response = requests.get(url)
+		jsondata = json.loads(response.text)
+
+		print("PHOTOOOOOOO" + str(jsondata))
+		
+		try:
+			venue_photo_reference = jsondata['results'][0]['photos'][0]['photo_reference']
+			venue_image = ('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photoreference=%s&key=%s') % (venue_photo_reference, population_script.get_google_key())
+			return venue_image
+		except:
+			venue_image = -1
+			return venue_image
+
 
 def show_profile(request, username):
 	"""View for User Profile"""

@@ -13,5 +13,7 @@ var input = document.getElementById('google_city_search');
 var autocomplete = new google.maps.places.Autocomplete(input, options);
 }
 
+    
+
 
 

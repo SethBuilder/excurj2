@@ -762,7 +762,7 @@ div.jumbotron#city_jumbotron .container{
 /*city TABS CSS*/
 
 
-ul.nav#tabs {
+ul.nav.tabs {
     border-bottom: none !important;
     text-align:center !important;
     width: 100%;
@@ -770,21 +770,21 @@ ul.nav#tabs {
 
 }
 
-ul.nav#tabs li a{
+ul.nav.tabs li a{
 	color: black;
 	
 }
 
-ul.nav#tabs li.active a{
+ul.nav.tabs li.active a{
 	color: #3060A8;
 	background-color: transparent;
 }
 
-ul.nav#tabs li.active{
+ul.nav.tabs li.active{
 	opacity: 1;
 }
 
-ul.nav#tabs li{
+ul.nav.tabs li{
 	/*padding: 0 5px;*/
 	display: inline-block !important;
 	font-size: 18px;
@@ -1023,6 +1023,87 @@ body button#feedback{
 .img-thumbnail{
 	background-color: #eceff2 !important;
 }
+
+
+
+header.event_header{
+	height: 180px;
+	display: block;
+	background-color: #f5f8fa;
+}
+
+#event_body{
+	background-color: #f5f8fa;
+}
+
+header.event_header h1{
+	margin-top: 90px;
+	padding-bottom: 10px;
+	text-align: left;
+	font-weight: bold;
+}
+
+header.event_header .event_detail{
+	font-weight: bold;
+	font-size: 20px;
+	padding: 0 20px 0 0;
+}
+
+
+.no_outline{
+	outline: none;
+}
+
+.event_section{
+	padding:20px;
+	overflow: hidden;
+	background-color: rgba(99,184,255,.9);
+	border-radius: 10px;
+	margin-bottom: 10px;
+	color: white;
+	border: none;
+	box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.event_section img{
+	box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	}
+
+.event_section .event_div{
+	background-color: white;
+	padding: 15px;
+	border-radius: 10px;
+	margin-bottom: 10px;
+	overflow: hidden;
+}
+
+/*.event_section pre{
+	box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);;
+}*/
+
+
+#map{
+	border-radius: 15px;
+	box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    color: #555;
+    cursor: default;
+    background-color: #f5f8fa; 
+    border: 1px solid #f5f8fa;
+    border-bottom-color: transparent;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
