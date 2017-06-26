@@ -7,6 +7,38 @@ Welcome to {{city.name}}! Yoppy!
 
 {% block body_block %}
 
+
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Event",
+  "name": "{{event.0.name}}",
+  "startDate": "{{event.0.start_time}}",
+  "location": {
+    "@type": "Place",
+    "name": "{{event.0.place.name}}",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "{{event.0.place.location.street}}",
+      "addressLocality": "{{event.0.place.location.city}}",
+      "postalCode": "{{event.0.place.location.zip}}",
+      "addressRegion": "",
+      "addressCountry": "{{event.0.place.location.country}}"
+    }
+  },
+  "image": "{{event.0.cover}}",
+  "description": "{{event.0.description}}",
+  "endDate": "{{event.0.end_time}}"
+}
+</script>
+
+
+
+
+
+
+
 <header class="event_header" style="">
 	<div class="container event_header_container">
 
@@ -80,17 +112,17 @@ Welcome to {{city.name}}! Yoppy!
 				<h3><strong>VENUE:</strong></h3>
 				<p class="lead"><span class="glyphicon glyphicon-map-marker"></span>
 
-				{% if  not event.0.place.name %}
+					{% if  not event.0.place.name %}
 					Venue address not available, please search manually in the map.
 
-				{% else %}
+					{% else %}
 
 					{{event.0.place.name}}
 
 					&nbsp {{event.0.place.location.street}}  &nbsp  {{event.0.place.location.zip}}
 
 					&nbsp{{event.0.place.location.city}} &nbsp{{event.0.place.location.country}}
-				{% endif %}
+					{% endif %}
 				</p>
 				<div class="event_div">
 
@@ -160,7 +192,7 @@ Welcome to {{city.name}}! Yoppy!
 	};
 
 	var acOptions = {
-  		types: ['establishment']
+		types: ['establishment']
 	};
 
 	var marker = new google.maps.Marker(markerOptions);
@@ -171,41 +203,41 @@ Welcome to {{city.name}}! Yoppy!
 	autocomplete.bindTo('bounds',map);
 	var infoWindowAC = new google.maps.InfoWindow();
 	var markerAC = new google.maps.Marker({
- 	 map: map
+		map: map
+	});
+
+
+
+
+
+
+	google.maps.event.addListener(autocomplete, 'place_changed', function() {
+		infoWindow.close();
+		var place = autocomplete.getPlace();
+		if (place.geometry.viewport) {
+			map.fitBounds(place.geometry.viewport);
+		} else {
+			map.setCenter(place.geometry.location);
+			map.setZoom(17);
+		}
+
+
+
+
+		markerAC.setPosition(place.geometry.location);
+		contentAC = '<div><strong>' + place.name + '</strong><br>'
+		infoWindowAC.setContent(contentAC.fontcolor("black"));
+		infoWindowAC.open(map, markerAC);
+
+
+
+
+		google.maps.event.addListener(markerAC,'click',function(e){
+
+			infoWindowAC.open(map, markerAC);
+
 		});
-
-
-
-
-
-
-google.maps.event.addListener(autocomplete, 'place_changed', function() {
-  infoWindow.close();
-  var place = autocomplete.getPlace();
-  if (place.geometry.viewport) {
-    map.fitBounds(place.geometry.viewport);
-  } else {
-    map.setCenter(place.geometry.location);
-    map.setZoom(17);
-  }
-
-
-
-
-  markerAC.setPosition(place.geometry.location);
-  contentAC = '<div><strong>' + place.name + '</strong><br>'
-  infoWindowAC.setContent(contentAC.fontcolor("black"));
-  infoWindowAC.open(map, markerAC);
-
-
-
-
-    google.maps.event.addListener(markerAC,'click',function(e){
-
-    infoWindowAC.open(map, markerAC);
-
-  });
-});
+	});
 
 
 	infoContent = '{{event.0.place.name}}' + '<br>' + '{{event.0.place.location.street}}' +' &nbsp' + '{{event.0.place.location.zip}}' + '<br>' + '{{event.0.place.location.city}}' + '&nbsp' + '{{event.0.place.location.country}}';
