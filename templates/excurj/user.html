@@ -12,14 +12,18 @@
 	{% if user %}
 
 	<div class="jumbotron" id="user_jumbotron">
-		<div class="container" style="background-image:url('{{ MEDIA_URL }}{{user.profile.city.city_image}}');">
+		<a href="{{ MEDIA_URL }}{{user.profile.city.city_image}}" data-lightbox="City Picture" data-title="Picture of {{user.profile.city.name}}">
+			<div class="container" style="background-image:url('{{ MEDIA_URL }}{{user.profile.city.city_image}}');">
 	<!-- 		<div class="city_header">
 				<h1> {{user.profile.city.display_name.upper}} </h1>
 			</div> -->
-		</div>
+			</div>
+		</a>
 
 		<div class="prof_pic_overlay" >
-			<img src=" {{ user.profile.prof_pic.url }} " class="img-thumbnail"> 
+			<a href="{{ user.profile.prof_pic.url }}" data-lightbox="Profile Picture" data-title="{{user.get_full_name.title}}">
+				<img src=" {{ user.profile.prof_pic.url }} " class="img-thumbnail">
+			</a>
 		</div>
 	</div>
 

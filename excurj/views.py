@@ -221,11 +221,16 @@ def eventdetails(request, cityslug, eventid):
 def pull_venue_image(event_in_question, cityslug):
 	
 	try:
-		venue_name = event_in_question[0]['place']['name']
-		venue_lat = event_in_question[0]['place']['location']['latitude']
-		venue_long = event_in_question[0]['place']['location']['longitude']
 		
-
+		if 'place' in event_in_question[0]:
+			venue_name = event_in_question[0]['place']['name']
+			venue_lat = event_in_question[0]['place']['location']['latitude']
+			venue_long = event_in_question[0]['place']['location']['longitude']
+		else:
+			venue_name="Venue details not available."
+			
+			venue_lat = 0
+			venue_long = 0
 		url = ('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%s,%s&radius=500&type=venue&keyword=%s&key=%s') % (venue_lat, venue_long, venue_name, population_script.get_google_key())
 
 		#retrieve the profile pic
@@ -247,6 +252,7 @@ def pull_venue_image(event_in_question, cityslug):
 
 	except IndexError:
 		venue_image = -1
+
 		return venue_image
 
 	#use geocode to pull lat and long

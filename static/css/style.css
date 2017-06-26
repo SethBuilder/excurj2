@@ -17,6 +17,29 @@ body{
     background: #63b8ff;
 }
 
+quote {
+border:none;
+font-family:  Georgia, "Times New Roman", Times, serif;
+margin-bottom:-30px;
+quotes: "\201C""\201D""\2018""\2019";
+
+
+}
+
+
+quote:before { 
+    content: open-quote;
+    font-weight: bold;
+    font-size:20px;
+    color:#6599ff;
+} 
+quote:after { 
+    content: close-quote;
+    font-weight: bold;
+    font-size:20px;
+    color:#6599ff; 
+}
+
 
 /*to make JOIN jump up and down*/
 #jump{
@@ -283,6 +306,7 @@ nav.navbar.opaque{
 
 .superstars-container{
 	background-color: white;
+	padding: 0px !important;
 }
 
 .popular-cities-container{
@@ -979,6 +1003,7 @@ body button#feedback{
 	right: 5px;
 	z-index: 5;
 	
+	
 }
 
 /*.disappear_upon_load{
@@ -1046,7 +1071,7 @@ header.event_header h1{
 header.event_header .event_detail{
 	font-weight: bold;
 	font-size: 20px;
-	padding: 0 20px 0 0;
+	
 }
 
 

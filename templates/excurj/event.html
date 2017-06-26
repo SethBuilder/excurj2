@@ -9,94 +9,120 @@ Welcome to {{city.name}}! Yoppy!
 
 <header class="event_header" style="">
 	<div class="container event_header_container">
-		<h1>{{event.0.name}}</h1>
-		{% if event.0.place.name %}
-		<span class="event_detail"><span class="glyphicon glyphicon-map-marker"></span>&nbsp <a href="#venue_map" > {{event.0.place.name}}</a></span>
-		{% else %}
-		<span class="event_detail"><span class="glyphicon glyphicon-map-marker"></span>&nbsp Not available</span>
-		{% endif %}
-		<span class="event_detail"><span class="glyphicon glyphicon-calendar"></span>&nbsp {{event_time}} &nbsp ({{city.display_name}} Local Time)
-	</span>
 
-	<span class="event_detail"><span class=""></span>&nbsp {{event.0.type|upper}}&nbspEVENT
-</span>
+		<div class="row">
+			<div class="col-md-12 col-xs-12">
+				<h1>{{event.0.name}}</h1>
+			</div>
+		</div>
 
+		<div class="row">
+			<div class="col-md-3 col-xs-12">
+				{% if event.0.place.name %}
+				<span class="event_detail"><span class="glyphicon glyphicon-map-marker"></span> <a href="#venue_map" > {{event.0.place.name}}</a></span>
+				{% else %}
+				<span class="event_detail"><span class="glyphicon glyphicon-map-marker"></span> Location not available</span>
+				{% endif %}
+			</div>
+
+			<div class="col-md-6 col-xs-12">
+				<span class="event_detail"><span class="glyphicon glyphicon-calendar"></span> {{event_time}}  			 
+			</span> ({{city.display_name}} Local Time)
+		</div>
+
+		<div class="col-md-3 col-xs-12">
+			<span class="event_detail"><span class="glyphicon glyphicon-glass"></span> {{event.0.type|upper}}&nbspEVENT
+		</span>
+	</div>
+</div>
 </div>
 </header>
 
 
 
 <div id="event_body">
-<div class="container ">
+	<div class="container">
 
-	<div id="home" class="no_outline">
+		<div id="home" class="no_outline">
+			<div class="row">
+				<div class="col-xs-12 col-md-12">
+					<section class="event_section">
+						<h3><strong>TICKETS INFO:</strong></h3>
+						{% if event.0.ticket_uri %}
 
-		<section class="event_section">
-			<h3><strong>TICKETS INFO:</strong></h3>
-			{% if event.0.ticket_uri %}
-			<pre style="white-space:pre-wrap; background-color: white; border: none;font-weight: bold;"><a href="{{event.0.ticket_uri}}" target="_blank">{{event.0.ticket_uri}}</a></pre>
-			{% else %}
-			<p style="white-space:pre-wrap; background-color: white; border: none;color: #333; padding:5px;">This event is not ticketed or tickets are not on sale yet.</p>
-			{% endif %}
-		</section>
+						<pre style="white-space:pre-wrap; background-color: white; border: none;font-weight: bold;"><p><a href="{{event.0.ticket_uri}}" target="_blank">{{event.0.ticket_uri}}</a></p></pre>
 
-		<section class="event_section">
-			<h3><strong>OVERVIEW:</strong></h3>
-			<div class="event_div">
-			<meta itemprop="name" content="{{event.0.name}}">
-			{% if event.0.description %}
+						{% else %}
 
-				<pre class="lead" style=" font-family: inherit; white-space:pre-wrap; border: none;text-align: justify;padding: 20px;background-color: white;">
-					<a href="{{event.0.cover}}" data-lightbox="image-1" data-title="{{event.0.name}}">
-				<img src="{{event.0.cover}}" class="img-thumbnail" width="500" height="500" style="padding: 10px;margin-left: 20px;float: right;">
-			</a>
-					{{event.0.description}}
-				</pre>
-
-			{% else %}
-
-				<pre style=" font-family: inherit; white-space:pre-wrap; border: none;background-color: white;">
-					Event description not available.
-				</pre>
-
-			{% endif %}
-		</section>
-		</div>
-		<section class="event_section" id="venue_map">
-
-		<h3><strong>VENUE:</strong></h3>
-		<p class="lead"><span class="glyphicon glyphicon-map-marker"></span>
-
-			{{event.0.place.name}},
-
-			&nbsp {{event.0.place.location.street}}  &nbsp  {{event.0.place.location.zip}},
-
-			&nbsp{{event.0.place.location.city}}, &nbsp{{event.0.place.location.country}}
-
-		</p>
-		<div class="event_div">
-		
-			
-			{% if venue_image == -1 %}
-			<a href="{{ MEDIA_URL }}{{city.city_image}}" data-lightbox="image-1" data-title="Picture of the venue.">
-				<img src="{{ MEDIA_URL }}{{city.city_image}}" class="pull-right img-thumbnail" width="500" height="500" style="padding: 10px;margin-left: 20px;">
-			</a>
-			{% else %}
-			<a href="{{ venue_image }}" data-lightbox="image-1" data-title="Picture of the venue.">
-				<img src="{{ venue_image }}" class=" img-thumbnail" width="500" height="500" style="padding: 10px;margin-left: 20px;float: right;">
-			</a>
-			{% endif %}
-
-			<div id="map" style="height: 500px;width: 500px;border-radius: 15px;"></div>
+						<p style="white-space:pre-wrap; background-color: white; border: none;color: #333; padding:5px;">This event is not ticketed or tickets are not on sale yet.
+						</p>
+						{% endif %}
+					</section>
+				</div>
 			</div>
-		</section>
-		
-			
-		
-	
+			<section class="event_section">
+				<h3><strong>OVERVIEW:</strong></h3>
+				<div class="event_div">
+					<meta itemprop="name" content="{{event.0.name}}">
+					{% if event.0.description %}
 
+					<pre class="lead" style=" font-family: inherit; white-space:pre-wrap; border: none;text-align: justify;padding: 20px;background-color: white;"><a href="{{event.0.cover}}" data-lightbox="image-1" data-title="{{event.0.name}}"><img src="{{event.0.cover}}" class="img-thumbnail" width="500" height="500" style="padding: 10px;margin-left: 20px;float: right;"></a><p>{{event.0.description}}</p></pre>
+
+					{% else %}
+
+					<pre style=" font-family: inherit; white-space:pre-wrap; border: none;background-color: white;"><p>Event description not available.</p></pre>
+
+					{% endif %}
+				</section>
+			</div>
+			<section class="event_section" id="venue_map">
+
+				<h3><strong>VENUE:</strong></h3>
+				<p class="lead"><span class="glyphicon glyphicon-map-marker"></span>
+
+				{% if  not event.0.place.name %}
+					Venue address not available, please search manually in the map.
+
+				{% else %}
+
+					{{event.0.place.name}}
+
+					&nbsp {{event.0.place.location.street}}  &nbsp  {{event.0.place.location.zip}}
+
+					&nbsp{{event.0.place.location.city}} &nbsp{{event.0.place.location.country}}
+				{% endif %}
+				</p>
+				<div class="event_div">
+
+
+					<div class="row">
+						<div class="col-md-6 col-xs-12">
+							{% if venue_image == -1 %}
+							<a href="{{ MEDIA_URL }}{{city.city_image}}" data-lightbox="image-1" data-title="Picture of {{city.name}}">
+								<img src="{{ MEDIA_URL }}{{city.city_image}}" class="pull-right img-thumbnail" height="500" style="padding: 10px;">
+							</a>
+							{% else %}
+							<a href="{{ venue_image }}" data-lightbox="image-1" data-title="Picture of the venue.">
+								<img src="{{ venue_image }}" class=" img-thumbnail" height="500" style="padding: 10px;">
+							</a>
+							{% endif %}
+						</div>
+						<div class="col-md-6 col-xs-12">
+							<input type="text" id="autocomplete" style="color: black; width: 100%">
+							<div id="map" style="height: 500px;border-radius: 15px;"></div>
+
+						</div>
+					</div>
+				</div>
+
+			</section>
+
+			
+
+
+
+		</div>
 	</div>
-</div>
 
 </div>
 
@@ -110,35 +136,95 @@ Welcome to {{city.name}}! Yoppy!
 
 
 <script type="text/javascript">
+	var lat = "{{event.0.place.location.latitude}}";
+	var lng = "{{event.0.place.location.longitude}}";
+	
+	if(lat ==  "" && lng == ""){
+		lat = {{city.lat}};
+		lng = {{city.lng}};
+	}
 
-var mapOptions = {
-    center: new google.maps.LatLng({{event.0.place.location.latitude}}, {{event.0.place.location.longitude}}),
-    zoom: 12,
-    mapTypeId: google.maps.MapTypeId.ROADMAP,
-    scrollwheel:  false
-};
-var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+	console.log(lat);
 
-var markerOptions = {
-    position: new google.maps.LatLng({{event.0.place.location.latitude}}, {{event.0.place.location.longitude}}),
-    map: map
-};
-var marker = new google.maps.Marker(markerOptions);
-marker.setMap(map);
+	var mapOptions = {
+		center: new google.maps.LatLng(lat,lng),
+		zoom: 12,
+		mapTypeId: google.maps.MapTypeId.ROADMAP,
+		scrollwheel:  false
+	};
+	var map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-infoContent = '{{event.0.place.name}}' + '<br>' + '{{event.0.place.location.street}}' +' &nbsp' + '{{event.0.place.location.zip}}' + '<br>' + '{{event.0.place.location.city}}' + '&nbsp' + '{{event.0.place.location.country}}'
+	var markerOptions = {
+		position: new google.maps.LatLng(lat, lng),
+		map: map
+	};
 
-var infoWindowOptions = {
-    content: infoContent.fontcolor("black")
-};
+	var acOptions = {
+  		types: ['establishment']
+	};
 
-var infoWindow = new google.maps.InfoWindow(infoWindowOptions);
+	var marker = new google.maps.Marker(markerOptions);
+	marker.setMap(map);
 
-google.maps.event.addListener(marker,'click',function(e){
 
-  infoWindow.open(map, marker);
-  
+	var autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete'),acOptions);
+	autocomplete.bindTo('bounds',map);
+	var infoWindowAC = new google.maps.InfoWindow();
+	var markerAC = new google.maps.Marker({
+ 	 map: map
+		});
+
+
+
+
+
+
+google.maps.event.addListener(autocomplete, 'place_changed', function() {
+  infoWindow.close();
+  var place = autocomplete.getPlace();
+  if (place.geometry.viewport) {
+    map.fitBounds(place.geometry.viewport);
+  } else {
+    map.setCenter(place.geometry.location);
+    map.setZoom(17);
+  }
+
+
+
+
+  markerAC.setPosition(place.geometry.location);
+  contentAC = '<div><strong>' + place.name + '</strong><br>'
+  infoWindowAC.setContent(contentAC.fontcolor("black"));
+  infoWindowAC.open(map, markerAC);
+
+
+
+
+    google.maps.event.addListener(markerAC,'click',function(e){
+
+    infoWindowAC.open(map, markerAC);
+
+  });
 });
+
+
+	infoContent = '{{event.0.place.name}}' + '<br>' + '{{event.0.place.location.street}}' +' &nbsp' + '{{event.0.place.location.zip}}' + '<br>' + '{{event.0.place.location.city}}' + '&nbsp' + '{{event.0.place.location.country}}';
+
+	if ('{{event.0.place.name}}' == "")
+		infoContent = "Venue address not available for this event :(<br> Please search manually using the text field above <span class='glyphicon glyphicon-hand-up'></span>"
+
+	var infoWindowOptions = {
+		content: infoContent.fontcolor("black"),
+		width : 600
+	};
+
+	var infoWindow = new google.maps.InfoWindow(infoWindowOptions);
+
+	google.maps.event.addListener(marker,'click',function(e){
+
+		infoWindow.open(map, marker);
+
+	});
 </script>
 
 
