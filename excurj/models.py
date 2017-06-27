@@ -3,6 +3,7 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 import datetime
 from crispy_forms.helper import FormHelper
+from django.contrib.sitemaps import ping_google
 
 
 
@@ -41,6 +42,12 @@ class City(models.Model):
 	def save(self, *args, **kwargs):
 		self.slug = slugify(self.name + " " + self.country)
 		super(City, self).save(*args, **kwargs)
+		try:
+			ping_google()
+		except Exception:
+		# Bare 'except' because we could get a variety
+		# of HTTP-related exceptions.
+			pass
 
 	#Display name pulls the city name without province/state/country 
 	#for ex: New York, New York, USA becomes New York
@@ -48,6 +55,10 @@ class City(models.Model):
 		return self.name.split(",")[0]
 
 	display_name = property(display_name)
+
+
+	def get_absolute_url(self):
+		return 'city/%s/' % self.slug
 
 
 class Request(models.Model):
@@ -149,6 +160,19 @@ class UserProfile(models.Model):
 
 	age = property(age)
 
+		#Override save to ping google
+	def save(self, *args, **kwargs):
+		super(UserProfile, self).save(*args, **kwargs)
+		try:
+			ping_google()
+		except Exception:
+		# Bare 'except' because we could get a variety
+		# of HTTP-related exceptions.
+			pass
+
+	def get_absolute_url(self):
+		return 'user/%s/' % self.user.username
+
 class Excursion(models.Model):
 	"""
 		Traveler lists his trips so locals could see her and possibly offer to take her out
@@ -164,6 +188,20 @@ class Excursion(models.Model):
 
 	def __str__(self):
 		return self.traveler.first_name.title() + " " + self.traveler.last_name.title() + "'s trip to " + self.city.name + " on " + str(self.date)
+
+	#Override save to ping google
+	def save(self, *args, **kwargs):
+		super(Excursion, self).save(*args, **kwargs)
+		try:
+			ping_google()
+		except Exception:
+		# Bare 'except' because we could get a variety
+		# of HTTP-related exceptions.
+			pass
+
+
+	def get_absolute_url(self):
+		return 'user/%s/#trips' % self.traveler.username
 
 class Offer(models.Model):
 	""" local offers traveler to take her out based on the trips listed by traveler """

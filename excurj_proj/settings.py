@@ -43,6 +43,7 @@ EMAIL_USE_TLS = True
 
 INSTALLED_APPS = [
     'excurj',
+    'django.contrib.sitemaps',
     'django.contrib.admin',
     'django.contrib.sites',
     'registration',
