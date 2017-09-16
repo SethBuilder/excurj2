@@ -99,17 +99,22 @@ def pull_events(city):
 
 	print(events_json)
 
-
+	try:
 	# If no events were returned, try using the first level of the city name as query (Amman instead of Amman, Jordam)
-	if len(events_json['data']) == 0:
-		try_differeny_city_name = city.name.split(',');
-		try_differeny_city_name = try_differeny_city_name[0] + ',' + try_differeny_city_name[len(try_differeny_city_name) -1]
+		if len(events_json['data']) == 0:
+			try_differeny_city_name = city.name.split(',');
+			try_differeny_city_name = try_differeny_city_name[0] + ',' + try_differeny_city_name[len(try_differeny_city_name) -1]
 
-		
-		#PULL LOCAL EVENTS
-		url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBALw6K4nKuWGH20ZClQ4Dc67lBMGEMd3t9o7mIZBsOqBGbxGuVKyqTfflfv3NFCt9nA98yWEGLduZCclZCf24QaGMUDyEh8KpRmJE9RzwNrRM5MEJhj7xcNWww77l8qJAj9YysZC2LZBE797by4VI8DgsVPR0k40AZDZD&token_type=bearer' % try_differeny_city_name.replace(' ', '')
-		
-		events_json = get_json_raw(url)
+			
+			#PULL LOCAL EVENTS
+			url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBALw6K4nKuWGH20ZClQ4Dc67lBMGEMd3t9o7mIZBsOqBGbxGuVKyqTfflfv3NFCt9nA98yWEGLduZCclZCf24QaGMUDyEh8KpRmJE9RzwNrRM5MEJhj7xcNWww77l8qJAj9YysZC2LZBE797by4VI8DgsVPR0k40AZDZD&token_type=bearer' % try_differeny_city_name.replace(' ', '')
+			
+			events_json = get_json_raw(url)
+
+	except Exception:
+		pass
+
+
 		
 		
 
