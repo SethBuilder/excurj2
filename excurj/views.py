@@ -93,9 +93,11 @@ def get_json_raw(url):
 
 def pull_events(city):
 	events=[]
-	url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBALgvIecgxo7OXsfJ8wldki5xkJt43Jxa7nMHJSlYX1ajnO90pIopsLDsGTyLYJXy7y8KFCrmh7hBiKRAOEFZBYOGyzxEjJP1p1RzCuR0NsGCaT3PTSxJexceqYZCSo5tukee7aCasdCMAZBpFkZD&token_type=bearer' % city.name.replace(' ', '')
+	url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBALw6K4nKuWGH20ZClQ4Dc67lBMGEMd3t9o7mIZBsOqBGbxGuVKyqTfflfv3NFCt9nA98yWEGLduZCclZCf24QaGMUDyEh8KpRmJE9RzwNrRM5MEJhj7xcNWww77l8qJAj9YysZC2LZBE797by4VI8DgsVPR0k40AZDZD&token_type=bearer' % city.name.replace(' ', '')
 	
 	events_json = get_json_raw(url)
+
+	print(events_json)
 
 
 	# If no events were returned, try using the first level of the city name as query (Amman instead of Amman, Jordam)
@@ -105,7 +107,7 @@ def pull_events(city):
 
 		
 		#PULL LOCAL EVENTS
-		url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBALgvIecgxo7OXsfJ8wldki5xkJt43Jxa7nMHJSlYX1ajnO90pIopsLDsGTyLYJXy7y8KFCrmh7hBiKRAOEFZBYOGyzxEjJP1p1RzCuR0NsGCaT3PTSxJexceqYZCSo5tukee7aCasdCMAZBpFkZD&token_type=bearer' % try_differeny_city_name.replace(' ', '')
+		url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBALw6K4nKuWGH20ZClQ4Dc67lBMGEMd3t9o7mIZBsOqBGbxGuVKyqTfflfv3NFCt9nA98yWEGLduZCclZCf24QaGMUDyEh8KpRmJE9RzwNrRM5MEJhj7xcNWww77l8qJAj9YysZC2LZBE797by4VI8DgsVPR0k40AZDZD&token_type=bearer' % try_differeny_city_name.replace(' ', '')
 		
 		events_json = get_json_raw(url)
 		
@@ -114,10 +116,8 @@ def pull_events(city):
 	#Loop thru events and send list of events
 	for event in events_json['data']:
 
-
-
 		#pull event cover photo
-		cover_photo_url = 'https://graph.facebook.com/{0}?fields=cover,ticket_uri,type&access_token=EAADuTyDZATeoBALgvIecgxo7OXsfJ8wldki5xkJt43Jxa7nMHJSlYX1ajnO90pIopsLDsGTyLYJXy7y8KFCrmh7hBiKRAOEFZBYOGyzxEjJP1p1RzCuR0NsGCaT3PTSxJexceqYZCSo5tukee7aCasdCMAZBpFkZD&token_type=bearer'.format(event['id'])
+		cover_photo_url = 'https://graph.facebook.com/{0}?fields=cover,ticket_uri,type&access_token=EAADuTyDZATeoBALw6K4nKuWGH20ZClQ4Dc67lBMGEMd3t9o7mIZBsOqBGbxGuVKyqTfflfv3NFCt9nA98yWEGLduZCclZCf24QaGMUDyEh8KpRmJE9RzwNrRM5MEJhj7xcNWww77l8qJAj9YysZC2LZBE797by4VI8DgsVPR0k40AZDZD&token_type=bearer'.format(event['id'])
 		
 		event_photo_json = get_json_raw(cover_photo_url)
 		if 'cover' in event_photo_json:

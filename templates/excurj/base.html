@@ -51,6 +51,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/animate.css' %} ">
     <script src="{% static 'js/autocomplete.js' %}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYfS_V4jHXS_jVYa1k2w9VY52r0pMrL8g&callback=initMap&libraries=places" async defer></script>
     <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAali5z1ZHUooZzMz7GP_sqMYDVpN-PQl8"></script> -->
@@ -147,7 +148,7 @@
             {% if not request.user.is_authenticated %}
 
               <li><a href=" {% url 'auth_login' %} ">LOG IN</a></li>
-              <li><a href=" {% url 'registration_register' %} " id="jump">JOIN</a></li>
+              <li class="animated infinite tada"><a href=" {% url 'registration_register' %} ">JOIN</a></li>
 
             {% else %}
 
