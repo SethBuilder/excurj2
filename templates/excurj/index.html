@@ -2,7 +2,16 @@
 {% load staticfiles %}
 
 {% block title_block %}
-  Make New Friends As You Travel!
+  excurj | Meet Locals Wherever You Travel | Become Friends With Locals,| Free Excursions | Bonding Activities | Culture Exchange | Current Events, Things To Do and More!
+{% endblock %}
+
+{% block desc_block %}
+  <meta name="description" content="excurj is the ultimate social network for travelers and locals from all over the world. Meet locals. Go on free excurions to bond and become friends! Exchange culture. Learn about local events, history and more!">
+{% endblock %}
+
+
+{% block kw_block %}
+  <meta name="keywords" content="meet locals from all over the world, events, excursions, make friends with locals, friends, fun, genuine travel experience, culture, cultural exchange, inter-cultural relationships, tolerance, travel, travel blogging, travel vloging, things to do in">
 {% endblock %}
 
 {% block body_block %}
@@ -75,7 +84,7 @@
 
     <div class="col-lg-4 col-xs-12">
       <div class="  how-it-works-box">
-        <img src=" {% static "images/showpeople.svg" %} ">
+        <img src=" {% static 'images/showpeople.svg' %} ">
         <h3>When You're a Local</h3>
         <p>Show travelers around and meet interesting international visitors.</p>
       </div>
@@ -83,7 +92,7 @@
 
     <div class="col-lg-4 col-xs-12">
       <div class=" how-it-works-box">
-        <img src=" {% static "images/makefriends.svg" %} ">
+        <img src=" {% static 'images/makefriends.svg' %} ">
         <h3>Make New Friends!</h3>
         <p>Walking around is a fun bonding activity to make new friends!</p>
       </div>
@@ -113,13 +122,13 @@
 
             <div class="superstars-box-header">
 
-              <a href=" {% url 'excurj:show_profile' ref.request.local.username %} ">{{ ref.request.local.first_name.title }}</a>  (local) met with  <a href=" {% url 'excurj:show_profile' ref.request.traveler.username  %} ">{{ref.request.traveler.first_name.title}}</a> (traveler) on {{ref.request.date}} in  <a href=" {% url 'excurj:show_city'  ref.request.local.profile.city.slug %} "> {{ref.request.local.profile.city}} </a>  
+              <a title="Local person reference" href=" {% url 'excurj:show_profile' ref.request.local.username %} ">{{ ref.request.local.first_name.title }}</a>  (local) met with  <a title="traveler's reference" href=" {% url 'excurj:show_profile' ref.request.traveler.username  %} ">{{ref.request.traveler.first_name.title}}</a> (traveler) on {{ref.request.date}} in  <a href=" {% url 'excurj:show_city'  ref.request.local.profile.city.slug %} "> {{ref.request.local.profile.city}} </a>  
             </div>
 
               <div class="clearfix paired">
 
-                <img src=" {{ ref.request.local.profile.prof_pic.url }} " id="first" class="img-circle img-responsive" height="100" width="100">
-                <img src=" {{ ref.request.traveler.profile.prof_pic.url }} " id="second" class="img-circle img-responsive" height="100" width="100">
+                <img alt="{{ ref.request.local.first_name.title }}  {{ ref.request.local.last_name.title }}" src=" {{ ref.request.local.profile.prof_pic.url }} " id="first" class="img-circle img-responsive" height="100" width="100">
+                <img alt="{{ref.request.traveler.first_name.title}}  {{ref.request.traveler.last_name.title}}" src=" {{ ref.request.traveler.profile.prof_pic.url }} " id="second" class="img-circle img-responsive" height="100" width="100">
 
                 <strong>{{ ref.request.local.first_name.title}} said:</strong>
                 <quote> 
@@ -159,7 +168,7 @@
         <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
           <div class="popular-cities-box">
           <div class="thumbnails">
-            <a href="{% url 'excurj:show_city' city.slug %}">
+            <a title="{{ city.display_name }}" href="{% url 'excurj:show_city' city.slug %}">
               <div class="captions">
                 <h2> {{ city.display_name }} </h2>
               </div>
@@ -175,7 +184,7 @@
 
 {% endif %}
 
-              <img src=" {{city.photo_url}} " class="img-responsive img-rounded">
+              <img alt="{{ city.display_name }}" src=" {{city.photo_url}} " class="img-responsive img-rounded">
 
             </a>
           </div>
@@ -192,7 +201,7 @@
 
 <div class="container-fluid superstars-container" id="insta">
 
-  <h2>Instagram Feed  (<a href="https://www.instagram.com/explore/tags/excurj/" target="_blank">#excurj</a>) </h2>
+  <h2>Instagram Feed  (<a href="https://www.instagram.com/explore/tags/excurj/" target="_blank" title="excurj instagram feed (#excurj)">#excurj</a>) </h2>
   
     <!-- SnapWidget -->
   <script src="https://snapwidget.com/js/snapwidget.js"></script>

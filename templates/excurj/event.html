@@ -2,7 +2,18 @@
 {% load staticfiles %}
 
 {% block title_block %}
-Welcome to {{city.name}}! Yoppy!
+	excurj {{city.display_name}} | {{event.0.name}}
+{% endblock %}
+
+
+
+{% block desc_block %}
+	<meta name="description" content="{{event.0.name}} | {{event.0.description}}">
+{% endblock %}
+
+
+{% block kw_block %}
+	<meta name="keywords" content="{{event.0.name}}, {{event.0.description}}, {{city.display_name}} events, excursions in {{city.display_name}}, make friends with {{city.display_name}} locals, friends, fun, genuine travel experience, culture, cultural exchange, inter-cultural relationships, tolerance, travel, travel blogging, travel vloging, things to do in {{city.display_name}}, {{city.name}}">
 {% endblock %}
 
 {% block body_block %}
@@ -130,12 +141,12 @@ Welcome to {{city.name}}! Yoppy!
 					<div class="row">
 						<div class="col-md-6 col-xs-12">
 							{% if venue_image == -1 %}
-							<a href="{{ MEDIA_URL }}{{city.city_image}}" data-lightbox="image-1" data-title="Picture of {{city.name}}">
-								<img src="{{ MEDIA_URL }}{{city.city_image}}" class="pull-right img-thumbnail" height="500" style="padding: 10px;">
+							<a href="{{ MEDIA_URL }}{{city.city_image}}" data-lightbox="image-1" data-title="Picture of {{city.name}}" title="Picture of {{city.name}}">
+								<img src="{{ MEDIA_URL }}{{city.city_image}}" class="pull-right img-thumbnail" height="500" style="padding: 10px;" alt="Picture of {{city.name}}">
 							</a>
 							{% else %}
-							<a href="{{ venue_image }}" data-lightbox="image-1" data-title="Picture of the venue.">
-								<img src="{{ venue_image }}" class=" img-thumbnail" height="500" style="padding: 10px;">
+							<a href="{{ venue_image }}" data-lightbox="image-1" data-title="Picture of the venue." title="{{event.0.place.name}} | The venue for {{event.0.name}}">
+								<img src="{{ venue_image }}" class=" img-thumbnail" height="500" style="padding: 10px;" alt="{{event.0.place.name}} | The venue for {{event.0.name}}">
 							</a>
 							{% endif %}
 						</div>

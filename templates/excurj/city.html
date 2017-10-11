@@ -2,11 +2,22 @@
 {% load staticfiles %}
 
 {% block title_block %}
-	Welcome to {{city.name}}! Yay!
+	excurj {{city.display_name}} | Become Friends With {{city.display_name}} Locals, Free Excursions With Locals, Culture Exchange, Current Events, Things To Do and More!
 {% endblock %}
 
-{% block body_block %}
+{% block desc_block %}
+	<meta name="description" content="excurj is the ultimate social network for travelers and locals in {{city.display_name}}. Meet {{city.display_name}}'s locals. Go on free excurions with locals to bond and become friends! Exchange culture with locals. Learn about local events, history and more!">
+{% endblock %}
 
+
+{% block kw_block %}
+	<meta name="keywords" content="meet locals in {{city.name}}, {{city.display_name}} events, excursions in {{city.display_name}}, make friends with {{city.display_name}} locals, friends, fun, genuine travel experience, culture, cultural exchange, inter-cultural relationships, tolerance, travel, travel blogging, travel vloging, things to do in {{city.display_name}}, {{city.name}}">
+{% endblock %}
+
+
+
+
+{% block body_block %}
 
 <div class="jumbotron" id="city_jumbotron">
 	<div class="container" style="background-image:url('{{ MEDIA_URL }}{{city.city_image}}');">
@@ -45,7 +56,7 @@
 	   	{% if city_locals_profiles %}
 	    {% for local in city_locals_profiles %}
 	      <tr>
-	        <td><img src=" {{ local.prof_pic.url }} " class="img-circle" width="105px" height="105px">  <a href="{% url 'excurj:show_profile' local.user.username %}">{{local.user.first_name.title}}  {{local.user.last_name.title}}</a>   </td>
+	        <td><img src=" {{ local.prof_pic.url }} " alt="{{local.user.first_name.title}}  {{local.user.last_name.title}}" class="img-circle" width="105px" height="105px">  <a href="{% url 'excurj:show_profile' local.user.username %}" title="{{local.user.first_name.title}}  {{local.user.last_name.title}}">{{local.user.first_name.title}}  {{local.user.last_name.title}}</a>   </td>
 
 	        <td>{{local.age}} year-old</td>
 
@@ -95,8 +106,8 @@
 	    {% if excursions %}
 	   	{% for exj in excursions %}
 	      <tr>
-	        <td><img src=" {{exj.traveler.profile.prof_pic.url }} " class="img-circle" width="105px" height="105px">  </td>
-	        <td> <strong> <a href=" {% url 'excurj:show_profile' exj.traveler.username %} ">{{ exj.traveler.first_name.title }}</a>  is arriving on {{ exj.date}} </td>
+	        <td><img src=" {{exj.traveler.profile.prof_pic.url }} " class="img-circle" width="105px" height="105px" alt="{{ exj.traveler.first_name.title }}  {{ exj.traveler.last_name.title }}">  </td>
+	        <td> <strong> <a href=" {% url 'excurj:show_profile' exj.traveler.username %} " title="{{ exj.traveler.first_name.title }}  {{ exj.traveler.last_name.title }}">{{ exj.traveler.first_name.title }}</a>  is arriving on {{ exj.date}} </td>
 	        <td> <p class="lead">" {{exj.message}} "</p></td>
 	      </tr>
 	    {% endfor %}
@@ -125,17 +136,17 @@
 
 	    <div class="abouts">
 
-	    	<a href=" {% url 'excurj:eventdetails' city.slug event.id %} "><h3>{{forloop.counter}}. {{event.name}}</h3></a>
+	    	<a href=" {% url 'excurj:eventdetails' city.slug event.id %} " title="{{event.name}} in {{city.name}}"><h3>{{forloop.counter}}. {{event.name}}</h3></a>
 
 
 	    	<div style="overflow: auto;">
 	    		{% if event.cover %}
-      				<img src="{{event.cover}}" style="float: right; width: 500px; height: auto;" class="img-thumbnail img-responsive">
+      				<img src="{{event.cover}}" style="float: right; width: 500px; height: auto;" class="img-thumbnail img-responsive" alt="{{event.name}} in {{city.name}}">
       			{% endif %}
 
 
       			{% if event.place.name %}
-      				<pre style="white-space:pre-wrap; background-color: white; border: none;font-weight: bold;">Place or venue:<a href=" {% url 'excurj:eventdetails' city.slug event.id %}#venue_map "> {{event.place.name}} </a></pre>
+      				<pre style="white-space:pre-wrap; background-color: white; border: none;font-weight: bold;">Place or venue:<a href=" {% url 'excurj:eventdetails' city.slug event.id %}#venue_map " title="{{event.place.name}}"> {{event.place.name}} </a></pre>
       			{% else %}
       				<pre style="white-space:pre-wrap; background-color: white; border: none;">Venue or place not available</pre>
       			{% endif %}
@@ -148,14 +159,14 @@
 
 
       			{% if event.ticket_uri %}
-      				<pre style="white-space:pre-wrap; background-color: white; border: none;font-weight: bold;">Tickets: <a href="{{event.ticket_uri}}" target="_blank">{{event.ticket_uri}}</a></pre>
+      				<pre style="white-space:pre-wrap; background-color: white; border: none;font-weight: bold;">Tickets: <a href="{{event.ticket_uri}}" target="_blank" title="Tickets for {{event.name}} in {{city.name}}" >{{event.ticket_uri}}</a></pre>
       			{% else %}
       				<pre style="white-space:pre-wrap; background-color: white; border: none;">Ticket info not avilable</pre>
       			{% endif %}
 
 
 	    		{% if event.description %}
-      				<pre style="white-space:pre-wrap; background-color: white; border: none;">{{event.description|truncatewords:50}} <a href=" {% url 'excurj:eventdetails' city.slug event.id %} ">more.</a> </pre>
+      				<pre style="white-space:pre-wrap; background-color: white; border: none;">{{event.description|truncatewords:50}} <a href=" {% url 'excurj:eventdetails' city.slug event.id %} " title="Details: {{event.name}} in {{city.name}}">more.</a> </pre>
       			{% else %}
       				<pre style="white-space:pre-wrap; background-color: white; border: none;">Description not available</pre>
       			{% endif %}

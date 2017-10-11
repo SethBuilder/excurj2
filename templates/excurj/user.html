@@ -2,8 +2,21 @@
 {% load staticfiles %}
 
 {% block title_block %}
-	Welcome to {{user.first_name.title}}! profile. Yoppy!
+	excurj | {{user.first_name.title}} {{user.last_name.title}} profile.
 {% endblock %}
+
+
+{% block desc_block %}
+	<meta name="description" content="Meet {{user.first_name.title}} {{user.last_name.title}} to become friends! excurj is the ultimate social network for travelers and locals all over the world.">
+{% endblock %}
+
+
+{% block kw_block %}
+	<meta name="keywords" content="meet locals in, make friends with locals, friends, fun, genuine travel experience, culture, cultural exchange, inter-cultural relationships, tolerance, travel, travel blogging, travel vloging, things to do in {{user.first_name.title}} {{user.last_name.title}}, {{user.first_name.title}}, {{user.last_name.title}}">
+{% endblock %}
+
+
+
 
 {% block body_block %}
 
@@ -12,7 +25,7 @@
 	{% if user %}
 
 	<div class="jumbotron" id="user_jumbotron">
-		<a href="{{ MEDIA_URL }}{{user.profile.city.city_image}}" data-lightbox="City Picture" data-title="Picture of {{user.profile.city.name}}">
+		<a href="{{ MEDIA_URL }}{{user.profile.city.city_image}}" data-lightbox="City Picture" data-title="Picture of {{user.profile.city.name}}" title="Picture of {{user.profile.city.name}}">
 			<div class="container" style="background-image:url('{{ MEDIA_URL }}{{user.profile.city.city_image}}');">
 	<!-- 		<div class="city_header">
 				<h1> {{user.profile.city.display_name.upper}} </h1>
@@ -21,8 +34,8 @@
 		</a>
 
 		<div class="prof_pic_overlay" >
-			<a href="{{ user.profile.prof_pic.url }}" data-lightbox="Profile Picture" data-title="{{user.get_full_name.title}}">
-				<img src=" {{ user.profile.prof_pic.url }} " class="img-thumbnail">
+			<a href="{{ user.profile.prof_pic.url }}" data-lightbox="Profile Picture" data-title="{{user.get_full_name.title}}" title="{{user.get_full_name.title}}">
+				<img alt="{{user.get_full_name.title}}" src=" {{ user.profile.prof_pic.url }} " class="img-thumbnail">
 			</a>
 		</div>
 	</div>
@@ -44,7 +57,7 @@
 			
 				<li class="pull-right " style="margin-right: 20px;margin-top: 2px;">
 					<button class="btn btn-danger btn-md">
-						<a href="{% url 'excurj:excursionrequest' user.username %}" style="color: white"><strong>Ask {{user.first_name.title}} to Take You Out!</strong> </a>
+						<a title="Ask {{user.first_name.title}} to Take You Out!" href="{% url 'excurj:excursionrequest' user.username %}" style="color: white"><strong>Ask {{user.first_name.title}} to Take You Out!</strong> </a>
 					</button>
 				</li>
 		{% endif %}
@@ -60,7 +73,7 @@
 			<li class="pull-right " style="margin-right: 20px;margin-top: 2px;">
 
 				<button class="btn btn-default btn-md" style=""> 
-					<a href=" {% url 'excurj:leavereview_for_local' user.username %} ">
+					<a title="Leave a Reference for {{user.first_name.title}} (Local)" href=" {% url 'excurj:leavereview_for_local' user.username %} ">
 						<strong>
 							Leave a Reference for {{user.first_name.title}} (Local)
 						</strong>
@@ -72,7 +85,7 @@
 			
 				<li class="pull-right " style="margin-right: 20px;margin-top: 2px;">
 					<button class="btn btn-default btn-md">
-						<a href="{% url 'excurj:leavereview_for_traveler' user.username %}" style="color: black">
+						<a title="Leave a Reference for {{user.first_name.title}} (Traveler)" href="{% url 'excurj:leavereview_for_traveler' user.username %}" style="color: black">
 							<strong>
 								Leave a Reference for {{user.first_name.title}} (Traveler)
 							</strong> </a>

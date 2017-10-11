@@ -13,8 +13,14 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
-    <meta name="description" content="excurj. is a community where people show visitors around their cities to make new friendships.">
-    <meta name="keywords" content="Travel, travel mates, excursions, europe, asia, australia, friends, fun, genuine travel experience, culture, cultural exchange, inter-cultural relationships, tolerance, travel, travel blogging">
+
+    {% block desc_block %}
+      <meta name="description" content="excurj. is a community where people show visitors around their cities to make new inter-cultural friendships! Meet interesting locals on your next trip (FREE)!">
+    {% endblock %}
+
+    {% block kw_block %}
+      <meta name="keywords" content="Travel, travel mates, excursions, europe, asia, australia, friends, fun, genuine travel experience, culture, cultural exchange, inter-cultural relationships, tolerance, travel, travel blogging">
+    {% endblock %}
     <meta name="author" content="Seif Elmughrabi">
 
 
@@ -39,7 +45,7 @@
     <title>
 
     {% block title_block %}
-    	Make New Friends Via Travel | excurj.
+    	excurj | Make New Friends Via Travel 
     {% endblock %}
 
     </title>
@@ -117,17 +123,17 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a href=" {% url 'excurj:index' %} "><img src=" {% static 'images/logo.png' %} "></a>       
+            <a href=" {% url 'excurj:index' %} " title="excurj | Make New Friendships Via Travel"><img src=" {% static 'images/logo.png' %} " alt="Excurj logo"></a>       
           </div>
 
           <!--menu items-->
           <div class="collapse navbar-collapse " id="mainNavBar">
             <ul class="nav navbar-nav ">
-              <li><a href="{% url 'excurj:index' %}#how-it-works">How it Works</a></li>
-              <li><a href=" {% url 'excurj:index' %}#superstars">Super Stars</a></li>
-              <li><a href=" {% url 'excurj:index' %}#popularcities ">Popular Cities</a></li>
-              <li><a href=" {% url 'excurj:index' %}#insta ">Insta Feed</a></li>
-              <li><a href=" {% url 'excurj:index' %}#map_canvas ">Map</a></li>
+              <li><a href="{% url 'excurj:index' %}#how-it-works" title="How it works">How it Works</a></li>
+              <li><a href=" {% url 'excurj:index' %}#superstars" title="Superstars">Super Stars</a></li>
+              <li><a href=" {% url 'excurj:index' %}#popularcities " title="Popular cities">Popular Cities</a></li>
+              <li><a href=" {% url 'excurj:index' %}#insta " title="Instagram feed (#excurj)">Insta Feed</a></li>
+              <li><a href=" {% url 'excurj:index' %}#map_canvas " title="excurj Map">Map</a></li>
               {% if request.user.is_authenticated %}
                 <li class=" no_desktop"><a href=" {% url 'excurj:dashboard' %} ">My Dashboard</a></li>
                 <li class=" no_desktop"><a href="{% url 'excurj:show_profile' request.user.username %}">My Profile</a></li>
@@ -185,8 +191,8 @@
       <div class="container">
         <div class="row">
           <div class="col-md-4 col-xs-12">
-            <a href=" {% url 'excurj:index' %} " class="">
-              <img src=" {% static 'images/logo.png' %} " class="">
+            <a title="excurj logo" href=" {% url 'excurj:index' %} " class="">
+              <img src=" {% static 'images/logo.png' %} " class="" alt="excurj logo">
             </a>
           </div>
 
