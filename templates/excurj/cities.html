@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block title_block %}
-	Search Results
+	excurj | Search Results...
 {% endblock %}
 
 {% block body_block %}
@@ -53,12 +53,11 @@
   {% if cities.has_next %}
 
   	
-  	{% if searched_query %}
+  	
   	<a class="infinite-more-link" href="?city-search={{ searched_query }}&page={{ cities.next_page_number }}"></a>
-    {% else %}<!-- user searched for 'gibberish' and couldn't find any city -->
-    <a class="infinite-more-link" href="?page={{ cities.next_page_number }}"></a>
     
-    {% endif %}
+    
+    
   {% endif %}
 
 

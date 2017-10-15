@@ -428,6 +428,7 @@ def search(request):
 
 			#Pull the search text
 			searched_city = request.GET.get('city-search')
+			
 			print("IDDDDD is" + str(population_script.get_city_json(searched_city.replace(" ", ""))))
 			#Pass on the searched text for a city and pull the ID (from Google Places API)
 			searched_city_id = population_script.get_city_json(searched_city.replace(" ", ""))['results'][0]['id']
