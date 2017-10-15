@@ -1,0 +1,109 @@
+{% extends 'excurj/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+	Search Results
+{% endblock %}
+
+{% block body_block %}
+	<div style="margin-top: 00px;min-height: 450px;background-color: #f5f8fa;">	
+
+	
+
+	  <div class="container popular-cities-container infinite-container" id="popularcities" style="background-color: #f5f8fa; padding: 50px"; >
+	  	{% if searched_query == 'nothing' %}
+	  	<h1 title="All cities! | Bon Voyage!">These Are All The Cities For your inspirations!</h1>
+	  	{% else %}
+	  	<h1 title="All cities! | Bon Voyage!">Oops! We Couldn't Find a City Based on Your Query!</h1>
+	  	<h3>Howeverrr... We Listed All Our Cities For Your Inspiration!</h3>
+      <div class="row">
+      	{% endif %}
+
+{% if cities %}
+{% for city in cities %}
+
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 infinite-item">
+          <div class="popular-cities-box">
+          <div class="thumbnails">
+            <a title="{{ city.name }}" href="{% url 'excurj:show_city' city.slug %}">
+              <div class="captions">
+                <h2> {{ city.display_name }} </h2>
+              </div>
+{% if city.city.count == 1 %}
+
+              <div class="num">
+                <p> Has one awesome person!</p>
+              </div>
+{% else %}
+              <div class="num">
+                <p> Has {{ city.city.count}} people!</p>
+              </div>
+
+{% endif %}
+
+              <img alt="{{ city.display_name }}" src=" {{city.photo_url}} " class="img-responsive img-rounded">
+
+            </a>
+          </div>
+        </div>
+      </div>
+
+{% endfor %}
+
+  {% if cities.has_next %}
+
+  	
+  	{% if searched_query %}
+  	<a class="infinite-more-link" href="?city-search={{ searched_query }}&page={{ cities.next_page_number }}"></a>
+    {% else %}<!-- user searched for 'gibberish' and couldn't find any city -->
+    <a class="infinite-more-link" href="?page={{ cities.next_page_number }}"></a>
+    
+    {% endif %}
+  {% endif %}
+
+
+{% else %}
+  <strong>There's no cities</strong>
+{% endif %}
+
+      </div>
+  </div>
+
+    <!-- 1 -->
+<div class="container" style="padding-bottom: 30px;">
+  <div class="row">
+<div class="loader loading col-md-12 col-xs-12" title="Loading awseome cities ... | excurj" style="display: none"><p  style="text-align: center;" class="lead">Loading Awesome Cities! Please Wait.</p>
+  <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+   width="80px" height="80px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+  <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+    s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+    c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"/>
+  <path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+    C22.32,8.481,24.301,9.057,26.013,10.047z">
+    <animateTransform attributeType="xml"
+      attributeName="transform"
+      type="rotate"
+      from="0 20 20"
+      to="360 20 20"
+      dur="0.5s"
+      repeatCount="indefinite"/>
+    </path>
+  </svg>
+</div>
+
+</div>
+</div>
+
+<script>
+  var infinite = new Waypoint.Infinite({
+    element: $('.infinite-container')[0],
+    onBeforePageLoad: function () {
+    $('.loading').show();
+    },
+    onAfterPageLoad: function ($items) {
+    $('.loading').hide();
+    }
+  });
+</script>
+
+{% endblock %}

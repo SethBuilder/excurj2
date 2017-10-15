@@ -21,6 +21,7 @@ urlpatterns=[
 	url(r'^offerexcursion/(?P<username>[\w\-]+)/$', views.offerexcursion, name="offerexcursion"),
 	url(r'^feedback/$', views.feedback, name="feedback"),
 	url(r'^thankyou/$', views.thankyou, name="thankyou"),
+	url(r'^cities/$', views.cities_list, name="cities"),
 	url(r'^confirmoffer/(?P<offerid>[\w\-]+)/$', views.confirmoffer, name="confirmoffer"),
 	url(r'^acceptrequest/(?P<requestid>[\w\-]+)/$', views.acceptrequest, name="acceptrequest"),
 	url(r'^leavereview_for_traveler/(?P<username>[\w\-]+)/$', views.leavereview_for_traveler, name="leavereview_for_traveler"),

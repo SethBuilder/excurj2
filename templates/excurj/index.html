@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block title_block %}
-  excurj | Meet Locals Wherever You Travel | Become Friends With Locals,| Free Excursions | Bonding Activities | Culture Exchange | Current Events, Things To Do and More!
+  excurj | Meet Locals Wherever You Travel | Become Friends With Locals | Free Excursions | Bonding Activities | Culture Exchange | Current Events | Things To Do and More!
 {% endblock %}
 
 {% block desc_block %}
@@ -168,7 +168,7 @@
         <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
           <div class="popular-cities-box">
           <div class="thumbnails">
-            <a title="{{ city.display_name }}" href="{% url 'excurj:show_city' city.slug %}">
+            <a title="{{ city.name }}" href="{% url 'excurj:show_city' city.slug %}">
               <div class="captions">
                 <h2> {{ city.display_name }} </h2>
               </div>

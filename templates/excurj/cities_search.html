@@ -8,23 +8,37 @@
 {% block body_block %}
 	<div style="margin-top: 70px;min-height: 450px;">	
 
-	<h1>People Search results</h1>
+	<h1 title="City Search results | Bon Voyage!">City Search results</h1>
 
 	{% if cities %}
 	<h2>We found these cities based on your query</h2>
-		{% for city in cities %}
 		<ul>
-			<li>  <a href=" {% url 'excurj:show_city' city.slug %} ">{{ city.name }} </a>  </li>
+			{% for city in cities %}
+			
+				<li>  <a title="{{city.name}}" href=" {{city.get_absolute_url}} ">{{ city.name }} </a>  </li>
+			
+			{% endfor %}
 		</ul>
-		{% endfor %}
 
-	{% else %}
-	<p>This city doesn't have users yet :( you can search for other cities by:</p>
-	<ul>
-		<li>city name</li>
-		<li>country</li>
-		<li>description</li>
-	</ul>
+	{% elif all_cities %}
+
+	<h2>Oopsie! The city you searched for still doesn't have users.</h2>
+	<h3>These are all the populated cities for your inspiration!</h3>
+		<ul>
+			{% for city in all_cities %}
+			
+				<li>  <a title="{{city.name}}" href=" {{city.get_absolute_url}} ">{{ city.name }} </a>  </li>
+			
+			{% endfor %}
+		</ul>
+
+		{% else %}
+			<p>This city doesn't have users yet or it doesn't exist :( you can search for other cities by:</p>
+			<ul>
+				<li>city name</li>
+				<li>country</li>
+				<li>description</li>
+			</ul>
 	{% endif %}
 
 	</div>

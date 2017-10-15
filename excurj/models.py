@@ -58,7 +58,7 @@ class City(models.Model):
 
 
 	def get_absolute_url(self):
-		return 'city/%s/' % self.slug
+		return '/city/%s/' % self.slug
 
 
 class Request(models.Model):

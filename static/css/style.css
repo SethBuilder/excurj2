@@ -437,6 +437,23 @@ div#events h2, div#wiki h2, #coming h2, #locals h2{
 
 }
 
+.loader{
+  
+  height: 100px;
+  width: 100%;
+  text-align: center;
+
+}
+
+/*
+  Set the color of the icon
+*/
+svg path,
+svg rect{
+  fill: #63b8ff;
+  
+}
+
 .how-it-works-box h3{
 position: relative;
 }

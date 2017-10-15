@@ -15,11 +15,11 @@
     <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
 
     {% block desc_block %}
-      <meta name="description" content="excurj. is a community where people show visitors around their cities to make new inter-cultural friendships! Meet interesting locals on your next trip (FREE)!">
+      <meta name="description" content="excurj. is a community where people show visitors around their cities to make new inter-cultural friendships! Meet interesting locals on your next trip | Go on free excurions | Learn about cool local events | Meet travel mates and more! (FREE)">
     {% endblock %}
 
     {% block kw_block %}
-      <meta name="keywords" content="Travel, travel mates, excursions, europe, asia, australia, friends, fun, genuine travel experience, culture, cultural exchange, inter-cultural relationships, tolerance, travel, travel blogging">
+      <meta name="keywords" content="Travel, travel mates, excursions, europe, asia, australia, friends, fun, genuine travel experience, culture, cultural exchange, inter-cultural relationships, tolerance, travel, travel blogging, excurj. is a community where people show visitors around their cities to make new inter-cultural friendships! Meet interesting locals on your next trip | Go on free excurions | Learn about cool local events | Meet travel mates and more! (FREE)">
     {% endblock %}
     <meta name="author" content="Seif Elmughrabi">
 
@@ -60,6 +60,8 @@
     <link rel="stylesheet" type="text/css" href=" {% static 'css/animate.css' %} ">
     <script src="{% static 'js/autocomplete.js' %}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYfS_V4jHXS_jVYa1k2w9VY52r0pMrL8g&callback=initMap&libraries=places" async defer></script>
+
+
     <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAali5z1ZHUooZzMz7GP_sqMYDVpN-PQl8"></script> -->
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -89,6 +91,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/infinite.min.js' %}"></script>
+
 
     <script type="application/ld+json">
       {
@@ -108,7 +113,7 @@
   <body>
 
     <form action=" {% url 'excurj:feedback' %} ">
-        <button id="feedback" class="btn btn-lg btn-primary" name="feedback">
+        <button title="Contact Us, We Love Your feedback!" id="feedback" class="btn btn-lg btn-primary" name="feedback">
         <span class="glyphicon glyphicon-send" style="padding-right: 10px;"></span>  FEEDBACK
       </button>
     </form>
@@ -132,6 +137,7 @@
               <li><a href="{% url 'excurj:index' %}#how-it-works" title="How it works">How it Works</a></li>
               <li><a href=" {% url 'excurj:index' %}#superstars" title="Superstars">Super Stars</a></li>
               <li><a href=" {% url 'excurj:index' %}#popularcities " title="Popular cities">Popular Cities</a></li>
+              <li><a href=" {% url 'excurj:cities' %} " title="All cities">All Cities</a></li>
               <li><a href=" {% url 'excurj:index' %}#insta " title="Instagram feed (#excurj)">Insta Feed</a></li>
               <li><a href=" {% url 'excurj:index' %}#map_canvas " title="excurj Map">Map</a></li>
               {% if request.user.is_authenticated %}
@@ -349,5 +355,8 @@
 
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.9.0/css/lightbox.css">
   <script src='https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.9.0/js/lightbox.min.js'></script>
+
+
+
   </body>
 </html>

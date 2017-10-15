@@ -2,10 +2,8 @@
 {% load staticfiles %}
 
 {% block title_block %}
-	excurj {{city.display_name}} | {{event.0.name}}
+	excurj | {{event.0.name}} | Find More Cool Events in {{city.display_name}}
 {% endblock %}
-
-
 
 {% block desc_block %}
 	<meta name="description" content="{{event.0.name}} | {{event.0.description}}">
@@ -62,7 +60,7 @@
 		<div class="row">
 			<div class="col-md-3 col-xs-12">
 				{% if event.0.place.name %}
-				<span class="event_detail"><span class="glyphicon glyphicon-map-marker"></span> <a href="#venue_map" > {{event.0.place.name}}</a></span>
+				<span class="event_detail"><span class="glyphicon glyphicon-map-marker"></span> <a href="#venue_map" title="Location for {{event.0.place.name}}"> {{event.0.place.name}}</a></span>
 				{% else %}
 				<span class="event_detail"><span class="glyphicon glyphicon-map-marker"></span> Location not available</span>
 				{% endif %}
@@ -90,7 +88,7 @@
 			<div class="row">
 				<div class="col-xs-12 col-md-12">
 					<section class="event_section">
-						<h3><strong>TICKETS INFO:</strong></h3>
+						<h3 title="tickets for {{event.0.name}}"><strong>TICKETS INFO:</strong></h3>
 						{% if event.0.ticket_uri %}
 
 						<pre style="white-space:pre-wrap; background-color: white; border: none;font-weight: bold;"><p><a href="{{event.0.ticket_uri}}" target="_blank">{{event.0.ticket_uri}}</a></p></pre>
@@ -120,7 +118,7 @@
 			</div>
 			<section class="event_section" id="venue_map">
 
-				<h3><strong>VENUE:</strong></h3>
+				<h3 title="Venue / Location for {{event.0.name}}"><strong>VENUE:</strong></h3>
 				<p class="lead"><span class="glyphicon glyphicon-map-marker"></span>
 
 					{% if  not event.0.place.name %}

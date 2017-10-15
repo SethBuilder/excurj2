@@ -22,17 +22,17 @@
 <div class="jumbotron" id="city_jumbotron">
 	<div class="container" style="background-image:url('{{ MEDIA_URL }}{{city.city_image}}');">
 		<div class="city_header">
-			<h1> {{city.display_name.upper}} </h1>
+			<h1 title="Meet locals of {{city.name}} | Go on excursions | Exchange Culture | Make {{city.display_name}} Friends | Learn about local events and more!"> {{city.display_name.upper}} </h1>
 		</div>
 	</div>
 </div>
 
 	<ul class="nav  navbar-centered tabs" id="">
-		<li class="active" role="presentation"><a data-toggle="tab" href="#locals">LOCALS</a></li>
-		<li role="presentation"><a data-toggle="tab" href="#coming">PEOPLE COMING HERE SOON</a></li>
-		<li role="presentation"><a data-toggle="tab" href="#insta">INSTAFRAM FEED</a></li>
-		<li role="presentation"><a data-toggle="tab" href="#wiki">WIKI SUMMARY</a></li>
-		<li role="presentation" title="Coming Soon!"><a data-toggle="tab" href="#events" title="coming soon!">LOCALS EVENTS</a></li>
+		<li class="active" role="presentation"><a data-toggle="tab" href="#locals" title="locals of {{city.display_name}}">LOCALS</a></li>
+		<li role="presentation"><a data-toggle="tab" href="#coming" title="travel mates for {{city.display_name}}">PEOPLE COMING HERE SOON</a></li>
+		<li role="presentation"><a data-toggle="tab" href="#insta" title="Instagram feed for {{city.display_name}}">INSTAFRAM FEED</a></li>
+		<li role="presentation"><a data-toggle="tab" href="#wiki" title="Wiki summary of {{city.display_name}}">WIKI SUMMARY</a></li>
+		<li role="presentation" title="Coming Soon!"><a data-toggle="tab" href="#events" title="Cool Events in {{city.display_name}}">LOCALS EVENTS</a></li>
 		<li title="Coming Soon!"><a data-toggle="tab" href="javascript:void(0)" title="coming soon!">POINTS OF INTEREST</a></li>
 	</ul>
 
@@ -40,7 +40,7 @@
     <div id="locals" class="tab-pane fade in active no_outline">
 
 	<div class="container table-responsive">
-	  <h2 style="text-align: center;"> Locals of <span style="font-weight: bold;">{{city.name}}</span></h2>
+	  <h2 style="text-align: center;" title="Locals of {{city.display_name}}"> Locals of <span style="font-weight: bold;">{{city.name}}</span></h2>
 	  <!-- <p>The .table-striped class adds zebra-stripes to a table:</p> -->            
 	  <table class="table table-striped table-condensed table-hover">
 	    <thead>
@@ -90,7 +90,7 @@
 
 
 	<div class="container table-responsive">
-	  <h2 style="text-align: center;">People coming to <span style="font-weight: bold;"> {{city.display_name}} </span> soon! </h2>
+	  <h2 title="Travel mates in {{city.name}}" style="text-align: center;">People coming to <span style="font-weight: bold;"> {{city.display_name}} </span> soon! </h2>
 	  <!-- <p>The .table-striped class adds zebra-stripes to a table:</p> -->            
 	  <table class="table table-striped table-condensed table-hover">
 	    <thead>
@@ -129,14 +129,14 @@
 
 
     <div id="events" class="tab-pane fade no_outline" style="margin-right: 20px;padding: 20px;">
-      <h2>Here's what's happening in <strong>{{city.display_name}}</strong> to jump start your plans! </h2>
+      <h2 title="Local events in {{city.name}}">Here's what's happening in <strong>{{city.display_name}}</strong> to jump start your plans! </h2>
       {% if events %}
 
       {% for event in events %}
 
 	    <div class="abouts">
 
-	    	<a href=" {% url 'excurj:eventdetails' city.slug event.id %} " title="{{event.name}} in {{city.name}}"><h3>{{forloop.counter}}. {{event.name}}</h3></a>
+	    	<a href=" {% url 'excurj:eventdetails' city.slug event.id %} " title="{{event.name}} in {{city.name}}"><h3 title="{{event.name}}">{{forloop.counter}}. {{event.name}}</h3></a>
 
 
 	    	<div style="overflow: auto;">
@@ -193,7 +193,7 @@
 
 
 	<div id="wiki" class="tab-pane fade no_outline" style="padding: 20px;">
-	  	<h2><strong>{{city.display_name}}</strong>'s Wiki Summary to Jump Start Your Conversations!</h2>
+	  	<h2 title="wiki simmary for {{city.name}}"><strong>{{city.display_name}}</strong>'s Wiki Summary to Jump Start Your Conversations!</h2>
 		<pre style="white-space:pre-wrap; background-color: white; border: none;"> {{city.description}} </pre>
 	</div>
   </div>

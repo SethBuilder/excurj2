@@ -17,6 +17,8 @@ from django.utils.safestring import mark_safe
 import urllib.request, json
 import requests
 import dateutil.parser
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from time import sleep
 
 
 
@@ -79,6 +81,35 @@ def index(request):
 	context_dict['all_cities'] =  mark_safe(lat_lng_dict)
 	
 	return render(request, 'excurj/index.html', context_dict)
+
+
+def cities_list(request):
+	context_dict={}
+
+	#brings back top all cities with the highest number of users
+	city_list = City.objects.annotate(user_count=Count('city__user')).order_by('-user_count')
+
+	page = request.GET.get('page', 1)
+
+	searched_query = request.GET.get('city-search', 'nothing')
+
+	print("PAIGE IS "  + str(request))
+	paginator = Paginator(city_list, 6)
+
+	try:
+		sleep(2)
+		cities = paginator.page(page)
+	except PageNotAnInteger:
+		cities = paginator.page(1)
+	except EmptyPage:
+		cities = paginator.page(paginator.num_pages)
+
+	context_dict['cities'] = cities
+	context_dict['searched_query'] = searched_query
+	print(str(context_dict))
+	
+	
+	return render(request, 'excurj/cities.html', context_dict)
 
 
 def get_perma_fb_token():
@@ -383,8 +414,6 @@ def show_profile(request, username):
 
 	return render(request, 'excurj/user.html', context_dict)
 
-
-
 def search(request):
 	"""
 		View for the search features - 
@@ -395,16 +424,17 @@ def search(request):
 	if 'city-search' in request.GET:
 		try:	
 			#Send me Email
-			send_me_email("NEW CITY SEARCH!!!!!! | excurj." , str(request.GET), ['moghrabi@gmail.com'])
+			# send_me_email("NEW CITY SEARCH!!!!!! | excurj." , str(request.GET), ['moghrabi@gmail.com'])
 
 			#Pull the search text
 			searched_city = request.GET.get('city-search')
-
+			print("IDDDDD is" + str(population_script.get_city_json(searched_city.replace(" ", ""))))
 			#Pass on the searched text for a city and pull the ID (from Google Places API)
 			searched_city_id = population_script.get_city_json(searched_city.replace(" ", ""))['results'][0]['id']
 			
 			#If city ID is returned
 			if searched_city_id != -1:
+				print("IDDDDD is" + searched_city_id)
 				
 				#Pull city from the database and return the appropriate city profile
 				city = City.objects.get(city_id = searched_city_id)
@@ -412,7 +442,9 @@ def search(request):
 
 			#If no city ID was returned from the Google API (very rarely the case)
 			else:
-				return HttpResponse("There's no such city, please try a different query.")
+				# return HttpResponse("There's no such city, please try a different query.")
+				print("No such city!")
+				return cities_list(request)
 
 		#If the user searched for a city that does not exist in the database 
 		except City.DoesNotExist:
@@ -436,15 +468,14 @@ def search(request):
 
 				) 
 
-			#Show the searching user these cities
 			context_dict['cities']=cities
-
 			return render(request, 'excurj/cities_search.html', context_dict)
 
 		#If no query matches found
 		except IndexError:
-			return HttpResponse("We couldn't find any city based on your query :( please pick from the list instead.")
-
+			print("INDEX ERROR")
+			#If num of cities is 0 return all cities (never ending scroll of cities)
+			return cities_list(request)
 
 	#Is user is searching for a person (in the nav bar)
 	elif 'q' in request.GET:
@@ -487,7 +518,9 @@ def search(request):
 		except User.DoesNotExist:
 			return HttpResponse("No profiles were returned based on this query :(")
 
-	
+
+
+
 def creat_city_object(city_search_text, profile):
 	""" 
 		Takes query string for a city from the Google autocomplete API, 
