@@ -2,16 +2,16 @@
 {% load staticfiles %}
 
 {% block title_block %}
-  excurj | Meet Locals Wherever You Travel | Become Friends With Locals | Free Excursions | Bonding Activities | Culture Exchange | Current Events | Things To Do and More!
+  Make Frienships Via Travel | Meet Locals Wherever You Travel | Befriend Locals | Free Excursions With Locals | Bonding Activities to Form Inter-Cultual Friendships | Culture Exchange | Current Events | Things To Do and More!
 {% endblock %}
 
 {% block desc_block %}
-  <meta name="description" content="excurj is the ultimate social network for travelers and locals from all over the world. Meet locals. Go on free excurions to bond and become friends! Exchange culture. Learn about local events, history and more!">
+  <meta name="description" content="excurj is a community where people show visitors around their cities to make new friendships. Meet locals. Go on free excurions to bond and become friends! Exchange culture. Learn about local events, history and more!">
 {% endblock %}
 
 
 {% block kw_block %}
-  <meta name="keywords" content="meet locals from all over the world, events, excursions, make friends with locals, friends, fun, genuine travel experience, culture, cultural exchange, inter-cultural relationships, tolerance, travel, travel blogging, travel vloging, things to do in">
+  <meta name="keywords" content="excurj is a community where people show visitors around their cities to make new friendships, meet locals from all over the world, events, excursions, make friends with locals, friends, fun, genuine travel experience, culture, cultural exchange, inter-cultural friendships, tolerance via travel, Frienships Via Travel, travel blogging, travel vloging, things to do in">
 {% endblock %}
 
 {% block body_block %}
@@ -57,9 +57,9 @@
     </div>
   
     <!-- video background -->
-    <video autoplay muted loop id="background_video" poster="capture.jpg">
+    <video autoplay muted loop id="background_video">
             <source src="{% static 'videos/fun.mp4' %}" type="video/mp4" id="vid">
-            <!-- <img src="{% static 'images/capture.jpg' %}"> -->
+            <img src="{% static 'images/capture.jpg' %}">
     </video>
 
     <!-- shows the arrow pointing down at the bottom -->
@@ -220,125 +220,6 @@
   
 </div>
 
-<script type="text/javascript">
-
-  //CENTER CONTROL 
-
-
-function CenterControl(controlDiv, map) {
-  var center_here = {lat: 41.38506389999999, lng: 2.1734035,};
-
-        // Set CSS for the control border.
-        var controlUI = document.createElement('div');
-        controlUI.style.backgroundColor = '#fff';
-        controlUI.style.border = '2px solid #fff';
-        controlUI.style.borderRadius = '3px';
-        controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
-        controlUI.style.cursor = 'pointer';
-        controlUI.style.marginBottom = '22px';
-        controlUI.style.textAlign = 'center';
-        controlUI.title = 'Click to recenter the map';
-        controlDiv.appendChild(controlUI);
-
-        // Set CSS for the control interior.
-        var controlText = document.createElement('div');
-        controlText.style.color = 'rgb(25,25,25)';
-        controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
-        controlText.style.fontSize = '16px';
-        controlText.style.lineHeight = '38px';
-        controlText.style.paddingLeft = '5px';
-        controlText.style.paddingRight = '5px';
-        controlText.innerHTML = 'Center Map';
-        controlUI.appendChild(controlText);
-
-        // Setup the click event listeners: simply set the map to Chicago.
-        controlUI.addEventListener('click', function() {
-          map.setCenter(center_here);
-        });
-
-      }
-
-
-
-
-
-
-
-
-
-
-
-  (function(window, google){
-
-    //map option
-    var options = {
-      center: {
-        lat:41.38506389999999,
-        lng:2.1734035
-      },
-      zoom: 2,
-      scrollwheel:  false
-    },
-    //map
-    element = document.getElementById('map_canvas'),
-    map = new google.maps.Map(element, options);
-
-    var cities = {{all_cities}}
-
-    // Create a popup for when users click on a map marker
-    var infowindow = new google.maps.InfoWindow();
-    var marker, i;
-    // Loop through each location in the list and place a marker there
-    for (i = 0; i < cities.length; i++) {
-      console.log("LAAAAt is:  " + cities[i].lat)
-      console.log("LNG is:  " + cities[i].lng)
-
-      
-        marker = new google.maps.Marker({
-            position: new google.maps.LatLng(cities[i].lat, cities[i].lng),
-            map: map,
-            
-        });
-
-        google.maps.event.addListener(marker, 'click', (function (marker, i) {
-          return function () {
-            if (cities[i].count == 1) {
-              infowindow.setContent("<a href ='" + "/city/" + cities[i].slug + "'><h3>" + cities[i].city_name + "</h3>" + "</a>" + "<br>" + 
- 
-                "<img class='img-circle' width=100 height=100 src='" + cities[i].king_pic + "'>" + 
-                "<p class='lead'>Has one awesome person!</p>");
-              }
-
-              else{
-              infowindow.setContent("<a href ='" + "/city/" + cities[i].slug + "'><h3>" + cities[i].city_name + "</h3></a>" + "<br>" + "<p class='lead'>Has " + cities[i].count + " people!</p>");
-            }
-
-            infowindow.open(map, marker);
-          }
-          })(marker, i));
-           
-            
-            }
-
-            
-
-     
-
-            // Create the DIV to hold the control and call the CenterControl()
-        // constructor passing in this DIV.
-        var centerControlDiv = document.createElement('div');
-        var centerControl = new CenterControl(centerControlDiv, map);
-
-        centerControlDiv.index = 1;
-        map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv);
-
-  }(window, google));
-
-  
-
-  
-</script>
-
 
 
 <div class="superstars-container ready">
@@ -347,9 +228,6 @@ function CenterControl(controlDiv, map) {
       <h2>Ready to meet new friends?</h2>
       <button class="ready-header-button">Sign up for free!</button>
     </div>
-    
-          
-  
 
     <!-- <img src=" {% static 'images/2friends.jpg' %} " id="readyimg"> -->
   

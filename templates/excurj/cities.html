@@ -2,7 +2,30 @@
 {% load staticfiles %}
 
 {% block title_block %}
-	excurj | Search Results...
+  {% if searched_query != 'nothing' %}
+  	excurj | Search Results...
+  {% else %}
+    excurj | All Excurj Cities
+  {% endif %}
+{% endblock %}
+
+{% block desc_block %}
+  <meta name="description" content="excurj is a community where locals show visitors around their city to form new inter-cultural friendships. Meet locals for free. Go on free excurions with locals to bond and become friends! Exchange culture with locals. Learn about local events, history and more!">
+{% endblock %}
+
+
+{% block kw_block %}
+  <meta name="keywords" content="meet locals in ,  events, excursions in {{city.display_name}}, make friends with {{city.display_name}} locals, friends, fun, genuine travel experience, culture, cultural exchange, inter-cultural relationships, tolerance, travel, travel blogging, travel vloging, things to do in 
+{% if cities %}
+{% for city in cities %}
+
+{{ city.name }}
+
+{% endfor %}
+{% endif %}
+">
+
+
 {% endblock %}
 
 {% block body_block %}

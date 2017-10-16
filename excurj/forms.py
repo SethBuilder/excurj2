@@ -53,6 +53,9 @@ class UserProfileForm(forms.ModelForm):
 		label = "Your Current City",
 		max_length = 200,
 		required = True,
+
+		#Any text input field with this id is connected to Google Autocomplete API
+		widget=forms.TextInput(attrs={'id': 'google_city_search'})
 		)
 
 	prof_pic = forms.ImageField(

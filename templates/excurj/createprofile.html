@@ -4,7 +4,7 @@
 {% load widget_tweaks %}
 
 {% block title_block %}
-	Welcome to {{user.first_name.title}}! profile. Yoppy!
+	Welcome to {{user.first_name.title}}' profile. Currently in {{user.profile.city.name}}
 {% endblock %}
 
 {% block body_block %}
@@ -16,14 +16,14 @@
 
 	<form method="post" action="?next=/thankyou/" enctype="multipart/form-data">
                 {% csrf_token %}
-                <!-- {{ form|crispy }}
+                <!--  {{ form|crispy }}
 
 
 	                 {{ profile_form.city_search_text.label }}
 	                {{ profile_form.city_search_text|attr:"id:google_city_search"|attr:"placeholder:Search cities.."|add_class:"prof_search"}}
 	                {{ profile_form.city_search_text.errors }}<br>
 
-				-->
+				 -->
 				<!-- facebook conversion tracker -->
 				<script>
 					fbq('track', 'CompleteRegistration');

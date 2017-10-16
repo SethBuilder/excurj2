@@ -45,7 +45,7 @@
     <title>
 
     {% block title_block %}
-    	excurj | Make New Friends Via Travel 
+    	excurj | Make Friendships Via Travel 
     {% endblock %}
 
     </title>
@@ -58,8 +58,8 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href=" {% static 'css/animate.css' %} ">
-    <script src="{% static 'js/autocomplete.js' %}"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYfS_V4jHXS_jVYa1k2w9VY52r0pMrL8g&callback=initMap&libraries=places" async defer></script>
+    
+    
 
 
     <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAali5z1ZHUooZzMz7GP_sqMYDVpN-PQl8"></script> -->
@@ -356,7 +356,95 @@
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.9.0/css/lightbox.css">
   <script src='https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.9.0/js/lightbox.min.js'></script>
 
+<script src="{% static 'js/autocomplete.js' %}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYfS_V4jHXS_jVYa1k2w9VY52r0pMrL8g&callback=initMap&libraries=places"></script>
 
+<script type="text/javascript">
+  //CENTER CONTROL 
+function CenterControl(controlDiv, map) {
+  var center_here = {lat: 41.38506389999999, lng: 2.1734035,};
+        // Set CSS for the control border.
+        var controlUI = document.createElement('div');
+        controlUI.style.backgroundColor = '#fff';
+        controlUI.style.border = '2px solid #fff';
+        controlUI.style.borderRadius = '3px';
+        controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+        controlUI.style.cursor = 'pointer';
+        controlUI.style.marginBottom = '22px';
+        controlUI.style.textAlign = 'center';
+        controlUI.title = 'Click to recenter the map';
+        controlDiv.appendChild(controlUI);
+        // Set CSS for the control interior.
+        var controlText = document.createElement('div');
+        controlText.style.color = 'rgb(25,25,25)';
+        controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+        controlText.style.fontSize = '16px';
+        controlText.style.lineHeight = '38px';
+        controlText.style.paddingLeft = '5px';
+        controlText.style.paddingRight = '5px';
+        controlText.innerHTML = 'Center Map';
+        controlUI.appendChild(controlText);
+        // Setup the click event listeners: simply set the map to Chicago.
+        controlUI.addEventListener('click', function() {
+          map.setCenter(center_here);
+        });
+      }
+  (function(window, google){
+    //map option
+    var options = {
+      center: {
+        lat:41.38506389999999,
+        lng:2.1734035
+      },
+      zoom: 2,
+      scrollwheel:  false
+    },
+    //map
+    element = document.getElementById('map_canvas'),
+    map = new google.maps.Map(element, options);
+    var cities = {{all_cities}}
+    // Create a popup for when users click on a map marker
+    var infowindow = new google.maps.InfoWindow();
+    var marker, i;
+    // Loop through each location in the list and place a marker there
+    for (i = 0; i < cities.length; i++) {
+      console.log("LAAAAt is:  " + cities[i].lat)
+      console.log("LNG is:  " + cities[i].lng)
+      
+        marker = new google.maps.Marker({
+            position: new google.maps.LatLng(cities[i].lat, cities[i].lng),
+            map: map,
+            
+        });
+        google.maps.event.addListener(marker, 'click', (function (marker, i) {
+          return function () {
+            if (cities[i].count == 1) {
+              infowindow.setContent("<a href ='" + "/city/" + cities[i].slug + "'><h3>" + cities[i].city_name + "</h3>" + "</a>" + "<br>" + 
+ 
+                "<img class='img-circle' width=100 height=100 src='" + cities[i].king_pic + "'>" + 
+                "<p class='lead'>Has one awesome person!</p>");
+              }
+              else{
+              infowindow.setContent("<a href ='" + "/city/" + cities[i].slug + "'><h3>" + cities[i].city_name + "</h3></a>" + "<br>" + "<p class='lead'>Has " + cities[i].count + " people!</p>");
+            }
+            infowindow.open(map, marker);
+          }
+          })(marker, i));
+           
+            
+            }
+            
+     
+            // Create the DIV to hold the control and call the CenterControl()
+        // constructor passing in this DIV.
+        var centerControlDiv = document.createElement('div');
+        var centerControl = new CenterControl(centerControlDiv, map);
+        centerControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv);
+  }(window, google));
+  
+  
+</script>
 
   </body>
 </html>
