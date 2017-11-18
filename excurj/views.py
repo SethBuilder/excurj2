@@ -124,7 +124,7 @@ def get_json_raw(url):
 
 def pull_events(city):
 	events=[]
-	url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBAFela6PcIBMdZAfn9f1qU7QYWLKZClHGsF6plhshzuRyDdZAlFsx0jQkcwx8wALT0w43iUBkCzKgTqYsJ6tMLFz52yYGGRDCxcZAMSdtJf2iVRGZAEsY1UZBAR4TuvVxp1er2Iv18ZCbj6eopqa9lverXXlT5WnlAZDZD&token_type=bearer' % city.name.replace(' ', '')
+	url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBAEPJ3zygxn83DUIK9LISNQWQaO10c5yR3ZBHaCvZCI5ACYSBs7mHsZBaLFZAku4ahuB6WXSMcw14C1zZChKTaVZBxSLklZBgHaNPgY3LjqgaX7fxCox8Dow0rUuFZBdsppl01erkNPFkGnJUgHqb4bvi959Wx3Ni4AZDZD&token_type=bearer' % city.name.replace(' ', '')
 	
 	events_json = get_json_raw(url)
 
@@ -138,7 +138,7 @@ def pull_events(city):
 
 			
 			#PULL LOCAL EVENTS
-			url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBAFela6PcIBMdZAfn9f1qU7QYWLKZClHGsF6plhshzuRyDdZAlFsx0jQkcwx8wALT0w43iUBkCzKgTqYsJ6tMLFz52yYGGRDCxcZAMSdtJf2iVRGZAEsY1UZBAR4TuvVxp1er2Iv18ZCbj6eopqa9lverXXlT5WnlAZDZD&token_type=bearer' % try_differeny_city_name.replace(' ', '')
+			url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBAEPJ3zygxn83DUIK9LISNQWQaO10c5yR3ZBHaCvZCI5ACYSBs7mHsZBaLFZAku4ahuB6WXSMcw14C1zZChKTaVZBxSLklZBgHaNPgY3LjqgaX7fxCox8Dow0rUuFZBdsppl01erkNPFkGnJUgHqb4bvi959Wx3Ni4AZDZD&token_type=bearer' % try_differeny_city_name.replace(' ', '')
 			
 			events_json = get_json_raw(url)
 			print("WHYYYY" + events_json)
@@ -154,7 +154,7 @@ def pull_events(city):
 	for event in events_json['data']:
 
 		#pull event cover photo
-		cover_photo_url = 'https://graph.facebook.com/{0}?fields=cover,ticket_uri,type&access_token=EAADuTyDZATeoBALA0Kns66mYImTyUDQseHLxgKRyJsUK3nK9YaiyKE24ywRu0ksm2kvy8Wi39e0w8Unl6Qrgpi4ljrQEV1ninh6ZAgCikjgqVV7jnrRyKTWawrP2OG72zIiE2gSo0Boogt4k2wUEepDS38fhPzsH4qQJsU3wZDZD&token_type=bearer'.format(event['id'])
+		cover_photo_url = 'https://graph.facebook.com/{0}?fields=cover,ticket_uri,type&access_token=EAADuTyDZATeoBAEPJ3zygxn83DUIK9LISNQWQaO10c5yR3ZBHaCvZCI5ACYSBs7mHsZBaLFZAku4ahuB6WXSMcw14C1zZChKTaVZBxSLklZBgHaNPgY3LjqgaX7fxCox8Dow0rUuFZBdsppl01erkNPFkGnJUgHqb4bvi959Wx3Ni4AZDZD&token_type=bearer'.format(event['id'])
 		
 		event_photo_json = get_json_raw(cover_photo_url)
 		if 'cover' in event_photo_json:

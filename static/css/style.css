@@ -1187,7 +1187,7 @@ no-mobile{
 }
 
 
-@media only screen and (max-width: 996px){
+@media only screen and (max-width: 1250px){
 
 #offers{
 	margin-left: 0;
@@ -1213,12 +1213,20 @@ margin-top: 80px;
 
 .mobile{
 	display: inline;
-	/*background-image: url(' {% static 'images/cap.jpg' %} ');*/
+	/*background-image: url(' {% static 'images/cap1.jpeg' %} ');*/
 	background-position: center center;
-	-o-background-size: contain;
-    -moz-background-size: contain;
-    -webkit-background-size: contain;
-	background-size: contain;	
+	-o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+	background-size: cover;
+	object-fit: cover;
+	min-width:100%;
+    min-height:100%;
+    overflow: hidden;
+}
+
+video {
+	display: none;
 }
 
 .no_mobile{
