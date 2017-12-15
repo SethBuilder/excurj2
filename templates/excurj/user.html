@@ -16,7 +16,83 @@
 {% endblock %}
 
 
+{% block css_block %}
+	#city_hero {
+	background-image:url('{{ MEDIA_URL }}{{user.profile.city.city_image}}');
+}
 
+/*USER PROFILE CSS*/
+div.jumbotron#user_jumbotron .container{
+    margin: 0;
+    padding: 0;
+    min-height: 320px;
+    position: relative;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    width: 100%;
+    -webkit-filter: brightness(1.10);
+    filter: brightness(1.10);
+
+}
+
+
+.prof_pic_overlay{
+  position: absolute;
+  left: 70px;
+  top:190px;
+  box-shadow: 0 1px 1px rgba(136,153,166,0.15);
+  z-index: 3;
+  
+  border-radius: 15px;
+
+}
+
+.prof_pic_overlay h3, div.tab-content div#about h3{
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 28px;
+    margin-right: 2px;
+    word-break: keep-all;
+    color: black;
+}
+
+pre{
+  word-break: keep-all;
+}
+
+.prof_pic_overlay img{
+  width: 200px;
+  height: 200px;
+  border-radius: 12px;
+}
+
+.personal_info{
+  
+  margin-left: 70px;
+  /*margin-top: 80px;*/
+  background-color:  #f5f8fa;
+}
+
+.personal_info p{
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+}
+
+
+.abouts{
+  background-color: white; 
+  padding: 18px;
+  border-radius: 12px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  /*box-shadow: 0 2px 4px 0 rgba(255, 255, 255, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);*/
+}
+
+{% endblock %}
 
 {% block body_block %}
 
@@ -25,18 +101,18 @@
 	{% if user %}
 
 	<div class="jumbotron" id="user_jumbotron">
-		<a href="{{ MEDIA_URL }}{{user.profile.city.city_image}}" data-lightbox="City Picture" data-title="Picture of {{user.profile.city.name}}" title="Picture of {{user.profile.city.name}}">
-			<div class="container" style="background-image:url('{{ MEDIA_URL }}{{user.profile.city.city_image}}');">
+		<!-- <a href="{{ MEDIA_URL }}{{user.profile.city.city_image}}" data-lightbox="City Picture" data-title="Picture of {{user.profile.city.name}}" title="Picture of {{user.profile.city.name}}"> -->
+			<div class="container" id="city_hero">
 	<!-- 		<div class="city_header">
 				<h1> {{user.profile.city.display_name.upper}} </h1>
 			</div> -->
 			</div>
-		</a>
+		<!-- </a> -->
 
 		<div class="prof_pic_overlay" >
-			<a href="{{ user.profile.prof_pic.url }}" data-lightbox="Profile Picture" data-title="{{user.get_full_name.title}}" title="{{user.get_full_name.title}}">
+			<!-- <a href="{{ user.profile.prof_pic.url }}" data-lightbox="Profile Picture" data-title="{{user.get_full_name.title}}" title="{{user.get_full_name.title}}"> -->
 				<img alt="{{user.get_full_name.title}}" src=" {{ user.profile.prof_pic.url }} " class="img-thumbnail">
-			</a>
+			<!-- </a> -->
 		</div>
 	</div>
 

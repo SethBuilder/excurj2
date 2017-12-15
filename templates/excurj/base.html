@@ -3,16 +3,22 @@
 {% load staticfiles %}
 {% load crispy_forms_tags %}
 {% load widget_tweaks %}
-<html lang="en">
+<html amp lang="en">
   <head>
 
     <meta charset="utf-8">
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
+    <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
+    <script async custom-element="amp-video" src="https://cdn.ampproject.org/v0/amp-video-0.1.js"></script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <link rel="canonical" href="{% url 'excurj:index' %}">
     <link rel="icon" type="image/png" sizes="32x32" href=" {% static 'images/favicon-32x32.png' %} ">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    
 
-    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
     {% block desc_block %}
       <meta name="description" content="excurj. is a community where people show visitors around their cities to make new inter-cultural friendships! Meet interesting locals on your next trip | Go on free excurions | Learn about cool local events | Meet travel mates and more! (FREE)">
@@ -25,7 +31,7 @@
 
 
     <!-- Facebook Pixel Code -->
-    <script>
+    <!-- <script>
     !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
     n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
@@ -36,7 +42,7 @@
     </script>
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=1920864801525488&ev=PageView&noscript=1"
-    /></noscript>
+    /></noscript> -->
     <!-- DO NOT MODIFY -->
     <!-- End Facebook Pixel Code -->
 
@@ -45,19 +51,15 @@
     <title>
 
     {% block title_block %}
-    	excurj | Make Friendships Via Travel 
+    	Make Friendships While Traveling | Excurj
     {% endblock %}
 
     </title>
 
     <!-- Bootstrap CSS and CSS-->
-    <link href="{% static 'css/bootstrap.min.css'%} " rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href=" {% static 'css/style.css' %} ">
-    <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" type="text/css" href=" {% static 'css/animate.css' %} ">
+    
+    <!-- <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css"> -->
+    
     
     
 
@@ -72,14 +74,14 @@
     <![endif]-->
 
 <!-- Google Analytics script -->
-<script>
+<!-- <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
   ga('create', 'UA-58047753-2', 'auto');
   ga('send', 'pageview');
-</script>
+</script> -->
     
     {% block extra_style %}
       
@@ -88,155 +90,2078 @@
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> -->
 
-    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
-    <script src="{% static 'js/infinite.min.js' %}"></script>
-
+ <!--  -->
+ <script type="application/ld+json">
+      {
+    "name": "Excurj",
+    "url": "https://excurj.pythonanywhere.com/",
+    "logo": "{% static 'images/logo.png' %}",
+    "sameAs": [
+        "https://www.facebook.com/excurj",
+        "https://twitter.com/excurj",
+        "https://plus.google.com/excurj",
+        "https://www.youtube.com/user/excurj"
+    ],
+    "@type": "Organization",
+    "@context": "http://schema.org"
+}
+    </script>
 
     <script type="application/ld+json">
       {
         "@context": "http://schema.org",
         "@type": "WebSite",
+        "name": "Excurj",
         "url": "https://excurj.pythonanywhere.com/",
+        "description": "Visit Excurj to meet locals and fellow travelers. Excurj also provides up-to-the-minute events and festival information in cities around the world.",
         
         "potentialAction": {
         "@type": "SearchAction",
         "target": "https://excurj.pythonanywhere.com/search/?city-search={search_term_string}",
         "query-input": "required name=search_term_string"
-        }
+        },
+        "name": "Home - Excurj"
       }
     </script>
 
+    
+
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+
+    <style amp-custom>
+
+* {
+      font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    }
+
+html{
+  line-height: 1.1;
+  font-family: 'Lato', sans-serif;
+  font-weight: lighter;
+
+}
+body{
+ margin: 0px;
+ padding: 0px;
+}
+
+::selection {
+    color: white; 
+    background: #63b8ff;
+}
+
+
+
+.fa-quote-left, .fa-quote-right {
+  color: #929dad;
+}
+
+
+/*to make JOIN jump up and down*/
+#jump{
+  animation: top .7s linear infinite
+}
+
+@keyframes top{
+from{transform:translateY(0px);}
+to{transform:translateY(-4.5px);}
+}
+
+
+.navbar{
+  border-bottom: 1px solid white;
+  background-color: rgba(99,184,255,0.4);
+  transition: background-color 1s ease 0s;
+  /*font-family: 'Questrial', sans-serif;*/
+  font-weight: bolder;
+  font-size: 15px;
+  height: 50px;
+  position: absolute;
+    z-index: 5;
+    width: 100%;
+
+}
+
+.navbar-header{
+  opacity: .6;
+}
+
+.navbar-default .navbar-nav>li>a{
+  color: white;
+}
+
+
+.container-fluid{
+  padding: 0;
+}
+
+/*to change nav bar color upon scrolling*/
+.navbar.opaque{
+  background-color: rgba(99,184,255,.95);
+  transition: background-color 1s ease 0s;
+}
+
+/*.feedback.opaque{
+  background-color: rgba(255,255,255,1);
+  transition: background-color 1s ease 0s;
+}
+
+.up.opaque{
+  background-color: rgba(255,255,255,1);
+  transition: background-color 1s ease 0s;
+}*/
+
+.active{
+  background-color: #f5f8fa;
+  opacity: 1;
+}
+
+#topsearchbox{
+  width: 150px;
+  -webkit-transition: width 0.4s ease;
+  transition: width 0.4s ease;
+  border: none;
+  opacity: .7;
+  margin: .5em;
+  padding: 10px;
+  vertical-align: middle;
+}
+
+#topsearchbox:focus{
+  width:200px;
+  opacity: 1;
+
+}
+
+#mainNavBar ul.nav li:hover{
+  background-color: white;
+  color: white;
+  opacity: 1;
+}
+
+
+
+.jumbotron{
+  background: no-repeat fixed;
+    background-size: cover;
+    margin: 0;
+    color: black;
+    padding: 0px;
+    width: 100%;
+    object-fit: cover;
+
+}
+
+.jumbotron #container {
+    position: relative;
+    overflow: hidden;
+    height: 700px;
+    background: #edeae8;
+    margin: 0;
+    background-size: cover;
+    padding: 0;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.jumbotron #container video{
+    width: 110%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+
+.jumbotron h1{
+  font-size: 56px;
+    font-weight: lighter;
+    
+    color: #FFFFFF;
+    text-align: center;
+}
+
+#google_city_search{
+   
+   font-size: 12px;
+   /*font-weight: lighter;*/
+   transition: width 2s ease;
+}
+
+/*.pac-container{
+  opacity: .95;
+  font-family: inherit;
+}
+
+.pac-item:hover{
+  background-color: #D6C362;
+  color: white;
+  opacity: 1;
+}*/
+
+.jumbotron p{
+  font-size: 25px;
+    width: 700px;
+    font-weight: 20;
+    font-style: normal;
+    color: #FFFFFF;
+    text-align: center;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+.homepage_jumbo{
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 10px;
+    text-align: center;
+    position: absolute;
+    z-index: 1;
+    top: 150px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    justify-items:center;
+    align-items:center;
+    grid-auto-rows:100px;
+}
+
+.header-sections{
+  width: 100%;
+  margin: auto;
+}
+
+
+#google_city_search{
+  width: 700px;
+  margin: auto;
+  padding: 12px;
+  font-size: 20px;
+  transition: padding .0s ease;
+  opacity: 0.7;
+  border: none;
+}
+
+#google_city_search:focus{
+  padding: 15px;
+  opacity: 1;
+}
+
+.prof_search#google_city_search{
+  width: 400px;
+  margin: auto;
+  padding: 5px;
+  transition: padding .0s ease;
+  opacity: 0.7;
+  border: 1px solid black;
+  font-size: 20px;
+}
+
+.header-button{
+  padding: 5px 10px;
+  font-size: 20px;
+    background-color: white;
+    font-weight: bold;
+    color: black;
+    text-align: center;
+    width: 220px;
+    opacity: .7;
+    margin: 0px 20px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+
+
+.header-button:hover, .ready-header-button:hover{
+  opacity: 1;
+}
+
+.buttons{
+  margin: auto;
+  width: 100%;
+  text-align: center;
+  padding-top: 10px;
+}
+
+
+.how-it-works-container, .superstars-container, .popular-cities-container{
+  
+  /*opacity: .8;*/
+  text-align: center;
+  /*width: 100%;*/
+}
+
+
+.superstars-container p, .pop-city-title p, .superstars-container p, #world_map_p
+{
+  color: #929dad;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .2px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.how-it-works-container{
+  background-color: #6599ff;
+  padding: 40px;
+  display: grid;
+  /*height: 80vh;*/
+  grid-template-columns: 1fr 1fr 1fr;
+   justify-items:stretch;
+  align-items:stretch;
+}
+
+.superstars-container{
+  background-color: white;
+  padding: 0px;
+  /*height: 85vh;*/
+}
+
+.popular-cities-container{
+  background-color: rgba(99,184,255,.3);
+  display: inline-block;
+  padding: 30px 0;
+  width: 100%;
+}
+
+.pop-city-title {
+  grid-column: 1/7;
+}
+
+.how-it-works-container h2, .popular-cities-container h2, div#events h2{
+  color: black;
+    font-size: 30px;
+    font-weight: lighter;
+    line-height: 1.1;
+    text-align: center;
+}
+
+.how-it-works-container h2 {
+  grid-column: 1/5;
+}
+
+
+div#events h2, div#wiki h2, #coming h2, #locals h2{
+  text-align: center;
+  position: relative;
+  color: black;
+  margin-bottom: 30px;
+}
+
+.how-it-works-container h2{
+  color: white;
+}
+
+.superstars-container h2{
+  color: black;
+    font-size: 30px;
+    font-weight: lighter;
+    line-height: 1.1;
+    text-align: center;
+  
+}
+
+#world_map{
+  color: black;
+    font-size: 30px;
+    font-weight: lighter;
+    line-height: 1.1; 
+    text-align: center; 
+}
+
+/*.how-it-works-container h2:after{
+  content: "";
+  position: absolute;
+  top: 50px;
+  left: 47%;
+  right: 47%;
+  height: 2px;
+  background-color: white;
+  display: block;
+}*/
+
+/*.superstars-container h2:after,#world_map:after{
+  content: "";
+  position: absolute;
+  top: 50px;
+  left: 47%;
+  right: 47%;
+  height: 2px;
+  background-color: black;
+  display: block;
+}*/
+
+
+/*div#events h2:after, div#wiki h2:after, div#coming h2:after, div#locals h2:after{
+  content: "";
+  position: absolute;
+  top: 50px;
+  left: 27%;
+  right: 27%;
+  height: 2px;
+  background-color: black;
+  display: block;
+}*/
+
+/*.ready h2:after{
+  content: "";
+  position: absolute;
+  top: 50px;
+  left: 37%;
+  right: 37%;
+  height: 2px;
+  background-color: white;
+  display: block;
+}*/
+
+/*.popular-cities-container h2:after{
+  content: "";
+  position: absolute;
+  top: 50px;
+  left: 47%;
+  right: 47%;
+  height: 2px;
+  background-color: grey;
+  display: block;
+}*/
+
+.how-it-works-box{
+  padding: 30px;
+
+  background-color: #63b8ff;
+  margin: 20px 5px;
+/*  min-width: calc(40%);
+*/  overflow-wrap: break-word;
+  color: white;
+  display: inline-block;
+  box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.popular-cities-box{
+  
+  background-color: rgba(99,184,255,.3);
+  margin: .5em .5em;
+  overflow-wrap: break-word;
+  color: white;
+  display: inline-block;
+  width: 200px;
+  height: 170px;
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.popular-cities-box amp-img{
+  
+  width: 200px;
+    height: 170px;
+  z-index: 0;
+}
+
+.popular-cities-box a{
+  display: block;
+
+}
+
+.loader{
+  
+  height: 100px;
+  width: 100%;
+  text-align: center;
+
+}
+
+/*
+  Set the color of the icon
+*/
+svg path,
+svg rect{
+  fill: #63b8ff;
+  
+}
+
+.how-it-works-box h3{
+position: relative;
+}
+
+
+
+
+.how-it-works-box p{
+  margin-top: 20px;
+  font-size: 20px;
+  
+}
+
+
+.superstars-box{
+  background-color: white;
+}
+
+.superstars-box #first{
+  float: left;
+}
+
+.superstars-box #second{
+  float: right;
+}
+
+
+.clearfix{
+  overflow: auto;
+}
+
+
+
+.paired{
+  padding: 10px 0px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items:stretch;
+  align-items:center;
+  grid-gap: 50px;
+}
+
+.rev {
+  display: grid;
+  grid-template-columns: 1fr 6fr;
+  justify-items:stretch;
+  align-items:center;
+  padding: 20px;
+}
+
+.reviews amp-img {
+  border-radius: 50%;
+}
+
+.superstars-box-header{
+  
+  
+  font-size: 16px;
+  font-weight: bold;
+}
+
+
+.thumbnails{
+  position: relative;
+  overflow: hidden;
+
+}
+
+.popular-cities-box:hover{
+  filter: brightness(110%);
+}
+
+.captions{
+  position: absolute;
+  left: 100px;
+  top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+        z-index: 100;
+    
+}
+
+.popular-cities-box:hover .num{
+  left: 0;
+}
+
+.num{
+  position: absolute;
+        z-index: 100;
+    left:-800px;
+    bottom: 0;
+    transition: left 300ms ease-out;
+}
+
+.captions h2, .num p{
+  color: black;
+  background-color: rgba(255,255,255,.69);
+  padding: 5px;
+  
+}
+
+.num p{
+  padding: 1px 2px;
+}
+
+
+.ready{
+  margin: 0;
+  padding: 0;
+  min-height: 600px;
+  position: relative;
+  background-image: url('/static/images/bk2.jpg');
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  opacity: .85;
+
+}
+
+.ready-header, .city_header{
+  position: absolute;
+  text-align: center;
+  top: 60%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    background-color: rgba(255,255,255,.2);
+    padding: 35px;
+}
+
+.city_header{
+  position: absolute;
+  text-align: center;
+  top: 60%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    background-color: rgba(0,0,0,.4);
+    padding: 35px;
+}
+
+.ready-header h2 {
+  color: white;
+  font-size: 46px;
+  font-weight: lighter;
+  line-height: 1.1;
+}
+
+.city_header h1{
+  color: white;
+  font-size: 55px;
+  font-weight: lighter;
+  line-height: 1.1;
+}
+
+
+.ready-header-button{
+  padding: 5px 10px;
+  font-size: 20px;
+    
+    font-weight: bold;
+    color: black;
+    
+    width: 220px;
+    opacity: .8;
+    margin: 10px 20px;
+    border: none;
+    border-radius: 2px;
+}
+
+
+footer{
+  background-color: white;
+  border-top: 3px solid grey;
+  font-size: .9em;
+  padding: 7px;
+  display: grid;
+  grid-template-columns: 4fr 8fr 4fr;
+  justify-items:center;
+      align-items:center;
+  text-align: center;max-height: 100px;
+}
+
+.link-footer {
+  align-self: flex-end;
+}
+
+.connect-with-us {
+
+}
+
+ul.footer-links{
+  
+  margin-left: -25px;
+  
+}
+
+ul.footer-links li{
+  list-style-type: none;
+  float: left;
+  text-transform: uppercase;
+    margin-right: 20px;
+    margin-bottom: 0em;
+    font-size: 12px;
+    font-weight: bold;
+
+    
+}
+
+ul.footer-links li a{
+  display: block;
+  color: #34495e;
+
+}
+
+.copyrights{
+  margin-bottom: 0;
+  clear: left;
+  
+  text-transform: none;
+    font-size: 12px;
+    font-weight: 700;
+    color: #bfcad2;
+}
+
+.call-to-action{
+  color: #929dad;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .2px;
+    text-transform: uppercase;
+    padding: 5px;
+}
+
+
+
+.fa-twitter {
+    color: #4099FF;
+}
+
+.fa-facebook {
+    color: #3B5998;
+}
+
+.fa-youtube-play {
+    color: #e52d27;
+}
+
+.fa-rss {
+    color: #FF6600;
+}
+
+
+.fa-flickr {
+    color: #ff0084;
+}
+
+
+.fa {
+    opacity: 0.6;
+    transition: 0s;
+    -webkit-transition: 0s;
+}
+
+.fa:hover{
+    opacity: 1;
+    transition: 0s;
+    -webkit-transition: .0s;
+}
+
+
+.navbar-default .navbar-collapse, .navbar-default .navbar-form{
+  padding: 0 8px;
+}
+
+.mobile{
+  display: none;
+}
+
+
+.container-fluid>.navbar-collapse, .container-fluid>.navbar-header, .container>.navbar-collapse, .container>.navbar-header{
+  margin-right: 1px;
+  margin-left: -5px;
+}
+
+
+
+#prof_dropdown{
+  position: absolute;
+    top: 48px;
+    background: white;
+    /*right: 180px;*/
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 10000;
+    display: none;
+    border-radius: 12px;
+      z-index: 150;
+}
+
+#prof_dropdown li.dropli{
+  float: none;
+  text-decoration: none;
+  list-style: none;
+
+  
+  
+}
+
+#prof_dropdown li.dropli:not(:last-child){
+  border-bottom: 1px solid grey;
+  list-style: none;
+}
+
+#prof_dropdown li.dropli a{
+  display: block;
+  text-decoration: none;
+  padding: 20px;
+  color: #63b8ff;
+}
+
+#prof_dropdown li.dropli:hover{
+  background-color: #63b8ff;
+  
+}
+
+#prof_dropdown li.dropli:last-child:hover{
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+#prof_dropdown li.dropli:first-child:hover{
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+#prof_dropdown li.dropli:hover a{
+  color: white;
+}
+
+#prof_li {
+  list-style: none;
+  position: relative; background-color: transparent;
+}
+
+#prof_li a
+{
+  display: inline;
+}
+
+#prof_li:hover  #prof_dropdown{
+  display: block;
+}
+
+ul.navbar-nav li.no_desktop{
+  display: none;
+}
+
+
+
+/*CITY PAGE CSS*/
+div.jumbotron #city_jumbotron{
+  background: no-repeat fixed;
+    background-size: cover;
+    margin: 0;
+    
+    padding: 0px;
+    width: 100%;
+    object-fit: cover;
+    min-height: 200px;
+    
+}
+
+div.jumbotron#city_jumbotron .container{
+  
+    margin: 0;
+    padding: 0;
+    min-height: 400px;
+    position: relative;
+    background-image: url('../media/city_pictures.jpg');
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    width: 100%;
+    -webkit-filter: brightness(1.10);
+    filter: brightness(1.10);
+    
+}
+
+/*city TABS CSS*/
+
+
+ul.nav.tabs {
+    border-bottom: none;
+    text-align:center;
+    width: 100%;
+    background-color: #eceff2;
+
+}
+
+ul.nav.tabs li a{
+  color: black;
+  
+}
+
+ul.nav.tabs li.active a{
+  color: #3060A8;
+  background-color: transparent;
+}
+
+ul.nav.tabs li.active{
+  opacity: 1;
+}
+
+ul.nav.tabs li{
+  /*padding: 0 5px;*/
+  display: inline-block;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/*TABS CSS*/
+
+
+ul.nav#tabs_user {
+    border-bottom: none;
+    text-align:center;
+    width: 100%;
+    background-color: #eceff2;
+}
+
+ul.nav#tabs_user li a{
+  color: black;
+  
+}
+
+ul.nav#tabs_user li.active a{
+  color: #3060A8;
+  background-color: transparent;
+}
+
+ul.nav#tabs_user li.active{
+  opacity: 1;
+}
+
+ul.nav#tabs_user li{
+  /*padding: 0 5px;*/
+  display: inline-block;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/*LOCALS' TABLE CSS*/
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+  vertical-align: middle;
+  font-size: 20px;
+}
+
+table.table{
+  width: 100%;
+  
+}
+
+
+
+
+/*USER PROFILE CSS*/
+div.jumbotron#user_jumbotron .container{
+    margin: 0;
+    padding: 0;
+    min-height: 320px;
+    position: relative;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    width: 100%;
+    -webkit-filter: brightness(1.10);
+    filter: brightness(1.10);
+
+}
+
+
+.prof_pic_overlay{
+  position: absolute;
+  left: 70px;
+  top:190px;
+  box-shadow: 0 1px 1px rgba(136,153,166,0.15);
+  z-index: 3;
+  
+  border-radius: 15px;
+
+}
+
+.prof_pic_overlay h3, div.tab-content div#about h3{
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 28px;
+    margin-right: 2px;
+    word-break: keep-all;
+    color: black;
+}
+
+pre{
+  word-break: keep-all;
+}
+
+.prof_pic_overlay img{
+  width: 200px;
+  height: 200px;
+  border-radius: 12px;
+}
+
+.personal_info{
+  
+  margin-left: 70px;
+  /*margin-top: 80px;*/
+  background-color:  #f5f8fa;
+}
+
+.personal_info p{
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+}
+
+
+.abouts{
+  background-color: white; 
+  padding: 18px;
+  border-radius: 12px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  /*box-shadow: 0 2px 4px 0 rgba(255, 255, 255, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);*/
+}
+
+
+
+
+/*LOADING GIF*/
+div#loading {
+    display: none;
+    cursor: wait;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 4;
+    }
+
+
+
+#tabs_container{
+  width: 100%;position: relative;padding-bottom: 100px
+}
+
+
+#tabs_content_user{
+  width: 50%; margin: auto;margin-top: 60px;margin-left:400px;
+}
+
+
+
+/*DHASHBOARD CSS*/
+#dashboard_bio{
+  
+  
+  margin-top: 70px;
+  background-color: white;
+  margin-left: 10px;
+  margin-right: 3px;
+  border-bottom: 2px solid #bfcad2;
+  padding: 0;
+}
+
+#dashboard_bio h3{
+  font-weight: bold;
+  text-align: center;
+  padding:  5px 20px;
+}
+
+#req_i_made, #offers{
+  
+  margin-left: 5px;
+  margin-right: 3px;
+  margin-top: 70px;
+  background-color: white;
+  border-bottom: 2px solid #bfcad2;
+  padding: 0;
+}
+
+#offers{
+  margin-left: 355px;
+}
+
+table.upcoming_guests tbody tr td{
+  font-size: 14px;
+}
+
+
+body button#feedback:hover {
+  background-color: #6599ff;
+}
+body button#feedback{
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
+  z-index: 5;
+  color: white;
+  font-size: 18px;
+  background-color: #63b8ff;
+  padding: 15px;
+  border: none;
+  cursor: pointer;
+}
+
+/*.disappear_upon_load{
+  display: none;
+}
+
+.preload{
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  z-index: 6;
+}*/
+
+
+/*START SECTION FEATUED ON*/
+
+/*.featured-on{
+  background-color: #EEE;
+  padding-top: 20px
+  padding-bottom: 20px;
+}
+
+.featured-on p:not(.first){
+  opacity: .4;
+  filter: alpha(opacity=40);
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.first{
+    margin-top: 20px;
+  margin-bottom: 20px;
+}*/
+
+/*END SECTION FEATUED ON*/
+
+
+
+.img-thumbnail{
+  background-color: #eceff2;
+}
+
+
+
+header.event_header{
+  height: 180px;
+  display: block;
+  background-color: #f5f8fa;
+}
+
+#event_body{
+  background-color: #f5f8fa;
+}
+
+header.event_header h1{
+  margin-top: 90px;
+  padding-bottom: 10px;
+  text-align: left;
+  font-weight: bold;
+}
+
+header.event_header .event_detail{
+  font-weight: bold;
+  font-size: 20px;
+  
+}
+
+
+.no_outline{
+  outline: none;
+}
+
+.event_section{
+  padding:20px;
+  overflow: hidden;
+  background-color: rgba(99,184,255,.9);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  color: white;
+  border: none;
+  box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.event_section img{
+  box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+
+.event_section .event_div{
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+/*.event_section pre{
+  box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);;
+}*/
+
+
+#map{
+  border-radius: 15px;
+  box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    color: #555;
+    cursor: default;
+    background-color: #f5f8fa; 
+    border: 1px solid #f5f8fa;
+    border-bottom-color: transparent;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 910px){
+
+  #google_city_search {
+    width: 630px;
+
+  }
+
+no-mobile{
+  display: none;
+}
+
+}
+
+
+@media only screen and (min-width: 1251px){
+
+  .header-button{
+  padding: 7px 16px;
+  font-size: 25px;
+    /*font-family: 'Montserrat', sans-serif;*/
+    font-weight: bold;
+    color: black;
+    /*width: 50%;*/
+    background-color: white;
+}
+
+
+.base-nav {
+  display: grid;
+  grid-template-columns: 1fr 4fr 3fr 4fr 3fr 3fr 3fr  repeat(2, 2fr) 3fr;
+  grid-auto-rows: 100%;
+  justify-items:stretch;
+  align-items:stretch;
+  position: fixed;
+  grid-gap: 5px;
+}
+
+
+
+
+}
+
+
+@media only screen and (max-width: 1250px){
+
+.popular-cities-box {
+    
+    grid-column: 1/7;
+    
+}
+
+.how-it-works-box{
+  grid-column: 1/6;
+}
+
+.how-it-works-container{
+  background-color: #6599ff;
+  padding: 40px;
+  display: grid;
+  /*height: 80vh;*/
+  grid-template-columns: 1fr;
+}
+
+.base-nav {
+  position: fixed;
+  display: grid;
+  grid-template-columns: 1fr 4fr 4fr;
+  grid-auto-rows: 100%;
+  justify-items:stretch;
+  align-items:stretch;
+  grid-gap: 5px;
+}
+
+#prof_dropdown{
+  position: absolute;
+    top: 48px;
+    background: white;
+   /* right: 500px;*/
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1000;
+    display: none;
+    border-radius: 12px;
+      z-index: 150;
+}
+
+#offers{
+  margin-left: 0;
+}
+
+#tabs_container{
+  margin-top: 200px;
+}
+
+#tabs_content_user{
+   margin-top: 300px;
+   margin: auto;
+   width: 100%;
+}
+
+.personal_info{
+  display: none;
+}
+
+ul.nav#tabs_user {
+margin-top: 80px;
+}
+
+.mobile{
+  display: inline;
+  /*background-image: url(' {% static 'images/cap1.jpeg' %} ');*/
+  background-position: center center;
+  -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+  background-size: cover;
+  object-fit: cover;
+  min-width:100%;
+    min-height:100%;
+    overflow: hidden;
+}
+
+video {
+  display: none;
+}
+
+.no_mobile{
+  display: none;
+}
+
+.no-mobile{
+  display: none;
+}
+
+ul.navbar-nav li.no_desktop{
+  display: inline;
+}
+
+.mobile img{
+  height: 100%;
+  min-width: 100%;
+}
+
+.feedback, .up{
+  display: none;
+}
+
+
+
+  .jumbotron h1{
+  font-size: 45px;
+}
+
+
+/*.jumbotron p{
+  font-size:25px;
+    font-weight: 30;
+    width: 550px;
+}*/
+
+.homepage_jumbo{
+  /*background-color: rgba(255,255,255,.3);*/
+/*  position: absolute;
+  width: 600px;
+  left: 0;
+    right: 0;
+    margin: 0 auto;
+    top: 50%;
+    left: 50%;
+    padding: 10px;
+    transform: translate(-50%, -50%);*/
+    
+}
+
+#header-sections{
+  width: 50%;
+  margin: auto;
+}
+
+#google_city_search{
+  width: 80%;
+  margin: auto;
+  padding: 15px;
+}
+
+.header-button{
+  padding: 5px 18px;
+  font-size: 15px;
+    /*font-family: 'Montserrat', sans-serif;*/
+    /*font-weight: bold;*/
+    color: black;
+    /*width: 30%;*/
+
+    background-color: white;
+}
+
+#google_city_search:focus{
+  padding: 18px;
+
+}
+
+.how-it-works-box h3:after{
+  
+  top: 55px;
+  
+}
+
+.how-it-works-container h2:after{
+  
+  left: 37%;
+  right: 37%;
+  
+}
+
+.ready-header-button{
+  background-color: white;
+}
+
+}
+
+
+@media only screen and (max-width: 899px){
+
+#offers{
+  margin-left: 0;
+}
+
+#tabs_container{
+  margin-top: 200px;
+}
+
+#tabs_content_user{
+   margin-top: 300px;
+   margin: auto;
+   width: 100%;
+}
+
+.personal_info{
+  display: none;
+}
+
+.no-mobile{
+  display: none;
+}
+
+.no_mobile{
+  display: none;
+}
+
+.on_mobile{
+  display: inline;
+}
+
+  #mainNavBar{
+    background-color: rgba(255,255,255,1);
+
+
+  }
+
+.navbar-default .navbar-nav>li>a{
+  color: black;
+  padding-left: 40px;
+  float: left;
+}
+
+.navbar-default .navbar-nav>li>a:hover{
+  color: white;
+  background-color: black;
+}
+
+  #topsearchbox{
+  width: 200px;
+  -webkit-transition: width 0.4s ease;
+  transition: width 0.4s ease;
+  border: none;
+  opacity: .7;
+  padding-left: 60px;
+}
+
+#topsearchbox:focus{
+  width:250px;
+  opacity: 1;
+
+}
+
+  ul.nav li{
+  background-color: white;
+  color: black;
+  opacity: 1;
+
+}
+
+.jumbotron p{
+  
+    width: 400px;
+}
+}
+
+
+@media only screen and (max-width: 640px){
+#offers{
+  margin-left: 0;
+}
+
+#tabs_container{
+  margin-top: 280px;
+}
+
+#tabs_content_user{
+   margin-top: 300px;
+   margin: auto;
+   width: 100%;
+}
+
+.personal_info{
+  display: none;
+}
+
+/*.jumbotron p{
+  display: none;
+}*/
+
+.homepage_jumbo{
+  /*max-width: 100%;*/
+
+  }
+
+.jumbotron h1{
+  font-size: 48px;
+  line-height: 1.1;
+}
+
+
+.jumbotron p{
+  font-size:20px;
+    font-weight: 20;
+    line-height: 1.1;
+    width: 500px;
+}
+
+
+.header-button{
+  padding: 7px 16px;
+  font-size: 12px;
+    /*font-family: 'Montserrat', sans-serif;*/
+    font-weight: bold;
+    color: black;
+    width: 38%;
+    background-color: white;
+}
+
+.ready-header-button{
+  background-color: white;
+}
+
+.container-fluid>.navbar-collapse, .container-fluid>.navbar-header, .container>.navbar-collapse, .container>.navbar-header{
+  margin-right: -5px;
+  margin-left: -5px;
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 470px){
+
+.paired {
+  grid-gap: 0;
+  grid-template-columns: 1fr;
+}
+
+.homepage_jumbo {
+  grid-auto-rows: 80px;
+  grid-gap: 0;
+}
+
+
+  #google_city_search{
+  width: 300px;
+  margin: auto;
+  padding: 10px;
+}
+
+.header-button{
+  padding: 7px 16px;
+  /*font-size: 10px;*/
+    /*font-family: 'Montserrat', sans-serif;*/
+    font-weight: bold;
+    color: black;
+    /*width: 50%;*/
+    background-color: white;
+}
+
+
+
+.jumbotron p {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 30px;
+    width: 350px;
+}
+
+
+.jumbotron h1 {
+        font-size: 28px;
+    font-weight: 500;
+    color: #FFFFFF;
+    text-align: center;
+}
+}
+
+li.pull-right {
+    float: none;
+}
+
+#tabs_container{
+  margin-top: 280px;
+}
+
+#tabs_content_user{
+   margin-top: 300px;
+   margin: auto;
+   width: 100%;
+}
+
+.personal_info{
+  display: none;
+}
+
+/*.jumbotron #container{
+  height: 600px;
+}*/
+
+.header-button{
+  margin: 0;
+  background-color: white;
+  width: 47%
+
+}
+
+/*.jumbotron h1{
+  font-size: 27px;
+  line-height: 1.1;
+}*/
+
+
+/*.jumbotron p {
+    font-size: 25px;
+    font-weight: 20;
+    line-height: 1.1;
+    margin-bottom: 30px;
+    width: 620px;
+}*/
+
+
+/*.jumbotron h1 {
+    font-size: 50px;
+    line-height: 1.1;
+}*/
+
+/*#google_city_search {
+    width: 500px;
+    margin: auto;
+    padding: 15px;
+}*/
+
+.ready{
+  min-height: 600px;
+}
+
+.ready-header-button{
+  background-color: white;
+}
+
+.container-fluid>.navbar-collapse, .container-fluid>.navbar-header, .container>.navbar-collapse, .container>.navbar-header{
+  margin-right: -5px;
+  margin-left: -5px;
+}
+}
+
+
+.img-circle {
+  border-radius: 50%;
+}
+
+
+.logo img {
+  opacity: .7;
+}
+
+
+
+
+/*IPAD MEDIA QUERY*/
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait) {
+
+.homepage_jumbo {
+    
+    grid-gap: 30px;
+    
+} 
+
+  .how-it-works-container h2 {
+    grid-column: 1/5;
+    font-size: 70px;
+}
+
+  .how-it-works-box h3 {
+    position: relative;
+    font-size: 50px;
+}
+
+  .how-it-works-box p {
+    margin-top: 20px;
+    font-size: 40px;
+}
+
+  #google_city_search{
+  width: 500px;
+  margin: auto;
+  padding: 15px;
+}
+
+.header-button{
+  padding: 7px 16px;
+  font-size: 23px;
+    /*font-family: 'Montserrat', sans-serif;*/
+    font-weight: bold;
+    color: black;
+    /*width: 50%;*/
+    background-color: white;
+}
+
+
+
+.jumbotron p {
+    font-size: 25px;
+    font-weight: 20;
+    line-height: 1.1;
+    margin-bottom: 30px;
+    width: 620px;
+}
+
+
+.jumbotron h1 {
+        font-size: 65px;
+    font-weight: lighter;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.popular-cities-container {
+  display: inline-block;
+}
+
+.jumbotron p {
+  font-size: 28px;
+}
+
+
+
+ }
+
+
+.base-nav a:not(.logo) {
+  text-align: center;
+  padding: 1em;
+  color: white;
+  text-decoration: none;
+  vertical-align: middle;
+
+}
+
+.base-nav a:not(.logo):hover {
+  color: #ffd700 ;
+
+}
+
+@media only screen and (max-width: 330px)
+{
+  .jumbotron p {
+      font-size: 14px;
+       font-weight: lighter; 
+      line-height: 1.1;
+      margin-bottom: 30px;
+      width: 300px;
+  }
+
+  #google_city_search {
+    width: 250px;
+    margin: auto;
+    padding: 8px;
+}
+
+}
+
+#map_canvas {
+  height: 500px
+}
+
+
+#topsearchbox:focus, #google_city_search:focus {
+  outline: none;
+}
+
+
+/*Bouncing arrow*/
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+}
+.arrow {
+  position: absolute;
+  /*bottom: 0;*/
+  left: 50%;
+  top: 580px;
+  margin-left: -20px;
+  width: 40px;
+  z-index: 100;
+  height: 40px;
+  background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNi4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iNTEycHgiIGhlaWdodD0iNTEycHgiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA1MTIgNTEyIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0yOTMuNzUxLDQ1NS44NjhjLTIwLjE4MSwyMC4xNzktNTMuMTY1LDE5LjkxMy03My42NzMtMC41OTVsMCwwYy0yMC41MDgtMjAuNTA4LTIwLjc3My01My40OTMtMC41OTQtNzMuNjcyICBsMTg5Ljk5OS0xOTBjMjAuMTc4LTIwLjE3OCw1My4xNjQtMTkuOTEzLDczLjY3MiwwLjU5NWwwLDBjMjAuNTA4LDIwLjUwOSwyMC43NzIsNTMuNDkyLDAuNTk1LDczLjY3MUwyOTMuNzUxLDQ1NS44Njh6Ii8+DQo8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNMjIwLjI0OSw0NTUuODY4YzIwLjE4LDIwLjE3OSw1My4xNjQsMTkuOTEzLDczLjY3Mi0wLjU5NWwwLDBjMjAuNTA5LTIwLjUwOCwyMC43NzQtNTMuNDkzLDAuNTk2LTczLjY3MiAgbC0xOTAtMTkwYy0yMC4xNzgtMjAuMTc4LTUzLjE2NC0xOS45MTMtNzMuNjcxLDAuNTk1bDAsMGMtMjAuNTA4LDIwLjUwOS0yMC43NzIsNTMuNDkyLTAuNTk1LDczLjY3MUwyMjAuMjQ5LDQ1NS44Njh6Ii8+DQo8L3N2Zz4=);
+  background-size: contain;
+}
+
+.bounce {
+  animation: bounce 2s infinite;
+}
+
+/*End Bouncing arrow*/
+
+
+.reviews {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.superstars-box {
+  display: grid;
+  grid-template-columns: 1fr;
+  /*grid-gap: 15px;*/
+  background-color: #fff;
+}
+
+.superstars-box-header {
+  grid-column: 1/3;
+}
+
+hr {
+  width: 80%;
+  border-width: .15px;
+  margin: 40px auto;
+  border-color: #929dad;
+  margin-top: 0;
+}
+
+
+
+    </style>
   </head>
   <body>
 
-    <form action=" {% url 'excurj:feedback' %} ">
+    <form action=" {% url 'excurj:feedback' %} " target="_top">
         <button title="Contact Us, We Love Your feedback!" id="feedback" class="btn btn-lg btn-primary" name="feedback">
-        <span class="glyphicon glyphicon-send" style="padding-right: 10px;"></span>  FEEDBACK
+        FEEDBACK
       </button>
     </form>
 
-    <div>
-    	<nav class="navbar navbar-default navbar-fixed-top">
-    		<div class="container-fluid">
-          <!-- logo -->
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavBar">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a href=" {% url 'excurj:index' %} " title="excurj | Make New Friendships Via Travel"><img src=" {% static 'images/logo.png' %} " alt="Excurj logo"></a>       
-          </div>
+    
+    	<nav class="navbar navbar-default base-nav">
+    	
+      <a class="logo" href=" {% url 'excurj:index' %} " title="excurj | Make New Friendships While Traveling">
+        <amp-img height="50" width="153" src=" {% static 'images/logo.png' %} " alt="Excurj logo" layout="fixed"></amp-img>
+      </a>
+      <a class="no_mobile" href="{% url 'excurj:index' %}#how-it-works" title="How it works">How it Works</a>
+      <a class="no_mobile" href=" {% url 'excurj:index' %}#superstars" title="Superstars">Super Stars</a>
+      <a class="no_mobile" href=" {% url 'excurj:index' %}#popularcities " title="Popular cities">Popular Cities</a>
+      <a class="no_mobile" href=" {% url 'excurj:cities' %} " title="All cities">All Cities</a></li>
+      <a class="no_mobile" href=" {% url 'excurj:index' %}#insta " title="Instagram feed (#excurj)">Insta Feed</a>
+      <a class="no_mobile" href=" {% url 'excurj:index' %}#map_canvas " title="excurj Map">Map</a>
+      {% if request.user.is_authenticated %}
+      <!-- <a href=" {% url 'excurj:dashboard' %} ">My Dashboard</a>
+      <a href="{% url 'excurj:show_profile' request.user.username %}">My Profile</a>
+      <a class="no_desktop" href="">Account</a>
+      <a href="{% url 'auth_logout' %}?next=/"> logout</a> -->
+      <div id="prof_li">
+        <a href="  javascript:void(0)"> 
+          <amp-img layout="responsive" src=" {{request.user.profile.prof_pic.url}} " height="49px" width="49px" class="img-circle "></amp-img>
 
-          <!--menu items-->
-          <div class="collapse navbar-collapse " id="mainNavBar">
-            <ul class="nav navbar-nav ">
-              <li><a href="{% url 'excurj:index' %}#how-it-works" title="How it works">How it Works</a></li>
-              <li><a href=" {% url 'excurj:index' %}#superstars" title="Superstars">Super Stars</a></li>
-              <li><a href=" {% url 'excurj:index' %}#popularcities " title="Popular cities">Popular Cities</a></li>
-              <li><a href=" {% url 'excurj:cities' %} " title="All cities">All Cities</a></li>
-              <li><a href=" {% url 'excurj:index' %}#insta " title="Instagram feed (#excurj)">Insta Feed</a></li>
-              <li><a href=" {% url 'excurj:index' %}#map_canvas " title="excurj Map">Map</a></li>
-              {% if request.user.is_authenticated %}
-                <li class=" no_desktop"><a href=" {% url 'excurj:dashboard' %} ">My Dashboard</a></li>
-                <li class=" no_desktop"><a href="{% url 'excurj:show_profile' request.user.username %}">My Profile</a></li>
-                <li class=" no_desktop"><a class="no_desktop" href="">Account</a></li>
-                <li class=" no_desktop"><a href="{% url 'auth_logout' %}?next=/"> logout</a></li>
-              {% endif %}
-            </ul>
+        </a>
 
-            <form class="navbar-form navbar-right no_mobile" action=" {% url 'excurj:search' %} ">
-                <div class="form-group no_mobile">
-                    <input type="text" name="q" class="form-control no_mobile" placeholder="Search people..." id="topsearchbox">
-                </div>
-                  <button type="submit" class="btn btn-default no_mobile"><span class="glyphicon glyphicon-search"></span></button>
-            </form> 
-
-            <ul class="nav navbar-nav navbar-right">
-
-            {% if not request.user.is_authenticated %}
-
-              <li><a href=" {% url 'auth_login' %} ">LOG IN</a></li>
-              <li class="animated infinite tada"><a href=" {% url 'registration_register' %} ">JOIN</a></li>
-
-            {% else %}
-
-            <li style="position: relative; background-color: transparent;" id="prof_li">
-              <a href="  javascript:void(0)" style="display: inline;" class="no_mobile"> 
-                <img src=" {{request.user.profile.prof_pic.url}} " height="49px" width="49px" class="img-circle no_mobile"> 
-                <span class="caret no_mobile"></span> 
-              </a>
-            </li>
-
-            <div id="prof_dropdown">
-              <li class="dropli no_mobile"><a class="no_mobile" href="{% url 'excurj:dashboard' %}">My Dashboard</a></li>
-              <li class="dropli no_mobile"><a class="no_mobile" href="{% url 'excurj:show_profile' request.user.username %}">My Profile</a></li>
-              <li class="dropli no_mobile"><a class="no_mobile" href="{% url 'excurj:editaccount' %}">Account</a></li>
-              <li class="dropli no_mobile"><a class="no_mobile" href="{% url 'auth_logout' %}?next=/"> logout</a></li>
-            </div>
-
-            {% endif %}
-
-            </ul>
-            
-          </div>
+        <span class="caret "></span>
+          <div id="prof_dropdown">
+          <li class="dropli "><a class="" href="{% url 'excurj:dashboard' %}">Dashboard</a></li>
+          <li class="dropli "><a class="" href="{% url 'excurj:show_profile' request.user.username %}">Profile</a></li>
+          <li class="dropli "><a class="" href="{% url 'excurj:editaccount' %}">Account</a></li>
+          <li class="dropli "><a class="" href="{% url 'auth_logout' %}?next=/"> logout</a></li>
         </div>
-    	</nav>
 
-      <div>
+
+        </div>
+
+        
+
+        
+            
+      
+            
+
+      {% else %}
+
+      <a href=" {% url 'auth_login' %} ">LOGIN</a>
+      <a href=" {% url 'registration_register' %} ">JOIN</a>
+      {% endif %} 
+
+      <form target="_top" class="top-form navbar-form navbar-right no_mobile" action=" {% url 'excurj:search' %} ">
+        
+            <input type="text" name="q" class="form-control " placeholder="Search people..." id="topsearchbox">
+        
+         <!--  <button type="submit" class="btn btn-default no_mobile"><span class="glyphicon glyphicon-search"></span></button> -->
+      </form>       
+ 
+     
+    	</nav>
+      
+
+      
         {% block body_block %}
         <p class="lead">This page is undergoing maintenance, it'll be up in a giffy :)</p>
         {% endblock %}
-      </div>
-
-    <footer style="text-align: center;max-height: 100px;> 
       
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4 col-xs-12">
+
+    <footer> 
+      
+      <div class="link-footer">
+        <ul class="footer-links">
+                <li> <a href="">ABOUT</a> </li>
+                <li> <a href="">SAFETY</a> </li>
+                <li> <a href="">SUPPORT</a> </li>
+                <li> <a href="">BLOG</a> </li>
+            </ul>
+      </div>
+        
+          <!-- <div class="col-md-4 col-xs-12">
             <a title="excurj logo" href=" {% url 'excurj:index' %} " class="">
               <img src=" {% static 'images/logo.png' %} " class="" alt="excurj logo">
             </a>
-          </div>
+          </div> -->
 
-          <div class="col-md-4 col-xs-12">
+          <div>
+          <div class="connect-with-us">
             <div class="call-to-action">Connect with us</div>
             <a href='#'><i class="fa fa-instagram fa-3x fa-fw"></i></a>
             <a href='#'><i class="fa fa-facebook fa-3x fa-fw"></i></a>
             <a href='#'><i class="fa fa-twitter fa-3x fa-fw"></i></a>
             <a href='#'><i class="fa fa-flickr fa-3x fa-fw"></i></a>
           </div>
-
-          
-        </div>
-
-        <div class="row">
-          <div class="col-lg-4">
-            <ul class="footer-links">
-                <li> <a href="">ABOUT</a> </li>
-                <li> <a href="">SAFETY</a> </li>
-                <li> <a href="">SUPPORT</a> </li>
-                <li> <a href="">BLOG</a> </li>
-            </ul>
+          <p class="copyrights" >
+            Copyrights 2018 by excurj. Made with 100% recycled pixels.
+          </p>
           </div>
 
-          <div class="col-lg-4">
-            <div class="copyrights">
+          
+        
 
-              <p class="" >
-                Copyrights 2017 by excurj.com. Made with 100% recycled pixels.
-              </p>
+        
+          
+            
+          
+
+          
+            <div>
+
+              
 
             </div>
-          </div>
+          
 
           
-        </div>
         
-      </div>
+        
+      
       
      
         
@@ -255,15 +2180,15 @@
 
 
 
-    <script>
+    <!-- <script>
         $('#id_dob').datepicker({
           changeMonth: true,
           changeYear: true,
           yearRange: '1925:'+(new Date).getFullYear()
         });
-      </script>
+      </script> -->
 
-      <script>
+      <!-- <script>
           $(function () {
           var start = new Date();
           start.setFullYear(start.getFullYear());
@@ -279,41 +2204,41 @@
               dateFormat: 'yy-mm-dd'
             });
           });
-      </script>
+      </script> -->
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- <script src="{% static 'js/bootstrap.min.js' %}"></script> -->
 
 
 
 
     <!-- to add and remove active class -->
 
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
         var selector = '#mainNavBar li';
 
         $(selector).on('click', function(){
             $(selector).removeClass('active');
             $(this).addClass('active');
         });
-    </script>
+    </script> -->
 
     <!-- to make nav bar opaque upon scrolling -->
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
 
 		    	$(window).scroll(function() {
 		    if($(this).scrollTop() > 10) {
-		        $('nav.navbar').addClass('opaque');
+		        $('.base-nav').addClass('opaque');
                 
 		    } else {
-		        $('nav.navbar').removeClass('opaque');
+		        $('.base-nav').removeClass('opaque');
                 
 		    }
 		});
 
-    </script>
+    </script> -->
 
     <!--for smooth scrolling of nav bar links-->
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
       // Select all links with hashes
       $('a[href*="#"]')
         // Remove links that don't actually link to anything
@@ -350,11 +2275,11 @@
             }
           }
         });
-      </script>
+      </script> -->
 
 
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.9.0/css/lightbox.css">
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.9.0/js/lightbox.min.js'></script>
+  <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.9.0/css/lightbox.css"> -->
+  <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.9.0/js/lightbox.min.js'></script> -->
 
 <script src="{% static 'js/autocomplete.js' %}"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYfS_V4jHXS_jVYa1k2w9VY52r0pMrL8g&callback=initMap&libraries=places"></script>

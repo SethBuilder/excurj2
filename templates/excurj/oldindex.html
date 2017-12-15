@@ -1,0 +1,151 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    		<div class="container-fluid">
+          <!-- logo -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavBar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a href=" {% url 'excurj:index' %} " title="excurj | Make New Friendships Via Travel"><img src=" {% static 'images/logo.png' %} " alt="Excurj logo"></a>       
+          </div>
+
+          <!--menu items-->
+          <div class="collapse navbar-collapse " id="mainNavBar">
+            <ul class="nav navbar-nav ">
+              <li><a href="{% url 'excurj:index' %}#how-it-works" title="How it works">How it Works</a></li>
+              <li><a href=" {% url 'excurj:index' %}#superstars" title="Superstars">Super Stars</a></li>
+              <li><a href=" {% url 'excurj:index' %}#popularcities " title="Popular cities">Popular Cities</a></li>
+              <li><a href=" {% url 'excurj:cities' %} " title="All cities">All Cities</a></li>
+              <li><a href=" {% url 'excurj:index' %}#insta " title="Instagram feed (#excurj)">Insta Feed</a></li>
+              <li><a href=" {% url 'excurj:index' %}#map_canvas " title="excurj Map">Map</a></li>
+              {% if request.user.is_authenticated %}
+                <li class=" no_desktop"><a href=" {% url 'excurj:dashboard' %} ">My Dashboard</a></li>
+                <li class=" no_desktop"><a href="{% url 'excurj:show_profile' request.user.username %}">My Profile</a></li>
+                <li class=" no_desktop"><a class="no_desktop" href="">Account</a></li>
+                <li class=" no_desktop"><a href="{% url 'auth_logout' %}?next=/"> logout</a></li>
+              {% endif %}
+            </ul>
+
+            <form class="navbar-form navbar-right no_mobile" action=" {% url 'excurj:search' %} ">
+                <div class="form-group no_mobile">
+                    <input type="text" name="q" class="form-control no_mobile" placeholder="Search people..." id="topsearchbox">
+                </div>
+                  <button type="submit" class="btn btn-default no_mobile"><span class="glyphicon glyphicon-search"></span></button>
+            </form> 
+
+            <ul class="nav navbar-nav navbar-right">
+
+            {% if not request.user.is_authenticated %}
+
+              <li><a href=" {% url 'auth_login' %} ">LOG IN</a></li>
+              <li class="animated infinite tada"><a href=" {% url 'registration_register' %} ">JOIN</a></li>
+
+            {% else %}
+
+            <li style="position: relative; background-color: transparent;" id="prof_li">
+              <a href="  javascript:void(0)" style="display: inline;" class="no_mobile"> 
+                <img src=" {{request.user.profile.prof_pic.url}} " height="49px" width="49px" class="img-circle no_mobile"> 
+                <span class="caret no_mobile"></span> 
+              </a>
+            </li>
+
+            <div id="prof_dropdown">
+              <li class="dropli no_mobile"><a class="no_mobile" href="{% url 'excurj:dashboard' %}">My Dashboard</a></li>
+              <li class="dropli no_mobile"><a class="no_mobile" href="{% url 'excurj:show_profile' request.user.username %}">My Profile</a></li>
+              <li class="dropli no_mobile"><a class="no_mobile" href="{% url 'excurj:editaccount' %}">Account</a></li>
+              <li class="dropli no_mobile"><a class="no_mobile" href="{% url 'auth_logout' %}?next=/"> logout</a></li>
+            </div>
+
+            {% endif %}
+
+            </ul>
+            
+          </div>
+        </div>
+    	</nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <nav class=" base-nav">
+      
+      <a class="logo" href=" {% url 'excurj:index' %} " title="excurj | Make New Friendships Via Travel">
+        <img src=" {% static 'images/logo.png' %} " alt="Excurj logo"></a>
+      <a href="{% url 'excurj:index' %}#how-it-works" title="How it works">How it Works</a>
+      <a href=" {% url 'excurj:index' %}#superstars" title="Superstars">Super Stars</a>
+      <a href=" {% url 'excurj:index' %}#popularcities " title="Popular cities">Popular Cities</a>
+      <a href=" {% url 'excurj:cities' %} " title="All cities">All Cities</a></li>
+      <a href=" {% url 'excurj:index' %}#insta " title="Instagram feed (#excurj)">Insta Feed</a>
+      <a href=" {% url 'excurj:index' %}#map_canvas " title="excurj Map">Map</a>
+              {% if request.user.is_authenticated %}
+      <a href=" {% url 'excurj:dashboard' %} ">My Dashboard</a>
+      <a href="{% url 'excurj:show_profile' request.user.username %}">My Profile</a>
+      <a href="">Account</a>
+      <a href="{% url 'auth_logout' %}?next=/"> logout</a>
+
+      {% else %}
+
+      <a href=" {% url 'auth_login' %} ">LOG IN</a>
+      <a href=" {% url 'registration_register' %} ">JOIN</a>
+              {% endif %} 
+
+      <form class="" action=" {% url 'excurj:search' %} ">
+        <div class="">
+            <input type="text" name="q" class="form-control no_mobile" placeholder="Search people..." id="topsearchbox">
+        </div>
+          <!-- <button type="submit" class="btn btn-default no_mobile"><span class="glyphicon glyphicon-search"></span></button>
+      </form>      -->  
+ 
+     
+      </nav>
