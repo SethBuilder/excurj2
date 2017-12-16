@@ -1,4 +1,4 @@
-{% extends 'excurj/base.html' %}
+{% extends 'excurj/base_amp.html' %}
 {% load staticfiles %}
 
 {% block title_block %}
@@ -15,108 +15,352 @@
 	<meta name="keywords" content="meet locals in, make friends with locals, friends, fun, genuine travel experience, culture, cultural exchange, inter-cultural relationships, tolerance, travel, travel blogging, travel vloging, things to do in {{user.first_name.title}} {{user.last_name.title}}, {{user.first_name.title}}, {{user.last_name.title}}">
 {% endblock %}
 
+{% block css %}
 
-{% block css_block %}
-	#city_hero {
-	background-image:url('{{ MEDIA_URL }}{{user.profile.city.city_image}}');
+
+
+.ampTabContainer {
+        display: grid;
+        <!-- grid-gap:20px; -->
+       	<!-- grid-template-columns:1fr 1fr 1fr 2fr; -->
+       	<!-- padding: 10px; -->
+       	    width: 100%;
+       	margin: 0;
+       	
+       	position: relative;
+    top: 0;
+    right: 0;
+    left: 0;
+    grid-auto-rows:minmax(40px, auto); 
+    grid-template-columns: repeat(5, 1fr);
+    justify-items:center;
+      align-items:stretch;
+
+    }
+
+   .tabContent {
+   	grid-column: 1/6;
+   	
 }
 
-/*USER PROFILE CSS*/
-div.jumbotron#user_jumbotron .container{
-    margin: 0;
-    padding: 0;
-    min-height: 320px;
-    position: relative;
-    background-position: center center;
-    background-size: cover;
-    opacity: 1;
-    width: 100%;
-    -webkit-filter: brightness(1.10);
-    filter: brightness(1.10);
+.bio {
+	position: relative;
+}
 
+.prof_pic_overlay {
+	position:absolute;
+	top: 0;
+	left: 0;
+	background: rgba(99,184,255,0.7);
+
+}
+    
+    .tabButton[selected] {
+        outline: none;
+        color: rgba(255, 90, 95, 1);
+        
+        outline:none;
+    }
+
+    amp-selector [option][selected] {
+    cursor: auto;
+    outline: none;
+    border-bottom: 1.5px solid rgba(255, 90, 95, 1);
+    border-width:thick;
+}
+    
+    .tabButton {
+        list-style: none;
+        flex-grow: 1;
+        font-weight:bolder;
+        text-align: center;
+        cursor: pointer;
+        <!-- background: rgba(255, 90, 95, .7); -->
+        background white;
+        color:black;
+        font-size: 22px;
+        width:50%;
+        
+        outline: none;
+        border: none ;
+        border-left:none;
+        border-right:none;
+        <!-- justify-self: center; -->
+
+    
+    
+    text-align: center;
+    }
+    
+    .tabContent {
+        display: none;
+        width: 100%;
+        order: 1; /* must be greater than the order of the tab buttons to flex to the next line */
+        border: none;
+    }
+    
+    .tabButton[selected]+.tabContent {
+        display: block;
+    }
+
+    
+    .itemCustom {
+        border: none;
+        height: 280px;
+        width: 380px;
+        margin: 10px;
+        text-align: center;
+        padding-top: 140px;
+    }
+    amp-selector {
+      <!-- padding: 1rem; -->
+      margin: 1rem;
+    }
+
+
+@media only screen and (max-width:720px) {
+	.prof_pic_overlay
+{
+	top: 50%;
+    left: 50%;
+    transform: translate(-50%, -150%);
 }
 
 
-.prof_pic_overlay{
-  position: absolute;
-  left: 70px;
-  top:190px;
-  box-shadow: 0 1px 1px rgba(136,153,166,0.15);
-  z-index: 3;
-  
-  border-radius: 15px;
-
 }
 
-.prof_pic_overlay h3, div.tab-content div#about h3{
-    font-size: 21px;
-    font-weight: bold;
-    line-height: 28px;
-    margin-right: 2px;
-    word-break: keep-all;
-    color: black;
-}
-
-pre{
-  word-break: keep-all;
-}
-
-.prof_pic_overlay img{
-  width: 200px;
-  height: 200px;
-  border-radius: 12px;
-}
-
-.personal_info{
-  
-  margin-left: 70px;
-  /*margin-top: 80px;*/
-  background-color:  #f5f8fa;
-}
-
-.personal_info p{
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
-    margin-bottom: 10px;
-    word-wrap: break-word;
-}
-
-
-.abouts{
-  background-color: white; 
-  padding: 18px;
-  border-radius: 12px;
-  margin-top: 50px;
-  margin-bottom: 50px;
-  /*box-shadow: 0 2px 4px 0 rgba(255, 255, 255, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);*/
-}
-
+    </style>
 {% endblock %}
+
 
 {% block body_block %}
 
-<div style="background-color: #f5f8fa">	
+	
 
 	{% if user %}
 
-	<div class="jumbotron" id="user_jumbotron">
+
+
+
+<div class="bio">	
+
+		<div class="jumbotron" id="user_jumbotron">
 		<!-- <a href="{{ MEDIA_URL }}{{user.profile.city.city_image}}" data-lightbox="City Picture" data-title="Picture of {{user.profile.city.name}}" title="Picture of {{user.profile.city.name}}"> -->
-			<div class="container" id="city_hero">
+			<div class="container" style="background-image:url('{{ MEDIA_URL }}{{user.profile.city.city_image}}');">
 	<!-- 		<div class="city_header">
 				<h1> {{user.profile.city.display_name.upper}} </h1>
 			</div> -->
 			</div>
 		<!-- </a> -->
 
-		<div class="prof_pic_overlay" >
-			<!-- <a href="{{ user.profile.prof_pic.url }}" data-lightbox="Profile Picture" data-title="{{user.get_full_name.title}}" title="{{user.get_full_name.title}}"> -->
-				<img alt="{{user.get_full_name.title}}" src=" {{ user.profile.prof_pic.url }} " class="img-thumbnail">
-			<!-- </a> -->
-		</div>
+		
 	</div>
+<amp-img  src=" {{ user.profile.prof_pic.url }} "  width="130" height="130" layout="fixed" alt="{{user.get_full_name.title}}" class="prof_pic_overlay"></amp-img>
 
-	<ul class="nav" id="tabs_user" style="float: right;">
+<div class="personal_info" style="position: absolute;top: 50px;left:100px;">
+		<h3>{{user.get_full_name.title}}</h3>
+
+		<p class=""> 
+		 	<a href="{% url 'excurj:show_profile' user.username  %}"> @{{ user.username }} </a>
+		 </p>
+
+		<p class="">
+		  	<span class="glyphicon glyphicon-home" style="padding-right: 10px; font-size: 15px;"></span>  <a href=" {% url 'excurj:show_city' user.profile.city.slug %} ">  
+		 	{{user.profile.city.name.title}}</a> 
+		</p>
+
+		<p class="">
+		  	<span class="glyphicon glyphicon-book" style="padding-right: 10px; font-size: 15px;"></span>    
+		 	{{user.profile.education}} 
+		</p>
+
+		<p class=""> 
+		 	<span class="glyphicon glyphicon-briefcase" style="padding-right: 10px; font-size: 15px;"></span>{{user.profile.career.title}}
+		</p>
+
+		<p class="">
+			<span class="glyphicon glyphicon-calendar" style="padding-right: 10px; font-size: 15px;"></span>
+		 	Joined {{ user.date_joined|date:'F d, Y' }}
+		</p>
+
+		<p class="">
+			<span class="glyphicon glyphicon-baby-formula" style="padding-right: 10px; font-size: 15px;"></span>
+			Born on {{user.profile.dob|date:'F d, Y'}}
+		</p>
+	</div>
+</div>
+
+
+	<amp-selector role="tablist"
+  layout="container"
+  class="ampTabContainer">
+
+
+
+ <!--  <div class="prof_pic_overlay" > -->
+			
+		<!-- </div> -->
+
+
+
+<!-- <a href="{{ user.profile.prof_pic.url }}" data-lightbox="Profile Picture" data-title="{{user.get_full_name.title}}" title="{{user.get_full_name.title}}"> -->
+		
+	<!-- </a> -->
+
+   <!-- <div role="tab"
+    class="tabButton"
+    option="b"></div>
+  <div role="tabpanel"
+    class="tabContent"></div> -->
+
+
+
+
+  <div role="tab"
+    class="tabButton"
+    selected
+    option="a">About</div>
+  <div role="tabpanel"
+    class="tabContent">
+		<h3>About  {{user.first_name.title}} </h3>
+		<p>
+			{{user.profile.about_you}}
+		</p>
+  </div>
+
+
+
+
+
+  <div role="tab"
+    class="tabButton"
+    option="b">Reviews</div>
+  <div role="tabpanel"
+    class="tabContent">
+
+    
+			
+			{% if reqs_as_local %}
+
+				<h3>What people said about {{ user.first_name.title }}</h3>
+
+			{% for req in reqs_as_local %}
+
+				<div>
+
+				<img src=" {{req.traveler.profile.prof_pic.url}} " class="img-circle" style="float: left;margin-right: 15px;"> 
+
+				{% if req.requestreference.traveler_fun == True %}
+					<div style="padding-top: 10px;">
+						<div>
+							<strong> <a href=" {% url 'excurj:show_profile' req.traveler.username  %} ">{{req.traveler.first_name.title}}</a>  had fun with {{ user.first_name.title}} and said:</strong>
+						</div>
+						 <p class="lead">"{{  req.requestreference.traveler_desc }}"</p>
+					</div>
+
+				{% else %}
+
+					<div>
+						<strong> <a href=" {% url 'excurj:show_profile' req.traveler.username  %} ">{{req.traveler.first_name.title}}</a>  didn't have fun with {{ user.first_name.title}} and said:</strong> "{{  req.requestreference.traveler_desc }} We missed our appointment! we'll do it again soon."
+					</div>
+
+			{% endif %}
+			
+			</div>
+			<hr>
+			{% endfor %}
+
+			{% else %}
+			<div class="" style="padding: 50px;">
+				<p class="lead">No said anythong about {{ user.first_name.title }} yet!</p>
+			</div>
+			{% endif %}
+
+		
+
+
+     </div>
+
+
+
+
+
+   <div role="tab"
+    class="tabButton"
+    option="b">Trips</div>
+  <div role="tabpanel"
+    class="tabContent">
+    	
+    	{% if excurjs %}
+	      	{% for ex in excurjs %}
+	      	<div class="">
+	      		<p class="lead">Trip {{forloop.counter}} </p>
+	      		<hr>
+	      		<p class="lead">Going to: <a href=" {%url 'excurj:show_city' ex.city.slug%} ">{{ex.city}}</a> </p>
+	      		<p class="lead">On: {{ex.date}}</p>
+	      		<p class="lead">"{{ex.message}}"</p>
+	      		<hr>
+	      	</div>
+	      		
+	      	{% endfor %}
+	      {% else %}
+		      <div class="" style="padding: 50px;">
+		      	<p class="lead">{{user.first_name}} doesn't have any trips soon.</p>
+		      </div>
+		  {% endif %}
+    </div>
+
+
+
+{% if request.user.is_authenticated and request.user.profile == user.profile%}
+
+  <div role="tab"
+    class="tabButton"
+    option="c">Edit Profile</div>
+  <div role="tabpanel"
+    class="tabContent">Tab three content... </div>
+
+{% else %}
+
+
+<div role="tab"
+    class="tabButton"
+    option="c">Contact {{user.first_name.title}} <!-- to Show You Around {{user.profile.city.display_name}} --></div>
+  <div role="tabpanel"
+    class="tabContent">Tab three content... </div>
+
+{% endif %}
+
+
+
+{% if request.user.is_authenticated and show_review_button_for_local == True %}
+
+<div role="tab"
+    class="tabButton"
+    option="c">Leave a Reference for {{user.first_name.title}} (You were the local)</div>
+  <div role="tabpanel"
+    class="tabContent">Tab three content... </div>
+
+
+
+{% elif request.user.is_authenticated and show_review_button_for_traveler == True %}
+
+<div role="tab"
+    class="tabButton"
+    option="c">Leave a Reference for {{user.first_name.title}} (You were the traveler)</div>
+  <div role="tabpanel"
+    class="tabContent">Tab three content... </div>
+
+
+{% endif %}
+
+
+
+</amp-selector>
+
+
+
+	<!-- <ul class="nav" id="tabs_user" style="float: right;">
 		<li class="active" role="presentation"><a data-toggle="tab" href="#about">ABOUT</a></li>
 		<li role="presentation"><a data-toggle="tab" href="#reviews">REVIEWS</a></li>
 		<li role="presentation" title="Coming soon!"><a data-toggle="tab" href="javascript:void(0)">INSTAFRAM FEED</a></li>
@@ -170,7 +414,7 @@ pre{
 
 		{% else %}
 
-		{% endif %}
+		{% endif %} -->
 
 
 
@@ -192,168 +436,7 @@ pre{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-	</ul>
-<div style="" id="tabs_container">
-	<div id="tabs_content_user" class="tab-content" style="">
-
-	    <div id="about" class="tab-pane fade active" style="">
-	    
-
-	    	<div class="abouts">
-		    	<h3>About  {{user.first_name.title}} </h3>
-		    	<p class="lead">
-		    		{{user.profile.about_you}}
-		    	</p>
-	    	</div>
-
-	    
-
-	    
-	    	<div class="abouts">
-		    	<h3>Music, Books and Movies </h3>
-		    	<p class="lead">
-		    		{{user.profile.music_movies_books}}
-		    	</p>
-	    	</div>
-
-	    	<div class="abouts">
-		    	<h3>Views on Forming Friendships via Travel</h3>
-		    	<p class="lead">
-		    		{{user.profile.friendship}}
-		    	</p>
-	    	</div>
-	    
-
-	    
-	    	<div class="abouts">
-		    	<h3>What will {{ user.first_name.title }} show you around {{user.profile.city.display_name.title}} </h3>
-		    	<p class="lead">
-		    		{{user.profile.what_will_you_show_visitors}}
-		    	</p>
-	    	</div>
-
-
-	    </div>
-
-		<div id="reviews" class="tab-pane fade">
-			
-			{% if reqs_as_local %}
-
-				<h3><strong>What people said about {{ user.first_name.title }} </strong></h3>
-
-			{% for req in reqs_as_local %}
-
-				<div style="margin-bottom: 50px;padding: 0px">
-
-				<img src=" {{req.traveler.profile.prof_pic.url}} " class="img-circle" style="float: left;margin-right: 15px;"> 
-
-				{% if req.requestreference.traveler_fun == True %}
-					<div style="padding-top: 10px;">
-						<div>
-							<strong> <a href=" {% url 'excurj:show_profile' req.traveler.username  %} ">{{req.traveler.first_name.title}}</a>  had fun with {{ user.first_name.title}} and said:</strong>
-						</div>
-						 <p class="lead">"{{  req.requestreference.traveler_desc }}"</p>
-					</div>
-
-				{% else %}
-
-					<div>
-						<strong> <a href=" {% url 'excurj:show_profile' req.traveler.username  %} ">{{req.traveler.first_name.title}}</a>  didn't have fun with {{ user.first_name.title}} and said:</strong> "{{  req.requestreference.traveler_desc }} We missed our appointment! we'll do it again soon."
-					</div>
-
-			{% endif %}
-			
-			</div>
-			<hr>
-			{% endfor %}
-
-			{% else %}
-			<div class="abouts" style="padding: 50px;">
-				<p class="lead">No said anythong about {{ user.first_name.title }} yet!</p>
-			</div>
-			{% endif %}
-
-		</div><!--end of reviews-->
-
-
-
-	    <div id="insta" class="tab-pane fade">
-	    	
-	    </div>
-
-
-
-	    <div id="trips" class="tab-pane fade">
-	      {% if excurjs %}
-	      	{% for ex in excurjs %}
-	      	<div class="abouts">
-	      		<p class="lead">Trip {{forloop.counter}} </p>
-	      		<hr>
-	      		<p class="lead">Going to: <a href=" {%url 'excurj:show_city' ex.city.slug%} ">{{ex.city}}</a> </p>
-	      		<p class="lead">On: {{ex.date}}</p>
-	      		<p class="lead">"{{ex.message}}"</p>
-	      		<hr>
-	      	</div>
-	      		
-	      	{% endfor %}
-	      {% else %}
-		      <div class="abouts" style="padding: 50px;">
-		      	<p class="lead">{{user.first_name}} doesn't have any trips soon.</p>
-		      </div>
-		  {% endif %}
-	    </div>
-
-  	</div>
-
-
-	<div class="personal_info" style="float: left;position: absolute;top: 0">
-		<h3>{{user.get_full_name.title}}</h3>
-
-		<p class=""> 
-		 	<a href="{% url 'excurj:show_profile' user.username  %}"> @{{ user.username }} </a>
-		 </p>
-
-		<p class="">
-		  	<span class="glyphicon glyphicon-home" style="padding-right: 10px; font-size: 15px;"></span>  <a href=" {% url 'excurj:show_city' user.profile.city.slug %} ">  
-		 	{{user.profile.city.name.title}}</a> 
-		</p>
-
-		<p class="">
-		  	<span class="glyphicon glyphicon-book" style="padding-right: 10px; font-size: 15px;"></span>    
-		 	{{user.profile.education}} 
-		</p>
-
-		<p class=""> 
-		 	<span class="glyphicon glyphicon-briefcase" style="padding-right: 10px; font-size: 15px;"></span>{{user.profile.career.title}}
-		</p>
-
-		<p class="">
-			<span class="glyphicon glyphicon-calendar" style="padding-right: 10px; font-size: 15px;"></span>
-		 	Joined {{ user.date_joined|date:'F d, Y' }}
-		</p>
-
-		<p class="">
-			<span class="glyphicon glyphicon-baby-formula" style="padding-right: 10px; font-size: 15px;"></span>
-			Born on {{user.profile.dob|date:'F d, Y'}}
-		</p>
-	</div>
-
-
-</div>
-</div>
+	
 
 {% else %}
 

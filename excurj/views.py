@@ -82,6 +82,58 @@ def index(request):
 	
 	return render(request, 'excurj/index.html', context_dict)
 
+def index_amp(request):
+	context_dict={}
+
+	# print("taaaaaaaaaaaaaaask is: " + str(fact.delay(20000).get(propagate=False)))
+
+	#brings back top 6 cities with the highest number of users
+	city_list = City.objects.annotate(user_count=Count('city__user')).order_by('-user_count')[:6]
+	
+	#The two references that are based on the front page
+	#Currently featured references are from Requests (traveler asks local to take her out) 
+		#and not offers (when local offers traveler to take him out)
+	refs= RequestReference.objects.select_related('request') \
+	.filter(traveler_fun=True,local_fun=True) \
+	.order_by('-request__date')[:2]
+
+	# refs = reversed(refs)
+	
+	context_dict['refs'] = refs
+
+	context_dict['cities'] = city_list
+
+	#bring back lat and lng for all cities to show them on the Google Maps
+	# lat_lng_dict=[]
+
+	# #Pull all cities to feature them on the Google Map with the number of users for each one
+	# all_cities = City.objects.select_related().annotate(count=Count('city__user'))
+
+	# #Loop thru cities and pull their name, lat, lng, slug and number of users
+	# for city in all_cities:
+	# 	lat_lng_entry = {
+	# 	'city_name' : city.name,
+	# 	'lat' : city.lat,
+	# 	'lng' : city.lng,
+	# 	'slug' : city.slug,
+	# 	'count' : city.count
+	# 	}
+
+	# 	#If the user only has one user then include her/his profile picture to feature it on the map marker pop up
+	# 	if city.count == 1:
+
+	# 		#A lonely user is called King as I might give royal titles to the first users of each city
+	# 		lat_lng_entry['king_pic'] = str(city.city.all()[0].prof_pic.url)
+
+	# 	#append city's lat and lng to the lat lng dictionary
+	# 	lat_lng_dict.append(lat_lng_entry)
+
+		
+
+	# context_dict['all_cities'] =  mark_safe(lat_lng_dict)
+	
+	return render(request, 'excurj/index_amp.html', context_dict)
+
 
 def cities_list(request):
 	context_dict={}

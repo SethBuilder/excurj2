@@ -3,7 +3,7 @@
 {% load staticfiles %}
 {% load crispy_forms_tags %}
 {% load widget_tweaks %}
-<html lang="en">
+<html amp lang="en">
   <head>
 
     <meta charset="utf-8">
@@ -11,9 +11,11 @@
     <script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
     <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
     <script async custom-element="amp-video" src="https://cdn.ampproject.org/v0/amp-video-0.1.js"></script>
+    <script async custom-element="amp-selector" src="https://cdn.ampproject.org/v0/amp-selector-0.1.js"></script>
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <link rel="amphtml" href="{% url 'excurj:index_amp' %}">
+    <link rel="canonical" href="{% url 'excurj:index' %}">
     <link rel="icon" type="image/png" sizes="32x32" href=" {% static 'images/favicon-32x32.png' %} ">
     
 
@@ -1067,7 +1069,7 @@ div.jumbotron#user_jumbotron .container{
 }
 
 
-.prof_pic_overlay{
+/*.prof_pic_overlay{
   position: absolute;
   left: 70px;
   top:190px;
@@ -1076,7 +1078,7 @@ div.jumbotron#user_jumbotron .container{
   
   border-radius: 15px;
 
-}
+}*/
 
 .prof_pic_overlay h3, div.tab-content div#about h3{
     font-size: 21px;
@@ -1458,9 +1460,9 @@ no-mobile{
    width: 100%;
 }
 
-.personal_info{
+/*.personal_info{
   display: none;
-}
+}*/
 
 ul.nav#tabs_user {
 margin-top: 80px;
@@ -1595,9 +1597,9 @@ ul.navbar-nav li.no_desktop{
    width: 100%;
 }
 
-.personal_info{
+/*.personal_info{
   display: none;
-}
+}*/
 
 .no-mobile{
   display: none;
@@ -1672,9 +1674,9 @@ ul.navbar-nav li.no_desktop{
    width: 100%;
 }
 
-.personal_info{
+/*.personal_info{
   display: none;
-}
+}*/
 
 /*.jumbotron p{
   display: none;
@@ -1796,9 +1798,9 @@ li.pull-right {
    width: 100%;
 }
 
-.personal_info{
+/*.personal_info{
   display: none;
-}
+}*/
 
 /*.jumbotron #container{
   height: 600px;
@@ -2036,7 +2038,8 @@ hr {
   margin-top: 0;
 }
 
-
+{% block css %}
+{% endblock %}
 
     </style>
   </head>
@@ -2281,7 +2284,7 @@ hr {
   <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.9.0/css/lightbox.css"> -->
   <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.9.0/js/lightbox.min.js'></script> -->
 
-<script src="{% static 'js/autocomplete.js' %}"></script>
+<!-- <script src="{% static 'js/autocomplete.js' %}"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYfS_V4jHXS_jVYa1k2w9VY52r0pMrL8g&callback=initMap&libraries=places"></script>
 
 <script type="text/javascript">
@@ -2369,7 +2372,7 @@ function CenterControl(controlDiv, map) {
   }(window, google));
   
   
-</script>
+</script> -->
 
   </body>
 </html>

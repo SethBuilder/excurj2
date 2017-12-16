@@ -1,0 +1,314 @@
+{% extends 'excurj/base_amp.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+  Make Frienships While Traveling | Meet Locals Wherever You Travel | Befriend Locals | Free Excursions With Locals | Bonding Activities to Form Inter-Cultual Friendships | Culture Exchange | Current Events | Things To Do and More!
+{% endblock %}
+
+{% block desc_block %}
+  <meta name="description" content="excurj is a community where people show visitors around their cities to make new friendships. Meet locals. Go on free excurions to bond and become friends! Exchange culture. Learn about local events that you can attend with locals and fellow travelers">
+{% endblock %}
+
+
+{% block kw_block %}
+  <meta name="keywords" content="excurj is a community where people show visitors around their cities to make new friendships, meet locals from all over the world, events, excursions, make friends with locals, friends, fun, genuine travel experience, culture, cultural exchange, inter-cultural friendships, tolerance While Traveling, Frienships While Traveling, travel blogging, travel vloging, things to do in">
+{% endblock %}
+
+{% block body_block %}
+
+<div class="jumbotron " id="index-jumbotron">
+  <div id="container">
+    <div class="homepage_jumbo col-md-4 col-md-offset-4 col-xs-8 col-xs-offset-2">
+
+        <section class="header-sections">
+        
+        {% if request.user.is_authenticated %}
+
+          <h1>{{request.user.first_name.title}},
+          where do you want to go?</h1>
+        
+        {% else %}
+
+        <h1>Where do you want to go?</h1>
+
+        {% endif %}
+        
+        </section>
+
+        <section class="header-sections">
+          <p>excurj. is a community where people show visitors around their cities to make new friendships.</p>
+        </section>
+
+        <form action=" {% url 'excurj:search' %} " target="_top">
+          <div class="form-group">
+            <input type="text" name="city-search" class="form-control google_city_search" id="google_city_search" placeholder="Search cities..." >
+                
+          </div>
+
+          <div class="buttons">
+            <button class="header-button">Find a Guide</button>
+            <button class="header-button">Become a Guide</button>
+          </div>
+        </form>
+    </div>
+
+    <!-- <div class="mobile">
+      <img class="img-responsive" src=" {% static 'images/cap1.jpeg' %} " class="">
+    </div> -->
+  
+    <!-- video background -->
+    <!-- <video autoplay muted loop id="background_video">
+            <source src="{% static 'videos/fun.mp4' %}" type="video/mp4" id="vid">
+            <img src="{% static 'images/capture.jpg' %}">
+    </video> -->
+
+    <!-- shows the arrow pointing down at the bottom -->
+    <div class="arrow bounce">
+
+</div>
+
+  <amp-video
+  autoplay
+  loop
+  width="640"
+  height="360"
+  layout="fill"
+  poster="{% static 'images/capture.jpg' %}">
+  <source src="videos/kitten-playing.webm"
+    type="video/webm" />
+  <source src="{% static 'videos/fun.mp4' %}"
+    type="video/mp4" />
+  <div fallback>
+    <p>This browser does not support the video element.</p>
+  </div>
+</amp-video>
+  </div>
+</div>
+
+<!-- How It Works section -->
+<div class="how-it-works-container container-fluid" id="how-it-works">
+
+  <h2>How It Works</h2>
+
+  
+
+    
+        <div class="how-it-works-box"> 
+          <amp-img src=" {% static 'images/meetlocals3.svg'%}" height="48" width="48" layout="fixed"></amp-img>
+          <h3>When You're a Traveler</h3>
+          <p>Meet locals who could show you around their city.</p>
+        </div>
+    
+
+    
+      <div class="  how-it-works-box">
+        <amp-img src=" {% static 'images/showpeople.svg' %} " height="48" width="48" layout="fixed"></amp-img>
+        <h3>When You're a Local</h3>
+        <p>Show travelers around and meet interesting international visitors.</p>
+      </div>
+   
+
+   
+      <div class=" how-it-works-box">
+        <amp-img src=" {% static 'images/makefriends.svg' %} " height="48" width="48" layout="fixed"></amp-img>
+        <h3>Make New Friends!</h3>
+        <p>Walking around is a fun bonding activity to make new friends!</p>
+      </div>
+
+    
+  
+</div>
+
+<div class="container-fluid superstars-container" id="superstars">
+
+  <h2>Super Stars!</h2>
+  <p>Last Two Reviews</p>
+
+  <div class="reviews">
+
+<!--pulls last two references-->
+{% if refs %}
+{% for ref in refs %}
+
+   
+        <div class="superstars-box">
+
+            <div class="superstars-box-header">
+
+
+              <a title="Local person reference" href=" {% url 'excurj:show_profile' ref.request.local.username %} ">
+                {{ ref.request.local.first_name.title }}
+              </a>  
+
+              (local) met with  
+              <a title="traveler's reference" href=" {% url 'excurj:show_profile' ref.request.traveler.username  %} ">
+
+                {{ref.request.traveler.first_name.title}}
+
+              </a> 
+
+              (traveler) on {{ref.request.date}} in  
+
+              <a href=" {% url 'excurj:show_city'  ref.request.local.profile.city.slug %} ">            {{ref.request.local.profile.city}} 
+              </a>  
+            </div>
+
+              <div class="clearfix paired">
+
+                <div class="rev rev1">
+                <amp-img alt="{{ ref.request.local.first_name.title }}  {{ ref.request.local.last_name.title }}" src=" {{ ref.request.local.profile.prof_pic.url }} " id="first" class="img-circle img-responsive" height="100" width="100" layout="fixed"></amp-img>
+
+                <div><strong>{{ ref.request.local.first_name.title}} said:</strong>
+                <i class="fa fa-quote-left" aria-hidden="true"></i>
+                  {{ ref.local_desc }} 
+                <i class="fa fa-quote-right" aria-hidden="true"></i></div>
+                </div>
+
+                <div class="rev rev1">
+                <amp-img alt="{{ref.request.traveler.first_name.title}}  {{ref.request.traveler.last_name.title}}" src=" {{ ref.request.traveler.profile.prof_pic.url }} " id="second" class="img-circle img-responsive" height="100" width="100" layout="fixed"></amp-img>
+
+                <div><strong>{{ref.request.traveler.first_name.title}} said:</strong> 
+                <i class="fa fa-quote-left" aria-hidden="true"></i>
+                  {{ ref.traveler_desc }} 
+                <i class="fa fa-quote-right" aria-hidden="true"></i></div>
+                <!-- </quote> -->
+                </div>
+              </div>
+
+
+              
+        </div>
+        {% if forloop.first %} 
+          <hr>
+        {% endif %}
+        
+
+    
+
+{% endfor %}
+
+{% else %}
+This section is empty because Excurj is brand new! We can't wait to see who you're going to meet on your travels!
+{% endif %}
+ 
+  </div>
+</div>
+
+  <div class="container popular-cities-container" id="popularcities">
+    <div class="pop-city-title">
+      <h2>Popular Cities</h2>
+      <p>
+              6 Most populated cities
+      </p>
+      </div>
+    
+      
+
+{% if cities %}
+{% for city in cities %}
+          <div class="popular-cities-box">
+          <div class="thumbnails">
+            <a title="{{ city.name }}" href="{% url 'excurj:show_city' city.slug %}">
+              <div class="captions">
+                <h2> {{ city.display_name }} </h2>
+              </div>
+{% if city.city.count == 1 %}
+
+              <div class="num">
+                <p> Has one awesome person!</p>
+              </div>
+{% else %}
+              <div class="num">
+                <p> Has {{ city.city.count}} people!</p>
+              </div>
+
+{% endif %}
+
+              <amp-img width="200" height="170" layout="responsive" alt="{{ city.display_name }}" src=" {{city.photo_url}} " class="img-responsive img-rounded"></amp-img>
+
+            </a>
+          </div>
+        </div>
+        
+
+{% endfor %}
+{% else %}
+  <strong>
+    This section is empty because Excurj is brand new! make your city show here by signing up!
+  </strong>
+{% endif %}
+
+      
+  </div>
+
+
+<div class="container-fluid superstars-container" id="insta">
+
+  <h2>Instagram Feed  (<a href="https://www.instagram.com/explore/tags/excurj/" target="_blank" title="excurj instagram feed (#excurj)">#excurj</a>) </h2>
+  <p>Tag Your Pictures with #excurj and They'll Show Up Here!</p>
+  
+    <!-- SnapWidget -->
+  
+
+  <!-- <amp-iframe width="200" height="100"
+    sandbox="allow-scripts allow-same-origin"
+    layout="responsive"
+    frameborder="0"
+    class="snapwidget-widget"
+    scrolling="no"
+    frameborder="0"
+    src="https://snapwidget.com/js/snapwidget.js">
+</amp-iframe> -->
+
+  <amp-iframe width="200" height="120"
+    sandbox="allow-scripts allow-same-origin"
+    layout="responsive"
+    frameborder="0"
+    class="snapwidget-widget"
+    scrolling="no"
+    frameborder="0"
+    src="https://snapwidget.com/embed/384797">
+</amp-iframe>
+
+</div>
+
+
+<!-- <div class="map">
+<h2 id="world_map"> All Populated Cities</h2>
+<p id="world_map_p">MARK YOUR CITY BY SIGNING UP!</p>
+<div id="map_canvas" class="superstars-container">
+  
+</div>
+</div> -->
+
+
+
+<div class="superstars-container ready">
+  
+    <div class="ready-header">
+      <h2>Ready to meet new friends?</h2>
+      <button class="ready-header-button">Sign up for free!</button>
+    </div>
+
+    <!-- <img src=" {% static 'images/2friends.jpg' %} " id="readyimg"> -->
+  
+</div>
+
+<!-- Start Section Featured On -->
+<!-- <section class="featured-on">
+  <div class="container">
+    <div class="row">
+      <ul class="list-unstyled">
+        <li class="col-md-2 col-xs-4"><p class="lead first">FEATURED ON:</p></li>
+        <li class="col-md-2 col-xs-4"><p class="lead">FORBES</p></li>
+        <li class="col-md-2 col-xs-4"><p class="lead">WIRED</p></li>
+        <li class="col-md-2 col-xs-4"><p class="lead">WSJ</p></li>
+        <li class="col-md-2 col-xs-4"><p class="lead">YAHOO!</p></li>
+        <li class="col-md-2 col-xs-4"><p class="lead">BBC</p></li>
+      </ul>
+    </div>
+  </div>
+</section> -->
+<!-- End Section Featured On -->
+
+{% endblock %}
