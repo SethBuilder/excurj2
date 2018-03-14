@@ -122,24 +122,24 @@ def populate_cities():
 	package = Package('https://datahub.io/core/world-cities/datapackage.json')
 
 	#only call the Google API if there are no City objects or no city pictures (db is empty)
-	if not City.objects.all() or len(glob.glob('media/city_images/*.jpg')) == 0:
+	# if not City.objects.all() or len(glob.glob('media/city_images/*.jpg')) == 0:
 
 		# for i in range(len(city_names)):
 		# 	query = city_names[i] + ", " + countries[i] # to be sent to the Google Places API
-		for resource in package.resources:
-			if resource.descriptor['datahub']['type'] == 'derived/csv':
-				resource = resource.read()
-				for r in resource:
-					query = r[0] + " " + r[1]
-					#now we'll use json results to extract city ID and city image
-					city_id =  get_city_json(query)['results'][0]['id']
-					created_city = populate_city(city_id, query)
-					created_city.save()
-					cities.append(created_city)
+	for resource in package.resources:
+		if resource.descriptor['datahub']['type'] == 'derived/csv':
+			resource = resource.read()
+			for r in resource:
+				query = r[0] + " " + r[1]
+				#now we'll use json results to extract city ID and city image
+				city_id =  get_city_json(query)['results'][0]['id']
+				created_city = populate_city(city_id, query)
+				created_city.save()
+				cities.append(created_city)
 
 	#If there are cities, just pull them
-	else:
-		cities = City.objects.all()
+	# else:
+	# 	cities = City.objects.all()
 
 		
 	#delete local files as they're already uploaded to media root
