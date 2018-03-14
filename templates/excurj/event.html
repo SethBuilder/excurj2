@@ -1,4 +1,4 @@
-{% extends 'excurj/base.html' %}
+{% extends 'excurj/base_no_amp.html' %}
 {% load staticfiles %}
 
 {% block title_block %}
@@ -167,6 +167,9 @@
 
 </div>
 
+<script src="{% static 'js/autocomplete.js' %}"></script>
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYfS_V4jHXS_jVYa1k2w9VY52r0pMrL8g"></script> -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYfS_V4jHXS_jVYa1k2w9VY52r0pMrL8g&libraries=places"></script>
 <script type="text/javascript">
 	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 		var target = this.href.split('#');

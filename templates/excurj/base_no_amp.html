@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+<html lang="en">
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="32x32" href=" {% static 'images/favicon-32x32.png' %} ">
+
+    {% block scripts_block %}
+    {% endblock %}
+
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+
+    {% block desc_block %}
+      <meta name="description" content="excurj. is a community where people show visitors around their cities to make new inter-cultural friendships! Meet interesting locals on your next trip | Go on free excurions | Learn about cool local events | Meet travel mates and more! (FREE)">
+    {% endblock %}
+
+    {% block kw_block %}
+      <meta name="keywords" content="Travel, travel mates, excursions, europe, asia, australia, friends, fun, genuine travel experience, culture, cultural exchange, inter-cultural relationships, tolerance, travel, travel blogging, excurj. is a community where people show visitors around their cities to make new inter-cultural friendships! Meet interesting locals on your next trip | Go on free excurions | Learn about cool local events | Meet travel mates and more! (FREE)">
+    {% endblock %}
+    <meta name="author" content="Seif Elmughrabi">
+
+
+    <!-- Facebook Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1920864801525488'); // Insert your pixel ID here.
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1920864801525488&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- DO NOT MODIFY -->
+    <!-- End Facebook Pixel Code -->
+
+
+
+    <title>
+
+    {% block title_block %}
+      excurj | Make Friendships Via Travel 
+    {% endblock %}
+
+    </title>
+
+    <!-- Bootstrap CSS and CSS-->
+    <link href="{% static 'css/bootstrap.min.css'%} " rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/style.css' %} ">
+    <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href=" {% static 'css/animate.css' %} ">
+    
+    
+
+
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAali5z1ZHUooZzMz7GP_sqMYDVpN-PQl8"></script> -->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+<!-- Google Analytics script -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-58047753-2', 'auto');
+  ga('send', 'pageview');
+</script>
+    
+    {% block extra_style %}
+      
+    {% endblock %}
+
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/infinite.min.js' %}"></script>
+
+
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "WebSite",
+        "url": "https://www.excurj.com/",
+        
+        "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.excurj.com/search/?city-search={search_term_string}",
+        "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+
+  </head>
+  <body>
+
+    <form action=" {% url 'excurj:feedback' %} ">
+        <button title="Contact Us, We Love Your feedback!" id="feedback" class="btn btn-lg btn-primary" name="feedback">
+        <span class="glyphicon glyphicon-send" style="padding-right: 10px;"></span>  FEEDBACK
+      </button>
+    </form>
+
+    <div>
+      <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+          <!-- logo -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavBar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a href=" {% url 'excurj:index' %} " title="excurj | Make New Friendships Via Travel"><img src=" {% static 'images/logo.png' %} " alt="Excurj logo"></a>       
+          </div>
+
+          <!--menu items-->
+          <div class="collapse navbar-collapse " id="mainNavBar">
+            <ul class="nav navbar-nav ">
+              <li><a href="{% url 'excurj:index' %}#how-it-works" title="How it works">How it Works</a></li>
+              <li><a href=" {% url 'excurj:index' %}#superstars" title="Superstars">Super Stars</a></li>
+              <li><a href=" {% url 'excurj:index' %}#popularcities " title="Popular cities">Popular Cities</a></li>
+              <li><a href=" {% url 'excurj:cities' %} " title="All cities">All Cities</a></li>
+              <li><a href=" {% url 'excurj:index' %}#insta " title="Instagram feed (#excurj)">Insta Feed</a></li>
+              <li><a href=" {% url 'excurj:index' %}#map_canvas " title="excurj Map">Map</a></li>
+              {% if request.user.is_authenticated %}
+                <li class=" no_desktop"><a href=" {% url 'excurj:dashboard' %} ">My Dashboard</a></li>
+                <li class=" no_desktop"><a href="{% url 'excurj:show_profile' request.user.username %}">My Profile</a></li>
+                <li class=" no_desktop"><a class="no_desktop" href="">Account</a></li>
+                <li class=" no_desktop"><a href="{% url 'excurj:logout' %}?next=/"> logout</a></li>
+              {% endif %}
+            </ul>
+
+            <form class="navbar-form navbar-right no_mobile" action=" {% url 'excurj:search' %} ">
+                <div class="form-group no_mobile">
+                    <input type="text" name="q" class="form-control no_mobile" placeholder="Search people..." id="topsearchbox">
+                </div>
+                  <button type="submit" class="btn btn-default no_mobile"><span class="glyphicon glyphicon-search"></span></button>
+            </form> 
+
+            <ul class="nav navbar-nav navbar-right">
+
+            {% if not request.user.is_authenticated %}
+
+              <li><a href=" {% url 'excurj:login' %} ">LOG IN</a></li>
+              <li class="animated infinite tada"><a href="{% url 'excurj:createprofile' %}">JOIN</a></li>
+
+            {% else %}
+
+            <li style="position: relative; background-color: transparent;" id="prof_li">
+              <a href="" style="display: inline;" class="no_mobile"> 
+                <img src=" {{request.user.profile.prof_pic.url}} " height="49px" width="49px" class="img-circle no_mobile"> 
+                <span class="caret no_mobile"></span> 
+              </a>
+            </li>
+
+            <div id="prof_dropdown">
+              <li class="dropli no_mobile"><a class="no_mobile" href="{% url 'excurj:dashboard' %}">My Dashboard</a></li>
+              <li class="dropli no_mobile"><a class="no_mobile" href="{% url 'excurj:show_profile' request.user.username %}">My Profile</a></li>
+              <li class="dropli no_mobile"><a class="no_mobile" href="{% url 'excurj:editaccount' %}">Account</a></li>
+              <li class="dropli no_mobile"><a class="no_mobile" href="{% url 'excurj:logout' %}?next=/"> logout</a></li>
+            </div>
+
+            {% endif %}
+
+            </ul>
+            
+          </div>
+        </div>
+      </nav>
+
+      <div>
+        {% block body_block %}
+        <p class="lead">This page is undergoing maintenance, it'll be up in a giffy :)</p>
+        {% endblock %}
+      </div>
+
+    
+
+    <footer style="text-align: center;max-height: 100px;"> 
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-xs-12">
+            <a title="excurj logo" href=" {% url 'excurj:index' %} " class="">
+              <img src=" {% static 'images/logo.png' %} " class="" alt="excurj logo">
+            </a>
+          </div>
+
+          <div class="col-md-4 col-xs-12">
+            <div class="call-to-action">Connect with us</div>
+            <a href='#'><i class="fa fa-instagram fa-3x fa-fw"></i></a>
+            <a href='#'><i class="fa fa-facebook fa-3x fa-fw"></i></a>
+            <a href='#'><i class="fa fa-twitter fa-3x fa-fw"></i></a>
+            <a href='#'><i class="fa fa-flickr fa-3x fa-fw"></i></a>
+          </div>
+
+          
+        </div>
+
+        <div class="row">
+          <div class="col-lg-4">
+            <ul class="footer-links">
+                <li> <a href="">ABOUT</a> </li>
+                <li> <a href="">SAFETY</a> </li>
+                <li> <a href="">SUPPORT</a> </li>
+                <li> <a href="">BLOG</a> </li>
+            </ul>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="copyrights">
+
+              <p class="" >
+                Copyrights 2018 by excurj.com. Made with 100% recycled pixels.
+              </p>
+
+            </div>
+          </div>
+
+          
+        </div>
+        
+      </div> 
+      
+    </footer>
+
+  </body>
+</html>

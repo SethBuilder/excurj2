@@ -1,8 +1,8 @@
-{% extends 'excurj/base.html' %}
+{% extends 'excurj/base_amp.html' %}
 {% load staticfiles %}
 
 {% block title_block %}
-	excurj {{city.display_name}} | Form New Friendships With {{city.display_name}} Locals, Free Excursions With Locals, Culture Exchange, Current Events, Things To Do and More!
+	Meet the locals of {{city.display_name}} | Meet travel mates coming to {{city.display_name}} soon | Events in {{city.display_name}}
 {% endblock %}
 
 {% block desc_block %}
@@ -14,34 +14,434 @@
 	<meta name="keywords" content="meet locals in {{city.name}}, {{city.display_name}} events, excursions in {{city.display_name}}, make friends with {{city.display_name}} locals, friends, fun, genuine travel experience, culture, cultural exchange, inter-cultural relationships, tolerance, travel, travel blogging, travel vloging, things to do in {{city.display_name}}, {{city.name}}">
 {% endblock %}
 
+{% block css %}
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  width: 310px;
+  text-align: left;
+  position: relative;
+  height: 250px;
+  padding: 5px;
+  
+}
 
+.event_card {
+	grid-auto-rows:minmax(100px, auto);
+	display: grid;
+	grid-template-columns: .7fr 3.7fr;
+	grid-gap: 1em;
+	justify-items:stretch;
+    align-items:stretch;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	
+}
+
+.card span.name {
+	font-size: 1.1em;
+	font-weight: normal;
+    text-overflow: ellipsis;
+}
+
+.card amp-img {
+	position: absolute;
+	left: 0;
+	top: 0;
+	padding: 10px;
+}
+
+
+
+.card_head {
+	left: 150px;
+    max-height: 150px;
+    
+    top: 8px;
+    right: 10px;
+    position: absolute;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+
+.card_head_event {
+	overflow: -webkit-paged-y;
+	overflow-wrap: break-word;
+	padding: 12px;
+}
+
+.what {
+    overflow:hidden;
+    text-overflow: ellipsis;
+    max-height: 150px;
+    
+    top: 130px;
+    padding: 10px;
+    position: absolute;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+.card p {
+	margin: 10px 0 0 0;
+}
+
+.card .title {
+  color: grey;
+  font-size: 13px;
+}
+
+.card button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: rgba(255, 90, 95, 1);
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.card a {
+  text-decoration: none;
+  font-size: 22px;
+  color: black;
+}
+
+.event_card a {
+  text-decoration: none;
+  font-size: 15px;
+  color: black;
+}
+
+.card a:hover {
+  opacity: 0.7;
+}
+
+
+.cards {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-gap: 1em;
+	justify-items:center;
+    align-items:center;
+    grid-auto-rows: minmax(100px, auto);
+}
+
+
+.prof_pic_overlay {
+	position:absolute;
+	top: 50px;
+	left: 0;
+	padding:10px;
+	
+	background: rgba(99,184,255,0.7);
+}
+
+.event_cards {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-gap: 1em;
+}
+
+
+@media only screen and (min-width: 2560px){
+.cards {
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.event_card {
+	
+	grid-template-columns: 1fr;
+	grid-auto-rows:minmax(100px, auto);
+	
+}
+
+}
+@media only screen and (max-width: 1200px){
+.cards {
+	grid-template-columns: 1fr 1fr;
+}
+
+.event_card {
+	grid-template-columns: 1fr;
+	grid-auto-rows:minmax(100px, auto);
+	
+}
+}
+
+@media only screen and (max-width: 800px){
+.cards {
+	grid-template-columns: 1fr;
+}
+
+.event_card {
+	grid-template-columns: 1fr;
+	grid-auto-rows:minmax(100px, auto);
+	
+}
+
+}
+
+
+@media only screen and (max-width: 360px){
+.event_card {
+	grid-template-columns: 1fr;
+	height: 550px;
+	
+}
+}
+.tabContent h2 {
+	text-align:center;
+}
+{% endblock %}
 
 
 {% block body_block %}
 
 <div class="jumbotron" id="city_jumbotron">
-	<div class="container" style="background-image:url('{{ MEDIA_URL }}{{city.city_image}}');">
+	<div class="container">
 		<div class="city_header">
 			<h1 title="Meet locals of {{city.name}} | Go on excursions | Exchange Culture | Make {{city.display_name}} Friends | Learn about local events and more!"> {{city.display_name.upper}} </h1>
 		</div>
 	</div>
 </div>
 
-	<ul class="nav  navbar-centered tabs" id="">
+
+<amp-selector role="tablist"
+  layout="container"
+  class="ampTabContainer">
+  <div role="tab"
+    class="tabButton"
+    selected
+    option="a">
+
+    Locals of {{city.display_name}}
+ </div>
+
+
+
+  <div role="tabpanel"
+    class="tabContent">
+
+    <h2 title="Locals of {{city.display_name}}"> Locals of <span>{{city.name}}</span></h2>
+
+    {% if city_locals_profiles %}
+    <div class="cards">
+	    {% for local in city_locals_profiles %}
+
+	    	<a href="{% url 'excurj:show_profile' local.user.username %}">
+	    	<div class="card {% cycle 'rev1' 'rev2' %}">
+	    	
+			  <amp-img src="{{ local.prof_pic.url }}" alt="{{local.user.first_name.title}}  {{local.user.last_name.title}}" width="120px" height="120px" layout="fixed"></amp-img>
+			  <div class="card_head">
+				  <span class="name">{{local.user.first_name.title}}  {{local.user.last_name.title}}</span>
+				  <p class="title"><i class="fa fa-briefcase" aria-hidden="true"></i> {{local.career.title}}</p>
+				  <p class="title"><i class="fa fa-book" aria-hidden="true"></i> {{local.education.title}}</p>
+				  <p class="title">{{local.user.local_requested.count}} References</p>
+			  </div>
+
+			  <div class="what">
+			  	<p>
+			  		<i class="fa fa-quote-left" aria-hidden="true"></i>
+			  	 		{{local.what_will_you_show_visitors}}
+			  	 	<i class="fa fa-quote-right" aria-hidden="true"></i>
+
+			  	</p>
+			  </div>
+			  
+			</div>
+			</a>
+	      <!-- tr>
+	        <td><img src=" {{ local.prof_pic.url }} " alt="{{local.user.first_name.title}}  {{local.user.last_name.title}}" class="img-circle" width="105px" height="105px">  <a href="{% url 'excurj:show_profile' local.user.username %}" title="{{local.user.first_name.title}}  {{local.user.last_name.title}}">{{local.user.first_name.title}}  {{local.user.last_name.title}}</a>   </td>
+
+	        <td>{{local.age}} year-old</td>
+
+	        <td> {{local.career}} </td>
+
+	        <td>  {{local.education}} </td>
+	      </tr> -->
+	    {% endfor %}
+	    </div>
+    	{% else %}
+		<strong>There's no people in this city yet :( but there'll be soon! :)</strong>
+		{% endif %}
+
+
+  </div>
+
+
+  <div role="tab"
+    class="tabButton"
+    option="b">People Coming to {{city.display_name}} Soon!</div>
+  <div role="tabpanel"
+    class="tabContent">
+    
+    <h2 title="Travel mates coming to {{city.name}}">Travel mates coming to {{city.display_name}} </span> soon! </h2>
+    {% if excursions %}
+    <div class="cards">
+	   	{% for exj in excursions %}
+
+	   	<a href="{% url 'excurj:show_profile' exj.traveler.username %} ">
+	    	<div class="card {% cycle 'rev1' 'rev2' %}">
+	    	
+			  <amp-img src="{{exj.traveler.profile.prof_pic.url }}" alt="{{ exj.traveler.first_name.title }}  {{ exj.traveler.last_name.title }}" width="120px" height="120px" layout="fixed"></amp-img>
+			  <div class="card_head">
+				  <span class="name">{{ exj.traveler.first_name.title }}  {{ exj.traveler.last_name.title }}</span>
+				  <p class="title"><i class="fa fa-briefcase" aria-hidden="true"></i> {{exj.traveler.profile.career.title}}</p>
+				  <p class="title"><i class="fa fa-book" aria-hidden="true"></i> {{exj.traveler.profile.education.title}}</p>
+				  <p class="title"><i class="fa fa-plane" aria-hidden="true"></i> Arriving on {{ exj.date}}</p>
+				  <!-- <p class="title">{{exj.traveler.profile.user.local_requested.count}} References</p> -->
+			  </div>
+
+			  <div class="what">
+			  	<p>
+			  		<i class="fa fa-quote-left" aria-hidden="true"></i>
+			  	 		{{exj.message}}
+			  	 	<i class="fa fa-quote-right" aria-hidden="true"></i>
+
+			  	</p>
+			  </div>
+			  
+			</div>
+		</a>
+
+
+
+	      
+	     
+	       <!-- <amp-img src=" {{exj.traveler.profile.prof_pic.url }} " class="img-circle" width="105px" height="105px" alt="{{ exj.traveler.first_name.title }}  {{ exj.traveler.last_name.title }}" layout="fixed"></amp-img>
+	        <strong> <a href=" {% url 'excurj:show_profile' exj.traveler.username %} " title="{{ exj.traveler.first_name.title }}  {{ exj.traveler.last_name.title }}">{{ exj.traveler.first_name.title }}</a>  is arriving on {{ exj.date}}
+	        <p class="lead">" {{exj.message}} "</p> -->
+	      
+	    {% endfor %}
+	</div>
+			
+		{% else %}
+		<p class="lead">No one is coming just now.</p>
+		{% endif %}
+
+
+
+
+
+   </div>
+
+
+
+     <div role="tab"
+    class="tabButton"
+    option="b">{{city.display_name}}'s Wiki Summary</div>
+  <div role="tabpanel"
+    class="tabContent">
+    
+    <h2 title="Wiki Summary About {{city.display_name}}">Here some info about {{city.display_name}} to jump start your conversations!</h2>
+    
+    <pre> {{city.description}} </pre>
+
+
+
+
+   </div>
+
+
+
+
+  <div role="tab"
+    class="tabButton"
+    option="c">Events in {{city.display_name}}</div>
+  <div role="tabpanel"
+    class="tabContent">
+    {% if events %}
+    <div class="event_cards">
+     {% for event in events %}
+
+     
+     <div class="{% cycle 'rev1' 'rev2' %}">
+     	<a href=" {% url 'excurj:eventdetails' city.slug event.id %} " title="{{event.name}} in {{city.name}}">
+     		<h3 title="{{event.name}}">{{forloop.counter}}. {{event.name}}</h3>
+     	</a>
+	    	<div class="event_card">
+
+
+	    	{% if event.cover %}
+	    	<div>
+			  <amp-img src="{{event.cover}}" alt="{{event.name}} in {{city.name}}" width="240px" height="200px" layout="flex-item" class=""></amp-img>
+			 </div>
+			 {% endif %}
+
+
+			  <div class="card_head_event">
+
+			  	{% if event.place.name %}
+				  <span title="{{event.place.name}}"><strong>Venue or place:</strong> {{event.place.name}} </span>
+				{% else %}
+					<span title="{{event.place.name}}">Venue or place: Not Available :(</span>
+				{% endif %}
+
+				{% if event.start_time %}
+      				<p><strong>Start time:</strong> {{event.start_time}}</p>
+      			{% else %}
+      				<p>Start time: Not Available</p>
+      			{% endif %}
+
+      			{% if event.ticket_uri %}
+      				<p><strong>Tickets:</strong> <a href="{{event.ticket_uri}}" target="_blank" title="Tickets for {{event.name}} in {{city.name}}" >{{event.ticket_uri}}</a></p>
+      			{% else %}
+      				<pre><strong>Tickets:</strong> Not Available</pre>
+      			{% endif %}
+
+
+      			{% if event.description %}
+      				<i class="fa fa-quote-left" aria-hidden="true"></i><span>{{event.description|truncatewords:40}} <a href=" {% url 'excurj:eventdetails' city.slug event.id %} " title="More deatils on {{event.name}} in {{city.name}}"><strong>click for more details.</strong></a></span><i class="fa fa-quote-right" aria-hidden="true"></i>
+      			{% else %}
+      				<p>Description not available</p>
+      			{% endif %}
+
+
+			  </div>
+			  
+			</div>
+		</div>
+
+
+		
+
+	  {% endfor %}	
+</div>
+	  {% else %}
+	  	<p class="lead">No events were found.</p>
+
+	  {% endif %}
+    </div>
+</amp-selector>
+
+<!-- 	<ul class="nav  navbar-centered tabs" id="">
 		<li class="active" role="presentation"><a data-toggle="tab" href="#locals" title="locals of {{city.display_name}}">LOCALS</a></li>
 		<li role="presentation"><a data-toggle="tab" href="#coming" title="travel mates for {{city.display_name}}">PEOPLE COMING HERE SOON</a></li>
 		<li role="presentation"><a data-toggle="tab" href="#insta" title="Instagram feed for {{city.display_name}}">INSTAFRAM FEED</a></li>
 		<li role="presentation"><a data-toggle="tab" href="#wiki" title="Wiki summary of {{city.display_name}}">WIKI SUMMARY</a></li>
 		<li role="presentation" title="Coming Soon!"><a data-toggle="tab" href="#events" title="Cool Events in {{city.display_name}}">LOCALS EVENTS</a></li>
 		<li title="Coming Soon!"><a data-toggle="tab" href="javascript:void(0)" title="coming soon!">POINTS OF INTEREST</a></li>
-	</ul>
+	</ul> -->
 
-<div class="tab-content no_outline">
+<!-- <div class="tab-content no_outline">
     <div id="locals" class="tab-pane fade in active no_outline">
 
 	<div class="container table-responsive">
 	  <h2 style="text-align: center;" title="Locals of {{city.display_name}}"> Locals of <span style="font-weight: bold;">{{city.name}}</span></h2>
-	  <!-- <p>The .table-striped class adds zebra-stripes to a table:</p> -->            
+	          
 	  <table class="table table-striped table-condensed table-hover">
 	    <thead>
 	      <tr>
@@ -70,7 +470,7 @@
 		{% endif %}
 	    </tbody>
 	  </table>
-	</div>
+	</div> -->
 <!-- 		<h1>{{city.name}}'s Locals</h1>
 
 
@@ -84,22 +484,21 @@
 		{% else %}
 			<strong>There's no people in this city yet :( but there'll be soon! :)</strong>
 		{% endif %} -->
-    </div>
+    <!-- </div> -->
 
-	<div id="coming" class="tab-pane fade no_outline" style="border: none;">
+<!-- 	<div id="coming" class="tab-pane fade no_outline" style="border: none;">
+ -->
 
-
-	<div class="container table-responsive">
+	<!-- <div class="container table-responsive">
 	  <h2 title="Travel mates in {{city.name}}" style="text-align: center;">People coming to <span style="font-weight: bold;"> {{city.display_name}} </span> soon! </h2>
-	  <!-- <p>The .table-striped class adds zebra-stripes to a table:</p> -->            
 	  <table class="table table-striped table-condensed table-hover">
 	    <thead>
-	      <tr>
+	      <tr> -->
 	        <!-- <th>Name</th>
 	        <th>Age</th>
 	        <th>Career</th>
 	        <th>Education</th> -->
-	      </tr>
+	      <!-- </tr>
 	    </thead>
 
 	    <tbody>
@@ -120,9 +519,9 @@
 	</div>
 </div>
 
+ -->
 
-
-    <div id="insta" class="tab-pane fade no_outline">
+    <!-- <div id="insta" class="tab-pane fade no_outline">
     	<script async src="https://d36hc0p18k1aoc.cloudfront.net/pages/a5b5e5.js"></script><div class="tintup" data-id="moghrabi" data-columns="" data-expand="true"    data-infinitescroll="true" data-personalization-id="863390" style="height:500px;width:100%;"></div>
     </div>
 
@@ -206,6 +605,6 @@
 		$('.tab-content > .tab-pane.active').jScrollPane();
 	});
 	</script>
-
+ -->
 	
 {% endblock %}

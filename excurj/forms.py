@@ -11,19 +11,42 @@ class UserForm(forms.ModelForm):
 	first_name = forms.CharField(
 		label = "First Name:",
 		max_length = 80,
-		required = True
+		required = True,
+		widget=forms.TextInput(attrs={'autocomplete':'given-name'})
 		)
 	#LAST NAME
 	last_name = forms.CharField(
 		label = "Last Name:",
 		max_length = 80,
 		required = True,
+		widget=forms.TextInput(attrs={'autocomplete':'family-name'})
+		)
+
+	username = forms.CharField(
+		label = "Username:",
+		max_length = 30,
+		required = True,
+		widget = forms.TextInput(attrs={'autocomplete':'username'})
+		)
+
+	email = forms.CharField(
+		label = "Email address:",
+		max_length = 50,
+		required = True,
+		widget = forms.TextInput(attrs={'autocomplete':'email'})
+		)
+
+	password = forms.CharField(
+		label = "Password:",
+		max_length = 50,
+		required = True,
+		widget=forms.PasswordInput(attrs={'autocomplete':'new-password'})
 		)
 
 	#ONLY DISPLAY FIRST/LAST NAME
 	class Meta:
 	    model = User
-	    fields = ('first_name', 'last_name')
+	    fields = ('first_name', 'last_name', 'username', 'email', 'password')
 
 
 
@@ -55,7 +78,7 @@ class UserProfileForm(forms.ModelForm):
 		required = True,
 
 		#Any text input field with this id is connected to Google Autocomplete API
-		widget=forms.TextInput(attrs={'id': 'google_city_search'})
+		widget=forms.TextInput(attrs={'autocomplete':'address-level2', 'id': 'google_city_search'})
 		)
 
 	prof_pic = forms.ImageField(
@@ -64,10 +87,17 @@ class UserProfileForm(forms.ModelForm):
 		)
 
 	dob = forms.DateField(
-		widget=forms.SelectDateWidget(years=range(1930, _13_or_older )),
+		widget=forms.SelectDateWidget(years=range(1930, _13_or_older ), attrs={'autocomplete':'bday'}),
 		label = "Your Birthday",
 		required = True,
-		initial = datetime.date(1980,1,1)
+		initial = datetime.date(1980,1,1),
+		)
+
+	sex = forms.CharField(
+		label = "Sex:",
+		required = False,
+		widget=forms.TextInput(attrs={'autocomplete':'sex'})
+
 		)
 
 	music_movies_books = forms.CharField(
@@ -112,6 +142,7 @@ class EditProfileForm(forms.ModelForm):
 		label = "Your Current City",
 		max_length = 200,
 		required = True,
+		widget=forms.TextInput(attrs={'autocomplete':'address-level2', 'id': 'google_city_search'})
 		)
 
 	prof_pic = forms.ImageField(
@@ -161,7 +192,7 @@ class ExcursionRequestForm(forms.ModelForm):
 		label='Message',
 
 		widget=forms.Textarea(attrs={'placeholder': 'Introduce yourself and' 
-			'share more about your plans with the local person.'})
+			' share more about your plans with the local person.'})
 		)
 
 	#The date of the suggested outing or excursion 

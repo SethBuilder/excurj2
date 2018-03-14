@@ -14,6 +14,7 @@ import glob
 import random
 from django.http import HttpResponseServerError
 from django.contrib.staticfiles.storage import staticfiles_storage
+from datapackage import Package
 
 def get_json(url):
 	""" 
@@ -50,7 +51,8 @@ def get_city_json(query):
 		return -1
 
 def populate_city(city_id, query):
-	""" takes city ID and search query returns City object """
+	""" takes city ID (as per Google Places API) and search query (from the homepage search field) 
+	returns City object """
 
 	#create a City object
 	created_city = City.objects.create(city_id=city_id)
@@ -58,9 +60,6 @@ def populate_city(city_id, query):
 	#save name, country, description
 	created_city.name = query#Save search query as city name
 	created_city.slug = query.replace(", ", "-").replace(' ', '-').lower()#replaces spaces and commas with -
-	
-	#Country is no longer used
-	# created_city.country = countries[i]
 
 	# send search query to wikipedia and exctract first 5 sentences
 	try:
@@ -113,23 +112,30 @@ def populate_city(city_id, query):
 def populate_cities():
 	""" populates City objects """
 	#these cities will be highlighted on front page
-	city_names = ['London', 'Paris', 'Munich', 'New York City', 'Beijing', 'Toronto', 'Barcelona', 'Budapest', 'Dubai', 'Vancouver' ]
-	countries = ['England', 'France', 'Germany', 'USA', 'China', 'Canada', 'Spain', 'Hungary', 'UAE', 'Canada']
+	# city_names = ['London', 'Paris', 'Munich', 'New York City', 'Beijing', 'Toronto', 'Barcelona', 'Budapest', 'Dubai', 'Vancouver', 'Cairo']
+	# countries = ['England', 'France', 'Germany', 'USA', 'China', 'Canada', 'Spain', 'Hungary', 'UAE', 'Canada', 'Egypt']
 
 	#this will be returned at the end
 	cities = []
 
+	# package that returns all world cities
+	package = Package('https://datahub.io/core/world-cities/datapackage.json')
+
 	#only call the Google API if there are no City objects or no city pictures (db is empty)
 	if not City.objects.all() or len(glob.glob('media/city_images/*.jpg')) == 0:
 
-		for i in range(len(city_names)):
-			query = city_names[i] + ", " + countries[i] # to be sent to the Google Places API
-			
-			#now we'll use json results to extract city ID and city image
-			city_id =  get_city_json(query)['results'][0]['id']
-			created_city = populate_city(city_id, query)
-			created_city.save()
-			cities.append(created_city)
+		# for i in range(len(city_names)):
+		# 	query = city_names[i] + ", " + countries[i] # to be sent to the Google Places API
+		for resource in package.resources:
+			if resource.descriptor['datahub']['type'] == 'derived/csv':
+				resource = resource.read()
+				for r in resource:
+					query = r[0] + " " + r[1]
+					#now we'll use json results to extract city ID and city image
+					city_id =  get_city_json(query)['results'][0]['id']
+					created_city = populate_city(city_id, query)
+					created_city.save()
+					cities.append(created_city)
 
 	#If there are cities, just pull them
 	else:

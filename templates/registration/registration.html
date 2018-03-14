@@ -1,13 +1,19 @@
-{% extends 'excurj/base.html' %}
+{% extends 'excurj/base_no_amp.html' %}
 {% load staticfiles %}
+{% load i18n %}
 {% load crispy_forms_tags %}
 
 {% block title_block %}
 	Login to Your Excurj Account
 {% endblock %}
 
+{% block extra_style %}
+	 
+{% endblock %}
+
 {% block body_block %}
-	<div style="margin-top: 70px;">	
+	<div style="height: 100vh;">
+	<div style="padding: 100px;width: 20%; margin: auto;">	
 
 	<h1>Register here</h1>
 	<div class="col-sm-6 col-sm-offset-3">
@@ -19,4 +25,5 @@
 		</form>
 	</div>
 	</div>
+</div>
 {% endblock %}

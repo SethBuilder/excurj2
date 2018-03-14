@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
-from django.core.urlresolvers import reverse
 from excurj.models import City, UserProfile, RequestReference, Request, User, Excursion, Offer
 from django.db.models import Count
 from django.contrib.auth.models import User
@@ -19,6 +18,9 @@ import requests
 import dateutil.parser
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from time import sleep
+from django.utils.timezone import localtime
+from django.contrib.auth import login, authenticate
+from django.http import JsonResponse
 
 
 
@@ -176,7 +178,7 @@ def get_json_raw(url):
 
 def pull_events(city):
 	events=[]
-	url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBAEPJ3zygxn83DUIK9LISNQWQaO10c5yR3ZBHaCvZCI5ACYSBs7mHsZBaLFZAku4ahuB6WXSMcw14C1zZChKTaVZBxSLklZBgHaNPgY3LjqgaX7fxCox8Dow0rUuFZBdsppl01erkNPFkGnJUgHqb4bvi959Wx3Ni4AZDZD&token_type=bearer' % city.name.replace(' ', '')
+	url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBAEO0VFZCZCROVUmhAdqE8ZCXFpQLqh4F3KRZCL9EIJ3N9MJZA4AUcVrNCJg077Oh80XJiyWwbLLmJiN7dFnSxm1OCm04ZCbuICDNvwlLMDhbUv3iYOzdEBPBKcZBSLUuQlyhZCPxeqsfhDscYQuIMGhZBq2EZCt0D4jQZDZD&token_type=bearer' % city.name.replace(' ', '')
 	
 	events_json = get_json_raw(url)
 
@@ -190,7 +192,7 @@ def pull_events(city):
 
 			
 			#PULL LOCAL EVENTS
-			url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBAEPJ3zygxn83DUIK9LISNQWQaO10c5yR3ZBHaCvZCI5ACYSBs7mHsZBaLFZAku4ahuB6WXSMcw14C1zZChKTaVZBxSLklZBgHaNPgY3LjqgaX7fxCox8Dow0rUuFZBdsppl01erkNPFkGnJUgHqb4bvi959Wx3Ni4AZDZD&token_type=bearer' % try_differeny_city_name.replace(' ', '')
+			url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBAEO0VFZCZCROVUmhAdqE8ZCXFpQLqh4F3KRZCL9EIJ3N9MJZA4AUcVrNCJg077Oh80XJiyWwbLLmJiN7dFnSxm1OCm04ZCbuICDNvwlLMDhbUv3iYOzdEBPBKcZBSLUuQlyhZCPxeqsfhDscYQuIMGhZBq2EZCt0D4jQZDZD&token_type=bearer' % try_differeny_city_name.replace(' ', '')
 			
 			events_json = get_json_raw(url)
 			print("WHYYYY" + events_json)
@@ -206,14 +208,13 @@ def pull_events(city):
 	for event in events_json['data']:
 
 		#pull event cover photo
-		cover_photo_url = 'https://graph.facebook.com/{0}?fields=cover,ticket_uri,type&access_token=EAADuTyDZATeoBAEPJ3zygxn83DUIK9LISNQWQaO10c5yR3ZBHaCvZCI5ACYSBs7mHsZBaLFZAku4ahuB6WXSMcw14C1zZChKTaVZBxSLklZBgHaNPgY3LjqgaX7fxCox8Dow0rUuFZBdsppl01erkNPFkGnJUgHqb4bvi959Wx3Ni4AZDZD&token_type=bearer'.format(event['id'])
+		cover_photo_url = 'https://graph.facebook.com/{0}?fields=cover,start_time,ticket_uri,type&access_token=EAADuTyDZATeoBAEO0VFZCZCROVUmhAdqE8ZCXFpQLqh4F3KRZCL9EIJ3N9MJZA4AUcVrNCJg077Oh80XJiyWwbLLmJiN7dFnSxm1OCm04ZCbuICDNvwlLMDhbUv3iYOzdEBPBKcZBSLUuQlyhZCPxeqsfhDscYQuIMGhZBq2EZCt0D4jQZDZD&token_type=bearer'.format(event['id'])
 		
 		event_photo_json = get_json_raw(cover_photo_url)
 		if 'cover' in event_photo_json:
 			event['cover'] = event_photo_json['cover']['source']
 		if 'ticket_uri' in event_photo_json:
 			event['ticket_uri'] = event_photo_json['ticket_uri']
-		
 
 		if 'type' in event_photo_json:
 			event['type'] = event_photo_json['type']
@@ -242,17 +243,16 @@ def pull_city(city_name_slug):
 	return city
 
 def show_city(request, city_name_slug):
-	"""View to show city profile"""
+	""" Django View to show city profile page """
 
 	context_dict={}
-	# events=[]
 
 	try:
 
 		#Try pull the City object from the passed slug
 		city = pull_city(city_name_slug)
 		
-		#Pull associated profiles to feature them under the "Locals" tab
+		#Pull associated user profiles to feature them under the "Locals" tab
 		city_locals_profiles = UserProfile.objects.filter(city=city)
 
 		#Pull trips to this city to feature them under "People coming to this city soon"
@@ -268,6 +268,7 @@ def show_city(request, city_name_slug):
 	except Excursion.DoesNotExist:
 		context_dict['excursions'] = None
 
+	# Pull city events from the Facebook Graph
 	events = pull_events(city)
 
 	context_dict['events'] = events
@@ -608,13 +609,19 @@ def createprofile(request):
 	#If request is POST, pull data and save it
 	if request.method =='POST':
 
-		user = User.objects.get(username=request.user.username)
-		user_form = UserForm(data=request.POST, instance=user)
+		# user = User.objects.get(username=request.user.username)
+		user_form = UserForm(data=request.POST)# took this out:instance=user
 		profile_form = UserProfileForm(data=request.POST)
 		
 		if user_form.is_valid() and profile_form.is_valid():
 			user = user_form.save()
+			login(request, user)
 			user.save()
+
+			username = user_form.cleaned_data.get('username')
+			raw_password = user_form.cleaned_data.get('password')
+			# user = authenticate(username=username, password=raw_password)
+			login(request, user)
 
 			#commit = false so that we can save profile pic and process city search query
 			profile = profile_form.save(commit=False)
@@ -636,10 +643,14 @@ def createprofile(request):
 				profile.prof_pic = 'profile_pictures/anon.png'
 
 			profile.save()
+			send_me_email("NEW USER!!!!!! | excurj." , request.user.username, ['moghrabi@gmail.com'])
+			return JsonResponse({'success':"success"})
 
 			#direct user to index page
 			if 'next' in request.GET:
-				return redirect(request.GET['next'])
+				# send_me_email("NEW USER!!!!!! | excurj." , request.user.username, ['moghrabi@gmail.com'])
+				# return redirect(request.GET['next'])
+				return JsonResponse({'success':"success"})
 
 		else:
 			print (user_form.errors, profile_form.errors)
@@ -649,7 +660,6 @@ def createprofile(request):
 		user_form = UserForm()
 		profile_form = UserProfileForm()
 
-	send_me_email("NEW USER!!!!!! | excurj." , request.user.username, ['moghrabi@gmail.com'])
 	return render(request, 'excurj/createprofile.html', {'user_form':user_form, 'profile_form':profile_form})
 	
 

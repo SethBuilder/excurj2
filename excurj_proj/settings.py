@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'django.contrib.admin',
     'django.contrib.sites',
-    'registration',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -66,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'excurj.middleware.AMPMiddleware',
 ]
 
 ROOT_URLCONF = 'excurj_proj.urls'

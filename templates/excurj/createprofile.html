@@ -1,4 +1,4 @@
-{% extends 'excurj/base.html' %}
+{% extends 'excurj/base_no_amp.html' %}
 {% load staticfiles %}
 {% load crispy_forms_tags %}
 {% load widget_tweaks %}
@@ -7,41 +7,37 @@
 	Welcome to {{user.first_name.title}}' profile. Currently in {{user.profile.city.name}}
 {% endblock %}
 
+{% block scripts_block %}
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
+{% endblock %}
+
 {% block body_block %}
-<div id="loading"><img src= "{% static 'images/giphy.gif' %}"></div>
-
+<!--?next=/thankyou/-->
 <div id="content" class="col-sm-6 col-sm-offset-3" style="margin-top: 100px;margin-bottom: 100px" >
+	<h1>Create Your Profile</h1>
+	<form 
+		method="post" 
+		action-xhr="/createprofile/" 
 
-<h1>Create Your Profile</h1>
-
-	<form method="post" action="?next=/thankyou/" enctype="multipart/form-data">
+		enctype="multipart/form-data"
+		target="_top"
+		>
                 {% csrf_token %}
-                <!--  {{ form|crispy }}
-
-
-	                 {{ profile_form.city_search_text.label }}
-	                {{ profile_form.city_search_text|attr:"id:google_city_search"|attr:"placeholder:Search cities.."|add_class:"prof_search"}}
-	                {{ profile_form.city_search_text.errors }}<br>
-
-				 -->
 				<!-- facebook conversion tracker -->
 				<script>
 					fbq('track', 'CompleteRegistration');
-				</script>
-
-	                                
+				</script>                  
                  {{ user_form|crispy }}
             	 {{ profile_form|crispy }}
 
- 
 
-    <input type="submit" value="Submit" class="btn btn-primary btn-lg"/>
-
-
-
-        </form>    	
-					
+    	<input type="submit" value="Submit and Login" class="btn btn-primary btn-lg"/>
+        </form>    			
 </div>
 
 
+
+<script src="{% static 'js/autocomplete.js' %}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYfS_V4jHXS_jVYa1k2w9VY52r0pMrL8g&callback=initMap&libraries=places"></script>
 {% endblock %}

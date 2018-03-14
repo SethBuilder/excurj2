@@ -2,10 +2,7 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 import datetime
-from crispy_forms.helper import FormHelper
 from django.contrib.sitemaps import ping_google
-
-
 
 class City(models.Model):
 	"""
@@ -63,8 +60,8 @@ class City(models.Model):
 
 class Request(models.Model):
 	"""traveler requests local to take her out upon liking her profile"""
-	traveler = models.ForeignKey(User, related_name='traveler_requests', blank=True)
-	local = models.ForeignKey(User, related_name='local_requested', blank=True)
+	traveler = models.ForeignKey(User,on_delete=models.CASCADE, related_name='traveler_requests', blank=True)
+	local = models.ForeignKey(User,on_delete=models.CASCADE, related_name='local_requested', blank=True)
 	message = models.CharField(max_length=500)
 	date = models.DateField()
 	local_approval = models.NullBooleanField(default=None, null=True)
@@ -132,11 +129,11 @@ class UserProfile(models.Model):
 	"""Each User instance is associated with a profile instance - One to One"""
 
 	#Each User is related to only one User Profile
-	user = models.OneToOneField(User, related_name='profile', primary_key=True)
+	user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile', primary_key=True)
 
 	#User picks city from the autocomplete, then the text is used to pull or create a city 
 	city_search_text = models.CharField(blank=True, max_length=300)
-	city = models.ForeignKey(City, blank=True, null=True, related_name='city') #Each User Profile must be related to one city.
+	city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True, related_name='city') #Each User Profile must be related to one city.
 	prof_pic = models.ImageField(blank=True, upload_to='profile_pictures')
 	dob = models.DateField(blank=True, null=True)
 	sex = models.CharField(max_length=10, blank=True)
@@ -160,15 +157,15 @@ class UserProfile(models.Model):
 
 	age = property(age)
 
-		#Override save to ping google
-	def save(self, *args, **kwargs):
-		super(UserProfile, self).save(*args, **kwargs)
-		try:
-			ping_google()
-		except Exception:
-		# Bare 'except' because we could get a variety
-		# of HTTP-related exceptions.
-			pass
+	#Override save to ping google
+	# def save(self, *args, **kwargs):
+	# 	super(UserProfile, self).save(*args, **kwargs)
+	# 	try:
+	# 		ping_google()
+	# 	except Exception:
+	# 	# Bare 'except' because we could get a variety
+	# 	# of HTTP-related exceptions.
+	# 		pass
 
 	def get_absolute_url(self):
 		return 'user/%s/' % self.user.username
@@ -179,9 +176,9 @@ class Excursion(models.Model):
 		The term Excursion, outing and trip are used interchangeabily across the app
 
 	"""
-	traveler = models.ForeignKey(User, related_name='traveler_lists_excursion')
-	local = models.ForeignKey(User, related_name='local_who_offered', blank=True, null=True)
-	city = models.ForeignKey(City, related_name='visited_city', blank=True, null=True) #Each excursion is connected to one City.
+	traveler = models.ForeignKey(User, on_delete=models.CASCADE, related_name='traveler_lists_excursion')
+	local = models.ForeignKey(User,on_delete=models.CASCADE, related_name='local_who_offered', blank=True, null=True)
+	city = models.ForeignKey(City, on_delete=models.CASCADE, related_name='visited_city', blank=True, null=True) #Each excursion is connected to one City.
 	city_search_text = models.CharField(blank=True, max_length=300)
 	message = models.CharField(max_length=500)#message to all locals of that city "Hey good people of Edinburgh!"
 	date = models.DateField()
@@ -205,9 +202,9 @@ class Excursion(models.Model):
 
 class Offer(models.Model):
 	""" local offers traveler to take her out based on the trips listed by traveler """
-	local = models.ForeignKey(User, related_name='local_offers_excursion')
+	local = models.ForeignKey(User, on_delete=models.CASCADE, related_name='local_offers_excursion')
 	message = models.CharField(max_length=500)
-	trip = models.ForeignKey(Excursion, related_name='traveler_trip')
+	trip = models.ForeignKey(Excursion, on_delete=models.CASCADE, related_name='traveler_trip')
 	traveler_approval = models.NullBooleanField(default=None)
 	def __str__(self):
 		return trip.id

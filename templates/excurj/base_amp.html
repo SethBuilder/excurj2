@@ -99,7 +99,7 @@
  <script type="application/ld+json">
       {
     "name": "Excurj",
-    "url": "https://excurj.pythonanywhere.com/",
+    "url": "https://www.excurj.com/",
     "logo": "{% static 'images/logo.png' %}",
     "sameAs": [
         "https://www.facebook.com/excurj",
@@ -117,12 +117,12 @@
         "@context": "http://schema.org",
         "@type": "WebSite",
         "name": "Excurj",
-        "url": "https://excurj.pythonanywhere.com/",
+        "url": "https://www.excurj.com/",
         "description": "Visit Excurj to meet locals and fellow travelers. Excurj also provides up-to-the-minute events and festival information in cities around the world.",
         
         "potentialAction": {
         "@type": "SearchAction",
-        "target": "https://excurj.pythonanywhere.com/search/?city-search={search_term_string}",
+        "target": "https://www.excurj.com/search/?city-search={search_term_string}",
         "query-input": "required name=search_term_string"
         },
         "name": "Home - Excurj"
@@ -216,10 +216,6 @@ to{transform:translateY(-4.5px);}
   transition: background-color 1s ease 0s;
 }*/
 
-.active{
-  background-color: #f5f8fa;
-  opacity: 1;
-}
 
 #topsearchbox{
   width: 150px;
@@ -246,7 +242,7 @@ to{transform:translateY(-4.5px);}
 
 
 
-.jumbotron{
+#index-jumbotron{
   background: no-repeat fixed;
     background-size: cover;
     margin: 0;
@@ -257,11 +253,15 @@ to{transform:translateY(-4.5px);}
 
 }
 
-.jumbotron #container {
+pre {
+  white-space:pre-wrap; background-color: white; border: none;
+}
+
+#index-jumbotron #container {
     position: relative;
     overflow: hidden;
     height: 700px;
-    background: #edeae8;
+    background: #F0F8FF;
     margin: 0;
     background-size: cover;
     padding: 0;
@@ -271,7 +271,7 @@ to{transform:translateY(-4.5px);}
     margin: 0 auto;
 }
 
-.jumbotron #container video{
+#index-jumbotron #container video{
     width: 110%;
     height: 100%;
     object-fit: cover;
@@ -279,7 +279,7 @@ to{transform:translateY(-4.5px);}
 
 
 
-.jumbotron h1{
+#index-jumbotron h1{
   font-size: 56px;
     font-weight: lighter;
     
@@ -305,7 +305,7 @@ to{transform:translateY(-4.5px);}
   opacity: 1;
 }*/
 
-.jumbotron p{
+#index-jumbotron p{
   font-size: 25px;
     width: 700px;
     font-weight: 20;
@@ -965,7 +965,7 @@ div.jumbotron#city_jumbotron .container{
     padding: 0;
     min-height: 400px;
     position: relative;
-    background-image: url('../media/city_pictures.jpg');
+    background-image: url('{{ MEDIA_URL }}{{city.city_image}}');
     background-position: center center;
     background-size: cover;
     opacity: 1;
@@ -973,6 +973,14 @@ div.jumbotron#city_jumbotron .container{
     -webkit-filter: brightness(1.10);
     filter: brightness(1.10);
     
+}
+
+.rev1 {
+  background: #F0F8FF;
+}
+
+.rev2 {
+  background: rgba(192, 192, 192, .1);
 }
 
 /*city TABS CSS*/
@@ -1093,17 +1101,21 @@ pre{
   word-break: keep-all;
 }
 
-.prof_pic_overlay img{
+/*.prof_pic_overlay img{
   width: 200px;
   height: 200px;
   border-radius: 12px;
-}
+}*/
 
 .personal_info{
-  
-  margin-left: 70px;
+  margin-left: 62px;
   /*margin-top: 80px;*/
-  background-color:  #f5f8fa;
+  color: black;
+  padding: 4.5px;
+  border-radius: 0%;
+  max-height: 270px;
+  background-color:  rgba(230, 236, 240, .89);
+  position: absolute;top: 50px;left:90px;
 }
 
 .personal_info p{
@@ -1117,9 +1129,9 @@ pre{
 
 .abouts{
   background-color: white; 
-  padding: 18px;
+  padding: 0 18px 18px 18px;
   border-radius: 12px;
-  margin-top: 50px;
+  /*margin-top: 50px;*/
   margin-bottom: 50px;
   /*box-shadow: 0 2px 4px 0 rgba(255, 255, 255, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);*/
 }
@@ -1509,7 +1521,7 @@ ul.navbar-nav li.no_desktop{
 
 
 
-  .jumbotron h1{
+  #index-jumbotron h1{
   font-size: 45px;
 }
 
@@ -1652,7 +1664,7 @@ ul.navbar-nav li.no_desktop{
 
 }
 
-.jumbotron p{
+#index-jumbotron p{
   
     width: 400px;
 }
@@ -1687,13 +1699,13 @@ ul.navbar-nav li.no_desktop{
 
   }
 
-.jumbotron h1{
+#index-jumbotron h1{
   font-size: 48px;
   line-height: 1.1;
 }
 
 
-.jumbotron p{
+#index-jumbotron p{
   font-size:20px;
     font-weight: 20;
     line-height: 1.1;
@@ -1767,7 +1779,7 @@ ul.navbar-nav li.no_desktop{
 
 
 
-.jumbotron p {
+#index-jumbotron p {
     font-size: 16px;
     font-weight: 300;
     line-height: 1.1;
@@ -1776,7 +1788,7 @@ ul.navbar-nav li.no_desktop{
 }
 
 
-.jumbotron h1 {
+#index-jumbotron h1 {
         font-size: 28px;
     font-weight: 500;
     color: #FFFFFF;
@@ -1911,7 +1923,7 @@ and (orientation : portrait) {
 
 
 
-.jumbotron p {
+#index-jumbotron p {
     font-size: 25px;
     font-weight: 20;
     line-height: 1.1;
@@ -1920,7 +1932,7 @@ and (orientation : portrait) {
 }
 
 
-.jumbotron h1 {
+#index-jumbotron h1 {
         font-size: 65px;
     font-weight: lighter;
     color: #FFFFFF;
@@ -1931,7 +1943,7 @@ and (orientation : portrait) {
   display: inline-block;
 }
 
-.jumbotron p {
+#index-jumbotron p {
   font-size: 28px;
 }
 
@@ -1956,7 +1968,7 @@ and (orientation : portrait) {
 
 @media only screen and (max-width: 330px)
 {
-  .jumbotron p {
+  #index-jumbotron p {
       font-size: 14px;
        font-weight: lighter; 
       line-height: 1.1;
@@ -2035,9 +2047,89 @@ hr {
   border-width: .15px;
   margin: 40px auto;
   border-color: #929dad;
-  margin-top: 0;
+  /*margin-top: 0;*/
 }
 
+
+
+
+
+
+
+
+
+
+
+
+amp-selector [option][selected] {
+  outline: none;
+}
+
+.tabButton[selected] {
+outline: none;
+color: #6599FF;
+border: none;
+outline:none;
+}
+
+
+.ampTabContainer {
+        display: flex;
+        flex-wrap: wrap;
+
+    }
+    
+    .tabButton[selected] {
+        outline: none;
+     
+        border:none;
+    }
+    
+    .tabButton {
+        list-style: none;
+        flex-grow: 1;
+        text-align: center;
+        cursor: pointer;
+        border: none;
+        padding:10px;
+    outline:none;
+    font-weight:bold;
+    text-transform: capitalize;
+    }
+    
+    .tabContent {
+        display: none;
+        width: 100%;
+        min-height: 300px;
+        order: 1; /* must be greater than the order of the tab buttons to flex to the next line */
+     
+    }
+
+
+    
+    .tabButton[selected]+.tabContent {
+        display: block;
+    }
+
+    /* For example below (not required) */
+    .itemCustom {
+        
+        height: 280px;
+        width: 80px;
+        margin: 10px;
+        text-align: center;
+        padding-top: 140px;
+    }
+    amp-selector {
+      padding: 0 1rem 1rem 1rem;
+      margin: 0 1rem 1rem 1rem;
+      outline: none;
+    }
+
+
+    amp-selector [option][selected] {
+  border : none;
+}
 {% block css %}
 {% endblock %}
 
@@ -2064,14 +2156,10 @@ hr {
       <a class="no_mobile" href=" {% url 'excurj:index' %}#insta " title="Instagram feed (#excurj)">Insta Feed</a>
       <a class="no_mobile" href=" {% url 'excurj:index' %}#map_canvas " title="excurj Map">Map</a>
       {% if request.user.is_authenticated %}
-      <!-- <a href=" {% url 'excurj:dashboard' %} ">My Dashboard</a>
-      <a href="{% url 'excurj:show_profile' request.user.username %}">My Profile</a>
-      <a class="no_desktop" href="">Account</a>
-      <a href="{% url 'auth_logout' %}?next=/"> logout</a> -->
-      <div id="prof_li">
-        <a href="  javascript:void(0)"> 
-          <amp-img layout="responsive" src=" {{request.user.profile.prof_pic.url}} " height="49px" width="49px" class="img-circle "></amp-img>
 
+      <div id="prof_li">
+        <a href=""> 
+          <amp-img layout="fixed" src=" {{request.user.profile.prof_pic.url}} " height="49px" width="49px" class="img-circle "></amp-img>
         </a>
 
         <span class="caret "></span>
@@ -2079,12 +2167,12 @@ hr {
           <li class="dropli "><a class="" href="{% url 'excurj:dashboard' %}">Dashboard</a></li>
           <li class="dropli "><a class="" href="{% url 'excurj:show_profile' request.user.username %}">Profile</a></li>
           <li class="dropli "><a class="" href="{% url 'excurj:editaccount' %}">Account</a></li>
-          <li class="dropli "><a class="" href="{% url 'auth_logout' %}?next=/"> logout</a></li>
+          <li class="dropli "><a class="" href="{% url 'excurj:logout' %}?next=/"> logout</a></li>
         </div>
 
 
         </div>
-
+        <a href="{% url 'excurj:logout' %}?next=/">LOGOUT</a>
         
 
         
@@ -2094,8 +2182,8 @@ hr {
 
       {% else %}
 
-      <a href=" {% url 'auth_login' %} ">LOGIN</a>
-      <a href=" {% url 'registration_register' %} ">JOIN</a>
+      <a href=" {% url 'excurj:login' %} ">LOGIN</a>
+      <a href=" {% url 'excurj:signup' %} ">JOIN</a>
       {% endif %} 
 
       <form target="_top" class="top-form navbar-form navbar-right no_mobile" action=" {% url 'excurj:search' %} ">
@@ -2118,6 +2206,13 @@ hr {
     <footer> 
       
       <div class="link-footer">
+
+        <div class="col-md-4 col-xs-12">
+            <a title="excurj logo" href=" {% url 'excurj:index' %} " class="">
+              <img src=" {% static 'images/logo.png' %} " class="" alt="excurj logo">
+            </a>
+        </div>
+        
         <ul class="footer-links">
                 <li> <a href="">ABOUT</a> </li>
                 <li> <a href="">SAFETY</a> </li>
@@ -2126,11 +2221,7 @@ hr {
             </ul>
       </div>
         
-          <!-- <div class="col-md-4 col-xs-12">
-            <a title="excurj logo" href=" {% url 'excurj:index' %} " class="">
-              <img src=" {% static 'images/logo.png' %} " class="" alt="excurj logo">
-            </a>
-          </div> -->
+          
 
           <div>
           <div class="connect-with-us">

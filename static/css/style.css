@@ -120,7 +120,7 @@ nav.navbar.opaque{
 
 
 
-.jumbotron{
+#index-jumbotron{
 	background: no-repeat fixed;
     background-size: cover;
     margin: 0;
@@ -131,7 +131,7 @@ nav.navbar.opaque{
 
 }
 
-.jumbotron #container {
+#index-jumbotron #container {
     position: relative;
     overflow: hidden;
     height: 600px;
@@ -145,7 +145,7 @@ nav.navbar.opaque{
   	margin: 0 auto;
 }
 
-.jumbotron #container video{
+#index-jumbotron #container video{
     width: 110%;
     height: 100%;
     object-fit: cover;
@@ -185,7 +185,7 @@ nav.navbar.opaque{
   transform: skewX(-45deg);
 }
 
-.jumbotron h1{
+#index-jumbotron h1{
 	font-size: 56px;
     font-weight: lighter;
     
@@ -211,7 +211,7 @@ nav.navbar.opaque{
 	opacity: 1;
 }*/
 
-.jumbotron p{
+#index-jumbotron p{
 	font-size: 25px;
     width: 700px;
     font-weight: 20;

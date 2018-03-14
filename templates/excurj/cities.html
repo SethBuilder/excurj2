@@ -28,12 +28,49 @@
 
 {% endblock %}
 
+
+{% block extra_style %}
+
+.infinite-container {
+  grid-auto-rows:minmax(100px, auto);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 1em;
+  justify-items:center;
+  align-items:center;
+}
+
+.popular-cities-box{
+  
+  background-color: grey;
+  margin: 10px 5px;
+  overflow-wrap: break-word;
+  color: white;
+  display: inline-block;
+  width: 200px;
+  height: 170px;
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.popular-cities-box img{
+  
+  width: 200px;
+    height: 170px;
+  
+}
+
+.popular-cities-container {
+  padding:0;
+}
+
+{% endblock %}
+
 {% block body_block %}
 	<div style="margin-top: 00px;min-height: 450px;background-color: #f5f8fa;">	
 
 	
 
-	  <div class="container popular-cities-container infinite-container" id="popularcities" style="background-color: #f5f8fa; padding: 50px"; >
+	  <div class="container popular-cities-container" id="popularcities" style="background-color: #f5f8fa"; >
 	  	{% if searched_query == 'nothing' %}
 	  	<h1 title="All cities! | Bon Voyage!">These Are All The Cities For your inspirations!</h1>
 	  	{% else %}
@@ -43,9 +80,11 @@
       	{% endif %}
 
 {% if cities %}
+
+<div class="infinite-container">
 {% for city in cities %}
 
-        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 infinite-item">
+        <div class="infinite-item">
           <div class="popular-cities-box">
           <div class="thumbnails">
             <a title="{{ city.name }}" href="{% url 'excurj:show_city' city.slug %}">
@@ -72,6 +111,7 @@
       </div>
 
 {% endfor %}
+</div>
 
   {% if cities.has_next %}
 

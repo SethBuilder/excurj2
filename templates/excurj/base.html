@@ -82,22 +82,27 @@
   ga('create', 'UA-58047753-2', 'auto');
   ga('send', 'pageview');
 </script> -->
-    
+    <style type="text/css">
     {% block extra_style %}
       
     {% endblock %}
-
+  </style>
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'js/infinite.min.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
  <!--  -->
  <script type="application/ld+json">
       {
     "name": "Excurj",
-    "url": "https://excurj.pythonanywhere.com/",
+    "url": "https://www.excurj.com/",
     "logo": "{% static 'images/logo.png' %}",
     "sameAs": [
         "https://www.facebook.com/excurj",
@@ -115,12 +120,12 @@
         "@context": "http://schema.org",
         "@type": "WebSite",
         "name": "Excurj",
-        "url": "https://excurj.pythonanywhere.com/",
+        "url": "https://www.excurj.com/",
         "description": "Visit Excurj to meet locals and fellow travelers. Excurj also provides up-to-the-minute events and festival information in cities around the world.",
         
         "potentialAction": {
         "@type": "SearchAction",
-        "target": "https://excurj.pythonanywhere.com/search/?city-search={search_term_string}",
+        "target": "https://www.excurj.com/search/?city-search={search_term_string}",
         "query-input": "required name=search_term_string"
         },
         "name": "Home - Excurj"
@@ -244,7 +249,7 @@ to{transform:translateY(-4.5px);}
 
 
 
-.jumbotron{
+#index-jumbotron{
   background: no-repeat fixed;
     background-size: cover;
     margin: 0;
@@ -255,11 +260,11 @@ to{transform:translateY(-4.5px);}
 
 }
 
-.jumbotron #container {
+#index-jumbotron #container {
     position: relative;
     overflow: hidden;
     height: 700px;
-    background: #edeae8;
+    background: rgba(99,184,255,0.4);
     margin: 0;
     background-size: cover;
     padding: 0;
@@ -269,7 +274,7 @@ to{transform:translateY(-4.5px);}
     margin: 0 auto;
 }
 
-.jumbotron #container video{
+#index-jumbotron #container video{
     width: 110%;
     height: 100%;
     object-fit: cover;
@@ -277,7 +282,7 @@ to{transform:translateY(-4.5px);}
 
 
 
-.jumbotron h1{
+#index-jumbotron h1{
   font-size: 56px;
     font-weight: lighter;
     
@@ -303,7 +308,11 @@ to{transform:translateY(-4.5px);}
   opacity: 1;
 }*/
 
-.jumbotron p{
+.img-circle {
+  border-radius: 50%;
+}
+
+#index-jumbotron p{
   font-size: 25px;
     width: 700px;
     font-weight: 20;
@@ -1101,7 +1110,7 @@ pre{
   
   margin-left: 70px;
   /*margin-top: 80px;*/
-  background-color:  #f5f8fa;
+  background-color:  rgba(255, 250, 250, .1);
 }
 
 .personal_info p{
@@ -2038,6 +2047,637 @@ hr {
 
 
 
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 910px){
+
+  #google_city_search {
+    width: 630px;
+
+  }
+
+no-mobile{
+  display: none;
+}
+
+}
+
+
+@media only screen and (min-width: 1251px){
+
+  .header-button{
+  padding: 7px 16px;
+  font-size: 25px;
+    /*font-family: 'Montserrat', sans-serif;*/
+    font-weight: bold;
+    color: black;
+    /*width: 50%;*/
+    background-color: white;
+}
+
+
+.base-nav {
+  display: grid;
+  grid-template-columns: 1fr 4fr 3fr 4fr 3fr 3fr 3fr  repeat(2, 2fr) 3fr;
+  grid-auto-rows: 100%;
+  justify-items:stretch;
+  align-items:stretch;
+  position: fixed;
+  grid-gap: 5px;
+}
+
+
+
+
+}
+
+
+@media only screen and (max-width: 1250px){
+
+.popular-cities-box {
+    
+    grid-column: 1/7;
+    
+}
+
+.how-it-works-box{
+  grid-column: 1/6;
+}
+
+.how-it-works-container{
+  background-color: #6599ff;
+  padding: 40px;
+  display: grid;
+  /*height: 80vh;*/
+  grid-template-columns: 1fr;
+}
+
+.base-nav {
+  position: fixed;
+  display: grid;
+  grid-template-columns: 1fr 4fr 4fr;
+  grid-auto-rows: 100%;
+  justify-items:stretch;
+  align-items:stretch;
+  grid-gap: 5px;
+}
+
+#prof_dropdown{
+  position: absolute;
+    top: 48px;
+    background: white;
+   /* right: 500px;*/
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1000;
+    display: none;
+    border-radius: 12px;
+      z-index: 150;
+}
+
+#offers{
+  margin-left: 0;
+}
+
+#tabs_container{
+  margin-top: 200px;
+}
+
+#tabs_content_user{
+   margin-top: 300px;
+   margin: auto;
+   width: 100%;
+}
+
+/*.personal_info{
+  display: none;
+}*/
+
+ul.nav#tabs_user {
+margin-top: 80px;
+}
+
+.mobile{
+  display: inline;
+  /*background-image: url(' {% static 'images/cap1.jpeg' %} ');*/
+  background-position: center center;
+  -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+  background-size: cover;
+  object-fit: cover;
+  min-width:100%;
+    min-height:100%;
+    overflow: hidden;
+}
+
+video {
+  display: none;
+}
+
+.no_mobile{
+  display: none;
+}
+
+.no-mobile{
+  display: none;
+}
+
+ul.navbar-nav li.no_desktop{
+  display: inline;
+}
+
+.mobile img{
+  height: 100%;
+  min-width: 100%;
+}
+
+.feedback, .up{
+  display: none;
+}
+
+
+
+  #index-jumbotron h1{
+  font-size: 45px;
+}
+
+
+/*.jumbotron p{
+  font-size:25px;
+    font-weight: 30;
+    width: 550px;
+}*/
+
+.homepage_jumbo{
+  /*background-color: rgba(255,255,255,.3);*/
+/*  position: absolute;
+  width: 600px;
+  left: 0;
+    right: 0;
+    margin: 0 auto;
+    top: 50%;
+    left: 50%;
+    padding: 10px;
+    transform: translate(-50%, -50%);*/
+    
+}
+
+#header-sections{
+  width: 50%;
+  margin: auto;
+}
+
+#google_city_search{
+  width: 80%;
+  margin: auto;
+  padding: 15px;
+}
+
+.header-button{
+  padding: 5px 18px;
+  font-size: 15px;
+    /*font-family: 'Montserrat', sans-serif;*/
+    /*font-weight: bold;*/
+    color: black;
+    /*width: 30%;*/
+
+    background-color: white;
+}
+
+#google_city_search:focus{
+  padding: 18px;
+
+}
+
+.how-it-works-box h3:after{
+  
+  top: 55px;
+  
+}
+
+.how-it-works-container h2:after{
+  
+  left: 37%;
+  right: 37%;
+  
+}
+
+.ready-header-button{
+  background-color: white;
+}
+
+}
+
+
+@media only screen and (max-width: 899px){
+
+#offers{
+  margin-left: 0;
+}
+
+#tabs_container{
+  margin-top: 200px;
+}
+
+#tabs_content_user{
+   margin-top: 300px;
+   margin: auto;
+   width: 100%;
+}
+
+/*.personal_info{
+  display: none;
+}*/
+
+.no-mobile{
+  display: none;
+}
+
+.no_mobile{
+  display: none;
+}
+
+.on_mobile{
+  display: inline;
+}
+
+  #mainNavBar{
+    background-color: rgba(255,255,255,1);
+
+
+  }
+
+.navbar-default .navbar-nav>li>a{
+  color: black;
+  padding-left: 40px;
+  float: left;
+}
+
+.navbar-default .navbar-nav>li>a:hover{
+  color: white;
+  background-color: black;
+}
+
+  #topsearchbox{
+  width: 200px;
+  -webkit-transition: width 0.4s ease;
+  transition: width 0.4s ease;
+  border: none;
+  opacity: .7;
+  padding-left: 60px;
+}
+
+#topsearchbox:focus{
+  width:250px;
+  opacity: 1;
+
+}
+
+  ul.nav li{
+  background-color: white;
+  color: black;
+  opacity: 1;
+
+}
+
+#index-jumbotron p{
+  
+    width: 400px;
+}
+}
+
+
+@media only screen and (max-width: 640px){
+#offers{
+  margin-left: 0;
+}
+
+#tabs_container{
+  margin-top: 280px;
+}
+
+#tabs_content_user{
+   margin-top: 300px;
+   margin: auto;
+   width: 100%;
+}
+
+/*.personal_info{
+  display: none;
+}*/
+
+/*.jumbotron p{
+  display: none;
+}*/
+
+.homepage_jumbo{
+  /*max-width: 100%;*/
+
+  }
+
+#index-jumbotron h1{
+  font-size: 48px;
+  line-height: 1.1;
+}
+
+
+#index-jumbotron p{
+  font-size:20px;
+    font-weight: 20;
+    line-height: 1.1;
+    width: 500px;
+}
+
+
+.header-button{
+  padding: 7px 16px;
+  font-size: 12px;
+    /*font-family: 'Montserrat', sans-serif;*/
+    font-weight: bold;
+    color: black;
+    width: 38%;
+    background-color: white;
+}
+
+.ready-header-button{
+  background-color: white;
+}
+
+.container-fluid>.navbar-collapse, .container-fluid>.navbar-header, .container>.navbar-collapse, .container>.navbar-header{
+  margin-right: -5px;
+  margin-left: -5px;
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 470px){
+
+.paired {
+  grid-gap: 0;
+  grid-template-columns: 1fr;
+}
+
+.homepage_jumbo {
+  grid-auto-rows: 80px;
+  grid-gap: 0;
+}
+
+
+  #google_city_search{
+  width: 300px;
+  margin: auto;
+  padding: 10px;
+}
+
+.header-button{
+  padding: 7px 16px;
+  /*font-size: 10px;*/
+    /*font-family: 'Montserrat', sans-serif;*/
+    font-weight: bold;
+    color: black;
+    /*width: 50%;*/
+    background-color: white;
+}
+
+
+
+#index-jumbotron p {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 30px;
+    width: 350px;
+}
+
+
+#index-jumbotron h1 {
+        font-size: 28px;
+    font-weight: 500;
+    color: #FFFFFF;
+    text-align: center;
+}
+}
+
+li.pull-right {
+    float: none;
+}
+
+#tabs_container{
+  margin-top: 280px;
+}
+
+#tabs_content_user{
+   margin-top: 300px;
+   margin: auto;
+   width: 100%;
+}
+
+/*.personal_info{
+  display: none;
+}*/
+
+/*.jumbotron #container{
+  height: 600px;
+}*/
+
+.header-button{
+  margin: 0;
+  background-color: white;
+  width: 47%
+
+}
+
+/*.jumbotron h1{
+  font-size: 27px;
+  line-height: 1.1;
+}*/
+
+
+/*.jumbotron p {
+    font-size: 25px;
+    font-weight: 20;
+    line-height: 1.1;
+    margin-bottom: 30px;
+    width: 620px;
+}*/
+
+
+/*.jumbotron h1 {
+    font-size: 50px;
+    line-height: 1.1;
+}*/
+
+/*#google_city_search {
+    width: 500px;
+    margin: auto;
+    padding: 15px;
+}*/
+
+.ready{
+  min-height: 600px;
+}
+
+.ready-header-button{
+  background-color: white;
+}
+
+.container-fluid>.navbar-collapse, .container-fluid>.navbar-header, .container>.navbar-collapse, .container>.navbar-header{
+  margin-right: -5px;
+  margin-left: -5px;
+}
+}
+
+
+.img-circle {
+  border-radius: 50%;
+}
+
+
+.logo img {
+  opacity: .7;
+}
+
+
+
+
+/*IPAD MEDIA QUERY*/
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait) {
+
+.homepage_jumbo {
+    
+    grid-gap: 30px;
+    
+} 
+
+  .how-it-works-container h2 {
+    grid-column: 1/5;
+    font-size: 70px;
+}
+
+  .how-it-works-box h3 {
+    position: relative;
+    font-size: 50px;
+}
+
+  .how-it-works-box p {
+    margin-top: 20px;
+    font-size: 40px;
+}
+
+  #google_city_search{
+  width: 500px;
+  margin: auto;
+  padding: 15px;
+}
+
+.header-button{
+  padding: 7px 16px;
+  font-size: 23px;
+    /*font-family: 'Montserrat', sans-serif;*/
+    font-weight: bold;
+    color: black;
+    /*width: 50%;*/
+    background-color: white;
+}
+
+
+
+#index-jumbotron p {
+    font-size: 25px;
+    font-weight: 20;
+    line-height: 1.1;
+    margin-bottom: 30px;
+    width: 620px;
+}
+
+
+#index-jumbotron h1 {
+        font-size: 65px;
+    font-weight: lighter;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.popular-cities-container {
+  display: inline-block;
+}
+
+#index-jumbotron p {
+  font-size: 28px;
+}
+
+
+
+ }
+
+
+.base-nav a:not(.logo) {
+  text-align: center;
+  padding: 1em;
+  color: white;
+  text-decoration: none;
+  vertical-align: middle;
+
+}
+
+.base-nav a:not(.logo):hover {
+  color: #ffd700 ;
+
+}
+
+@media only screen and (max-width: 330px)
+{
+  #index-jumbotron p {
+      font-size: 14px;
+       font-weight: lighter; 
+      line-height: 1.1;
+      margin-bottom: 30px;
+      width: 300px;
+  }
+
+  #google_city_search {
+    width: 250px;
+    margin: auto;
+    padding: 8px;
+}
+
+}
+
+#map_canvas {
+  height: 500px
+}
+
+
+#topsearchbox:focus, #google_city_search:focus {
+  outline: none;
+}
+
+
+
     </style>
   </head>
   <body>
@@ -2061,13 +2701,10 @@ hr {
       <a class="no_mobile" href=" {% url 'excurj:index' %}#insta " title="Instagram feed (#excurj)">Insta Feed</a>
       <a class="no_mobile" href=" {% url 'excurj:index' %}#map_canvas " title="excurj Map">Map</a>
       {% if request.user.is_authenticated %}
-      <!-- <a href=" {% url 'excurj:dashboard' %} ">My Dashboard</a>
-      <a href="{% url 'excurj:show_profile' request.user.username %}">My Profile</a>
-      <a class="no_desktop" href="">Account</a>
-      <a href="{% url 'auth_logout' %}?next=/"> logout</a> -->
+
       <div id="prof_li">
         <a href="  javascript:void(0)"> 
-          <amp-img layout="responsive" src=" {{request.user.profile.prof_pic.url}} " height="49px" width="49px" class="img-circle "></amp-img>
+          <amp-img layout="fixed" src=" {{request.user.profile.prof_pic.url}} " height="49px" width="49px" class="img-circle"></amp-img>
 
         </a>
 
@@ -2076,11 +2713,13 @@ hr {
           <li class="dropli "><a class="" href="{% url 'excurj:dashboard' %}">Dashboard</a></li>
           <li class="dropli "><a class="" href="{% url 'excurj:show_profile' request.user.username %}">Profile</a></li>
           <li class="dropli "><a class="" href="{% url 'excurj:editaccount' %}">Account</a></li>
-          <li class="dropli "><a class="" href="{% url 'auth_logout' %}?next=/"> logout</a></li>
+          <li class="dropli "><a class="" href="{% url 'excurj:logout' %}?next=/"> logout</a></li>
         </div>
 
 
         </div>
+
+        <a href="{% url 'excurj:logout' %}?next=/">LOGOUT</a>
 
         
 
@@ -2091,8 +2730,8 @@ hr {
 
       {% else %}
 
-      <a href=" {% url 'auth_login' %} ">LOGIN</a>
-      <a href=" {% url 'registration_register' %} ">JOIN</a>
+      <a href=" {% url 'excurj:login' %} ">LOGIN</a>
+      <a href="{% url 'excurj:createprofile' %}">JOIN</a>
       {% endif %} 
 
       <form target="_top" class="top-form navbar-form navbar-right no_mobile" action=" {% url 'excurj:search' %} ">
@@ -2115,6 +2754,11 @@ hr {
     <footer> 
       
       <div class="link-footer">
+        <div class="col-md-12 col-xs-12">
+            <a title="excurj | Make Friendships While Traveling" href=" {% url 'excurj:index' %} " class="">
+              <img src=" {% static 'images/logo.png' %} " class="" alt="excurj logo">
+            </a>
+          </div>
         <ul class="footer-links">
                 <li> <a href="">ABOUT</a> </li>
                 <li> <a href="">SAFETY</a> </li>
@@ -2123,11 +2767,7 @@ hr {
             </ul>
       </div>
         
-          <!-- <div class="col-md-4 col-xs-12">
-            <a title="excurj logo" href=" {% url 'excurj:index' %} " class="">
-              <img src=" {% static 'images/logo.png' %} " class="" alt="excurj logo">
-            </a>
-          </div> -->
+          
 
           <div>
           <div class="connect-with-us">
@@ -2223,7 +2863,7 @@ hr {
     </script> -->
 
     <!-- to make nav bar opaque upon scrolling -->
-    <!-- <script type="text/javascript">
+    <script type="text/javascript">
 
 		    	$(window).scroll(function() {
 		    if($(this).scrollTop() > 10) {
@@ -2235,10 +2875,10 @@ hr {
 		    }
 		});
 
-    </script> -->
+    </script>
 
     <!--for smooth scrolling of nav bar links-->
-    <!-- <script type="text/javascript">
+    <script type="text/javascript">
       // Select all links with hashes
       $('a[href*="#"]')
         // Remove links that don't actually link to anything
@@ -2275,7 +2915,7 @@ hr {
             }
           }
         });
-      </script> -->
+      </script>
 
 
   <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.9.0/css/lightbox.css"> -->

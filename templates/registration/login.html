@@ -1,4 +1,4 @@
-{% extends 'excurj/base.html' %}
+{% extends 'excurj/base_no_amp.html' %}
 {% load staticfiles %}
 {% load i18n %}
 {% load crispy_forms_tags %}
@@ -8,8 +8,9 @@
 {% endblock %}
 
 {% block body_block %}
-<div style="margin-top: 70px;margin-bottom: 70px;" class="col-sm-4 col-sm-offset-4">
-	<h1>Login here</h1>
+<div style="max-height: 100vh;">
+	<div style="padding: 100px;max-width: 50%; margin: auto;">
+	<h1>Login</h1>
 	<form method="post" action=".">
 	  {% csrf_token %} 
 	  {{ form|crispy }}
@@ -17,8 +18,9 @@
 	  <input class="btn btn-primary" type="submit" value="{% trans 'Log in' %}" />
 	  <input type="hidden" name="next" value="{{ next }}" />
 	</form>
-	<p class="lead">{% trans "Forgot password" %}? <a href="{% url 'auth_password_reset' %}">{% trans "Reset it" %}</a>!</p>
-<p class="lead">{% trans "Not member" %}? <a href="{% url 'registration_register' %}">{% trans "Register" %}</a>!</p>
+	<p class="lead">{% trans "Forgot password" %}? <a href="">{% trans "Reset it" %}</a>!</p>
+	<p class="lead">{% trans "Not member" %}? <a href="">{% trans "Register" %}</a>!</p>
+</div>
 </div>
 
 {% endblock %}
