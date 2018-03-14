@@ -14,7 +14,6 @@ import glob
 import random
 from django.http import HttpResponseServerError
 from django.contrib.staticfiles.storage import staticfiles_storage
-from datapackage import Package
 
 def get_json(url):
 	""" 
@@ -28,8 +27,8 @@ def get_json(url):
 
 def get_google_key():
 	""" returns Google api key"""
-	GoogleKey = 'AIzaSyDaa7NZzS-SE4JW3J-7TaA1v1Y5aWUTiyc'
-	# GoogleKey = 'AIzaSyDViGwJgWL18QSKvPozvAiqloyy1pW2lxg'
+	# GoogleKey = 'AIzaSyDaa7NZzS-SE4JW3J-7TaA1v1Y5aWUTiyc'
+	GoogleKey = 'AIzaSyDViGwJgWL18QSKvPozvAiqloyy1pW2lxg'
 	# GoogleKey = 'AIzaSyB1E9CZaaaw1c77A7eZSophK_LnaGX5XRQ'
 
 	return GoogleKey
@@ -112,34 +111,115 @@ def populate_city(city_id, query):
 def populate_cities():
 	""" populates City objects """
 	#these cities will be highlighted on front page
-	# city_names = ['London', 'Paris', 'Munich', 'New York City', 'Beijing', 'Toronto', 'Barcelona', 'Budapest', 'Dubai', 'Vancouver', 'Cairo']
-	# countries = ['England', 'France', 'Germany', 'USA', 'China', 'Canada', 'Spain', 'Hungary', 'UAE', 'Canada', 'Egypt']
+	city_names = ['London', 'Paris', 'Munich', 'New York City', 'Beijing', 'Toronto', 'Barcelona', 'Budapest', 'Dubai', 'Vancouver',
+	'Hong Kong',
+	'Singapore',
+	'Bangkok',
+	'Macau',
+	'Shenzhen',
+	'Kuala Lumpur',
+	'Antalya',
+	'Istanbul',
+	'Seoul',
+	'Rome',
+	'Phuket',
+	'Guangzhou',
+	'Mecca',
+	'Pattaya',
+	'Taipei',
+	'Miami',
+	'Prague',
+	'Shanghai',
+	'Las Vegas',
+	'Milan',
+	'Moscow',
+	'Amsterdam',
+	'Vienna',
+	'Venice',
+	'Los Angeles',
+	'Lima',
+	'Tokyo',
+	'Johannesburg',
+	'Beijing',
+	'Sofia',
+	'Orlando',
+	'Berlin',
+	'Ho Chi Minh City',
+	'Florence',
+	'Madrid',
+	'Warsaw',
+	'Doha',
+	'Nairobi',
+	'Delhi',
+	'Mumbai',
+	'Chennai',
+	'Mexico City',
+	'Dublin',
+	'San Francisco' ]
+	countries = ['England', 'France', 'Germany', 'USA', 'China', 'Canada', 'Spain', 'Hungary', 'UAE', 'Canada',
+	'China',
+	'Singapore',
+	'Thailand',
+	'China',
+	'China',
+	'Malaysia',
+	'Turkey',
+	'Turkey',
+	'South Korea',
+	'Italy',
+	'Thailand',
+	'China',
+	'Saudi Arabia',
+	'Thailand',
+	'Taiwan',
+	'USA',
+	'Czech Republic',
+	'China',
+	'USA',
+	'Italy',
+	'Russia',
+	'Netherlands',
+	'Austria',
+	'Italy',
+	'USA',
+	'Peru',
+	'Japan',
+	'South Africa',
+	'China',
+	'Bulgaria',
+	'USA',
+	'Germany',
+	'Vietnam',
+	'Italy'
+	,'Spain',
+	'Poland',
+	'Qatar',
+	'Kenya',
+	'India',
+	'India',
+	'India',
+	'Mexico',
+	'Ireland',
+	'USA']
 
 	#this will be returned at the end
 	cities = []
 
-	# package that returns all world cities
-	package = Package('https://datahub.io/core/world-cities/datapackage.json')
-
 	#only call the Google API if there are no City objects or no city pictures (db is empty)
-	# if not City.objects.all() or len(glob.glob('media/city_images/*.jpg')) == 0:
+	if not City.objects.all() or len(glob.glob('media/city_images/*.jpg')) == 0:
 
-		# for i in range(len(city_names)):
-		# 	query = city_names[i] + ", " + countries[i] # to be sent to the Google Places API
-	for resource in package.resources:
-		if resource.descriptor['datahub']['type'] == 'derived/csv':
-			resource = resource.read()
-			for r in resource:
-				query = r[0] + " " + r[1]
-				#now we'll use json results to extract city ID and city image
-				city_id =  get_city_json(query)['results'][0]['id']
-				created_city = populate_city(city_id, query)
-				created_city.save()
-				cities.append(created_city)
+		for i in range(len(city_names)):
+			query = city_names[i] + ", " + countries[i] # to be sent to the Google Places API
+			
+			#now we'll use json results to extract city ID and city image
+			city_id =  get_city_json(query)['results'][0]['id']
+			created_city = populate_city(city_id, query)
+			created_city.save()
+			cities.append(created_city)
 
 	#If there are cities, just pull them
-	# else:
-	# 	cities = City.objects.all()
+	else:
+		cities = City.objects.all()
 
 		
 	#delete local files as they're already uploaded to media root
