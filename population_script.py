@@ -16,7 +16,7 @@ from django.http import HttpResponseServerError
 from django.contrib.staticfiles.storage import staticfiles_storage
 
 def get_json(url):
-	""" 
+	"""
 		takes Google Places api url and returns raw JSON response
 	 	of random users of different nationalities
 	 """
@@ -27,10 +27,10 @@ def get_json(url):
 
 def get_google_key():
 	""" returns Google api key"""
-	# GoogleKey = 'AIzaSyDaa7NZzS-SE4JW3J-7TaA1v1Y5aWUTiyc'
-	# GoogleKey = 'AIzaSyDViGwJgWL18QSKvPozvAiqloyy1pW2lxg'
-	# GoogleKey = 'AIzaSyB1E9CZaaaw1c77A7eZSophK_LnaGX5XRQ'
-	GoogleKey = AIzaSyCgGouj8lB-qunITGnLOiWucimp6HRm7j0
+# 	GoogleKey = 'AIzaSyBwpyozCS6ooknxp2wfyt2KKB0jwCRHYs0'
+	GoogleKey = 'AIzaSyDViGwJgWL18QSKvPozvAiqloyy1pW2lxg'
+# 	GoogleKey = 'AIzaSyB1E9CZaaaw1c77A7eZSophK_LnaGX5XRQ'
+# 	GoogleKey = 'AIzaSyCgGouj8lB-qunITGnLOiWucimp6HRm7j0'
 
 	return GoogleKey
 
@@ -40,22 +40,26 @@ def get_city_json(query):
 	url = ('https://maps.googleapis.com/maps/api/place/textsearch/json'
 				'?query=%s'
 				'&key=%s') % (query, get_google_key())
-	
+
 	try:
 		#grabbing the JSON results
 		response = requests.get(url)
 		jsondata = json.loads(response.text)
+		print(jsondata)
 		return jsondata
 
 	except IndexError:
 		return -1
 
 def populate_city(city_id, query):
-	""" takes city ID (as per Google Places API) and search query (from the homepage search field) 
+	""" takes city ID (as per Google Places API) and search query (from the homepage search field)
 	returns City object """
 
 	#create a City object
-	created_city = City.objects.create(city_id=city_id)
+	if City.objects.filter(city_id=city_id).exists():
+	    created_city = City.objects.filter(city_id=city_id)[0]
+	else:
+	    created_city = City.objects.create(city_id=city_id)
 
 	#save name, country, description
 	created_city.name = query#Save search query as city name
@@ -100,13 +104,13 @@ def populate_city(city_id, query):
 		if not created_city.city_image or not os.path.isfile("media/city_pictures/"+created_city.slug + '.jpg'):
 			created_city.city_image.save(created_city.slug + '.jpg', django_file, save=True)
 			django_file.close()
-		
+
 	created_city.save()# save City object in db
 
 	#delete local files as they're already uploaded to media root
 	if os.path.isfile(created_city.slug + '.jpg'):
 		os.remove(created_city.slug + '.jpg')
-		
+
 	return created_city
 
 def populate_cities():
@@ -155,7 +159,8 @@ def populate_cities():
 	'Chennai',
 	'Mexico City',
 	'Dublin',
-	'San Francisco' ]
+	'San Francisco'
+	]
 	countries = ['England', 'France', 'Germany', 'USA', 'China', 'Canada', 'Spain', 'Hungary', 'UAE', 'Canada',
 	'China',
 	'Singapore',
@@ -199,7 +204,8 @@ def populate_cities():
 	'India',
 	'Mexico',
 	'Ireland',
-	'USA']
+	'USA'
+]
 
 	#this will be returned at the end
 	cities = []
@@ -209,22 +215,22 @@ def populate_cities():
 
 	for i in range(len(city_names)):
 		query = city_names[i] + ", " + countries[i] # to be sent to the Google Places API
-		
+
 		#now we'll use json results to extract city ID and city image
 		city_id =  get_city_json(query)['results'][0]['id']
 		created_city = populate_city(city_id, query)
 
-		if created_city.city_name==None:
+		if created_city.name=='' or created_city.lng==None or created_city.lat==None:
 			continue
 		else:
-			created_city.save()
-			cities.append(created_city)
+		    created_city.save()
+		    cities.append(created_city)
 
 	#If there are cities, just pull them
 	# else:
 	# 	cities = City.objects.all()
 
-		
+
 	#delete local files as they're already uploaded to media root
 	for city in cities:
 		if os.path.isfile(city.name + '.jpg'):
@@ -244,11 +250,11 @@ def populate_users():
 		cities = City.objects.all()#else, call them from the db
 
 	#URLs that bring back data for test users, one URL for each city
-	urls = ['https://randomuser.me/api/?nat=gb&results=5', 'https://randomuser.me/api/?nat=fr&results=4', 
-	'https://randomuser.me/api/?nat=de&results=3', 'https://randomuser.me/api/?nat=us&results=0', 
-	'https://randomuser.me/api/?results=0', 'https://randomuser.me/api/?results=1', 'https://randomuser.me/api/?results=7&nat=es', 
-	'https://randomuser.me/api/?results=0', 
-	'https://randomuser.me/api/?results=0', 
+	urls = ['https://randomuser.me/api/?nat=gb&results=5', 'https://randomuser.me/api/?nat=fr&results=4',
+	'https://randomuser.me/api/?nat=de&results=3', 'https://randomuser.me/api/?nat=us&results=0',
+	'https://randomuser.me/api/?results=0', 'https://randomuser.me/api/?results=1', 'https://randomuser.me/api/?results=7&nat=es',
+	'https://randomuser.me/api/?results=0',
+	'https://randomuser.me/api/?results=0',
 	'https://randomuser.me/api/?results=3&nat=ca',
 	'https://randomuser.me/api/?nat=gb&results=2',
 	'https://randomuser.me/api/?nat=gb&results=10',
@@ -256,18 +262,19 @@ def populate_users():
 	'https://randomuser.me/api/?nat=gb&results=3',
 	'https://randomuser.me/api/?nat=gb&results=5',
 	'https://randomuser.me/api/?nat=gb&results=20',
-	'https://randomuser.me/api/?nat=gb&results=5',
-	'https://randomuser.me/api/?nat=gb&results=5',
-	'https://randomuser.me/api/?nat=gb&results=2',
-	'https://randomuser.me/api/?nat=gb&results=5',
-	'https://randomuser.me/api/?nat=gb&results=2',
-	'https://randomuser.me/api/?nat=gb&results=5',
-	'https://randomuser.me/api/?nat=gb&results=5',
-	'https://randomuser.me/api/?nat=gb&results=1',
-	'https://randomuser.me/api/?nat=gb&results=5',
-	'https://randomuser.me/api/?nat=gb&results=5',
-	'https://randomuser.me/api/?nat=gb&results=3',
-	'https://randomuser.me/api/?nat=gb&results=8']
+# 	'https://randomuser.me/api/?nat=gb&results=5',
+# 	'https://randomuser.me/api/?nat=gb&results=5',
+# 	'https://randomuser.me/api/?nat=gb&results=2',
+# 	'https://randomuser.me/api/?nat=gb&results=5',
+# 	'https://randomuser.me/api/?nat=gb&results=2',
+# 	'https://randomuser.me/api/?nat=gb&results=5',
+# 	'https://randomuser.me/api/?nat=gb&results=5',
+# 	'https://randomuser.me/api/?nat=gb&results=1',
+# 	'https://randomuser.me/api/?nat=gb&results=5',
+# 	'https://randomuser.me/api/?nat=gb&results=5',
+# 	'https://randomuser.me/api/?nat=gb&results=3',
+# 	'https://randomuser.me/api/?nat=gb&results=8'
+	]
 
 	#go through random data urls
 	for i in range(len(urls)):
@@ -277,9 +284,9 @@ def populate_users():
 
 		#send User objects list, json data and a City object to create profiles
 		user_list = get_users(users_in_json, cities[i], users_in_json)#returns list of User objects
-		
+
 		# user_profiles = get_profiles(user_list, cities[i], users_in_json)
-	
+
 def get_users(users, city, users_in_json):
 	"""takes JSON data for test users and bring back a list of User and UserProfile objects"""
 
@@ -322,7 +329,7 @@ def get_users(users, city, users_in_json):
 		#now fill education and career
 
 		education = ["MBA", 'MSc Physics', 'BSc ComSi', 'Bachelor of Sociology', 'Bachelor of Latin and Italian',
-		'Student of the Arts!', 'MA', 'High School Diploma', 'PhD of Astronomy', 'Community College', 
+		'Student of the Arts!', 'MA', 'High School Diploma', 'PhD of Astronomy', 'Community College',
 		'Chemical Engineering', 'English Literature']
 
 		career = ['CEO', 'student', 'web developer', 'teacher', 'interpreter', 'curator', 'teacher', 'shop keeper',
@@ -356,11 +363,11 @@ def save_image(url, file_name):
 		retrieved_image = requests.get(url)
 		sleep(3)#To avoid jamming the requests library
 		image = retrieved_image.content
-		
+
 	except requests.exceptions.ConnectionError as e:
 		e.status_code = 'Connection refused'
 		print(e.status_code)
-		
+
 		#If requests throws exception use this alternative city image
 		retrieved_image = open('/home/excurj/excurj_proj/static/images/one.jpg', 'rb').read()
 		image = retrieved_image
@@ -414,7 +421,7 @@ def populate_excursions():
 	 	message=random.choice(messages) % city.display_name
 
 	 	#create Excursion object
-	 	excursion = Excursion(traveler=random.choice(user_list), 
+	 	excursion = Excursion(traveler=random.choice(user_list),
 	 		city=city, message=message, date=generate_date() )
 
 	 	excursion.save()
@@ -448,8 +455,8 @@ def populate_offers():
 
 	#populate messages travelers put on their excursions
 	for excurj in excursion_list:
-		msg1 = "Hey there! nice to meet you. I see you're coming to %s, would love to meet up and show you around my hometown." 
-		msg2 = "Hey! my name is Sammy and would like to show you around %s and maybe meet up with my friends at the club, let me know if that works!" 
+		msg1 = "Hey there! nice to meet you. I see you're coming to %s, would love to meet up and show you around my hometown."
+		msg2 = "Hey! my name is Sammy and would like to show you around %s and maybe meet up with my friends at the club, let me know if that works!"
 		msg3 = "Ciao, Ciao! maybe I can go out with you tonight and introduce you to the best clubs around %s!"
 
 		messages.extend((msg3,msg2, msg1))
@@ -463,7 +470,7 @@ def populate_offers():
 		offer.save()
 		offers.append(offer)
 
-	return offers 
+	return offers
 
 def populate_requests():
 	""" populate requests for when a traveler asks local to take him out upon liking his profile """
@@ -486,7 +493,7 @@ def populate_requests():
 		local=random.choice(user_list)
 
 		if traveler != local:
-			request = Request(traveler=traveler, local=local, 
+			request = Request(traveler=traveler, local=local,
 				message=random.choice(messages), date=generate_date())
 
 			traveler_already_left_ref_for_local = False
@@ -496,7 +503,7 @@ def populate_requests():
 					continue
 				else:
 					traveler_already_left_ref_for_local = True
-					break	
+					break
 
 		if traveler_already_left_ref_for_local == False:
 			request.save()
@@ -505,7 +512,7 @@ def populate_requests():
 	return requests
 
 def populate_request_references():
-	""" Traveler request local to take her out. 
+	""" Traveler request local to take her out.
 	After they meet they leave each other a reference. """
 
 	user_list = User.objects.all()
@@ -516,9 +523,9 @@ def populate_request_references():
 	references=[]
 
 	for user in user_list:
-		msg_from_traveler1 = "Thank you %s for a wonderful time! You're more than welcome to visit me anytime." 
-		msg_from_traveler2 = "%s was so nice and interesting, we walked around art museums together and had interesting conversations." 
-		msg_from_traveler3 = "%s showed me around town and seemed to know so many interesting things!" 
+		msg_from_traveler1 = "Thank you %s for a wonderful time! You're more than welcome to visit me anytime."
+		msg_from_traveler2 = "%s was so nice and interesting, we walked around art museums together and had interesting conversations."
+		msg_from_traveler3 = "%s showed me around town and seemed to know so many interesting things!"
 		msg_from_traveler4 = "As an avid traveler I immensely enjoy meeting friendly locals. Thank you %s please do stop by."
 		msg_from_traveler5 = "Thank you %s! I enjoyed the tour!"
 		msg_from_traveler6 = "Couldn't have asked for a better guide than %s. Such a great persoanlity!"
@@ -542,11 +549,11 @@ def populate_request_references():
 		messages_from_locals.extend((msg_from_local1,msg_from_local2, msg_from_local3, msg_from_local4, msg_from_local5, msg_from_local6))
 
 	for req in req_list:
-		
+
 		traveler_desc = random.choice(messages_from_travelers) % req.local.first_name.title()
 		local_desc = random.choice(messages_from_locals) % req.traveler.first_name.title()
 
-		request_reference = RequestReference(request=req, traveler_desc=traveler_desc, 
+		request_reference = RequestReference(request=req, traveler_desc=traveler_desc,
 			local_desc = local_desc, traveler_fun=True, local_fun=True)
 
 		request_reference.save()

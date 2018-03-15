@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width,minimum-scale=1">
     <link rel="amphtml" href="{% url 'excurj:index_amp' %}">
     <link rel="icon" type="image/png" sizes="32x32" href=" {% static 'images/favicon-32x32.png' %} ">
-    
+
 
 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -57,11 +57,11 @@
     </title>
 
     <!-- Bootstrap CSS and CSS-->
-    
+
     <!-- <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css"> -->
-    
-    
-    
+
+
+
 
 
     <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAali5z1ZHUooZzMz7GP_sqMYDVpN-PQl8"></script> -->
@@ -84,7 +84,7 @@
 </script> -->
     <style type="text/css">
     {% block extra_style %}
-      
+
     {% endblock %}
   </style>
 
@@ -122,7 +122,7 @@
         "name": "Excurj",
         "url": "https://www.excurj.com/",
         "description": "Visit Excurj to meet locals and fellow travelers. Excurj also provides up-to-the-minute events and festival information in cities around the world.",
-        
+
         "potentialAction": {
         "@type": "SearchAction",
         "target": "https://www.excurj.com/search/?city-search={search_term_string}",
@@ -132,7 +132,7 @@
       }
     </script>
 
-    
+
 
     <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
 
@@ -154,7 +154,7 @@ body{
 }
 
 ::selection {
-    color: white; 
+    color: white;
     background: #63b8ff;
 }
 
@@ -285,13 +285,13 @@ to{transform:translateY(-4.5px);}
 #index-jumbotron h1{
   font-size: 56px;
     font-weight: lighter;
-    
+
     color: #FFFFFF;
     text-align: center;
 }
 
 #google_city_search{
-   
+
    font-size: 12px;
    /*font-weight: lighter;*/
    transition: width 2s ease;
@@ -401,7 +401,7 @@ to{transform:translateY(-4.5px);}
 
 
 .how-it-works-container, .superstars-container, .popular-cities-container{
-  
+
   /*opacity: .8;*/
   text-align: center;
   /*width: 100%;*/
@@ -475,15 +475,15 @@ div#events h2, div#wiki h2, #coming h2, #locals h2{
     font-weight: lighter;
     line-height: 1.1;
     text-align: center;
-  
+
 }
 
 #world_map{
   color: black;
     font-size: 30px;
     font-weight: lighter;
-    line-height: 1.1; 
-    text-align: center; 
+    line-height: 1.1;
+    text-align: center;
 }
 
 /*.how-it-works-container h2:after{
@@ -555,7 +555,7 @@ div#events h2, div#wiki h2, #coming h2, #locals h2{
 }
 
 .popular-cities-box{
-  
+
   background-color: rgba(99,184,255,.3);
   margin: .5em .5em;
   overflow-wrap: break-word;
@@ -567,7 +567,7 @@ div#events h2, div#wiki h2, #coming h2, #locals h2{
 }
 
 .popular-cities-box amp-img{
-  
+
   width: 200px;
     height: 170px;
   z-index: 0;
@@ -579,7 +579,7 @@ div#events h2, div#wiki h2, #coming h2, #locals h2{
 }
 
 .loader{
-  
+
   height: 100px;
   width: 100%;
   text-align: center;
@@ -592,7 +592,7 @@ div#events h2, div#wiki h2, #coming h2, #locals h2{
 svg path,
 svg rect{
   fill: #63b8ff;
-  
+
 }
 
 .how-it-works-box h3{
@@ -605,7 +605,7 @@ position: relative;
 .how-it-works-box p{
   margin-top: 20px;
   font-size: 20px;
-  
+
 }
 
 
@@ -650,8 +650,8 @@ position: relative;
 }
 
 .superstars-box-header{
-  
-  
+
+
   font-size: 16px;
   font-weight: bold;
 }
@@ -674,7 +674,7 @@ position: relative;
     left: 50%;
     transform: translate(-50%, -50%);
         z-index: 100;
-    
+
 }
 
 .popular-cities-box:hover .num{
@@ -693,7 +693,7 @@ position: relative;
   color: black;
   background-color: rgba(255,255,255,.69);
   padding: 5px;
-  
+
 }
 
 .num p{
@@ -753,10 +753,10 @@ position: relative;
 .ready-header-button{
   padding: 5px 10px;
   font-size: 20px;
-    
+
     font-weight: bold;
     color: black;
-    
+
     width: 220px;
     opacity: .8;
     margin: 10px 20px;
@@ -764,63 +764,51 @@ position: relative;
     border-radius: 2px;
 }
 
-
 footer{
-  background-color: white;
-  border-top: 3px solid grey;
-  font-size: .9em;
-  padding: 7px;
-  display: grid;
-  grid-template-columns: 4fr 8fr 4fr;
-  justify-items:center;
-      align-items:center;
-  text-align: center;max-height: 100px;
-}
-
-.link-footer {
-  align-self: flex-end;
-}
-
-.connect-with-us {
+	background-color: white;
+	border-top: 3px solid grey;
+	font-size: .9em;
+	padding: 7px;
 
 }
+
 
 ul.footer-links{
-  
-  margin-left: -25px;
-  
+
+	margin-left: -25px;
+
 }
 
 ul.footer-links li{
-  list-style-type: none;
-  float: left;
-  text-transform: uppercase;
+	list-style-type: none;
+	float: left;
+	text-transform: uppercase;
     margin-right: 20px;
-    margin-bottom: 0em;
+    margin-bottom: 0.75em;
     font-size: 12px;
     font-weight: bold;
 
-    
+
 }
 
 ul.footer-links li a{
-  display: block;
-  color: #34495e;
+	display: block;
+	color: #34495e;
 
 }
 
 .copyrights{
-  margin-bottom: 0;
-  clear: left;
-  
-  text-transform: none;
+
+	clear: left;
+
+	text-transform: none;
     font-size: 12px;
     font-weight: 700;
     color: #bfcad2;
 }
 
 .call-to-action{
-  color: #929dad;
+	color: #929dad;
     font-size: 12px;
     font-weight: 700;
     letter-spacing: .2px;
@@ -864,6 +852,105 @@ ul.footer-links li a{
     -webkit-transition: .0s;
 }
 
+/*footer{*/
+/*  background-color: white;*/
+/*  border-top: 3px solid grey;*/
+/*  font-size: .9em;*/
+/*  padding: 7px;*/
+/*  display: grid;*/
+/*  grid-template-columns: 4fr 8fr 4fr;*/
+/*  justify-items:center;*/
+/*      align-items:center;*/
+/*  text-align: center;max-height: 100px;*/
+/*}*/
+
+/*.link-footer {*/
+/*  align-self: flex-end;*/
+/*}*/
+
+/*.connect-with-us {*/
+
+/*}*/
+
+/*ul.footer-links{*/
+
+/*  margin-left: -25px;*/
+
+/*}*/
+
+/*ul.footer-links li{*/
+/*  list-style-type: none;*/
+/*  float: left;*/
+/*  text-transform: uppercase;*/
+/*    margin-right: 20px;*/
+/*    margin-bottom: 0em;*/
+/*    font-size: 12px;*/
+/*    font-weight: bold;*/
+
+
+/*}*/
+
+/*ul.footer-links li a{*/
+/*  display: block;*/
+/*  color: #34495e;*/
+
+/*}*/
+
+/*.copyrights{*/
+/*  margin-bottom: 0;*/
+/*  clear: left;*/
+
+/*  text-transform: none;*/
+/*    font-size: 12px;*/
+/*    font-weight: 700;*/
+/*    color: #bfcad2;*/
+/*}*/
+
+/*.call-to-action{*/
+/*  color: #929dad;*/
+/*    font-size: 12px;*/
+/*    font-weight: 700;*/
+/*    letter-spacing: .2px;*/
+/*    text-transform: uppercase;*/
+/*    padding: 5px;*/
+/*}*/
+
+
+
+/*.fa-twitter {*/
+/*    color: #4099FF;*/
+/*}*/
+
+/*.fa-facebook {*/
+/*    color: #3B5998;*/
+/*}*/
+
+/*.fa-youtube-play {*/
+/*    color: #e52d27;*/
+/*}*/
+
+/*.fa-rss {*/
+/*    color: #FF6600;*/
+/*}*/
+
+
+/*.fa-flickr {*/
+/*    color: #ff0084;*/
+/*}*/
+
+
+/*.fa {*/
+/*    opacity: 0.6;*/
+/*    transition: 0s;*/
+/*    -webkit-transition: 0s;*/
+/*}*/
+
+/*.fa:hover{*/
+/*    opacity: 1;*/
+/*    transition: 0s;*/
+/*    -webkit-transition: .0s;*/
+/*}*/
+
 
 .navbar-default .navbar-collapse, .navbar-default .navbar-form{
   padding: 0 8px;
@@ -898,8 +985,8 @@ ul.footer-links li a{
   text-decoration: none;
   list-style: none;
 
-  
-  
+
+
 }
 
 #prof_dropdown li.dropli:not(:last-child){
@@ -916,7 +1003,7 @@ ul.footer-links li a{
 
 #prof_dropdown li.dropli:hover{
   background-color: #63b8ff;
-  
+
 }
 
 #prof_dropdown li.dropli:last-child:hover{
@@ -958,16 +1045,16 @@ div.jumbotron #city_jumbotron{
   background: no-repeat fixed;
     background-size: cover;
     margin: 0;
-    
+
     padding: 0px;
     width: 100%;
     object-fit: cover;
     min-height: 200px;
-    
+
 }
 
 div.jumbotron#city_jumbotron .container{
-  
+
     margin: 0;
     padding: 0;
     min-height: 400px;
@@ -979,7 +1066,7 @@ div.jumbotron#city_jumbotron .container{
     width: 100%;
     -webkit-filter: brightness(1.10);
     filter: brightness(1.10);
-    
+
 }
 
 /*city TABS CSS*/
@@ -995,7 +1082,7 @@ ul.nav.tabs {
 
 ul.nav.tabs li a{
   color: black;
-  
+
 }
 
 ul.nav.tabs li.active a{
@@ -1026,7 +1113,7 @@ ul.nav#tabs_user {
 
 ul.nav#tabs_user li a{
   color: black;
-  
+
 }
 
 ul.nav#tabs_user li.active a{
@@ -1054,7 +1141,7 @@ ul.nav#tabs_user li{
 
 table.table{
   width: 100%;
-  
+
 }
 
 
@@ -1082,7 +1169,7 @@ div.jumbotron#user_jumbotron .container{
   top:190px;
   box-shadow: 0 1px 1px rgba(136,153,166,0.15);
   z-index: 3;
-  
+
   border-radius: 15px;
 
 }
@@ -1107,7 +1194,7 @@ pre{
 }
 
 .personal_info{
-  
+
   margin-left: 70px;
   /*margin-top: 80px;*/
   background-color:  rgba(255, 250, 250, .1);
@@ -1123,7 +1210,7 @@ pre{
 
 
 .abouts{
-  background-color: white; 
+  background-color: white;
   padding: 18px;
   border-radius: 12px;
   margin-top: 50px;
@@ -1160,8 +1247,8 @@ div#loading {
 
 /*DHASHBOARD CSS*/
 #dashboard_bio{
-  
-  
+
+
   margin-top: 70px;
   background-color: white;
   margin-left: 10px;
@@ -1177,7 +1264,7 @@ div#loading {
 }
 
 #req_i_made, #offers{
-  
+
   margin-left: 5px;
   margin-right: 3px;
   margin-top: 70px;
@@ -1276,7 +1363,7 @@ header.event_header h1{
 header.event_header .event_detail{
   font-weight: bold;
   font-size: 20px;
-  
+
 }
 
 
@@ -1319,7 +1406,7 @@ header.event_header .event_detail{
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
     color: #555;
     cursor: default;
-    background-color: #f5f8fa; 
+    background-color: #f5f8fa;
     border: 1px solid #f5f8fa;
     border-bottom-color: transparent;
 }
@@ -1414,9 +1501,9 @@ no-mobile{
 @media only screen and (max-width: 1250px){
 
 .popular-cities-box {
-    
+
     grid-column: 1/7;
-    
+
 }
 
 .how-it-works-box{
@@ -1538,7 +1625,7 @@ ul.navbar-nav li.no_desktop{
     left: 50%;
     padding: 10px;
     transform: translate(-50%, -50%);*/
-    
+
 }
 
 #header-sections{
@@ -1569,16 +1656,16 @@ ul.navbar-nav li.no_desktop{
 }
 
 .how-it-works-box h3:after{
-  
+
   top: 55px;
-  
+
 }
 
 .how-it-works-container h2:after{
-  
+
   left: 37%;
   right: 37%;
-  
+
 }
 
 .ready-header-button{
@@ -1660,7 +1747,7 @@ ul.navbar-nav li.no_desktop{
 }
 
 .jumbotron p{
-  
+
     width: 400px;
 }
 }
@@ -1874,16 +1961,16 @@ li.pull-right {
 
 
 /*IPAD MEDIA QUERY*/
-@media only screen 
-and (min-device-width : 768px) 
-and (max-device-width : 1024px) 
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
 and (orientation : portrait) {
 
 .homepage_jumbo {
-    
+
     grid-gap: 30px;
-    
-} 
+
+}
 
   .how-it-works-container h2 {
     grid-column: 1/5;
@@ -1965,7 +2052,7 @@ and (orientation : portrait) {
 {
   .jumbotron p {
       font-size: 14px;
-       font-weight: lighter; 
+       font-weight: lighter;
       line-height: 1.1;
       margin-bottom: 30px;
       width: 300px;
@@ -2102,9 +2189,9 @@ no-mobile{
 @media only screen and (max-width: 1250px){
 
 .popular-cities-box {
-    
+
     grid-column: 1/7;
-    
+
 }
 
 .how-it-works-box{
@@ -2226,7 +2313,7 @@ ul.navbar-nav li.no_desktop{
     left: 50%;
     padding: 10px;
     transform: translate(-50%, -50%);*/
-    
+
 }
 
 #header-sections{
@@ -2257,16 +2344,16 @@ ul.navbar-nav li.no_desktop{
 }
 
 .how-it-works-box h3:after{
-  
+
   top: 55px;
-  
+
 }
 
 .how-it-works-container h2:after{
-  
+
   left: 37%;
   right: 37%;
-  
+
 }
 
 .ready-header-button{
@@ -2348,7 +2435,7 @@ ul.navbar-nav li.no_desktop{
 }
 
 #index-jumbotron p{
-  
+
     width: 400px;
 }
 }
@@ -2562,16 +2649,16 @@ li.pull-right {
 
 
 /*IPAD MEDIA QUERY*/
-@media only screen 
-and (min-device-width : 768px) 
-and (max-device-width : 1024px) 
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
 and (orientation : portrait) {
 
 .homepage_jumbo {
-    
+
     grid-gap: 30px;
-    
-} 
+
+}
 
   .how-it-works-container h2 {
     grid-column: 1/5;
@@ -2653,7 +2740,7 @@ and (orientation : portrait) {
 {
   #index-jumbotron p {
       font-size: 14px;
-       font-weight: lighter; 
+       font-weight: lighter;
       line-height: 1.1;
       margin-bottom: 30px;
       width: 300px;
@@ -2688,9 +2775,9 @@ and (orientation : portrait) {
       </button>
     </form>
 
-    
+
     	<nav class="navbar navbar-default base-nav">
-    	
+
       <a class="logo" href=" {% url 'excurj:index' %} " title="excurj | Make New Friendships While Traveling">
         <amp-img height="50" width="153" src=" {% static 'images/logo.png' %} " alt="Excurj logo" layout="fixed"></amp-img>
       </a>
@@ -2703,7 +2790,7 @@ and (orientation : portrait) {
       {% if request.user.is_authenticated %}
 
       <div id="prof_li">
-        <a href="  javascript:void(0)"> 
+        <a href="  javascript:void(0)">
           <amp-img layout="fixed" src=" {{request.user.profile.prof_pic.url}} " height="49px" width="49px" class="img-circle"></amp-img>
 
         </a>
@@ -2721,96 +2808,142 @@ and (orientation : portrait) {
 
         <a href="{% url 'excurj:logout' %}?next=/">LOGOUT</a>
 
-        
 
-        
-            
-      
-            
+
+
+
+
+
 
       {% else %}
 
       <a href=" {% url 'excurj:login' %} ">LOGIN</a>
       <a href="{% url 'excurj:createprofile' %}">JOIN</a>
-      {% endif %} 
+      {% endif %}
 
       <form target="_top" class="top-form navbar-form navbar-right no_mobile" action=" {% url 'excurj:search' %} ">
-        
-            <input type="text" name="q" class="form-control " placeholder="Search people..." id="topsearchbox">
-        
-         <!--  <button type="submit" class="btn btn-default no_mobile"><span class="glyphicon glyphicon-search"></span></button> -->
-      </form>       
- 
-     
-    	</nav>
-      
 
-      
+            <input type="text" name="q" class="form-control " placeholder="Search people..." id="topsearchbox">
+
+         <!--  <button type="submit" class="btn btn-default no_mobile"><span class="glyphicon glyphicon-search"></span></button> -->
+      </form>
+
+
+    	</nav>
+
+
+
         {% block body_block %}
         <p class="lead">This page is undergoing maintenance, it'll be up in a giffy :)</p>
         {% endblock %}
-      
 
-    <footer> 
-      
-      <div class="link-footer">
-        <div class="col-md-12 col-xs-12">
-            <a title="excurj | Make Friendships While Traveling" href=" {% url 'excurj:index' %} " class="">
+        <footer style="text-align: center;max-height: 100px;">
+
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-xs-12">
+            <a title="excurj logo" href=" {% url 'excurj:index' %} " class="">
               <img src=" {% static 'images/logo.png' %} " class="" alt="excurj logo">
             </a>
           </div>
-        <ul class="footer-links">
-                <li> <a href="">ABOUT</a> </li>
-                <li> <a href="">SAFETY</a> </li>
-                <li> <a href="">SUPPORT</a> </li>
-                <li> <a href="">BLOG</a> </li>
-            </ul>
-      </div>
-        
-          
 
-          <div>
-          <div class="connect-with-us">
+          <div class="col-md-4 col-xs-12">
             <div class="call-to-action">Connect with us</div>
             <a href='#'><i class="fa fa-instagram fa-3x fa-fw"></i></a>
             <a href='#'><i class="fa fa-facebook fa-3x fa-fw"></i></a>
             <a href='#'><i class="fa fa-twitter fa-3x fa-fw"></i></a>
             <a href='#'><i class="fa fa-flickr fa-3x fa-fw"></i></a>
           </div>
-          <p class="copyrights" >
-            Copyrights 2018 by excurj. Made with 100% recycled pixels.
-          </p>
+
+
+        </div>
+
+        <div class="row">
+          <div class="col-lg-4">
+            <ul class="footer-links">
+                <li> <a href="">ABOUT</a> </li>
+                <li> <a href="">SAFETY</a> </li>
+                <li> <a href="">SUPPORT</a> </li>
+                <li> <a href="">BLOG</a> </li>
+            </ul>
           </div>
 
-          
-        
+          <div class="col-lg-4">
+            <div class="copyrights">
 
-        
-          
-            
-          
-
-          
-            <div>
-
-              
+              <p class="" >
+                Copyrights 2018 by excurj.com. Made with 100% recycled pixels.
+              </p>
 
             </div>
-          
+          </div>
 
-          
-        
-        
-      
-      
-     
-        
-        
-       
-      
+
+        </div>
+
+      </div>
+
     </footer>
+    <!--<footer> -->
 
-    <!-- <img src=" {% static 'images/up.svg' %}" class="up"> 
+    <!--  <div class="link-footer">-->
+    <!--    <div class="col-md-12 col-xs-12">-->
+    <!--        <a title="excurj | Make Friendships While Traveling" href=" {% url 'excurj:index' %} " class="">-->
+    <!--          <img src=" {% static 'images/logo.png' %} " class="" alt="excurj logo">-->
+    <!--        </a>-->
+    <!--      </div>-->
+    <!--    <ul class="footer-links">-->
+    <!--            <li> <a href="">ABOUT</a> </li>-->
+    <!--            <li> <a href="">SAFETY</a> </li>-->
+    <!--            <li> <a href="">SUPPORT</a> </li>-->
+    <!--            <li> <a href="">BLOG</a> </li>-->
+    <!--        </ul>-->
+    <!--  </div>-->
+
+
+
+    <!--      <div>-->
+    <!--      <div class="connect-with-us">-->
+    <!--        <div class="call-to-action">Connect with us</div>-->
+    <!--        <a href='#'><i class="fa fa-instagram fa-3x fa-fw"></i></a>-->
+    <!--        <a href='#'><i class="fa fa-facebook fa-3x fa-fw"></i></a>-->
+    <!--        <a href='#'><i class="fa fa-twitter fa-3x fa-fw"></i></a>-->
+    <!--        <a href='#'><i class="fa fa-flickr fa-3x fa-fw"></i></a>-->
+    <!--      </div>-->
+    <!--      <p class="copyrights" >-->
+    <!--        Copyrights 2018 by excurj. Made with 100% recycled pixels.-->
+    <!--      </p>-->
+    <!--      </div>-->
+
+
+
+
+
+
+
+
+
+
+    <!--        <div>-->
+
+
+
+    <!--        </div>-->
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--</footer>-->
+
+    <!-- <img src=" {% static 'images/up.svg' %}" class="up">
     <div class="feedback">
         <p>Feedback</p>
     </div> -->
@@ -2868,10 +3001,10 @@ and (orientation : portrait) {
 		    	$(window).scroll(function() {
 		    if($(this).scrollTop() > 10) {
 		        $('.base-nav').addClass('opaque');
-                
+
 		    } else {
 		        $('.base-nav').removeClass('opaque');
-                
+
 		    }
 		});
 
@@ -2887,8 +3020,8 @@ and (orientation : portrait) {
         .click(function(event) {
           // On-page links
           if (
-            location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') 
-            && 
+            location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '')
+            &&
             location.hostname == this.hostname
           ) {
             // Figure out element to scroll to
@@ -2925,7 +3058,7 @@ and (orientation : portrait) {
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYfS_V4jHXS_jVYa1k2w9VY52r0pMrL8g&callback=initMap&libraries=places"></script>
 
 <script type="text/javascript">
-  //CENTER CONTROL 
+  //CENTER CONTROL
 function CenterControl(controlDiv, map) {
   var center_here = {lat: 41.38506389999999, lng: 2.1734035,};
         // Set CSS for the control border.
@@ -2975,18 +3108,18 @@ function CenterControl(controlDiv, map) {
     for (i = 0; i < cities.length; i++) {
       console.log("LAAAAt is:  " + cities[i].lat)
       console.log("LNG is:  " + cities[i].lng)
-      
+
         marker = new google.maps.Marker({
             position: new google.maps.LatLng(cities[i].lat, cities[i].lng),
             map: map,
-            
+
         });
         google.maps.event.addListener(marker, 'click', (function (marker, i) {
           return function () {
             if (cities[i].count == 1) {
-              infowindow.setContent("<a href ='" + "/city/" + cities[i].slug + "'><h3>" + cities[i].city_name + "</h3>" + "</a>" + "<br>" + 
- 
-                "<img class='img-circle' width=100 height=100 src='" + cities[i].king_pic + "'>" + 
+              infowindow.setContent("<a href ='" + "/city/" + cities[i].slug + "'><h3>" + cities[i].city_name + "</h3>" + "</a>" + "<br>" +
+
+                "<img class='img-circle' width=100 height=100 src='" + cities[i].king_pic + "'>" +
                 "<p class='lead'>Has one awesome person!</p>");
               }
               else{
@@ -2995,11 +3128,11 @@ function CenterControl(controlDiv, map) {
             infowindow.open(map, marker);
           }
           })(marker, i));
-           
-            
+
+
             }
-            
-     
+
+
             // Create the DIV to hold the control and call the CenterControl()
         // constructor passing in this DIV.
         var centerControlDiv = document.createElement('div');
@@ -3007,8 +3140,8 @@ function CenterControl(controlDiv, map) {
         centerControlDiv.index = 1;
         map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv);
   }(window, google));
-  
-  
+
+
 </script>
 
   </body>
