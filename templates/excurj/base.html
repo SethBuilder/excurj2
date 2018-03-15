@@ -2750,8 +2750,54 @@ and (orientation : portrait) {
         <p class="lead">This page is undergoing maintenance, it'll be up in a giffy :)</p>
         {% endblock %}
       
+            <footer style="text-align: center;max-height: 100px;"> 
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-xs-12">
+            <a title="excurj logo" href=" {% url 'excurj:index' %} " class="">
+              <img src=" {% static 'images/logo.png' %} " class="" alt="excurj logo">
+            </a>
+          </div>
 
-    <footer> 
+          <div class="col-md-4 col-xs-12">
+            <div class="call-to-action">Connect with us</div>
+            <a href='#'><i class="fa fa-instagram fa-3x fa-fw"></i></a>
+            <a href='#'><i class="fa fa-facebook fa-3x fa-fw"></i></a>
+            <a href='#'><i class="fa fa-twitter fa-3x fa-fw"></i></a>
+            <a href='#'><i class="fa fa-flickr fa-3x fa-fw"></i></a>
+          </div>
+
+          
+        </div>
+
+        <div class="row">
+          <div class="col-lg-4">
+            <ul class="footer-links">
+                <li> <a href="">ABOUT</a> </li>
+                <li> <a href="">SAFETY</a> </li>
+                <li> <a href="">SUPPORT</a> </li>
+                <li> <a href="">BLOG</a> </li>
+            </ul>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="copyrights">
+
+              <p class="" >
+                Copyrights 2018 by excurj.com. Made with 100% recycled pixels.
+              </p>
+
+            </div>
+          </div>
+
+          
+        </div>
+        
+      </div> 
+      
+    </footer>
+<!--     <footer> 
       
       <div class="link-footer">
         <div class="col-md-12 col-xs-12">
@@ -2796,19 +2842,8 @@ and (orientation : portrait) {
               
 
             </div>
-          
-
-          
-        
-        
       
-      
-     
-        
-        
-       
-      
-    </footer>
+    </footer> -->
 
     <!-- <img src=" {% static 'images/up.svg' %}" class="up"> 
     <div class="feedback">

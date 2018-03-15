@@ -151,7 +151,7 @@ def cities_list(request):
 	paginator = Paginator(city_list, 6)
 
 	try:
-		sleep(2)
+		# sleep(2)
 		cities = paginator.page(page)
 	except PageNotAnInteger:
 		cities = paginator.page(1)

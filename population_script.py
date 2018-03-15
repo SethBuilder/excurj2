@@ -30,7 +30,7 @@ def get_google_key():
 	# GoogleKey = 'AIzaSyDaa7NZzS-SE4JW3J-7TaA1v1Y5aWUTiyc'
 	# GoogleKey = 'AIzaSyDViGwJgWL18QSKvPozvAiqloyy1pW2lxg'
 	# GoogleKey = 'AIzaSyB1E9CZaaaw1c77A7eZSophK_LnaGX5XRQ'
-	GoogleKey = AIzaSyCgGouj8lB-qunITGnLOiWucimp6HRm7j0
+	GoogleKey = 'AIzaSyCgGouj8lB-qunITGnLOiWucimp6HRm7j0'
 
 	return GoogleKey
 
@@ -214,7 +214,7 @@ def populate_cities():
 		city_id =  get_city_json(query)['results'][0]['id']
 		created_city = populate_city(city_id, query)
 
-		if created_city.city_name==None:
+		if created_city.name==None:
 			continue
 		else:
 			created_city.save()
