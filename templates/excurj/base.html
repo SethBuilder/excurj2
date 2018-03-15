@@ -2170,6 +2170,9 @@ no-mobile{
 
 @media only screen and (max-width: 1250px){
 
+.infinite-container {
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
 .popular-cities-box {
 
     grid-column: 1/7;
@@ -2346,7 +2349,9 @@ ul.navbar-nav li.no_desktop{
 
 
 @media only screen and (max-width: 899px){
-
+.infinite-container {
+  grid-template-columns: 1fr 1fr 1fr;
+}
 #offers{
   margin-left: 0;
 }
@@ -2424,6 +2429,10 @@ ul.navbar-nav li.no_desktop{
 
 
 @media only screen and (max-width: 640px){
+
+  .infinite-container {
+  grid-template-columns: 1fr 1fr;
+}
 #offers{
   margin-left: 0;
 }
@@ -2501,6 +2510,10 @@ ul.navbar-nav li.no_desktop{
 
 
 @media only screen and (max-width: 470px){
+
+  .infinite-container {
+  grid-template-columns: 1fr;
+}
 
 .paired {
   grid-gap: 0;
@@ -2636,6 +2649,10 @@ and (min-device-width : 768px)
 and (max-device-width : 1024px)
 and (orientation : portrait) {
 
+  .infinite-container {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
 .homepage_jumbo {
 
     grid-gap: 30px;
@@ -2719,7 +2736,13 @@ and (orientation : portrait) {
 }
 
 @media only screen and (max-width: 330px)
+
+
 {
+
+  .infinite-container {
+  grid-template-columns: 1fr;
+}
   #index-jumbotron p {
       font-size: 14px;
        font-weight: lighter;
@@ -2813,7 +2836,7 @@ and (orientation : portrait) {
 
     	</nav>
 
-      
+
 
         {% block body_block %}
         <p class="lead">This page is undergoing maintenance, it'll be up in a giffy :)</p>
