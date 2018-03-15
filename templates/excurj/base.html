@@ -142,6 +142,31 @@
       font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
     }
 
+
+  @media (min-width: 1200px)
+.container {
+    width: 1170px;
+}
+@media (min-width: 992px)
+.container {
+    width: 970px;
+}
+@media (min-width: 768px)
+.container {
+    width: 750px;
+}
+.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
 html{
   line-height: 1.1;
   font-family: 'Lato', sans-serif;
@@ -765,26 +790,37 @@ position: relative;
 }
 
 footer{
-	background-color: white;
-	border-top: 3px solid grey;
-	font-size: .9em;
-	padding: 7px;
+  background-color: white;
+  border-top: 3px solid grey;
+  font-size: .9em;
+  padding: 7px;
+  display: grid;
+  grid-template-columns: 4fr 8fr 4fr;
+  justify-items:center;
+      align-items:center;
+  text-align: center;max-height: 100px;
+}
+
+.link-footer {
+  align-self: flex-end;
+}
+
+.connect-with-us {
 
 }
 
-
 ul.footer-links{
 
-	margin-left: -25px;
+  margin-left: -25px;
 
 }
 
 ul.footer-links li{
-	list-style-type: none;
-	float: left;
-	text-transform: uppercase;
+  list-style-type: none;
+  float: left;
+  text-transform: uppercase;
     margin-right: 20px;
-    margin-bottom: 0.75em;
+    margin-bottom: 0em;
     font-size: 12px;
     font-weight: bold;
 
@@ -792,23 +828,23 @@ ul.footer-links li{
 }
 
 ul.footer-links li a{
-	display: block;
-	color: #34495e;
+  display: block;
+  color: #34495e;
 
 }
 
 .copyrights{
+  margin-bottom: 0;
+  clear: left;
 
-	clear: left;
-
-	text-transform: none;
+  text-transform: none;
     font-size: 12px;
     font-weight: 700;
     color: #bfcad2;
 }
 
 .call-to-action{
-	color: #929dad;
+  color: #929dad;
     font-size: 12px;
     font-weight: 700;
     letter-spacing: .2px;
@@ -852,104 +888,24 @@ ul.footer-links li a{
     -webkit-transition: .0s;
 }
 
-/*footer{*/
-/*  background-color: white;*/
-/*  border-top: 3px solid grey;*/
-/*  font-size: .9em;*/
-/*  padding: 7px;*/
-/*  display: grid;*/
-/*  grid-template-columns: 4fr 8fr 4fr;*/
-/*  justify-items:center;*/
-/*      align-items:center;*/
-/*  text-align: center;max-height: 100px;*/
-/*}*/
-
-/*.link-footer {*/
-/*  align-self: flex-end;*/
-/*}*/
-
-/*.connect-with-us {*/
-
-/*}*/
-
-/*ul.footer-links{*/
-
-/*  margin-left: -25px;*/
-
-/*}*/
-
-/*ul.footer-links li{*/
-/*  list-style-type: none;*/
-/*  float: left;*/
-/*  text-transform: uppercase;*/
-/*    margin-right: 20px;*/
-/*    margin-bottom: 0em;*/
-/*    font-size: 12px;*/
-/*    font-weight: bold;*/
 
 
-/*}*/
+@media only screen and (max-width: 910px){
 
-/*ul.footer-links li a{*/
-/*  display: block;*/
-/*  color: #34495e;*/
-
-/*}*/
-
-/*.copyrights{*/
-/*  margin-bottom: 0;*/
-/*  clear: left;*/
-
-/*  text-transform: none;*/
-/*    font-size: 12px;*/
-/*    font-weight: 700;*/
-/*    color: #bfcad2;*/
-/*}*/
-
-/*.call-to-action{*/
-/*  color: #929dad;*/
-/*    font-size: 12px;*/
-/*    font-weight: 700;*/
-/*    letter-spacing: .2px;*/
-/*    text-transform: uppercase;*/
-/*    padding: 5px;*/
-/*}*/
+no-mobile{
+  display: none;
+}
 
 
+@media only screen and (max-width: 470px){
 
-/*.fa-twitter {*/
-/*    color: #4099FF;*/
-/*}*/
+  footer {
+    grid-template-columns: 1fr;
+  }
 
-/*.fa-facebook {*/
-/*    color: #3B5998;*/
-/*}*/
+}
 
-/*.fa-youtube-play {*/
-/*    color: #e52d27;*/
-/*}*/
-
-/*.fa-rss {*/
-/*    color: #FF6600;*/
-/*}*/
-
-
-/*.fa-flickr {*/
-/*    color: #ff0084;*/
-/*}*/
-
-
-/*.fa {*/
-/*    opacity: 0.6;*/
-/*    transition: 0s;*/
-/*    -webkit-transition: 0s;*/
-/*}*/
-
-/*.fa:hover{*/
-/*    opacity: 1;*/
-/*    transition: 0s;*/
-/*    -webkit-transition: .0s;*/
-/*}*/
+}
 
 
 .navbar-default .navbar-collapse, .navbar-default .navbar-form{
@@ -959,6 +915,14 @@ ul.footer-links li a{
 .mobile{
   display: none;
 }
+
+
+.container-fluid>.navbar-collapse, .container-fluid>.navbar-header, .container>.navbar-collapse, .container>.navbar-header{
+  margin-right: 1px;
+  margin-left: -5px;
+}
+
+
 
 
 .container-fluid>.navbar-collapse, .container-fluid>.navbar-header, .container>.navbar-collapse, .container>.navbar-header{
@@ -1450,6 +1414,20 @@ header.event_header .event_detail{
 
 
 
+/*IPAD MEDIA QUERY*/
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : portrait) {
+
+  footer {
+    grid-template-columns: 4fr 5fr 5fr;
+  }
+
+
+}
+
+
 
 
 
@@ -1470,6 +1448,10 @@ no-mobile{
 
 
 @media only screen and (min-width: 1251px){
+
+  .no_desktop{
+  display: none;
+}
 
   .header-button{
   padding: 7px 16px;
@@ -2831,230 +2813,56 @@ and (orientation : portrait) {
 
     	</nav>
 
-
+      
 
         {% block body_block %}
         <p class="lead">This page is undergoing maintenance, it'll be up in a giffy :)</p>
         {% endblock %}
-<<<<<<< HEAD
-      
-            <footer style="text-align: center;max-height: 100px;"> 
-      
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4 col-xs-12">
-            <a title="excurj logo" href=" {% url 'excurj:index' %} " class="">
-              <img src=" {% static 'images/logo.png' %} " class="" alt="excurj logo">
-            </a>
-          </div>
 
-          <div class="col-md-4 col-xs-12">
-            <div class="call-to-action">Connect with us</div>
-            <a href='#'><i class="fa fa-instagram fa-3x fa-fw"></i></a>
-            <a href='#'><i class="fa fa-facebook fa-3x fa-fw"></i></a>
-            <a href='#'><i class="fa fa-twitter fa-3x fa-fw"></i></a>
-            <a href='#'><i class="fa fa-flickr fa-3x fa-fw"></i></a>
-          </div>
+            <footer>
 
-          
-        </div>
-
-        <div class="row">
-          <div class="col-lg-4">
-            <ul class="footer-links">
-                <li> <a href="">ABOUT</a> </li>
-                <li> <a href="">SAFETY</a> </li>
-                <li> <a href="">SUPPORT</a> </li>
-                <li> <a href="">BLOG</a> </li>
-            </ul>
-          </div>
-
-          <div class="col-lg-4">
-            <div class="copyrights">
-
-              <p class="" >
-                Copyrights 2018 by excurj.com. Made with 100% recycled pixels.
-              </p>
-
-            </div>
-          </div>
-
-          
-        </div>
-        
-      </div> 
-      
-    </footer>
-<!--     <footer> 
-      
       <div class="link-footer">
-        <div class="col-md-12 col-xs-12">
+
+        <div class="">
             <a title="excurj | Make Friendships While Traveling" href=" {% url 'excurj:index' %} " class="">
-=======
-
-        <footer style="text-align: center;max-height: 100px;">
-
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4 col-xs-12">
-            <a title="excurj logo" href=" {% url 'excurj:index' %} " class="">
->>>>>>> bb9552d6cdc92dda326ec7994db5d33fe542d2a4
-              <img src=" {% static 'images/logo.png' %} " class="" alt="excurj logo">
+              <amp-img width="180" height="60" layout="fixed" src=" {% static 'images/logo.png' %} " class="" alt="excurj logo"></amp-img>
             </a>
-          </div>
-
-          <div class="col-md-4 col-xs-12">
-            <div class="call-to-action">Connect with us</div>
-            <a href='#'><i class="fa fa-instagram fa-3x fa-fw"></i></a>
-            <a href='#'><i class="fa fa-facebook fa-3x fa-fw"></i></a>
-            <a href='#'><i class="fa fa-twitter fa-3x fa-fw"></i></a>
-            <a href='#'><i class="fa fa-flickr fa-3x fa-fw"></i></a>
-          </div>
-
-
         </div>
 
-        <div class="row">
-          <div class="col-lg-4">
-            <ul class="footer-links">
+        <ul class="footer-links no-mobile">
                 <li> <a href="">ABOUT</a> </li>
                 <li> <a href="">SAFETY</a> </li>
                 <li> <a href="">SUPPORT</a> </li>
                 <li> <a href="">BLOG</a> </li>
             </ul>
-          </div>
-
-          <div class="col-lg-4">
-            <div class="copyrights">
-
-              <p class="" >
-                Copyrights 2018 by excurj.com. Made with 100% recycled pixels.
-              </p>
-
-            </div>
-<<<<<<< HEAD
-      
-    </footer> -->
-=======
-          </div>
-
-
-        </div>
-
       </div>
 
+
+
+          <div>
+          <div class="connect-with-us">
+            <div class="call-to-action">Connect with us</div>
+            <a href='#'><i class="fa fa-instagram fa-3x fa-fw"></i></a>
+            <a href='#'><i class="fa fa-facebook fa-3x fa-fw"></i></a>
+            <a href='#'><i class="fa fa-twitter fa-3x fa-fw"></i></a>
+            <a href='#'><i class="fa fa-flickr fa-3x fa-fw"></i></a>
+          </div>
+          <p class="copyrights no-mobile" >
+            Copyrights 2018 by excurj. Made with 100% recycled pixels.
+          </p>
+          </div>
+
+          <ul class="footer-links no_desktop">
+                <li> <a href="">ABOUT</a> </li>
+                <li> <a href="">SAFETY</a> </li>
+                <li> <a href="">SUPPORT</a> </li>
+                <li> <a href="">BLOG</a> </li>
+            </ul>
+            <p class="copyrights no_desktop" >
+            Copyrights 2018 by excurj. Made with 100% recycled pixels.
+          </p>
     </footer>
-    <!--<footer> -->
 
-    <!--  <div class="link-footer">-->
-    <!--    <div class="col-md-12 col-xs-12">-->
-    <!--        <a title="excurj | Make Friendships While Traveling" href=" {% url 'excurj:index' %} " class="">-->
-    <!--          <img src=" {% static 'images/logo.png' %} " class="" alt="excurj logo">-->
-    <!--        </a>-->
-    <!--      </div>-->
-    <!--    <ul class="footer-links">-->
-    <!--            <li> <a href="">ABOUT</a> </li>-->
-    <!--            <li> <a href="">SAFETY</a> </li>-->
-    <!--            <li> <a href="">SUPPORT</a> </li>-->
-    <!--            <li> <a href="">BLOG</a> </li>-->
-    <!--        </ul>-->
-    <!--  </div>-->
-
-
-
-    <!--      <div>-->
-    <!--      <div class="connect-with-us">-->
-    <!--        <div class="call-to-action">Connect with us</div>-->
-    <!--        <a href='#'><i class="fa fa-instagram fa-3x fa-fw"></i></a>-->
-    <!--        <a href='#'><i class="fa fa-facebook fa-3x fa-fw"></i></a>-->
-    <!--        <a href='#'><i class="fa fa-twitter fa-3x fa-fw"></i></a>-->
-    <!--        <a href='#'><i class="fa fa-flickr fa-3x fa-fw"></i></a>-->
-    <!--      </div>-->
-    <!--      <p class="copyrights" >-->
-    <!--        Copyrights 2018 by excurj. Made with 100% recycled pixels.-->
-    <!--      </p>-->
-    <!--      </div>-->
-
-
-
-
-
-
-
-
-
-
-    <!--        <div>-->
-
-
-
-    <!--        </div>-->
-
->>>>>>> bb9552d6cdc92dda326ec7994db5d33fe542d2a4
-
-
-
-
-
-
-
-
-
-
-
-    <!--</footer>-->
-
-    <!-- <img src=" {% static 'images/up.svg' %}" class="up">
-    <div class="feedback">
-        <p>Feedback</p>
-    </div> -->
-
-
-
-
-
-
-    <!-- <script>
-        $('#id_dob').datepicker({
-          changeMonth: true,
-          changeYear: true,
-          yearRange: '1925:'+(new Date).getFullYear()
-        });
-      </script> -->
-
-      <!-- <script>
-          $(function () {
-          var start = new Date();
-          start.setFullYear(start.getFullYear());
-          var end = new Date();
-          end.setFullYear(end.getFullYear()+1);
-
-          $('#id_date').datepicker({
-              changeMonth: true,
-              changeYear: true,
-              minDate: start,
-              maxDate: end,
-              yearRange: start.getFullYear() + ':' + end.getFullYear(),
-              dateFormat: 'yy-mm-dd'
-            });
-          });
-      </script> -->
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <!-- <script src="{% static 'js/bootstrap.min.js' %}"></script> -->
-
-
-
-
-    <!-- to add and remove active class -->
-
-    <!-- <script type="text/javascript">
-        var selector = '#mainNavBar li';
-
-        $(selector).on('click', function(){
-            $(selector).removeClass('active');
-            $(this).addClass('active');
-        });
-    </script> -->
 
     <!-- to make nav bar opaque upon scrolling -->
     <script type="text/javascript">

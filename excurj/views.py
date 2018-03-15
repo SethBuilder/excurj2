@@ -521,12 +521,16 @@ def search(request):
 				| Q(slug__icontains=searched_city) \
 
 				) 
+			if cities.exists():
+				context_dict['cities']=cities
+				return render(request, 'excurj/cities_search.html', context_dict)
+			else:
+				return cities_list(request)
 
-			context_dict['cities']=cities
-			return render(request, 'excurj/cities_search.html', context_dict)
 
 		#If no query matches found
-		except IndexError:
+		# except IndexError:
+		except Exception:
 			print("INDEX ERROR")
 			#If num of cities is 0 return all cities (never ending scroll of cities)
 			return cities_list(request)
@@ -702,7 +706,7 @@ def editprofile(request):
 		if request.user.is_authenticated():
 			edit_profile_form = EditProfileForm(instance=request.user.profile)
 		else:
-			return HttpResponseRedirect("/accounts/login/")
+			return HttpResponseRedirect("/login/")
 
 	return render(request, 'excurj/editprofile.html', {'edit_profile_form':edit_profile_form,})
 
@@ -723,7 +727,7 @@ def editaccount(request):
 		if request.user.is_authenticated():
 			edit_account_form = EditAccountForm(instance=request.user)
 		else:
-			return HttpResponseRedirect("/accounts/login/")
+			return HttpResponseRedirect("/login/")
 
 	return render(request, 'excurj/editaccount.html', {'edit_account_form':edit_account_form,})
 
@@ -759,7 +763,7 @@ def excursion_request(request, username):
 		if request.user.is_authenticated():
 			excursion_request_form = ExcursionRequestForm()
 		else:
-			return HttpResponseRedirect("/accounts/login/")
+			return HttpResponseRedirect("/login/")
 	
 	return render(request, 'excurj/excursionrequest.html', {'excursion_request_form':excursion_request_form})
 
@@ -797,7 +801,7 @@ def dashboard(request):
 		return render(request, 'excurj/dashboard.html', context_dict)
 
 	else:
-		return HttpResponseRedirect("/accounts/login/")
+		return HttpResponseRedirect("/login/")
 
 
 def createtrip(request):
@@ -836,7 +840,7 @@ def createtrip(request):
 		if request.user.is_authenticated():
 			create_trip_form = CreateTripForm()
 		else:
-			return HttpResponseRedirect("/accounts/login/")
+			return HttpResponseRedirect("/login/")
 
 	return render(request, 'excurj/createtrip.html', {'create_trip_form':create_trip_form})
 

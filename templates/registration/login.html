@@ -4,12 +4,12 @@
 {% load crispy_forms_tags %}
 
 {% block title_block %}
-	Login to excurj.
+	excurj | Login
 {% endblock %}
 
 {% block body_block %}
-<div style="max-height: 100vh;">
-	<div style="padding: 100px;max-width: 50%; margin: auto;">
+<div style="max-height: 100vh;" class="col-sm-6 col-sm-offset-3">
+	<div style="padding: 100px; margin: auto;">
 	<h1>Login</h1>
 	<form method="post" action=".">
 	  {% csrf_token %} 

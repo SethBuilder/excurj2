@@ -73,6 +73,7 @@
   width="640"
   height="360"
   layout="fill"
+  poster="{% static 'images/Capture.JPG' %}"
   >
   <source src="{% static 'videos/fun.webm' %}"
     type="video/webm" />
@@ -285,7 +286,7 @@ This section is empty because Excurj is brand new! We can't wait to see who you'
   
     <div class="ready-header">
       <h2>Ready to meet new friends?</h2>
-      <button class="ready-header-button">Sign up for free!</button>
+      <a href="{% url 'excurj:signup' %}"><button class="ready-header-button">Sign up for free!</button></a>
     </div>
 
     <!-- <img src=" {% static 'images/2friends.jpg' %} " id="readyimg"> -->
