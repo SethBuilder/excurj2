@@ -28,8 +28,9 @@ def get_json(url):
 def get_google_key():
 	""" returns Google api key"""
 	# GoogleKey = 'AIzaSyDaa7NZzS-SE4JW3J-7TaA1v1Y5aWUTiyc'
-	GoogleKey = 'AIzaSyDViGwJgWL18QSKvPozvAiqloyy1pW2lxg'
+	# GoogleKey = 'AIzaSyDViGwJgWL18QSKvPozvAiqloyy1pW2lxg'
 	# GoogleKey = 'AIzaSyB1E9CZaaaw1c77A7eZSophK_LnaGX5XRQ'
+	GoogleKey = AIzaSyCgGouj8lB-qunITGnLOiWucimp6HRm7j0
 
 	return GoogleKey
 
@@ -140,7 +141,6 @@ def populate_cities():
 	'Lima',
 	'Tokyo',
 	'Johannesburg',
-	'Beijing',
 	'Sofia',
 	'Orlando',
 	'Berlin',
@@ -185,13 +185,12 @@ def populate_cities():
 	'Peru',
 	'Japan',
 	'South Africa',
-	'China',
 	'Bulgaria',
 	'USA',
 	'Germany',
 	'Vietnam',
-	'Italy'
-	,'Spain',
+	'Italy',
+	'Spain',
 	'Poland',
 	'Qatar',
 	'Kenya',
@@ -206,20 +205,24 @@ def populate_cities():
 	cities = []
 
 	#only call the Google API if there are no City objects or no city pictures (db is empty)
-	if not City.objects.all() or len(glob.glob('media/city_images/*.jpg')) == 0:
+	# if not City.objects.all() or len(glob.glob('media/city_images/*.jpg')) == 0:
 
-		for i in range(len(city_names)):
-			query = city_names[i] + ", " + countries[i] # to be sent to the Google Places API
-			
-			#now we'll use json results to extract city ID and city image
-			city_id =  get_city_json(query)['results'][0]['id']
-			created_city = populate_city(city_id, query)
+	for i in range(len(city_names)):
+		query = city_names[i] + ", " + countries[i] # to be sent to the Google Places API
+		
+		#now we'll use json results to extract city ID and city image
+		city_id =  get_city_json(query)['results'][0]['id']
+		created_city = populate_city(city_id, query)
+
+		if created_city.city_name==None:
+			continue
+		else:
 			created_city.save()
 			cities.append(created_city)
 
 	#If there are cities, just pull them
-	else:
-		cities = City.objects.all()
+	# else:
+	# 	cities = City.objects.all()
 
 		
 	#delete local files as they're already uploaded to media root
@@ -244,7 +247,27 @@ def populate_users():
 	urls = ['https://randomuser.me/api/?nat=gb&results=5', 'https://randomuser.me/api/?nat=fr&results=4', 
 	'https://randomuser.me/api/?nat=de&results=3', 'https://randomuser.me/api/?nat=us&results=0', 
 	'https://randomuser.me/api/?results=0', 'https://randomuser.me/api/?results=1', 'https://randomuser.me/api/?results=7&nat=es', 
-	'https://randomuser.me/api/?results=0', 'https://randomuser.me/api/?results=0', 'https://randomuser.me/api/?results=3&nat=ca']
+	'https://randomuser.me/api/?results=0', 
+	'https://randomuser.me/api/?results=0', 
+	'https://randomuser.me/api/?results=3&nat=ca',
+	'https://randomuser.me/api/?nat=gb&results=2',
+	'https://randomuser.me/api/?nat=gb&results=10',
+	'https://randomuser.me/api/?nat=gb&results=5',
+	'https://randomuser.me/api/?nat=gb&results=3',
+	'https://randomuser.me/api/?nat=gb&results=5',
+	'https://randomuser.me/api/?nat=gb&results=20',
+	'https://randomuser.me/api/?nat=gb&results=5',
+	'https://randomuser.me/api/?nat=gb&results=5',
+	'https://randomuser.me/api/?nat=gb&results=2',
+	'https://randomuser.me/api/?nat=gb&results=5',
+	'https://randomuser.me/api/?nat=gb&results=2',
+	'https://randomuser.me/api/?nat=gb&results=5',
+	'https://randomuser.me/api/?nat=gb&results=5',
+	'https://randomuser.me/api/?nat=gb&results=1',
+	'https://randomuser.me/api/?nat=gb&results=5',
+	'https://randomuser.me/api/?nat=gb&results=5',
+	'https://randomuser.me/api/?nat=gb&results=3',
+	'https://randomuser.me/api/?nat=gb&results=8']
 
 	#go through random data urls
 	for i in range(len(urls)):
