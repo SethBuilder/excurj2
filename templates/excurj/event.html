@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block title_block %}
-	excurj | {{event.0.name}} | Find More Cool Events in {{city.display_name}}
+	excurj | {{event.0.name.text}} | Find More Cool Events in {{city.display_name}}
 {% endblock %}
 
 {% block desc_block %}
@@ -37,7 +37,7 @@
     }
   },
   "image": "{{event.0.cover}}",
-  "description": "{{event.0.description}}",
+  "description": "{{event.0.description.text}}",
   "endDate": "{{event.0.end_time}}"
 }
 </script>
@@ -53,14 +53,14 @@
 
 		<div class="row">
 			<div class="col-md-12 col-xs-12">
-				<h1>{{event.0.name}}</h1>
+				<h1>{{event.0.name.text}}</h1>
 			</div>
 		</div>
 
 		<div class="row">
 			<div class="col-md-3 col-xs-12">
-				{% if event.0.place.name %}
-				<span class="event_detail"><span class="glyphicon glyphicon-map-marker"></span> <a href="#venue_map" title="Location for {{event.0.place.name}}"> {{event.0.place.name}}</a></span>
+				{% if event.0.venue_name %}
+				<span class="event_detail"><span class="glyphicon glyphicon-map-marker"></span> <a href="#venue_map" title="Location for {{event.0.venue_name}}"> {{event.0.venue_name}}</a></span>
 				{% else %}
 				<span class="event_detail"><span class="glyphicon glyphicon-map-marker"></span> Location not available</span>
 				{% endif %}
@@ -71,10 +71,10 @@
 			</span> ({{city.display_name}} Local Time)
 		</div>
 
-		<div class="col-md-3 col-xs-12">
+		<!-- <div class="col-md-3 col-xs-12">
 			<span class="event_detail"><span class="glyphicon glyphicon-glass"></span> {{event.0.type|upper}}&nbspEVENT
-		</span>
-	</div>
+			</span>
+		</div> -->
 </div>
 </div>
 </header>
@@ -88,10 +88,10 @@
 			<div class="row">
 				<div class="col-xs-12 col-md-12">
 					<section class="event_section">
-						<h3 title="tickets for {{event.0.name}}"><strong>TICKETS INFO:</strong></h3>
-						{% if event.0.ticket_uri %}
+						<h3 title="tickets for {{event.0.name.text}}"><strong>TICKETS INFO:</strong></h3>
+						{% if event.0.url %}
 
-						<pre style="white-space:pre-wrap; background-color: white; border: none;font-weight: bold;"><p><a href="{{event.0.ticket_uri}}" target="_blank">{{event.0.ticket_uri}}</a></p></pre>
+						<pre style="white-space:pre-wrap; background-color: white; border: none;font-weight: bold;"><p><a href="{{event.0.url}}" target="_blank">{{event.0.url}}</a></p></pre>
 
 						{% else %}
 
@@ -104,10 +104,10 @@
 			<section class="event_section">
 				<h3><strong>OVERVIEW:</strong></h3>
 				<div class="event_div">
-					<meta itemprop="name" content="{{event.0.name}}">
-					{% if event.0.description %}
+					<meta itemprop="name" content="{{event.0.name.text}}">
+					{% if event.0.description.text %}
 
-					<pre class="lead" style=" font-family: inherit; white-space:pre-wrap; border: none;text-align: justify;padding: 20px;background-color: white;"><a href="{{event.0.cover}}" data-lightbox="image-1" data-title="{{event.0.name}}"><img src="{{event.0.cover}}" class="img-thumbnail" width="500" height="500" style="padding: 10px;margin-left: 20px;float: right;"></a><p>{{event.0.description}}</p></pre>
+					<pre class="lead" style=" font-family: inherit; white-space:pre-wrap; border: none;text-align: justify;padding: 20px;background-color: white;"><a href="{{event.0.logo.original.url}}" data-lightbox="image-1" data-title="{{event.0.name}}"><img src="{{event.0.logo.original.url}}" class="img-thumbnail" width="500" height="500" style="padding: 10px;margin-left: 20px;float: right;"></a><p>{{event.0.description.text}}</p></pre>
 
 					{% else %}
 
@@ -118,19 +118,16 @@
 			</div>
 			<section class="event_section" id="venue_map">
 
-				<h3 title="Venue / Location for {{event.0.name}}"><strong>VENUE:</strong></h3>
+				<h3 title="Venue / Location for {{event.0.name.text}}"><strong>VENUE:</strong></h3>
 				<p class="lead"><span class="glyphicon glyphicon-map-marker"></span>
 
-					{% if  not event.0.place.name %}
+					{% if  not event.0.venue_address %}
 					Venue address not available, please search manually in the map.
 
 					{% else %}
 
-					{{event.0.place.name}}
+					{{event.0.venue_address}}
 
-					&nbsp {{event.0.place.location.street}}  &nbsp  {{event.0.place.location.zip}}
-
-					&nbsp{{event.0.place.location.city}} &nbsp{{event.0.place.location.country}}
 					{% endif %}
 				</p>
 				<div class="event_div">
@@ -169,7 +166,7 @@
 
 <script src="{% static 'js/autocomplete.js' %}"></script>
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYfS_V4jHXS_jVYa1k2w9VY52r0pMrL8g"></script> -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYfS_V4jHXS_jVYa1k2w9VY52r0pMrL8g&libraries=places"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAC9SSvIEbSOt7ocozi4AxBoFqOz7ZX2Wc&libraries=places"></script>
 <script type="text/javascript">
 	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 		var target = this.href.split('#');
@@ -179,16 +176,14 @@
 </script>
 
 
-<script type="text/javascript">
-	var lat = "{{event.0.place.location.latitude}}";
-	var lng = "{{event.0.place.location.longitude}}";
+<script>
+	var lat = "{{event.lat}}";
+	var lng = "{{event.lng}}";
 	
 	if(lat ==  "" && lng == ""){
 		lat = {{city.lat}};
 		lng = {{city.lng}};
 	}
-
-	console.log(lat);
 
 	var mapOptions = {
 		center: new google.maps.LatLng(lat,lng),

@@ -348,7 +348,7 @@
     
     <h2 title="Wiki Summary About {{city.display_name}}">Here some info about {{city.display_name}} to jump start your conversations!</h2>
     
-    <pre> {{city.description}} </pre>
+    <pre> {{city.description.text}} </pre>
 
 
 
@@ -370,41 +370,41 @@
      
      <div class="{% cycle 'rev1' 'rev2' %}">
      	<a href=" {% url 'excurj:eventdetails' city.slug event.id %} " title="{{event.name}} in {{city.name}}">
-     		<h3 title="{{event.name}}">{{forloop.counter}}. {{event.name}}</h3>
+     		<h3 title="{{event.name.text}}">{{forloop.counter}}. {{event.name.text}}</h3>
      	</a>
 	    	<div class="event_card">
 
 
-	    	{% if event.cover %}
+	    	{% if event.logo.original.url %}
 	    	<div>
-			  <amp-img src="{{event.cover}}" alt="{{event.name}} in {{city.name}}" width="240px" height="200px" layout="flex-item" class=""></amp-img>
+			  <amp-img src="{{event.logo.original.url}}" alt="{{event.name.text}} in {{city.name}}" width="240px" height="200px" layout="flex-item" class=""></amp-img>
 			 </div>
 			 {% endif %}
 
 
 			  <div class="card_head_event">
 
-			  	{% if event.place.name %}
-				  <span title="{{event.place.name}}"><strong>Venue or place:</strong> {{event.place.name}} </span>
+			  	{% if event.venue_address %}
+				  <span title="{{event.venue_address}}"><strong>Venue or place:</strong> {{event.venue_address}} </span>
 				{% else %}
-					<span title="{{event.place.name}}">Venue or place: Not Available :(</span>
+					<span>Venue or place: Not Available :(</span>
 				{% endif %}
 
-				{% if event.start_time %}
-      				<p><strong>Start time:</strong> {{event.start_time}}</p>
+				{% if event.start.local %}
+      				<p><strong>Start time:</strong> {{event.start.local}}</p>
       			{% else %}
       				<p>Start time: Not Available</p>
       			{% endif %}
 
-      			{% if event.ticket_uri %}
-      				<p><strong>Tickets:</strong> <a href="{{event.ticket_uri}}" target="_blank" title="Tickets for {{event.name}} in {{city.name}}" >{{event.ticket_uri}}</a></p>
+      			{% if event.url %}
+      				<p><strong>Tickets:</strong> <a href="{{event.url}}" target="_blank" title="Tickets for {{event.name.text}} in {{city.name}}" >{{event.url}}</a></p>
       			{% else %}
       				<pre><strong>Tickets:</strong> Not Available</pre>
       			{% endif %}
 
 
       			{% if event.description %}
-      				<i class="fa fa-quote-left" aria-hidden="true"></i><span>{{event.description|truncatewords:40}} <a href=" {% url 'excurj:eventdetails' city.slug event.id %} " title="More deatils on {{event.name}} in {{city.name}}"><strong>click for more details.</strong></a></span><i class="fa fa-quote-right" aria-hidden="true"></i>
+      				<i class="fa fa-quote-left" aria-hidden="true"></i><span>{{event.description.text|truncatewords:40}} <a href=" {% url 'excurj:eventdetails' city.slug event.id %} " title="More deatils on {{event.name.text}} in {{city.name}}"><strong>click for more details.</strong></a></span><i class="fa fa-quote-right" aria-hidden="true"></i>
       			{% else %}
       				<p>Description not available</p>
       			{% endif %}

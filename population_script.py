@@ -30,7 +30,7 @@ def get_google_key():
 	# GoogleKey = 'AIzaSyDaa7NZzS-SE4JW3J-7TaA1v1Y5aWUTiyc'
 	# GoogleKey = 'AIzaSyDViGwJgWL18QSKvPozvAiqloyy1pW2lxg'
 	# GoogleKey = 'AIzaSyB1E9CZaaaw1c77A7eZSophK_LnaGX5XRQ'
-	GoogleKey = 'AIzaSyCgGouj8lB-qunITGnLOiWucimp6HRm7j0'
+	GoogleKey = 'AIzaSyAC9SSvIEbSOt7ocozi4AxBoFqOz7ZX2Wc'
 
 	return GoogleKey
 

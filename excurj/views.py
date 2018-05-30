@@ -178,46 +178,56 @@ def get_json_raw(url):
 
 def pull_events(city):
 	events=[]
-	url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBAEO0VFZCZCROVUmhAdqE8ZCXFpQLqh4F3KRZCL9EIJ3N9MJZA4AUcVrNCJg077Oh80XJiyWwbLLmJiN7dFnSxm1OCm04ZCbuICDNvwlLMDhbUv3iYOzdEBPBKcZBSLUuQlyhZCPxeqsfhDscYQuIMGhZBq2EZCt0D4jQZDZD&token_type=bearer' % city.name.replace(' ', '')
-	
+	# url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBAEO0VFZCZCROVUmhAdqE8ZCXFpQLqh4F3KRZCL9EIJ3N9MJZA4AUcVrNCJg077Oh80XJiyWwbLLmJiN7dFnSxm1OCm04ZCbuICDNvwlLMDhbUv3iYOzdEBPBKcZBSLUuQlyhZCPxeqsfhDscYQuIMGhZBq2EZCt0D4jQZDZD&token_type=bearer' % city.name.replace(' ', '')
+	url = 'https://www.eventbriteapi.com/v3/events/search?token=YWBHVZTS67APSOUPW4X5&q=%s&sort_by=date' % city.name.replace(' ', '')
 	events_json = get_json_raw(url)
 
-	print(events_json)
+	# print(events_json)
 
-	try:
-	# If no events were returned, try using the first level of the city name as query (Amman instead of Amman, Jordam)
-		if len(events_json['data']) == 0:
-			try_differeny_city_name = city.name.split(',');
-			try_differeny_city_name = try_differeny_city_name[0] + ',' + try_differeny_city_name[len(try_differeny_city_name) -1]
+	# try:
+	# # If no events were returned, try using the first level of the city name as query (Amman instead of Amman, Jordam)
+	# 	if len(events_json['events']) == 0:
+	# 		try_differeny_city_name = city.name.split(',');
+	# 		try_differeny_city_name = try_differeny_city_name[0] + ',' + try_differeny_city_name[len(try_differeny_city_name) -1]
 
 			
-			#PULL LOCAL EVENTS
-			url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBAEO0VFZCZCROVUmhAdqE8ZCXFpQLqh4F3KRZCL9EIJ3N9MJZA4AUcVrNCJg077Oh80XJiyWwbLLmJiN7dFnSxm1OCm04ZCbuICDNvwlLMDhbUv3iYOzdEBPBKcZBSLUuQlyhZCPxeqsfhDscYQuIMGhZBq2EZCt0D4jQZDZD&token_type=bearer' % try_differeny_city_name.replace(' ', '')
+	# 		#PULL LOCAL EVENTS
+	# 		url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBAEO0VFZCZCROVUmhAdqE8ZCXFpQLqh4F3KRZCL9EIJ3N9MJZA4AUcVrNCJg077Oh80XJiyWwbLLmJiN7dFnSxm1OCm04ZCbuICDNvwlLMDhbUv3iYOzdEBPBKcZBSLUuQlyhZCPxeqsfhDscYQuIMGhZBq2EZCt0D4jQZDZD&token_type=bearer' % try_differeny_city_name.replace(' ', '')
 			
-			events_json = get_json_raw(url)
-			print("WHYYYY" + events_json)
+	# 		events_json = get_json_raw(url)
+	# 		print("WHYYYY" + events_json)
 
-	except Exception:
-		pass
+	# except Exception:
+	# 	pass
 
 
 		
 		
 
 	#Loop thru events and send list of events
-	for event in events_json['data']:
+	for event in events_json['events'][:6]:
 
-		#pull event cover photo
-		cover_photo_url = 'https://graph.facebook.com/{0}?fields=cover,start_time,ticket_uri,type&access_token=EAADuTyDZATeoBAEO0VFZCZCROVUmhAdqE8ZCXFpQLqh4F3KRZCL9EIJ3N9MJZA4AUcVrNCJg077Oh80XJiyWwbLLmJiN7dFnSxm1OCm04ZCbuICDNvwlLMDhbUv3iYOzdEBPBKcZBSLUuQlyhZCPxeqsfhDscYQuIMGhZBq2EZCt0D4jQZDZD&token_type=bearer'.format(event['id'])
+		# pull event cover photo
+		venue_url = 'https://www.eventbriteapi.com/v3/venues/{0}?token=YWBHVZTS67APSOUPW4X5'.format(event['venue_id'])
 		
-		event_photo_json = get_json_raw(cover_photo_url)
-		if 'cover' in event_photo_json:
-			event['cover'] = event_photo_json['cover']['source']
-		if 'ticket_uri' in event_photo_json:
-			event['ticket_uri'] = event_photo_json['ticket_uri']
+		event_photo_json = get_json_raw(venue_url)
+		if 'name' in event_photo_json:
+			event['venue_name'] = event_photo_json['name']
+		if 'address' in event_photo_json:
+			event['venue_address'] = event_photo_json['address']['localized_address_display']
 
-		if 'type' in event_photo_json:
-			event['type'] = event_photo_json['type']
+		if 'latitude' in event_photo_json:
+			event['lat'] = event_photo_json['latitude']
+
+		if 'longitude' in event_photo_json:
+			event['lng'] = event_photo_json['longitude']
+
+		# Pull venue image
+		# venue_photo_url = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query={0}&location={1},{2}&radius=10000&key=AIzaSyAC9SSvIEbSOt7ocozi4AxBoFqOz7ZX2Wc'.format(event['venue_address'], event_photo_json['longitude'], event_photo_json['latitude'])
+		# event_photo_json = get_json_raw(venue_photo_url)
+		# print('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz'+str(event_photo_json['results']))
+		# if 'type' in event_photo_json:
+		# 	event['type'] = event_photo_json['type']
 		
 		#append event to events list
 		events.append(event)
@@ -287,21 +297,21 @@ def eventdetails(request, cityslug, eventid):
 
 
 	context_dict['event'] = event_in_question
-	print("EVENTTT IS: " + str(event_in_question))
+	# print("EVENTTT IS: " + str(event_in_question))
 	
 	context_dict['venue_image'] = pull_venue_image(event_in_question,cityslug)
 
-	event_date = event_in_question[0]['start_time']
-	
+	event_date = event_in_question[0]['start']['local']
+	# print('ddddddddddddddddddd'+event_date)
 
-	date = dateutil.parser.parse(event_date)
-	offset = dateutil.parser.parse(event_date).tzinfo._offset
+	# date = dateutil.parser.parse(event_date)
+	# offset = dateutil.parser.parse(event_date).tzinfo._offset
 
-	readable_event_date = (date + offset).strftime('%a, %b %d %Y %I:%M:%S %p')
+	# readable_event_date = (date + offset).strftime('%a, %b %d %Y %I:%M:%S %p')
 
-	print("START TIME IS: " + str(readable_event_date))
+	# print("START TIME IS: " + str(event_date))
 
-	context_dict['event_time'] = readable_event_date
+	context_dict['event_time'] = event_date
 
 	context_dict['city'] = city
 
