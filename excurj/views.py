@@ -61,13 +61,14 @@ def index(request):
 
 	#Loop thru cities and pull their name, lat, lng, slug and number of users
 	for city in all_cities:
-		lat_lng_entry = {
-		'city_name' : city.name,
-		'lat' : city.lat,
-		'lng' : city.lng,
-		'slug' : city.slug,
-		'count' : city.count
-		}
+		if city.lat != None and city.name != '':
+			lat_lng_entry = {
+			'city_name' : city.name,
+			'lat' : city.lat,
+			'lng' : city.lng,
+			'slug' : city.slug,
+			'count' : city.count
+			}
 
 		#If the user only has one user then include her/his profile picture to feature it on the map marker pop up
 		if city.count == 1:
