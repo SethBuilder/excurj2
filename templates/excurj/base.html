@@ -17,6 +17,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href=" {% static 'images/favicon-32x32.png' %} ">
 
 
+
     
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -2771,9 +2772,11 @@ and (orientation : portrait) {
 
 
     </style>
+    <link rel="manifest" href="/static/manifest.json">
+    <script async custom-element="amp-install-serviceworker" src="https://cdn.ampproject.org/v0/amp-install-serviceworker-0.1.js"></script>
   </head>
   <body>
-
+    <amp-install-serviceworker src="https://www.excurj.com/serviceworker.js" layout="nodisplay"></amp-install-serviceworker>
     <form action=" {% url 'excurj:feedback' %} " target="_top">
         <button title="Contact Us, We Love Your feedback!" id="feedback" class="btn btn-lg btn-primary" name="feedback">
         FEEDBACK

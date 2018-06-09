@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" sizes="32x32" href=" {% static 'images/favicon-32x32.png' %} ">
 
+
     {% block scripts_block %}
     {% endblock %}
 
@@ -111,10 +112,11 @@
         }
       }
     </script>
-
+    <script async custom-element="amp-install-serviceworker" src="https://cdn.ampproject.org/v0/amp-install-serviceworker-0.1.js"></script>
+    <link rel="manifest" href="/static/manifest.json">
   </head>
   <body>
-
+    <amp-install-serviceworker src="https://www.excurj.com/serviceworker.js" layout="nodisplay"></amp-install-serviceworker>
     <form action=" {% url 'excurj:feedback' %} ">
         <button title="Contact Us, We Love Your feedback!" id="feedback" class="btn btn-lg btn-primary" name="feedback">
         <span class="glyphicon glyphicon-send" style="padding-right: 10px;"></span>  FEEDBACK

@@ -12,7 +12,8 @@
     <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
     <script async custom-element="amp-video" src="https://cdn.ampproject.org/v0/amp-video-0.1.js"></script>
     <script async custom-element="amp-selector" src="https://cdn.ampproject.org/v0/amp-selector-0.1.js"></script>
-
+    <script async custom-element="amp-install-serviceworker" src="https://cdn.ampproject.org/v0/amp-install-serviceworker-0.1.js"></script>
+    <link rel="manifest" href="/static/manifest.json">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,minimum-scale=1">
     <link rel="canonical" href="{% url 'excurj:index' %}">
@@ -2145,7 +2146,7 @@ outline:none;
     </style>
   </head>
   <body>
-
+    <amp-install-serviceworker src="https://www.excurj.com/serviceworker.js" layout="nodisplay"></amp-install-serviceworker>
     <form action=" {% url 'excurj:feedback' %} " target="_top">
         <button title="Contact Us, We Love Your feedback!" id="feedback" class="btn btn-lg btn-primary" name="feedback">
         FEEDBACK
