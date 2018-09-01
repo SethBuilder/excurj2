@@ -76,8 +76,8 @@ def index(request):
 			#A lonely user is called King as I might give royal titles to the first users of each city
 			lat_lng_entry['king_pic'] = str(city.city.all()[0].prof_pic.url)
 
-		#append city's lat and lng to the lat lng dictionary
-		lat_lng_dict.append(lat_lng_entry)
+			#append city's lat and lng to the lat lng dictionary
+			lat_lng_dict.append(lat_lng_entry)
 
 		
 
@@ -158,6 +158,8 @@ def cities_list(request):
 		cities = paginator.page(1)
 	except EmptyPage:
 		cities = paginator.page(paginator.num_pages)
+	except:
+		pass
 
 	context_dict['cities'] = cities
 	context_dict['searched_query'] = searched_query
@@ -180,7 +182,7 @@ def get_json_raw(url):
 def pull_events(city):
 	events=[]
 	# url = 'https://graph.facebook.com/search?q=%s&type=event&access_token=EAADuTyDZATeoBAEO0VFZCZCROVUmhAdqE8ZCXFpQLqh4F3KRZCL9EIJ3N9MJZA4AUcVrNCJg077Oh80XJiyWwbLLmJiN7dFnSxm1OCm04ZCbuICDNvwlLMDhbUv3iYOzdEBPBKcZBSLUuQlyhZCPxeqsfhDscYQuIMGhZBq2EZCt0D4jQZDZD&token_type=bearer' % city.name.replace(' ', '')
-	url = 'https://www.eventbriteapi.com/v3/events/search?token=YWBHVZTS67APSOUPW4X5&q=%s&sort_by=date' % city.name.replace(' ', '')
+	url = 'https://www.eventbriteapi.com/v3/events/search?token=6HXJMYZIFBDCKGFA5C6E&q=%s&sort_by=date' % city.name.replace(' ', '')
 	events_json = get_json_raw(url)
 
 	# print(events_json)
@@ -209,7 +211,7 @@ def pull_events(city):
 	for event in events_json['events'][:6]:
 
 		# pull event cover photo
-		venue_url = 'https://www.eventbriteapi.com/v3/venues/{0}?token=YWBHVZTS67APSOUPW4X5'.format(event['venue_id'])
+		venue_url = 'https://www.eventbriteapi.com/v3/venues/{0}?token=6HXJMYZIFBDCKGFA5C6E'.format(event['venue_id'])
 		
 		event_photo_json = get_json_raw(venue_url)
 		if 'name' in event_photo_json:
@@ -278,6 +280,8 @@ def show_city(request, city_name_slug):
 
 	except Excursion.DoesNotExist:
 		context_dict['excursions'] = None
+	except Exception:
+		pass
 
 	# Pull city events from the Facebook Graph
 	events = pull_events(city)
@@ -503,7 +507,9 @@ def search(request):
 				
 				#Pull city from the database and return the appropriate city profile
 				city = City.objects.get(city_id = searched_city_id)
-				return show_city(request, city.slug)
+
+				if city.slug != "":
+					return show_city(request, city.slug)
 
 			#If no city ID was returned from the Google API (very rarely the case)
 			else:

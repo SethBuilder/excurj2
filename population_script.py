@@ -14,6 +14,7 @@ import glob
 import random
 from django.http import HttpResponseServerError
 from django.contrib.staticfiles.storage import staticfiles_storage
+import csv
 
 def get_json(url):
 	"""
@@ -25,12 +26,18 @@ def get_json(url):
 		jsondata = json.loads(jsonraw)
 		return jsondata
 
+def get_csv(url):
+	"""
+		takes url that returns all world cities
+	 """
+	with urllib.request.urlopen(url) as response:
+		jsonraw = response.read().decode()
+		return jsonraw
+
 def get_google_key():
 	""" returns Google api key"""
-	# GoogleKey = 'AIzaSyDaa7NZzS-SE4JW3J-7TaA1v1Y5aWUTiyc'
-	# GoogleKey = 'AIzaSyDViGwJgWL18QSKvPozvAiqloyy1pW2lxg'
-	# GoogleKey = 'AIzaSyB1E9CZaaaw1c77A7eZSophK_LnaGX5XRQ'
-	GoogleKey = 'AIzaSyCccxiKA2599bTfsmwvpNeXxodgxBc4jwI'
+
+	GoogleKey = ''
 
 	return GoogleKey
 
@@ -207,6 +214,12 @@ def populate_cities():
 	'USA'
 ]
 
+	# world_cities = get_csv('https://pkgstore.datahub.io/core/world-cities/world-cities_csv/data/6cc66692f0e82b18216a48443b6b95da/world-cities_csv.csv');
+	# with open('world_cities.csv', encoding="utf8") as f:
+	# 	reader = csv.reader(f)
+	# 	world_cities = list(reader)
+		# print(world_cities[12])
+
 	#this will be returned at the end
 	cities = []
 
@@ -214,18 +227,19 @@ def populate_cities():
 	# if not City.objects.all() or len(glob.glob('media/city_images/*.jpg')) == 0:
 
 	for i in range(len(city_names)):
-		query = city_names[i] + ", " + countries[i] # to be sent to the Google Places API
-
-		#now we'll use json results to extract city ID and city image
-		city_id =  get_city_json(query)['results'][0]['id']
-		created_city = populate_city(city_id, query)
-
-
-		if created_city.name=='' or created_city.lng==None or created_city.lat==None:
-			continue
-		else:
-		    created_city.save()
-		    cities.append(created_city)
+		# query = world_cities[i+1] # to be sent to the Google Places API
+		query = city_names[i] + ", " + countries[i]
+		try:
+			#now we'll use json results to extract city ID and city image
+			city_id =  get_city_json(query)['results'][0]['id']
+			created_city = populate_city(city_id, query)
+			if created_city.name=='' or created_city.lng==None or created_city.lat==None:
+				created_city.delete()
+			else:
+			    created_city.save()
+			    cities.append(created_city)
+		except Exception as e:
+			pass
 
 	#If there are cities, just pull them
 	# else:
